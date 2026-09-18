@@ -1,0 +1,8 @@
+﻿backup -> I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.asi.bak_v14_20260917_2202
+DEPLOYED I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.asi
+   size=738816 md5=4289B78B7F755D14998A46CB2A5CE8ED
+SKIP (no dir) F:\SaintsRowIV\scripts
+SKIP (no dir) G:\SteamLibrary\steamapps\common\Saints Row IV\scripts
+SKIP (no dir) D:\SteamLibrary\steamapps\common\Saints Row IV\scripts
+=== artifact ===
+size=738816 md5=4289B78B7F755D14998A46CB2A5CE8ED

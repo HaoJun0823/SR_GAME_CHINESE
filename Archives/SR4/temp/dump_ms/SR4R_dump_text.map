@@ -1,0 +1,10 @@
+# SR4R_I18N executable-section dump
+# 用途: 为加密/未知构建的 exe 生成 AOB 特征码（离线看不到明文, 进程内看得到）
+# 触发: text_dump=2, 2/8 hooks 定位失败 (A=1 B=0 C=1 D=1 E=1 F=1 G=1 J=0)
+# IDA 用法: 以 raw binary (x64) 打开 SR4R_dump_text.bin, 装载基址填第一段的 VA
+# va 列 = GAME_BASE(0x140000000) 相对 VA, 与 dllmain.cpp 的 CFG/VA 表同口径
+va_base=0x140000000
+timestamp=5E58CEF8 ep=00FC44FC sizeofimage=07E6D000
+bin=SR4R_dump_text.bin
+# section va vsize bin_off size
+.text va=0x140001000 vsize=0x127DB1F bin_off=0x0 size=0x127DB1F

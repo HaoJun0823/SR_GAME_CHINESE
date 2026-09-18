@@ -1,0 +1,23 @@
+﻿============================================================================
+FILE: G:\Projects\SR4R_DLL\resource\dict\zh\le_string_keys.txt
+  physical lines: 1277
+  parsed entries: 1261
+  UNPARSEABLE (bad line) : 0
+  [R1] value contains %% specifier : 0
+  [R4] key contains %% / quote / newline : 0
+  [R5] value contains {n} : 2
+  --- sample R5 entries (value has {n}) ---
+    line 136   key=CELL_CHEAT_ACTIVIATE_DIALOG_BODY           val=[format][color:#edc300FF]{0}[/format]\n{1}浣跨敤绉樼睄灏嗚浣犳棤娉曡幏寰楁垚灏憋紝涓旇嚜鍔ㄤ繚瀛樹細琚鐢ㄣ€俓n\n浣犱粛瑕佹縺娲绘绉樼睄鍚楋紵
+    line 448   key=PC_RECORD_MODE_TEXT                        val=鍚敤褰曞埗妯″紡鍙皢浣犳渶鍚庢椂鍒荤殑娓告垙鐢婚潰鐩存帴淇濆瓨涓鸿棰戙€傛寜 ([format][color:#9400C5]{0}[/format]) 瀵煎嚭銆俓n\n瑙嗛淇濆瓨鑷筹細
+============================================================================
+FILE: G:\Projects\SR4R_DLL\resource\dict\en\le_string_keys.txt
+  physical lines: 1277
+  parsed entries: 1261
+  UNPARSEABLE (bad line) : 0
+  [R1] value contains %% specifier : 0
+  [R4] key contains %% / quote / newline : 0
+  [R5] value contains {n} : 2
+  --- sample R5 entries (value has {n}) ---
+    line 136   key=CELL_CHEAT_ACTIVIATE_DIALOG_BODY           val=[format][color:#edc300FF]{0}[/format]\n{1}Using cheats prevents you from earning achievements and autosaves ar
+    line 448   key=PC_RECORD_MODE_TEXT                        val=Enable Record Mode to save your last moments of gameplay straight to video. Press  ([format][color:#9400C5]{0}
+============================================================================

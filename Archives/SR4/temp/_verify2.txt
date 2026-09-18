@@ -1,0 +1,108 @@
+﻿
+========================================================================================================
+銆怱team 瀵圭収銆慡team
+========================================================================================================
+  DRAW_WIDE     L1 x1 @0x140DC36A0 | L2 x1 @0x140DC36A0
+  FORMAT        L1 x1 @0x140CF9A00 | L2 x1 @0x140CF9A00
+  FONT_LOOKUP   L1 x1 @0x140BF8550 | L2 x1 @0x140BF8550
+  TEXOBJ        L1 x1 @0x140B7AF30 | L2 x1 @0x140B7AF30
+  SRV_RESOLVE   L1 x1 @0x140E2C9E0 | L2 x1 @0x140E2C9E0
+  LANG_CUR      L1 x1 @0x140CF1980 | L2 x1 @0x140CF1980
+  LANG_TXT      L1 x1 @0x140CF1960 | L2 x1 @0x140CF1960
+  SUBTITLE      L1 x1 @0x1403D18F0 | L2 x1 @0x1403D18F0
+  --- 涓?CFG_STEAM 澹版槑鍊兼瘮瀵?---
+    DRAW_WIDE     鎵弿=0x140DC36A0      CFG=0x140DC36A0    鍛戒腑
+    FORMAT        鎵弿=0x140CF9A00      CFG=0x140CF9A00    鍛戒腑
+    FONT_LOOKUP   鎵弿=0x140BF8550      CFG=0x140BF8550    鍛戒腑
+    TEXOBJ        鎵弿=0x140B7AF30      CFG=0x140B7AF30    鍛戒腑
+    SRV_RESOLVE   鎵弿=0x140E2C9E0      CFG=0x140E2C9E0    鍛戒腑
+    LANG_CUR      鎵弿=0x140CF1980      CFG=0x140CF1980    鍛戒腑
+    LANG_TXT      鎵弿=0x140CF1960      CFG=0x140CF1960    鍛戒腑
+    SUBTITLE      鎵弿=0x1403D18F0      CFG=0x1403D18F0    鍛戒腑
+
+  --- 璇箟浜ゅ弶楠岃瘉 (Steam) ---
+  [1] DRAW_WIDE 灏鹃儴 call      -> 0x140BF8550   FONT_LOOKUP 钀界偣=0x140BF8550   涓€鑷?鉁?
+  [2] TEXOBJ mov r8d,[rip+d]  -> 0x1469152CE   fontCount 鏈熸湜 0x146AE504C  鉂?
+  [3] FONT_LOOKUP cmp [rip+d]  -> 0x146AE7080   搴斾笌 fontCount 鍚岃〃: 0x146AE504C  鉂?
+  [4] LANG_CUR singleton      -> 0x1471BF738
+      LANG_TXT singleton      -> 0x1471BF738   鍚屼竴鍏ㄥ眬 鉁?(纭负涓€瀵?vtable thunk)
+
+========================================================================================================
+銆怗OG 瀵圭収銆慓OG
+========================================================================================================
+  DRAW_WIDE     L1 x1 @0x140D4E520 | L2 x1 @0x140D4E520
+  FORMAT        L1 x1 @0x140C88810 | L2 x1 @0x140C88810
+  FONT_LOOKUP   L1 x1 @0x140BBBBB0 | L2 x1 @0x140BBBBB0
+  TEXOBJ        L1 x1 @0x140B99ED0 | L2 x1 @0x140B99ED0
+  SRV_RESOLVE   L1 x1 @0x140DC6E00 | L2 x1 @0x140DC6E00
+  LANG_CUR      L1 x1 @0x140C88120 | L2 x1 @0x140C88120
+  LANG_TXT      L1 x1 @0x140C88100 | L2 x1 @0x140C88100
+  SUBTITLE      L1 x1 @0x1404B1E00 | L2 x1 @0x1404B1E00
+  --- 涓?CFG_GOG 澹版槑鍊兼瘮瀵?---
+    DRAW_WIDE     鎵弿=0x140D4E520      CFG=0x140D4E520    鍛戒腑
+    FORMAT        鎵弿=0x140C88810      CFG=0x140C88810    鍛戒腑
+    FONT_LOOKUP   鎵弿=0x140BBBBB0      CFG=0x140BBBBB0    鍛戒腑
+    TEXOBJ        鎵弿=0x140B99ED0      CFG=0x140B99ED0    鍛戒腑
+    SRV_RESOLVE   鎵弿=0x140DC6E00      CFG=0x140DC6E00    鍛戒腑
+    LANG_CUR      鎵弿=0x140C88120      CFG=0x140C88120    鍛戒腑
+    LANG_TXT      鎵弿=0x140C88100      CFG=0x140C88100    鍛戒腑
+    SUBTITLE      鎵弿=0x1404B1E00      CFG=0x1404B1E00    鍛戒腑
+
+  --- 璇箟浜ゅ弶楠岃瘉 (GOG) ---
+  [1] DRAW_WIDE 灏鹃儴 call      -> 0x140BBBBB0   FONT_LOOKUP 钀界偣=0x140BBBBB0   涓€鑷?鉁?
+  [2] TEXOBJ mov r8d,[rip+d]  -> 0x1468EAAEA   fontCount 鏈熸湜 0x14698A5C8  鉂?
+  [3] FONT_LOOKUP cmp [rip+d]  -> 0x14698A5CC   搴斾笌 fontCount 鍚岃〃: 0x14698A5C8  鉂?
+  [4] LANG_CUR singleton      -> 0x14717CA00
+      LANG_TXT singleton      -> 0x14717CA00   鍚屼竴鍏ㄥ眬 鉁?(纭负涓€瀵?vtable thunk)
+
+========================================================================================================
+銆怑PIC 瀵圭収銆慐PIC
+========================================================================================================
+  DRAW_WIDE     L1 x1 @0x140DBE570 | L2 x1 @0x140DBE570
+  FORMAT        L1 x1 @0x140CF48D0 | L2 x1 @0x140CF48D0
+  FONT_LOOKUP   L1 x1 @0x140BF3D00 | L2 x1 @0x140BF3D00
+  TEXOBJ        L1 x1 @0x140B766D0 | L2 x1 @0x140B766D0
+  SRV_RESOLVE   L1 x1 @0x140E278B0 | L2 x1 @0x140E278B0
+  LANG_CUR      L1 x1 @0x140CEC850 | L2 x1 @0x140CEC850
+  LANG_TXT      L1 x1 @0x140CEC830 | L2 x1 @0x140CEC830
+  SUBTITLE      L1 x1 @0x1403D0850 | L2 x1 @0x1403D0850
+  --- 涓?CFG_EPIC 澹版槑鍊兼瘮瀵?---
+    DRAW_WIDE     鎵弿=0x140DBE570      CFG=0x140DBE570    鍛戒腑
+    FORMAT        鎵弿=0x140CF48D0      CFG=0x140CF48D0    鍛戒腑
+    FONT_LOOKUP   鎵弿=0x140BF3D00      CFG=0x140BF3D00    鍛戒腑
+    TEXOBJ        鎵弿=0x140B766D0      CFG=0x140B766D0    鍛戒腑
+    SRV_RESOLVE   鎵弿=0x140E278B0      CFG=0x140E278B0    鍛戒腑
+    LANG_CUR      鎵弿=0x140CEC850      CFG=0x140CEC850    鍛戒腑
+    LANG_TXT      鎵弿=0x140CEC830      CFG=0x140CEC830    鍛戒腑
+    SUBTITLE      鎵弿=0x1403D0850      CFG=0x1403D0850    鍛戒腑
+
+  --- 璇箟浜ゅ弶楠岃瘉 (EPIC) ---
+  [1] DRAW_WIDE 灏鹃儴 call      -> 0x140BF3D00   FONT_LOOKUP 钀界偣=0x140BF3D00   涓€鑷?鉁?
+  [2] TEXOBJ mov r8d,[rip+d]  -> 0x1468FB4A2   fontCount 鏈熸湜 0x146ACD304  鉂?
+  [3] FONT_LOOKUP cmp [rip+d]  -> 0x146ACD328   搴斾笌 fontCount 鍚岃〃: 0x146ACD304  鉂?
+  [4] LANG_CUR singleton      -> 0x1471A59A8
+      LANG_TXT singleton      -> 0x1471A59A8   鍚屼竴鍏ㄥ眬 鉁?(纭负涓€瀵?vtable thunk)
+
+========================================================================================================
+銆怣S Store 娈?dump銆慚S Store (dump)
+========================================================================================================
+  DRAW_WIDE     涓夊眰鍏ㄩ儴钀界┖
+  FORMAT        L3 x1 @0x140E92DA0
+  FONT_LOOKUP   涓夊眰鍏ㄩ儴钀界┖
+  TEXOBJ        涓夊眰鍏ㄩ儴钀界┖
+  SRV_RESOLVE   涓夊眰鍏ㄩ儴钀界┖
+  LANG_CUR      涓夊眰鍏ㄩ儴钀界┖
+  LANG_TXT      涓夊眰鍏ㄩ儴钀界┖
+  SUBTITLE      L3 x1 @0x140488A60
+  --- 涓?CFG_MSSTORE 澹版槑鍊兼瘮瀵?---
+    DRAW_WIDE     鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x140EF6D40    鏃犳硶鍞竴纭畾
+    FORMAT        鎵弿=0x140E92DA0     (L3)  CFG=0x140E92DA0    涓€鑷?
+    FONT_LOOKUP   鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x140E0A530    鏃犳硶鍞竴纭畾
+    TEXOBJ        鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x140DEAF00    鏃犳硶鍞竴纭畾
+    SRV_RESOLVE   鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x1411DFE30    鏃犳硶鍞竴纭畾
+    LANG_CUR      鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x140E92770    鏃犳硶鍞竴纭畾
+    LANG_TXT      鎵弿=澶氬眰鍛戒腑/鏃?         (-)  CFG=0x140E92750    鏃犳硶鍞竴纭畾
+    SUBTITLE      鎵弿=0x140488A60     (L3)  CFG=0x1400488A60   *** 涓嶄竴鑷?***
+
+  --- 璇箟浜ゅ弶楠岃瘉 (MS Store) ---
+  [5] SUBTITLE __security_cookie -> 0x141837548  (FORMAT 渚ф棤 L2 鍛戒腑, 鏃犳硶瀵圭収)

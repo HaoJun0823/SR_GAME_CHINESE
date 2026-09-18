@@ -1,0 +1,4 @@
+"HASH_49D64480": "Phil!!!!1!"
+"HASH_083B2AA8": "Created and saved a character to your profile. You're a real Saint, now!"
+"HASH_2477722E": "Create and save a character to your profile."
+"HASH_FCB2B21E": "Kinzie wants you to gather data from the NW Island"

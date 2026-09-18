@@ -1,0 +1,10 @@
+﻿===== 游戏进程是否在运行 =====
+(未运行)
+
+===== Steam dict 目录可写性 / 当前文件数 =====
+count = 19
+writable = NO : [safe-delete][SAFE_DELETE_FAIL_CLOSED] {"target":"I:\\SteamLibrary\\steamapps\\common\\Saints Row IV\\scripts\\dict\\_wtest.tmp","reason":"trash-failed","detail":"genie-trash failed; refusing fallback delete: I:\\SteamLibrary\\steamapps\\common\\Saints Row IV\\scripts\\dict\\_wtest.tmp"}
+
+===== 待部署词典 =====
+le_string_keys.txt  64922 B  md5=9412C23F9A
+le_string_keys.txt  65703 B  md5=BDFE9E4AC2

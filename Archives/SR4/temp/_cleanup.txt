@@ -1,0 +1,22 @@
+﻿残留测试文件存在? False
+
+=== dict 目录现状 ===
+exe_hardcoded.txt
+le_data_supplement.txt
+voice_001.txt
+voice_002.txt
+voice_003.txt
+voice_004.txt
+voice_005.txt
+voice_006.txt
+voice_007.txt
+voice_008.txt
+voice_009.txt
+voice_010.txt
+voice_011.txt
+voice_012.txt
+voice_013.txt
+voice_014.txt
+voice_015.txt
+voice_016.txt
+voice_017.txt

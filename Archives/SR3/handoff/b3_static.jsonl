@@ -1,0 +1,555 @@
+{"id": 4849, "en": "GIVE SPHERE", "tags": "plain"}
+{"id": 4850, "en": "UPGRADE STRONGHOLD", "tags": "plain"}
+{"id": 4851, "en": "You already own all styles of this item.", "tags": "plain"}
+{"id": 4852, "en": "CO-OP: TIME AT HIGHEST POLICE NOTORIETY", "tags": "plain"}
+{"id": 4853, "en": "GIVE GAT MOBILE", "tags": "plain"}
+{"id": 4854, "en": "All peoples, all over the world, get shrunk.", "tags": "plain"}
+{"id": 4855, "en": "CUSTOMIZE YOUR MOVEMENT", "tags": "plain"}
+{"id": 4856, "en": "FILL-HER-UP SUPER TOY SHOP", "tags": "plain"}
+{"id": 4857, "en": "TRAFFICKING", "tags": "plain"}
+{"id": 4858, "en": "25% OFF AT FRIENDLY FIRE", "tags": "plain"}
+{"id": 4859, "en": "UPGRADE WEAPON - LEVEL 3", "tags": "plain"}
+{"id": 4860, "en": "SMGS", "tags": "plain"}
+{"id": 4861, "en": "Everybody's a race car driver plus they try to run you over.", "tags": "plain"}
+{"id": 4862, "en": "TERTIARY COLOR", "tags": "plain"}
+{"id": 4863, "en": "WARNING", "tags": "plain"}
+{"id": 4864, "en": "You can't remove a piece of underwear that you are currently wearing.", "tags": "plain"}
+{"id": 4865, "en": "You need to repair your vehicle before it can be customized.", "tags": "plain"}
+{"id": 4866, "en": "VEHICLE OPTIONS", "tags": "plain"}
+{"id": 4867, "en": "[format][scale:1.0][image:map_store_clothing][/format]", "tags": "rich"}
+{"id": 4868, "en": "R SHOULDER", "tags": "plain"}
+{"id": 4869, "en": "WEAR ITEM", "tags": "plain"}
+{"id": 4870, "en": "TANK MAYHEM", "tags": "plain"}
+{"id": 4871, "en": "25% OFF AT IMPRESSIONS", "tags": "plain"}
+{"id": 4872, "en": "RED ONION HERB DISPENSARY", "tags": "plain"}
+{"id": 4873, "en": "PIMPS 'N HOS", "tags": "plain"}
+{"id": 4874, "en": "GOLDEN GUN", "tags": "plain"}
+{"id": 4875, "en": "GIVE RESPECT", "tags": "plain"}
+{"id": 4876, "en": "GIVE KENSHIN", "tags": "plain"}
+{"id": 4877, "en": "STOCK", "tags": "plain"}
+{"id": 4878, "en": "RESUME", "tags": "plain"}
+{"id": 4879, "en": "Lightning!", "tags": "plain"}
+{"id": 4880, "en": "GIVE SHARK", "tags": "plain"}
+{"id": 4881, "en": "Do you wish to take \\\"%s\\\" from your crib?", "tags": "fmt"}
+{"id": 4882, "en": "COLOR", "tags": "plain"}
+{"id": 4883, "en": "ZOMBIES", "tags": "plain"}
+{"id": 4884, "en": "RIM SIZE", "tags": "plain"}
+{"id": 4885, "en": "VEHICLE SMASH", "tags": "plain"}
+{"id": 4886, "en": "Melee attacks are extremely deadly.", "tags": "plain"}
+{"id": 4887, "en": "PAINT TYPE", "tags": "plain"}
+{"id": 4888, "en": "[format][scale:1.0][image:map_other_hidden_store][/format]", "tags": "rich"}
+{"id": 4889, "en": "GIVE RC POSSESSOR", "tags": "plain"}
+{"id": 4890, "en": "MASCOTS", "tags": "plain"}
+{"id": 4891, "en": "EXIT STRONGHOLD", "tags": "plain"}
+{"id": 4892, "en": "Do you wish to purchase the {0} for ${1}?", "tags": "fmt"}
+{"id": 4893, "en": "SPINNERS", "tags": "plain"}
+{"id": 4894, "en": "SLOT 2", "tags": "plain"}
+{"id": 4895, "en": "PURCHASE RIDE", "tags": "plain"}
+{"id": 4896, "en": "TNA TAXIS", "tags": "plain"}
+{"id": 4897, "en": "PURCHASE", "tags": "plain"}
+{"id": 4898, "en": "HAVEMAYER ESTATES", "tags": "plain"}
+{"id": 4899, "en": "HANDY J'S LUBE & TUBE", "tags": "plain"}
+{"id": 4900, "en": "YOU HAVE REPAIRED YOUR VEHICLE", "tags": "plain"}
+{"id": 4901, "en": "WEAPON CACHE", "tags": "plain"}
+{"id": 4902, "en": "FULL HEALTH", "tags": "plain"}
+{"id": 4903, "en": "Exit Gang Customization\\n\\nAre you sure?", "tags": "nl"}
+{"id": 4904, "en": "NO", "tags": "plain"}
+{"id": 4905, "en": "The Load Process has failed because the default\\nStorage Device is no longer available.", "tags": "nl"}
+{"id": 4906, "en": "Do you really want to leave player creation?", "tags": "plain"}
+{"id": 4907, "en": "NIGHT CLUB", "tags": "plain"}
+{"id": 4908, "en": "You cannot purchase a ride to that location.", "tags": "plain"}
+{"id": 4909, "en": "GIVE PEACEMAKER", "tags": "plain"}
+{"id": 4910, "en": "Gives you a full suite of weapons.", "tags": "plain"}
+{"id": 4911, "en": "EVERYBODY MUST GET SHRUNK", "tags": "plain"}
+{"id": 4912, "en": "NEVER DIE", "tags": "plain"}
+{"id": 4913, "en": "TARGET NAME", "tags": "plain"}
+{"id": 4914, "en": "You never have to reload because your clip runneth over forever.", "tags": "plain"}
+{"id": 4915, "en": "MEDIUM RAIN", "tags": "plain"}
+{"id": 4916, "en": "Do you wish to replace \\\"%s\\\" with \\\"%s\\\"?", "tags": "fmt"}
+{"id": 4917, "en": "PURCHASE FOR %ls", "tags": "fmt"}
+{"id": 4918, "en": "Everybody's on the crunk juice.", "tags": "plain"}
+{"id": 4919, "en": "GIVE ATTRAZIONE", "tags": "plain"}
+{"id": 4920, "en": "Selecting a new preset will change any other\\nchanges that you have made already!", "tags": "nl"}
+{"id": 4921, "en": "There is not enough free space on the default Storage Device\\nto complete the Save process.", "tags": "nl"}
+{"id": 4922, "en": "PIERCINGS", "tags": "plain"}
+{"id": 4923, "en": "RIM FAMILY", "tags": "plain"}
+{"id": 4924, "en": "DISTANCE BY CAR", "tags": "plain"}
+{"id": 4925, "en": "GIVE NOCTURNE", "tags": "plain"}
+{"id": 4926, "en": "GIVE MUNICIPAL", "tags": "plain"}
+{"id": 4927, "en": "GIVE VORTEX", "tags": "plain"}
+{"id": 4928, "en": "RETURN TO CRIB", "tags": "plain"}
+{"id": 4929, "en": "15% OFF AT IMPRESSIONS", "tags": "plain"}
+{"id": 4930, "en": "GIVE RIOT SHIELD", "tags": "plain"}
+{"id": 4931, "en": "CHANGE TIME OF DAY", "tags": "plain"}
+{"id": 4932, "en": "Gives you infinite ammo for all weapons.", "tags": "plain"}
+{"id": 4933, "en": "ADD GANG NOTORIETY", "tags": "plain"}
+{"id": 4934, "en": "WRATH OF GOD", "tags": "plain"}
+{"id": 4935, "en": "UPGRADE WEAPON - LEVEL 2", "tags": "plain"}
+{"id": 4936, "en": "ZOOM/ROTATE", "tags": "plain"}
+{"id": 4937, "en": "GIVE CHALLENGER", "tags": "plain"}
+{"id": 4938, "en": "GIVE D4TH BLOSSOM", "tags": "plain"}
+{"id": 4939, "en": "DOWNLOADED", "tags": "plain"}
+{"id": 4940, "en": "YES", "tags": "plain"}
+{"id": 4941, "en": "GIVE JUSTICE", "tags": "plain"}
+{"id": 4942, "en": "GIVE WIDOWMAKER", "tags": "plain"}
+{"id": 4943, "en": "PLAYER CUSTOMIZATION", "tags": "plain"}
+{"id": 4944, "en": "Exit Weapon Store\\n\\nAre you sure?", "tags": "nl"}
+{"id": 4945, "en": "BOTH AXLES", "tags": "plain"}
+{"id": 4946, "en": "REMOVE", "tags": "plain"}
+{"id": 4947, "en": "GIVE REAPER", "tags": "plain"}
+{"id": 4948, "en": "Exit Garage?", "tags": "plain"}
+{"id": 4949, "en": "MORNINGSTAR KILLED", "tags": "plain"}
+{"id": 4950, "en": "CHOP SHOP VEHICLES DELIVERED", "tags": "plain"}
+{"id": 4951, "en": "Hallelujah, it's a raining peds.", "tags": "plain"}
+{"id": 4952, "en": "PEDESTRIAN WAR", "tags": "plain"}
+{"id": 4953, "en": "CAR MASS HOLE", "tags": "plain"}
+{"id": 4954, "en": "Do you really want to leave Image As Designed?", "tags": "plain"}
+{"id": 4955, "en": "THE BACK BUTTON", "tags": "plain"}
+{"id": 4956, "en": "DRUG DEALER", "tags": "plain"}
+{"id": 4957, "en": "This crib is now yours. \\nYou can access your stored cash, weapons, clothes, and vehicles here. \\nCustomize it to increase your Style Rank.", "tags": "nl"}
+{"id": 4958, "en": "PISTOLS", "tags": "plain"}
+{"id": 4959, "en": "WHEEL SIZE", "tags": "plain"}
+{"id": 4960, "en": "GARAGE", "tags": "plain"}
+{"id": 4961, "en": "HELI ASSAULT", "tags": "plain"}
+{"id": 4962, "en": "EAGLELINE YELLOW", "tags": "plain"}
+{"id": 4963, "en": "TAXI", "tags": "plain"}
+{"id": 4964, "en": "Your vehicle is immune to damage.", "tags": "plain"}
+{"id": 4965, "en": "Do you wish to purchase {0} for ${1}?", "tags": "fmt"}
+{"id": 4966, "en": "SAVE OUTFIT", "tags": "plain"}
+{"id": 4967, "en": "Do you wish to repair this vehicle?", "tags": "plain"}
+{"id": 4968, "en": "CHANGE COLUMN", "tags": "plain"}
+{"id": 4969, "en": "PLASTIC SURGEON", "tags": "plain"}
+{"id": 4970, "en": "Do you really want to leave the wardrobe?", "tags": "plain"}
+{"id": 4971, "en": "PURCHASE AIRPORT HANGAR: ${0}", "tags": "fmt"}
+{"id": 4972, "en": "REGION (1/3)", "tags": "plain"}
+{"id": 4973, "en": "You do not have enough money to purchase this trip.", "tags": "plain"}
+{"id": 4974, "en": "PURCHASED", "tags": "plain"}
+{"id": 4975, "en": "WESLEY CUTTER INTERNATIONAL", "tags": "plain"}
+{"id": 4976, "en": "SAVE", "tags": "plain"}
+{"id": 4977, "en": "You can not carry any more ammo of this type.", "tags": "plain"}
+{"id": 4978, "en": "3RD STREET SAINTS MISSION", "tags": "plain"}
+{"id": 4979, "en": "TATTOO PARLOR", "tags": "plain"}
+{"id": 4980, "en": "IMAGE AS DESIGNED", "tags": "plain"}
+{"id": 4981, "en": "YOU HAVE TO TAKE CONTROL OF THIS HOOD BEFORE YOU CAN BUY THIS STORE", "tags": "plain"}
+{"id": 4982, "en": "SLOT 3", "tags": "plain"}
+{"id": 4983, "en": "THROWN", "tags": "plain"}
+{"id": 4984, "en": "CHANGE STORYLINE", "tags": "plain"}
+{"id": 4985, "en": "[format][scale:1.0][image:map_store_surgeon][/format]", "tags": "rich"}
+{"id": 4986, "en": "BODYGUARDS", "tags": "plain"}
+{"id": 4987, "en": "Your vehicle smashes other vehicles.", "tags": "plain"}
+{"id": 4988, "en": "GIVE STATUS QUO", "tags": "plain"}
+{"id": 4989, "en": "SUPER EXPLOSIONS", "tags": "plain"}
+{"id": 4990, "en": "PLAYER PRATFALLS", "tags": "plain"}
+{"id": 4991, "en": "DROP SPORTS CAR", "tags": "plain"}
+{"id": 4992, "en": "The heads up display is hidden.", "tags": "plain"}
+{"id": 4993, "en": "Replenishes your health to full.", "tags": "plain"}
+{"id": 4994, "en": "You can sprint forever.", "tags": "plain"}
+{"id": 4995, "en": "You cannot place a waypoint during a Mission or Activity!", "tags": "plain"}
+{"id": 4996, "en": "No choices for this category.", "tags": "plain"}
+{"id": 4997, "en": "RETURN TO LOBBY", "tags": "plain"}
+{"id": 4998, "en": "REMOVE WAYPOINT", "tags": "plain"}
+{"id": 4999, "en": "CAR MECHANIC", "tags": "plain"}
+{"id": 5000, "en": "BIG WILLY'S CAB", "tags": "plain"}
+{"id": 5001, "en": "EXIT UPGRADES?", "tags": "plain"}
+{"id": 5002, "en": "Do you want to repair this vehicle for ${0}?", "tags": "fmt"}
+{"id": 5003, "en": "COLOR GRID", "tags": "plain"}
+{"id": 5004, "en": "Homie, you shrunk yourself.", "tags": "plain"}
+{"id": 5005, "en": "STYLE", "tags": "plain"}
+{"id": 5006, "en": "VEHICLE NO DAMAGE", "tags": "plain"}
+{"id": 5007, "en": "UPGRADE", "tags": "plain"}
+{"id": 5008, "en": "SHOTGUNS", "tags": "plain"}
+{"id": 5009, "en": "MELEE", "tags": "plain"}
+{"id": 5010, "en": "TAUNT", "tags": "plain"}
+{"id": 5011, "en": "VEHICLE SURFING LONGEST TIME", "tags": "plain"}
+{"id": 5012, "en": "DECKER SPECIALISTS KILLED", "tags": "plain"}
+{"id": 5013, "en": "CRIB", "tags": "plain"}
+{"id": 5014, "en": "Do you really want to leave Rim Jobs?", "tags": "plain"}
+{"id": 5015, "en": "CURRENT AMMO", "tags": "plain"}
+{"id": 5016, "en": "CAR", "tags": "plain"}
+{"id": 5017, "en": "DESTROY", "tags": "plain"}
+{"id": 5018, "en": "Do you really want to leave the Activity level selection?", "tags": "plain"}
+{"id": 5019, "en": "FAT {0}%%%%", "tags": "fmt"}
+{"id": 5020, "en": "NONE AVAILABLE YET ", "tags": "plain"}
+{"id": 5021, "en": "NO WEAPONS AVAILABLE", "tags": "plain"}
+{"id": 5022, "en": "[format][scale:1.0][image:map_other_crib][/format]", "tags": "rich"}
+{"id": 5023, "en": "LEATHER AND LACE", "tags": "plain"}
+{"id": 5024, "en": "UNLOCKABLE", "tags": "plain"}
+{"id": 5025, "en": "Do you really want to leave Rusty's Needle?", "tags": "plain"}
+{"id": 5026, "en": "GIVE COMMANDER", "tags": "plain"}
+{"id": 5027, "en": "BLOODY MESS", "tags": "plain"}
+{"id": 5028, "en": "NOTHING", "tags": "plain"}
+{"id": 5029, "en": "CUSTOMIZE YOUR CRIB", "tags": "plain"}
+{"id": 5030, "en": "Stilwaters' gravity generators are at quarter power.", "tags": "plain"}
+{"id": 5031, "en": "Are you sure you wish to remove this item?", "tags": "plain"}
+{"id": 5032, "en": "FACTORY ", "tags": "plain"}
+{"id": 5033, "en": "HELIPORT", "tags": "plain"}
+{"id": 5034, "en": "UNKNOWN", "tags": "plain"}
+{"id": 5035, "en": "GARAGES ACQUIRED", "tags": "plain"}
+{"id": 5036, "en": "COLLEGE STUDENTS", "tags": "plain"}
+{"id": 5037, "en": "You are unstoppable.", "tags": "plain"}
+{"id": 5038, "en": "Do you really want to leave the chop shop?", "tags": "plain"}
+{"id": 5039, "en": "PRESS %s TO START %s STRONGHOLD", "tags": "fmt"}
+{"id": 5040, "en": "Bumps Gang Notoriety one star with each use.", "tags": "plain"}
+{"id": 5041, "en": "OVERCAST", "tags": "plain"}
+{"id": 5042, "en": "Do you wish to purchase this ride for %ls?", "tags": "fmt"}
+{"id": 5043, "en": "ROTATE", "tags": "plain"}
+{"id": 5044, "en": "GIVE SANDSTORM", "tags": "plain"}
+{"id": 5045, "en": "GIVE THE PENETRATOR", "tags": "plain"}
+{"id": 5046, "en": "GIVE GRENADE", "tags": "plain"}
+{"id": 5047, "en": "EXIT BODY", "tags": "plain"}
+{"id": 5048, "en": "OK", "tags": "plain"}
+{"id": 5049, "en": "NEWS STATION", "tags": "plain"}
+{"id": 5050, "en": "PRICE ${0}", "tags": "fmt"}
+{"id": 5051, "en": "Removing this item from your wardrobe will also remove the outfit that it belongs to.", "tags": "plain"}
+{"id": 5052, "en": "Exit Wardrobe\\n\\nAre you sure?", "tags": "nl"}
+{"id": 5053, "en": "RUSTY'S NEEDLE", "tags": "plain"}
+{"id": 5054, "en": "LOW GRAVITY", "tags": "plain"}
+{"id": 5055, "en": "SUITS", "tags": "plain"}
+{"id": 5056, "en": "RINGS", "tags": "plain"}
+{"id": 5057, "en": "RETURN TO MAIN MENU", "tags": "plain"}
+{"id": 5058, "en": "ZOOM", "tags": "plain"}
+{"id": 5059, "en": "CRIB FOR SALE", "tags": "plain"}
+{"id": 5060, "en": "Changes your player character to this character.", "tags": "plain"}
+{"id": 5061, "en": "ELECTRONICA", "tags": "plain"}
+{"id": 5062, "en": "UPGRADE WEAPON - LEVEL 1", "tags": "plain"}
+{"id": 5063, "en": "BUILD", "tags": "plain"}
+{"id": 5064, "en": "EXIT WARDROBE", "tags": "plain"}
+{"id": 5065, "en": "HITMAN", "tags": "plain"}
+{"id": 5066, "en": "GIVE TEK Z-10", "tags": "plain"}
+{"id": 5067, "en": "Changes the time of day.", "tags": "plain"}
+{"id": 5068, "en": "I AM GIANT", "tags": "plain"}
+{"id": 5069, "en": "SUPER SAINTS", "tags": "plain"}
+{"id": 5070, "en": "${0} PER HOUR", "tags": "fmt"}
+{"id": 5071, "en": "RONDINI'S BOAT DOCK", "tags": "plain"}
+{"id": 5072, "en": "%s (ADVANCED)", "tags": "fmt"}
+{"id": 5073, "en": "Your vehicle has infinite mass and smashes other vehicles out of the way.", "tags": "plain"}
+{"id": 5074, "en": "Use {SHOULDER_CAMERA_IMG}/{ATTACK_PRIMARY_IMG} to pratfall, like in Insurance Fraud.", "tags": "plain"}
+{"id": 5075, "en": "{0}%%% DISCOUNT", "tags": "fmt"}
+{"id": 5076, "en": "SLOT 1", "tags": "plain"}
+{"id": 5077, "en": "GIVE RPG LAUNCHER", "tags": "plain"}
+{"id": 5078, "en": "GIVE AMBULANCE", "tags": "plain"}
+{"id": 5079, "en": "PREVIEW UNAVAILABLE", "tags": "plain"}
+{"id": 5080, "en": "TIRE TREAD", "tags": "plain"}
+{"id": 5081, "en": "SHORTCUTS FOUND", "tags": "plain"}
+{"id": 5082, "en": "START", "tags": "plain"}
+{"id": 5083, "en": "GIVE MIAMI", "tags": "plain"}
+{"id": 5084, "en": "%s has been achieved!", "tags": "fmt"}
+{"id": 5085, "en": "CROSS DRESSERS", "tags": "plain"}
+{"id": 5086, "en": "Everyone you kill explodes.", "tags": "plain"}
+{"id": 5087, "en": "Repairs all damage to your vehicle.", "tags": "plain"}
+{"id": 5088, "en": "PLAN B PAWN SHOP", "tags": "plain"}
+{"id": 5089, "en": "ICONS ON/OFF", "tags": "plain"}
+{"id": 5090, "en": "NEUTRAL", "tags": "plain"}
+{"id": 5091, "en": "L FOREARM", "tags": "plain"}
+{"id": 5092, "en": "RIM JOBS", "tags": "plain"}
+{"id": 5093, "en": "GIVE CYBER BUSTER", "tags": "plain"}
+{"id": 5094, "en": "Do you want to save your changes\\nbefore exiting?", "tags": "nl"}
+{"id": 5095, "en": "EXIT", "tags": "plain"}
+{"id": 5096, "en": "GIVE MCMANUS 2015", "tags": "plain"}
+{"id": 5097, "en": "Retrying an Activity will cause you to lose any weaponsor respect you earned while playing the Activity.", "tags": "plain"}
+{"id": 5098, "en": "PRICE", "tags": "plain"}
+{"id": 5099, "en": "You can only hold one \\\"%s.\\\"", "tags": "fmt"}
+{"id": 5100, "en": "CO-OP: PLAYER REVIVES", "tags": "plain"}
+{"id": 5101, "en": "15% OFF AT FRIENDLY FIRE", "tags": "plain"}
+{"id": 5102, "en": "NECKLACES", "tags": "plain"}
+{"id": 5103, "en": "CUSTOMIZE", "tags": "plain"}
+{"id": 5104, "en": "VISIT THE PLASTIC SURGEON", "tags": "plain"}
+{"id": 5105, "en": "PC RESTORE TO NORMAL", "tags": "plain"}
+{"id": 5106, "en": "CLASSICAL", "tags": "plain"}
+{"id": 5107, "en": "SNOOKY'S SUNDRIES AND MORE", "tags": "plain"}
+{"id": 5108, "en": "COWBOY", "tags": "plain"}
+{"id": 5109, "en": "GIVE 45 SHEPERD", "tags": "plain"}
+{"id": 5110, "en": "GIVE MOLOTOV", "tags": "plain"}
+{"id": 5111, "en": "INFINITE AMMO", "tags": "plain"}
+{"id": 5112, "en": "GIVE CASH", "tags": "plain"}
+{"id": 5113, "en": "80S", "tags": "plain"}
+{"id": 5114, "en": "Do you wish to purchase a(n) \\\"%s\\\" tattoo on the %s for %s?", "tags": "fmt"}
+{"id": 5115, "en": "SWITCHING TO {0}", "tags": "fmt"}
+{"id": 5116, "en": "SAVE AND QUIT", "tags": "plain"}
+{"id": 5117, "en": "RAISE/LOWER CAMERA", "tags": "plain"}
+{"id": 5118, "en": "GIVE KNOXVILLE", "tags": "plain"}
+{"id": 5119, "en": "One shot firearm kills.", "tags": "plain"}
+{"id": 5120, "en": "DELETE", "tags": "plain"}
+{"id": 5121, "en": "UNARMED KILLS", "tags": "plain"}
+{"id": 5122, "en": "CHOP SHOP", "tags": "plain"}
+{"id": 5123, "en": "GIVE PIMP SLAP", "tags": "plain"}
+{"id": 5124, "en": "RAINING PEDESTRIANS", "tags": "plain"}
+{"id": 5125, "en": "Do you really want to leave the weapon cache?", "tags": "plain"}
+{"id": 5126, "en": "GIVE BASEBALL BAT", "tags": "plain"}
+{"id": 5127, "en": "OUTFITS", "tags": "plain"}
+{"id": 5128, "en": "VEHICLES", "tags": "plain"}
+{"id": 5129, "en": "CHUPACABRA CASINO", "tags": "plain"}
+{"id": 5130, "en": "EMERGENCY", "tags": "plain"}
+{"id": 5131, "en": "Instantly gives you respect.", "tags": "plain"}
+{"id": 5132, "en": "GIVE MINI-GUN", "tags": "plain"}
+{"id": 5133, "en": "Do you really want to accept game invite?\\n(any unsaved progress will be lost) ", "tags": "nl"}
+{"id": 5134, "en": "TAG", "tags": "plain"}
+{"id": 5135, "en": "SIGN IN", "tags": "plain"}
+{"id": 5136, "en": "PAN", "tags": "plain"}
+{"id": 5137, "en": "GIVE GL G20", "tags": "plain"}
+{"id": 5138, "en": "Changes your player character back to normal.", "tags": "plain"}
+{"id": 5139, "en": "MILK BONES", "tags": "plain"}
+{"id": 5140, "en": "You can't remove a bra that you are currently wearing.", "tags": "plain"}
+{"id": 5141, "en": "HUBCAPS", "tags": "plain"}
+{"id": 5142, "en": "CLOTHING STORE", "tags": "plain"}
+{"id": 5143, "en": "NO GANG NOTORIETY", "tags": "plain"}
+{"id": 5144, "en": "TIME SET NOON", "tags": "plain"}
+{"id": 5145, "en": "AXLES", "tags": "plain"}
+{"id": 5146, "en": "TAXI SERVICE", "tags": "plain"}
+{"id": 5147, "en": "GIVE WOODPECKER", "tags": "plain"}
+{"id": 5148, "en": "GIVE GRAVE DIGGER", "tags": "plain"}
+{"id": 5149, "en": "PIMPS AND HOS", "tags": "plain"}
+{"id": 5150, "en": "Changes the current weather.", "tags": "plain"}
+{"id": 5151, "en": "DIXON'S REFUGE", "tags": "plain"}
+{"id": 5152, "en": "Removes all existing Gang Notoriety.", "tags": "plain"}
+{"id": 5153, "en": "GIVE STUN GUN", "tags": "plain"}
+{"id": 5154, "en": "Do you wish to take a \\\"%s?\\\"", "tags": "fmt"}
+{"id": 5155, "en": "NEW HIGH SCORE", "tags": "plain"}
+{"id": 5156, "en": "SAINTS ROW LOFT", "tags": "plain"}
+{"id": 5157, "en": "You will never die.", "tags": "plain"}
+{"id": 5158, "en": "REQUIRED", "tags": "plain"}
+{"id": 5159, "en": "POLICE", "tags": "plain"}
+{"id": 5160, "en": "GIVE VTOL", "tags": "plain"}
+{"id": 5161, "en": "GIVE EAGLE", "tags": "plain"}
+{"id": 5162, "en": "PEEWEE", "tags": "plain"}
+{"id": 5163, "en": "All cars try to run you over.", "tags": "plain"}
+{"id": 5164, "en": "PRIMARY COLOR", "tags": "plain"}
+{"id": 5165, "en": "OWNED", "tags": "plain"}
+{"id": 5166, "en": "[format][scale:1.0][image:map_store_tattoo][/format]", "tags": "rich"}
+{"id": 5167, "en": "GIVE SATCHEL CHARGES", "tags": "plain"}
+{"id": 5168, "en": "Do you wish to replace \\\"%s\\\" with \\\"%s?\\\"", "tags": "fmt"}
+{"id": 5169, "en": "PURCHASE RONDINI'S BOAT DOCK: ${0}", "tags": "fmt"}
+{"id": 5170, "en": "GANG TAG", "tags": "plain"}
+{"id": 5171, "en": "Removes all existing Police Notoriety.", "tags": "plain"}
+{"id": 5172, "en": "HEAVEN BOUND", "tags": "plain"}
+{"id": 5173, "en": "TARGET LOCATION", "tags": "plain"}
+{"id": 5174, "en": "JOIN GAME", "tags": "plain"}
+{"id": 5175, "en": "TRAIL BLAZING", "tags": "plain"}
+{"id": 5176, "en": "GIVE ESTRADA", "tags": "plain"}
+{"id": 5177, "en": "UNLIMITED CLIP", "tags": "plain"}
+{"id": 5178, "en": "EASY LISTENING", "tags": "plain"}
+{"id": 5179, "en": "Do you wish to purchase the \\\"%s\\\" for %s?", "tags": "fmt"}
+{"id": 5180, "en": "WARDROBE", "tags": "plain"}
+{"id": 5181, "en": "WHEELS", "tags": "plain"}
+{"id": 5182, "en": "CRACKHOUSE", "tags": "plain"}
+{"id": 5183, "en": "GUARDIAN ANGEL", "tags": "plain"}
+{"id": 5184, "en": "REPAIR CAR", "tags": "plain"}
+{"id": 5185, "en": "This save file could not be loaded because the file has been corrupted or is an invalid save file.", "tags": "plain"}
+{"id": 5186, "en": "DETAIL COLOR", "tags": "plain"}
+{"id": 5187, "en": "GANG STYLE", "tags": "plain"}
+{"id": 5188, "en": "JOE COLA FACTORY", "tags": "plain"}
+{"id": 5189, "en": "Do you wish to remove the tattoo from your %s?", "tags": "fmt"}
+{"id": 5190, "en": "CONTINUE", "tags": "plain"}
+{"id": 5191, "en": "GIVE S3X HAMMER", "tags": "plain"}
+{"id": 5192, "en": "GYRO DADDY", "tags": "plain"}
+{"id": 5193, "en": "SECONDARY COLOR", "tags": "plain"}
+{"id": 5194, "en": "You do not have enough cash to repair this vehicle.\\nRetrieve anyway?", "tags": "nl"}
+{"id": 5195, "en": "Do you wish to purchase this {0} for ${1}?", "tags": "fmt"}
+{"id": 5196, "en": "All pedestrians are zombies.", "tags": "plain"}
+{"id": 5197, "en": "DANCE", "tags": "plain"}
+{"id": 5198, "en": "Do you wish to purchase \\\"%s\\\" for %s?", "tags": "fmt"}
+{"id": 5199, "en": "PASSING GAS SERVICE STATION", "tags": "plain"}
+{"id": 5200, "en": "Do you wish to purchase this item?", "tags": "plain"}
+{"id": 5201, "en": "[format][scale:1.0][image:map_store_mechanic][/format]", "tags": "rich"}
+{"id": 5202, "en": "GIVE TAXI", "tags": "plain"}
+{"id": 5203, "en": "LOWER BODY", "tags": "plain"}
+{"id": 5204, "en": "Are you sure you want to delete this vehicle?", "tags": "plain"}
+{"id": 5205, "en": "SPECIAL", "tags": "plain"}
+{"id": 5206, "en": "ARM TATTOOS", "tags": "plain"}
+{"id": 5207, "en": "TORSO TATTOOS", "tags": "plain"}
+{"id": 5208, "en": "HEAD", "tags": "plain"}
+{"id": 5209, "en": "GAS STATION", "tags": "plain"}
+{"id": 5210, "en": "ODYSSEY HOSTEL", "tags": "plain"}
+{"id": 5211, "en": "SET WAYPOINT", "tags": "plain"}
+{"id": 5212, "en": "[format][scale:1.0][image:map_store_gun][/format]", "tags": "rich"}
+{"id": 5213, "en": "GOD MODE", "tags": "plain"}
+{"id": 5214, "en": "ROCK", "tags": "plain"}
+{"id": 5215, "en": "SLOT {0} - {1:TEXT_TAG_CRC}", "tags": "fmt"}
+{"id": 5216, "en": "SHOTGUN", "tags": "plain"}
+{"id": 5217, "en": "Do you wish to replace \\\"%s\\\" with \\\"%s\\\" for %s?", "tags": "fmt"}
+{"id": 5218, "en": "GANGSTER", "tags": "plain"}
+{"id": 5219, "en": "GIVE FLASHBANG", "tags": "plain"}
+{"id": 5220, "en": "METH LAB", "tags": "plain"}
+{"id": 5221, "en": "CIVILIANS", "tags": "plain"}
+{"id": 5222, "en": "GIVE AR 55", "tags": "plain"}
+{"id": 5223, "en": "GIVE TORNADO", "tags": "plain"}
+{"id": 5224, "en": "Exit Television?", "tags": "plain"}
+{"id": 5225, "en": "HIGH SCORE", "tags": "plain"}
+{"id": 5226, "en": "FRIENDLY FIRE", "tags": "plain"}
+{"id": 5227, "en": "GIVE AS3 ULTIMAX", "tags": "plain"}
+{"id": 5228, "en": "DROP HELICOPTER", "tags": "plain"}
+{"id": 5229, "en": "COLOR FINISH", "tags": "plain"}
+{"id": 5230, "en": "MAYHEM", "tags": "plain"}
+{"id": 5231, "en": "This garage is now yours. \\nYou can store and access certain stored vehicles here.", "tags": "nl"}
+{"id": 5232, "en": "STIKIT INN", "tags": "plain"}
+{"id": 5233, "en": "DISCARD ITEM", "tags": "plain"}
+{"id": 5234, "en": "GIVE KANEDA", "tags": "plain"}
+{"id": 5235, "en": "UPGRADES", "tags": "plain"}
+{"id": 5236, "en": "TIRE TREAD #{0}", "tags": "fmt"}
+{"id": 5237, "en": "R FOREARM", "tags": "plain"}
+{"id": 5238, "en": "IMPRESSION", "tags": "plain"}
+{"id": 5239, "en": "GIVE APOCA-FISTS", "tags": "plain"}
+{"id": 5240, "en": "NO HUD", "tags": "plain"}
+{"id": 5241, "en": "All pedestrians are mascots.", "tags": "plain"}
+{"id": 5242, "en": "UPPER BODY", "tags": "plain"}
+{"id": 5243, "en": "Do you really want to quit?", "tags": "plain"}
+{"id": 5244, "en": "CHANGE LEADERBOARD", "tags": "plain"}
+{"id": 5245, "en": "PREPHOP", "tags": "plain"}
+{"id": 5246, "en": "SWITCH TO STORE", "tags": "plain"}
+{"id": 5247, "en": "{0}%%% CONTROL INCREASE", "tags": "fmt"}
+{"id": 5248, "en": "Purchase this crib for ${1}?", "tags": "fmt"}
+{"id": 5249, "en": "AMMO", "tags": "plain"}
+{"id": 5250, "en": "Do you wish to remove the tattoo from your %s and save?", "tags": "fmt"}
+{"id": 5251, "en": "SELECT COLOR", "tags": "plain"}
+{"id": 5252, "en": "START GAME", "tags": "plain"}
+{"id": 5253, "en": "UNDEFINED", "tags": "plain"}
+{"id": 5254, "en": "STRIPPERS", "tags": "plain"}
+{"id": 5255, "en": "All pedestrians are pimps and hos.", "tags": "plain"}
+{"id": 5256, "en": "DIFFICULTY", "tags": "plain"}
+{"id": 5257, "en": "You are not currently signed in with a gamer profile.\\nYou will not be able to save game progress or earn achievements.\\nContinue?", "tags": "nl"}
+{"id": 5258, "en": "GANG CUSTOMIZATION", "tags": "plain"}
+{"id": 5259, "en": "MECHANIC GARAGE", "tags": "plain"}
+{"id": 5260, "en": "REPAIR AND RETRIEVE VEHICLE: ${0}", "tags": "fmt"}
+{"id": 5261, "en": "YOU DON'T HAVE ENOUGH MONEY", "tags": "plain"}
+{"id": 5262, "en": "EXTRA LOW PROFILE", "tags": "plain"}
+{"id": 5263, "en": "GIVE VIPER LASER RIFLE", "tags": "plain"}
+{"id": 5264, "en": "LIGHT RAIN", "tags": "plain"}
+{"id": 5265, "en": "LOW PROFILE", "tags": "plain"}
+{"id": 5266, "en": "EXIT PURCHASE CLOTHING", "tags": "plain"}
+{"id": 5267, "en": "GIVE SPECTER", "tags": "plain"}
+{"id": 5268, "en": "ITTY BITTY", "tags": "plain"}
+{"id": 5269, "en": "AUTOSAVE", "tags": "plain"}
+{"id": 5270, "en": "Nude Up?", "tags": "plain"}
+{"id": 5271, "en": "VEHICLE CUSTOMIZATION", "tags": "plain"}
+{"id": 5272, "en": "L SHOULDER", "tags": "plain"}
+{"id": 5273, "en": "WEAPON STORE", "tags": "plain"}
+{"id": 5274, "en": "Do you really want to leave %s?", "tags": "fmt"}
+{"id": 5275, "en": "TAKE %ls FROM YOUR STASH", "tags": "fmt"}
+{"id": 5276, "en": "CHANGE BOARD", "tags": "plain"}
+{"id": 5277, "en": "GANG", "tags": "plain"}
+{"id": 5278, "en": "L LEG", "tags": "plain"}
+{"id": 5279, "en": "BROWSE", "tags": "plain"}
+{"id": 5280, "en": "ACCESS YOUR WEAPON CACHE", "tags": "plain"}
+{"id": 5281, "en": "GIVE SHOCK HAMMER", "tags": "plain"}
+{"id": 5282, "en": "GIVE SA-3 AIRSTRIKE", "tags": "plain"}
+{"id": 5283, "en": "You now get a piece of the action at this store and will receive a [format][color:highlight]${0}/hour[/format] payout to your crib stash as well as discounts on all items.", "tags": "rich+fmt"}
+{"id": 5284, "en": "NORMAL PROFILE", "tags": "plain"}
+{"id": 5285, "en": "[format][scale:1.0][image:map_other_hidden_act][/format]", "tags": "rich"}
+{"id": 5286, "en": "GIVE TOAD", "tags": "plain"}
+{"id": 5287, "en": "Instantly gives you cash.", "tags": "plain"}
+{"id": 5288, "en": "Hatred, Anger, Suffering, everybody hates each other.", "tags": "plain"}
+{"id": 5289, "en": "DRUNK PEDESTRIANS", "tags": "plain"}
+{"id": 5290, "en": "The dead all go to Heaven.", "tags": "plain"}
+{"id": 5291, "en": "GIVE FLAMETHROWER", "tags": "plain"}
+{"id": 5292, "en": "GIVE CHAINSAW", "tags": "plain"}
+{"id": 5293, "en": "Exporting to multiplayer will replace\\nany previously saved multiplayer character!", "tags": "nl"}
+{"id": 5294, "en": "STRENGTH {0}%%%%", "tags": "fmt"}
+{"id": 5295, "en": "SELECT EQUIPPED", "tags": "plain"}
+{"id": 5296, "en": "GIVE QUASAR", "tags": "plain"}
+{"id": 5297, "en": "The current storage device was removed.\\nPlease select a new storage device to continue with saving or loading.", "tags": "nl"}
+{"id": 5298, "en": "LEVEL", "tags": "plain"}
+{"id": 5299, "en": "SELECT", "tags": "plain"}
+{"id": 5300, "en": "INSURANCE FRAUD", "tags": "plain"}
+{"id": 5301, "en": "GIVE K-8 KRUKOV", "tags": "plain"}
+{"id": 5302, "en": "You must sign in with a gamer profile to access this feature.\\nWould you like to sign in?", "tags": "nl"}
+{"id": 5303, "en": "DECKERS", "tags": "plain"}
+{"id": 5304, "en": "SUICIDE HOTLINE", "tags": "plain"}
+{"id": 5305, "en": "SPORTY", "tags": "plain"}
+{"id": 5306, "en": "ADD POLICE NOTORIETY ", "tags": "plain"}
+{"id": 5307, "en": "REMOVE ITEM", "tags": "plain"}
+{"id": 5308, "en": "MAX LUCHADOR NOTORIETY TIME", "tags": "plain"}
+{"id": 5309, "en": "MAX GANG NOTORIETY TIME", "tags": "plain"}
+{"id": 5310, "en": "SCORE", "tags": "plain"}
+{"id": 5311, "en": "LONGEST ROADKILL", "tags": "plain"}
+{"id": 5312, "en": "CAB FARE:", "tags": "plain"}
+{"id": 5313, "en": "FORGIVE AND FORGET", "tags": "plain"}
+{"id": 5314, "en": "3RD SREET SAINTS STRONGHOLD", "tags": "plain"}
+{"id": 5315, "en": "PIMP VAN", "tags": "plain"}
+{"id": 5316, "en": "CHANGE PC MODEL", "tags": "plain"}
+{"id": 5317, "en": "FUNK", "tags": "plain"}
+{"id": 5318, "en": "LEG TATTOOS", "tags": "plain"}
+{"id": 5319, "en": "REGGAE", "tags": "plain"}
+{"id": 5320, "en": "Do you really want to leave the taxi?", "tags": "plain"}
+{"id": 5321, "en": "CHANGE MODE", "tags": "plain"}
+{"id": 5322, "en": "VIEW GAMER CARD", "tags": "plain"}
+{"id": 5323, "en": "BACK", "tags": "plain"}
+{"id": 5324, "en": "GIVE SONIC BOOM", "tags": "plain"}
+{"id": 5325, "en": "The Saints are bad muthas.", "tags": "plain"}
+{"id": 5326, "en": "CHANGE VIEWED PLAYER", "tags": "plain"}
+{"id": 5327, "en": "HIP-HOP", "tags": "plain"}
+{"id": 5328, "en": "OLDE STEEL FACTORY", "tags": "plain"}
+{"id": 5329, "en": "FRONT", "tags": "plain"}
+{"id": 5330, "en": "TOTAL CIVILIANS TAUNTED", "tags": "plain"}
+{"id": 5331, "en": "BEGIN GAME", "tags": "plain"}
+{"id": 5332, "en": "Bumps Police Notoriety one star with each use.", "tags": "plain"}
+{"id": 5333, "en": "Do you really want to return\\nto the Main Menu?", "tags": "nl"}
+{"id": 5334, "en": "ENTER A NAME FOR YOUR OUTFIT", "tags": "plain"}
+{"id": 5335, "en": "Exit Weapon Cache\\n\\nAre you sure?", "tags": "nl"}
+{"id": 5336, "en": "FREE", "tags": "plain"}
+{"id": 5337, "en": "Do you wish to take \\\"%s\\\" ammo?", "tags": "fmt"}
+{"id": 5338, "en": "EXIT PURCHASE TATTOOS", "tags": "plain"}
+{"id": 5339, "en": "SNATCH", "tags": "plain"}
+{"id": 5340, "en": "ESCORT", "tags": "plain"}
+{"id": 5341, "en": "RESTORE WEATHER TO NORMAL", "tags": "plain"}
+{"id": 5342, "en": "GANG SIGN", "tags": "plain"}
+{"id": 5343, "en": "IMPRESSIONS", "tags": "plain"}
+{"id": 5344, "en": "INVENTORY EMPTY", "tags": "plain"}
+{"id": 5345, "en": "Do you wish to disown this vehicle?", "tags": "plain"}
+{"id": 5346, "en": "CHANGE FILTER", "tags": "plain"}
+{"id": 5347, "en": "QUIT", "tags": "plain"}
+{"id": 5348, "en": "Sets the current time to Noon.", "tags": "plain"}
+{"id": 5349, "en": "Puts this vehicle into your garage.", "tags": "plain"}
+{"id": 5350, "en": "GIVE BOOTLEGGER", "tags": "plain"}
+{"id": 5351, "en": "GIVE TITAN", "tags": "plain"}
+{"id": 5352, "en": "Explosions are 4x bigger.", "tags": "plain"}
+{"id": 5353, "en": "Choose who or what your character looks like from a list.", "tags": "plain"}
+{"id": 5354, "en": "SWITCH TO WARDROBE", "tags": "plain"}
+{"id": 5355, "en": "REPAIR FOR ${0}", "tags": "fmt"}
+{"id": 5356, "en": "RIM #{0}", "tags": "fmt"}
+{"id": 5357, "en": "NOBODY LOVES ME", "tags": "plain"}
+{"id": 5358, "en": "PICKPOCKET PAWN SHOP", "tags": "plain"}
+{"id": 5359, "en": "PISTOL HIT PERCENTAGE", "tags": "plain"}
+{"id": 5360, "en": "SNATCH: NUMBER OF HOS CLAIMED", "tags": "plain"}
+{"id": 5361, "en": "INFINITE SPRINT", "tags": "plain"}
+{"id": 5362, "en": "NO COP NOTORIETY", "tags": "plain"}
+{"id": 5363, "en": "SAINTS HIDEOUT", "tags": "plain"}
+{"id": 5364, "en": "GIVE NFORCER", "tags": "plain"}
+{"id": 5365, "en": "GIVE CONDOR", "tags": "plain"}
+{"id": 5366, "en": "GIVE REAPER DRONE", "tags": "plain"}
+{"id": 5367, "en": "HARANO'S HOOKUP HOUSE", "tags": "plain"}
+{"id": 5368, "en": "PURCHASE TATTOOS", "tags": "plain"}
+{"id": 5369, "en": "ADVANCED", "tags": "plain"}
+{"id": 5370, "en": "HEAVY RAIN", "tags": "plain"}
+{"id": 5371, "en": "EVIL CARS", "tags": "plain"}
+{"id": 5372, "en": "RESPECT +{0}", "tags": "fmt"}
+{"id": 5373, "en": "SELECT BUILD", "tags": "plain"}
+{"id": 5374, "en": "SCROLL LIST", "tags": "plain"}
+{"id": 5375, "en": "3RD STREET SAINTS", "tags": "plain"}
+{"id": 5376, "en": "GIVE ANCHOR", "tags": "plain"}
+{"id": 5377, "en": "Sets the current time to Midnight.", "tags": "plain"}
+{"id": 5378, "en": "Adds this weapon to your inventory.", "tags": "plain"}
+{"id": 5379, "en": "You do not have enough money to purchase a(n) \\\"%s\\\" on the %s.", "tags": "fmt"}
+{"id": 5380, "en": "GIVE VULTURE", "tags": "plain"}
+{"id": 5381, "en": "SKINNY {0}%%%%", "tags": "fmt"}
+{"id": 5382, "en": "RETRIEVE", "tags": "plain"}
+{"id": 5383, "en": "Are you sure you wish to quit the stronghold?", "tags": "plain"}
+{"id": 5384, "en": "SIGN", "tags": "plain"}
+{"id": 5385, "en": "NINJAS", "tags": "plain"}
+{"id": 5386, "en": "GIVE KA-1 KOBRA", "tags": "plain"}
+{"id": 5387, "en": "GIVE PHOENIX", "tags": "plain"}
+{"id": 5388, "en": "EVIL CARS 2", "tags": "plain"}
+{"id": 5389, "en": "LET'S PRETEND", "tags": "plain"}
+{"id": 5390, "en": "Selecting a new preset will change any other changes that you have made already!", "tags": "plain"}
+{"id": 5391, "en": "You don't have any weapons.", "tags": "plain"}
+{"id": 5392, "en": "TIRES", "tags": "plain"}
+{"id": 5393, "en": "DAVILA'S AUTOMOTIVE", "tags": "plain"}
+{"id": 5394, "en": "WATERCRAFT", "tags": "plain"}
+{"id": 5395, "en": "STAIRS", "tags": "plain"}
+{"id": 5396, "en": "WEAPONS", "tags": "plain"}
+{"id": 5397, "en": "CANCEL", "tags": "plain"}
+{"id": 5398, "en": "CUSTOMIZE VEHICLE", "tags": "plain"}
+{"id": 5399, "en": "GIVE ELECTRIC GRENADE", "tags": "plain"}
+{"id": 5400, "en": "GIVE CYBER BLASTER", "tags": "plain"}
+{"id": 5401, "en": "CLEAR SKIES", "tags": "plain"}
+{"id": 5402, "en": "You already own this item style.", "tags": "plain"}
+{"id": 5403, "en": "AIRPORT HANGAR", "tags": "plain"}

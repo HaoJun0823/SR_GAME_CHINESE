@@ -1,0 +1,800 @@
+KEY: m12_failure_suko_died
+ENG: VIOLA DIED!
+CUR: 薇奥拉阵亡！
+
+KEY: M08_OBJ_GO_UP_TO_BAR
+ENG: GO UP TO [format][color:location]THE BAR[/format] 
+CUR: 上到[format][color:location]酒吧[/format] 
+
+KEY: M06_FAILURE_ABANDON_HOMIE
+ENG: HOMIES ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 兄弟被抛下了！\n圣徒可不能各自单飞！
+
+KEY: M04_OBJ_FIND_MECHANIC
+ENG: DRIVE TO THE [format][color:location]MECHANIC[/format]
+CUR: 开车去[format][color:location]修车师傅[/format]那里
+
+KEY: m07_failure_angel_died
+ENG: ANGEL DIED!
+CUR: 死神安吉尔阵亡！
+
+KEY: MM_K_02_obj_goto_kinzie
+ENG: GO TO [format][color:location]KINZIE'S HIDEOUT[/format]
+CUR: 前往[format][color:location]金茜的藏身处[/format]
+
+KEY: M09_OBJ_FIND_THE_GIRLS
+ENG: LOCATE [format][color:use]HO CRATES[/format]
+CUR: 找到[format][color:use]姑娘箱[/format]
+
+KEY: M17_OBJ_JAILBREAK
+ENG: FREE YOUR [format][color:use]FRIENDS[/format]
+CUR: 救出你的[format][color:use]朋友[/format]
+
+KEY: M11_OBJ_DESTROY_STAG
+ENG: GET [format][color:kill]STAG[/format]'S ATTENTION
+CUR: 引起[format][color:kill]STAG[/format]的注意
+
+KEY: M11_OBJ_DISTRACT_STAG
+ENG: FIND A [format][color:location]STAG BASE[/format]
+CUR: 找到一处[format][color:location]STAG 基地[/format]
+
+KEY: M08_OBJ_SURVIVE_ASSAULT
+ENG: [format][color:defend]SURVIVE[/format] INITIAL ASSAULT
+CUR: [format][color:defend]挺过[/format]第一波攻势
+
+KEY: M07_OBJ_FIND_KINZIE
+ENG: FIND [format][color:location]KINZIE[/format]
+CUR: 找到[format][color:location]金茜[/format]
+
+KEY: SH02_OBJ_SECURITY
+ENG: OVERRIDE SECURITY
+CUR: 解除安保系统
+
+KEY: M16_TXT_ADV_SC_03
+ENG: You lift the torch out of the wall sconce and open the door.  Before you stretches a dark corridor that fades into inky, tenebrous, blackness.  You walk for what feels like an eternity before you realize that your torch is beginning to burn out.\n\nWhat do you do?\n\n
+CUR: 你从壁架上取下火把，推开了门。眼前是一条幽暗的走廊，一路延伸向墨黑、阴森、深不见底的黑暗。你走了仿佛一个世纪那么久，这才发觉火把快要烧完了。\n\n你要怎么做？\n\n
+
+KEY: SH03_DIRECTIVE_ONE
+ENG: [format][color:location]UPLINKS[/format] HACKED
+CUR: 已入侵[format][color:location]上行链路[/format]
+
+KEY: m17_failure_shaundi_died
+ENG: SHAUNDI DIED!
+CUR: 肖蒂阵亡！
+
+KEY: M16_TXT_ADV_SC_00_CH2
+ENG: TAKE A TORCH
+CUR: 拿起火把
+
+KEY: M16_OBJ_GOTO_ANTI_VIRUS
+ENG: GET TO THE [format][color:location]ANTI-VIRUS[/format]
+CUR: 前往[format][color:location]反病毒区[/format]
+
+KEY: M13_OBJ_DEFEND_THE_SOUTH
+ENG: DEFEND THE [format][color:defend]SOUTH[/format]
+CUR: 守住[format][color:defend]南侧[/format]
+
+KEY: M08_OBJ_FIND_SNIPER_RIFLE
+ENG: GET [format][color:use]SNIPER RIFLE[/format]
+CUR: 拿到[format][color:use]狙击枪[/format]
+
+KEY: M02_OBJ_OPEN_DOORS
+ENG: OPEN THE [format][color:location]CARGO BAY DOORS[/format]
+CUR: 打开[format][color:location]货舱门[/format]
+
+KEY: M22_OBJ_CLEAR_ARMORY
+ENG: CLEAR THE [format][color:kill]ARMORY[/format]
+CUR: 肃清[format][color:kill]军械库[/format]
+
+KEY: M08_OBJ_DESTROY_VEHICLES
+ENG: DESTROY [format][color:kill]HELICOPTERS[/format]
+CUR: 摧毁[format][color:kill]直升机[/format]
+
+KEY: M03_OBJ_GO_TO_WEAPON_STORE
+ENG: GO TO [format][color:location]FRIENDLY FIRE[/format]
+CUR: 前往[format][color:location]友军火力[/format]
+
+KEY: M16_TXT_ADV_SC_06
+ENG: You press forward, praying to the 31 gods of Diaz that your torch won't go out.  Fortunately, it doesn't.  Ahead of you darkness gives way to light as a dull indigo glow illuminates the corridor up ahead.  You hear the sound of a large rock grinding against stone.\n\nWhat do you do?\n\n
+CUR: 你继续往前走，向迪亚兹的31位神明祈祷火把千万别熄。幸好，它真没熄。前方黑暗渐渐让位于光亮，一抹暗淡的靛蓝光辉照亮了走廊深处。你听见一块巨石在岩壁上摩擦的声响。\n\n你要怎么做？\n\n
+
+KEY: M04_OBJ_GET_CAR
+ENG: GET IN A [format][color:use]CAR[/format]
+CUR: 上一辆[format][color:use]车[/format]
+
+KEY: STRONGHOLD_HUD_TITLE
+ENG: STRONGHOLD
+CUR: 根据地
+
+KEY: m20_failure_no_tanks_to_you
+ENG: ALL STAG TANKS DESTROYED!
+CUR: STAG 坦克全被摧毁！
+
+KEY: M13_OBJ_HELP_VIOLA
+ENG: HELP [format][color:defend]VIOLA[/format]
+CUR: 救援[format][color:defend]薇奥拉[/format]
+
+KEY: M16_TXT_ADV_SC_08
+ENG: You sense that an evil most evil is coming down the corridor.  As you wait a loose flagstone falls from the ceiling.\n\nIt lands on your head and breaks your neck.\n\nYou are dead.\n\nThanks for playing Dragons and Tears: Part 1 of The Spiraling Darkness Trilogy\n\n
+CUR: 你感觉到一股邪到极致的气息正沿走廊逼近。你还在等，一块松动的石板就从天花板掉了下来。\n\n它砸在你头上，摔断了你的脖子。\n\n你死了。\n\n感谢游玩《龙与泪》——螺旋黑暗三部曲第一部\n\n
+
+KEY: M15_OBJ_DISABLE_THE_TRUCK
+ENG: DAMAGE TRUCK [format][color:kill]WHEELS[/format]
+CUR: 打坏卡车[format][color:kill]车轮[/format]
+
+KEY: m13_failure_oleg_died
+ENG: OLEG DIED!
+CUR: 奥列格阵亡！
+
+KEY: M08_OBJ_GET_TO_ROOF
+ENG: GET UP TO THE [format][color:location]ROOF[/format]
+CUR: 上到[format][color:location]屋顶[/format]
+
+KEY: M22_OI_KILLBANE_BODY_TEXT
+ENG: Kill Killbane but Shaundi will die
+CUR: 杀死杀霸，但肖蒂会死
+
+KEY: M14_LABEL_PLANTING_TRANSMITTER
+ENG: PLANTING TRANSMITTER
+CUR: 正在安放发射器
+
+KEY: M02_OBJ_CATCH_SHAUNDI
+ENG: CATCH [format][color:location]SHAUNDI[/format]
+CUR: 接住[format][color:location]肖蒂[/format]
+
+KEY: M22_OBJ_PROCEED_UP_STATUE
+ENG: PROCEED UP THE [format][color:location]STATUE[/format]
+CUR: 沿[format][color:location]雕像[/format]向上攀爬
+
+KEY: MSN_PROTO_SELECT_SATCHEL_DESC
+ENG: Prototype remote detonation bombs that have a special adhesive nano-property that allows them to stick to any surface they come in contact with.
+CUR: 原型遥控炸弹，带有特殊纳米黏性涂层，能牢牢黏附在接触到的任何表面上。
+
+KEY: MM03_OBJ_KILL_FP
+ENG: ELIMINATE THE [format][color:kill]GANG OPERATION[/format]
+CUR: 铲除[format][color:kill]帮派行动点[/format]
+
+KEY: M22_UNTIE
+ENG: UNTIE
+CUR: 松绑
+
+KEY: M16_TXT_ADV_SC_00_CH3
+ENG: GO THROUGH THE HOLE
+CUR: 钻过洞口
+
+KEY: M14_ACTION_TRANSMITTER
+ENG: PLANT TRANSMITTER
+CUR: 安放发射器
+
+KEY: M13_OBJ_ESCAPE
+ENG: [format][color:location]JUMP[/format] OFF THE PENTHOUSE
+CUR: 从顶层公寓[format][color:location]跳下[/format]
+
+KEY: M07_OBJ_GO_TO_CLUB
+ENG: GET TO THE [format][color:location]BDSM CLUB[/format]
+CUR: 前往[format][color:location]BDSM 俱乐部[/format]
+
+KEY: M15_OBJ_GET_TO_THE_GARAGE
+ENG: GET TO [format][color:location]GARAGE[/format]
+CUR: 前往[format][color:location]车库[/format]
+
+KEY: m09_failure_girls_heli
+ENG: HOS' HELICOPTER DESTROYED!\nKILL THE MORNINGSTAR BEFORE THEY KILL YOU!
+CUR: 姑娘们的直升机被摧毁了！\n快干掉晨星帮，别让他们干掉你！
+
+KEY: m06_failure_shaundi_died
+ENG: SHAUNDI DIED!
+CUR: 肖蒂阵亡！
+
+KEY: M06_OBJ_TO_OLEG
+ENG: GO [format][color:location]UPSTAIRS[/format]
+CUR: 上[format][color:location]楼[/format]
+
+KEY: m02_failure_shaundi_died
+ENG: SHAUNDI WAS KILLED
+CUR: 肖蒂被杀了
+
+KEY: M15_OBJ_GO_TO_PR_CENTER
+ENG: GET TO [format][color:location]STAG PR CENTER[/format]
+CUR: 前往[format][color:location]STAG 公关中心[/format]
+
+KEY: M12_OBJ_GET_TO_THE_ELEVATORS
+ENG: GET TO THE [format][color:location]ELEVATORS[/format]
+CUR: 前往[format][color:location]电梯[/format]
+
+KEY: M07_OBJ_PROTECT_ANGEL
+ENG: PROTECT [format][color:defend]ANGEL[/format]
+CUR: 保护[format][color:defend]安吉尔[/format]
+
+KEY: M01_RIDE_VAULT
+ENG: SURVIVE
+CUR: 活下来
+
+KEY: M06_Y_FOR_DESTROY_BUILDING
+ENG: DESTROY THE BUILDING
+CUR: 摧毁大楼
+
+KEY: M03_OBJ_CUTSCENE_FOUND_WEAPONS_CACHE
+ENG: [format][color:location]CUTSCENE: FOUND WEAPONS CACHE[/format]
+CUR: [format][color:location]过场动画：发现武器库[/format]
+
+KEY: M15_OBJ_GET_IN_THE_TANK
+ENG: STEAL [format][color:use]TANK[/format]
+CUR: 夺取[format][color:use]坦克[/format]
+
+KEY: M01_GO_TO_VAULT
+ENG: GO TO THE [format][color:location]VAULT[/format]
+CUR: 前往[format][color:location]金库[/format]
+
+KEY: METAGAME_OTHER
+ENG: OTHER
+CUR: 其他
+
+KEY: M08_OBJ_GET_TO_BASEMENT
+ENG: GET TO [format][color:location]MAINTENANCE ROOM[/format]
+CUR: 前往[format][color:location]维修间[/format]
+
+KEY: M02_OBJ_KILL_PURSUERS
+ENG: KILL THE [format][color:kill]ENEMY PURSUERS[/format]
+CUR: 消灭[format][color:kill]追兵[/format]
+
+KEY: MSN_PLAYER_ESCAPED
+ENG: One of you has made it out alive!
+CUR: 你们中有一人活着逃了出来！
+
+KEY: M15_OBJ_CATCH_THE_TRUCK
+ENG: CATCH [format][color:location]TRUCK[/format]
+CUR: 追上[format][color:location]卡车[/format]
+
+KEY: m14_failure_killbane_escaped
+ENG: TIME IS UP! KILLBANE ESCAPED!
+CUR: 时间到！杀霸跑了！
+
+KEY: M05_OBJ_GRENADES
+ENG: GRAB THE [format][color:use]GRENADES[/format]
+CUR: 拿起[format][color:use]手雷[/format]
+
+KEY: M04_OBJ_RETURN_HOME
+ENG: RETURN TO THE [format][color:location]SAFE HOUSE[/format]
+CUR: 回到[format][color:location]安全屋[/format]
+
+KEY: M16_TXT_ADV_SC_10_CH1
+ENG: PET UNICORN
+CUR: 抚摸独角兽
+
+KEY: M12_OBJ_ESCAPE_THE_STAG_BUILDING
+ENG: [format][color:location]ESCAPE[/format] THE STAG BUILDING
+CUR: [format][color:location]逃出[/format]STAG 大楼
+
+KEY: M11_OBJ_HELP_OLEG
+ENG: HELP [format][color:defend]OLEG[/format]
+CUR: 救援[format][color:defend]奥列格[/format]
+
+KEY: M13_OBJ_COVER_PIERCE
+ENG: PROVIDE COVER FIRE FOR [format][color:defend]PIERCE[/format]
+CUR: 为[format][color:defend]皮尔斯[/format]提供掩护火力
+
+KEY: M11_OBJ_KILL_AIR_BASE
+ENG: DESTROY [format][color:kill]SURVEILLANCE AIRCRAFT[/format]
+CUR: 摧毁[format][color:kill]监视飞机[/format]
+
+KEY: M07_OBJ_GO_TO_ZIMOS
+ENG: FIND [format][color:location]ZIMOS[/format]
+CUR: 找到[format][color:location]齐莫斯[/format]
+
+KEY: METAGAME_HEADSHOT_KILL
+ENG: HEAD SHOT
+CUR: 爆头击杀
+
+KEY: M18_HELP_GET_CLOSER_TO_DOOR
+ENG: The [format][color:use]Sonic Boom[/format] doesn't seem to have any effect at this range. Try getting closer to the [format][color:location]door[/format]
+CUR: [format][color:use]音爆[/format]在这个距离似乎毫无效果。试着靠近那扇[format][color:location]门[/format]
+
+KEY: M16_TXT_ADV_SC_09
+ENG: As you walk towards the indigo glow, the corridor gives way to a larger cavern, and the source of the light becomes apparent...the room is lit by a massive luminescent lake.  Lapping at the lake is a unicorn.\n\nWhat do you do?\n\n
+CUR: 你朝着那片靛蓝光辉走去，走廊尽头豁然开朗，出现一座更大的洞窟，光源也真相大白……整间石室被一片巨大的发光湖泊照得通亮。一头独角兽正在湖边饮水。\n\n你要怎么做？\n\n
+
+KEY: M06_Y_FOR_ELEVATOR
+ENG: CALL ELEVATOR
+CUR: 呼叫电梯
+
+KEY: M10_OBJ_KILL_STAG_VTOL
+ENG: DESTROY THE [format][color:kill]VTOL[/format]
+CUR: 摧毁[format][color:kill]VTOL[/format]
+
+KEY: MSN_MORN_START
+ENG: START MORNINGSTAR MISSION
+CUR: 开始晨星帮任务
+
+KEY: M12_OBJ_GRAB_JOSH_BIRK
+ENG: GRAB [format][color:use]JOSH BIRK[/format]
+CUR: 抓走[format][color:use]乔什·伯克[/format]
+
+KEY: M07_OBJ_REACH_BARGE
+ENG: GET TO THE [format][color:location]BARGE[/format]
+CUR: 前往[format][color:location]驳船[/format]
+
+KEY: MSN_PROTO_SELECT_OPTION_1
+ENG: SELECT FIRST PROTOTYPE
+CUR: 选择第一种原型装备
+
+KEY: M09_OBJ_KILL_ATTACKERS
+ENG: KILL [format][color:kill]ATTACKERS[/format]
+CUR: 消灭[format][color:kill]袭击者[/format]
+
+KEY: m07_failure_zimos_died
+ENG: ZIMOS DIED!
+CUR: 齐莫斯阵亡！
+
+KEY: M12_OBJ_FIND_JOSH_BIRK
+ENG: FIND [format][color:teal]JOSH BIRK[/format]
+CUR: 找到[format][color:teal]乔什·伯克[/format]
+
+KEY: m10_failure_viola_dismissed
+ENG: VIOLA WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 薇奥拉被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: M06_OBJ_SET_BOMB
+ENG: ARM [format][color:use]BOMB[/format]
+CUR: 启动[format][color:use]炸弹[/format]
+
+KEY: M13_OBJ_CLEAR_THE_FLOOR
+ENG: KILL [format][color:kill]STAG[/format] IN THE OBSERVATION DECK
+CUR: 消灭观景台上的[format][color:kill]STAG[/format]
+
+KEY: M13_OBJ_DETONATE_CAR_BOMBS
+ENG: SHOOT A [format][color:kill]CAR BOMB[/format]
+CUR: 射击[format][color:kill]汽车炸弹[/format]
+
+KEY: M09_OBJ_GET_INTO_TRUCK
+ENG: GET INTO [format][color:use]TRUCK[/format]
+CUR: 钻进[format][color:use]卡车[/format]
+
+KEY: M21_OBJ_KILL_LUCHADORES
+ENG: KILL [format][color:kill]LUCHADORES[/format]
+CUR: 消灭[format][color:kill]摔跤手帮[/format]
+
+KEY: M16_TXT_ADV_SC_10_CH2
+ENG: KILL UNICORN
+CUR: 宰了独角兽
+
+KEY: M09_OPEN_CONTAINER
+ENG: OPEN CONTAINER
+CUR: 打开集装箱
+
+KEY: M08_OBJ_STAIRS_TO_BASEMENT
+ENG: FIND [format][color:location]STAIRS[/format] TO MAINTENANCE ROOM
+CUR: 找到通往维修间的[format][color:location]楼梯[/format]
+
+KEY: MSN_PROTO_SELECT_OPTION_2
+ENG: SELECT SECOND PROTOTYPE
+CUR: 选择第二种原型装备
+
+KEY: m10_failure_oleg_died
+ENG: OLEG DIED!
+CUR: 奥列格阵亡！
+
+KEY: M06_OBJ_FIND_BALL
+ENG: USE [format][color:use]COUNTER WEIGHT[/format]
+CUR: 利用[format][color:use]配重块[/format]
+
+KEY: M05_OBJ_INTERROGATE
+ENG: GRAB [format][color:use]LIEUTENANT[/format]
+CUR: 抓住[format][color:use]副官[/format]
+
+KEY: M05_OBJ_LET_IN_SAINTS
+ENG: LET IN [format][color:use]SAINTS[/format]
+CUR: 放[format][color:use]圣徒[/format]进来
+
+KEY: M03_OBJ_DESTROY_TANKS
+ENG: DESTROY THE [format][color:kill]TANKS[/format]
+CUR: 摧毁[format][color:kill]坦克[/format]
+
+KEY: m06_failure_destroy_bomb
+ENG: THE BOMB BLEW UP!
+CUR: 炸弹爆了！
+
+KEY: m03_failure_pierce_destroyed
+ENG: PIERCE'S HELICOPTER WAS DESTROYED!
+CUR: 皮尔斯的直升机被摧毁！
+
+KEY: M03_OBJ_USE_SATELLITE_WEAPON
+ENG: USE THE [format][color:use]REAPER DRONE[/format]
+CUR: 使用[format][color:use]死神无人机[/format]
+
+KEY: M03_OBJ_GO_TO_WAREHOUSE
+ENG: GO TO THE [format][color:location]WAREHOUSE[/format]
+CUR: 前往[format][color:location]仓库[/format]
+
+KEY: METAGAME_MISSION_OBJECTIVE
+ENG: MISSION OBJECTIVE
+CUR: 任务目标
+
+KEY: METAGAME_PLAYER_DEATH
+ENG: DEATH
+CUR: 死亡
+
+KEY: M16_TXT_ADV_SC_06_CH2
+ENG: DRAW SWORD
+CUR: 拔剑
+
+KEY: METAGAME_GANG_LIEUTENANT
+ENG: GANG LIEUTENANT
+CUR: 帮派副官
+
+KEY: M16_TXT_ADV_SC_11_CH1
+ENG: START AGAIN
+CUR: 重新开始
+
+KEY: m15_failure_pierce_dismissed
+ENG: PIERCE WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 皮尔斯被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: M07_OBJ_FIND_ANGEL
+ENG: FIND [format][color:location]ANGEL[/format]
+CUR: 找到[format][color:location]安吉尔[/format]
+
+KEY: M05_MSG_TAUNT
+ENG: Taunt the [format][color:location]guards[/format].
+CUR: 挑衅[format][color:location]守卫[/format]。
+
+KEY: m14_failure_jane_died
+ENG: JANE DIED!\n DON'T KILL JANE, SHE CAN HELP FIND KILLBANE.
+CUR: 简死了！\n 别杀简，她能帮你找到杀霸。
+
+KEY: m07_failure_oleg_died
+ENG: OLEG DIED!
+CUR: 奥列格阵亡！
+
+KEY: M05_OBJ_PARACHUTE
+ENG: PARACHUTE INTO [format][color:location]PENTHOUSE[/format]
+CUR: 空降[format][color:location]顶层公寓[/format]
+
+KEY: M17_12_HOURS_LATER
+ENG: 12 HOURS LATER
+CUR: 12 小时后
+
+KEY: M20_OBJ_GO_TO_AIRPORT
+ENG: GET TO THE [format][color:location]AIRPORT[/format]
+CUR: 赶到[format][color:location]机场[/format]
+
+KEY: m19_failure_suko_died
+ENG: VIOLA DIED!
+CUR: 薇奥拉阵亡！
+
+KEY: m12_failure_cover_blown
+ENG: COVER AS THE CARDINAL BLOWN!\n DON'T DO ANYTHING TO RAISE ATTENTION.
+CUR: 假扮红衣主教的身份暴露了！\n 别干任何引人注意的事。
+
+KEY: M09_OBJ_KILL_GUARDS
+ENG: KILL [format][color:kill]GUARDS[/format]
+CUR: 杀掉[format][color:kill]守卫[/format]
+
+KEY: M16_TXT_ADV_SC_07_CH1
+ENG: KEEP WALKING
+CUR: 继续前进
+
+KEY: m12_failure_josh_abandoned
+ENG: JOSH WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 乔什被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: M04_OBJ_KILL_BRUTE
+ENG: KILL THE [format][color:kill]BRUTE[/format]
+CUR: 杀掉[format][color:kill]巨兽[/format]
+
+KEY: MSN_MAP_MESSAGE
+ENG: Press START at any time to find Activities{MAP_IMG_UNKNOWN_ACT} on the map.
+CUR: 随时按下 START，即可在地图上找到{MAP_IMG_UNKNOWN_ACT}活动。
+
+KEY: M18_OBJ_DESTROY_COCKPIT
+ENG: DESTROY [format][color:kill]DOOR[/format] WITH SONIC BOOM
+CUR: 用音爆摧毁[format][color:kill]舱门[/format]
+
+KEY: M06_OBJ_PHILLIPE
+ENG: FOLLOW [format][color:location]OLEG[/format]
+CUR: 跟上[format][color:location]奥列格[/format]
+
+KEY: SR3_MISSION_DEBUG_OBJECTIVE
+ENG: [format][color:red]UNLOCALIZED: [color:teal]%s [color:red](!!!)[/format]
+CUR: [format][color:red]未本地化：[color:teal]%s [color:red](!!!)[/format]
+
+KEY: M06_OBJ_TO_FACTORY
+ENG: GO TO [format][color:location]FACTORY[/format]
+CUR: 前往[format][color:location]工厂[/format]
+
+KEY: M05_OBJ_BARRIER
+ENG: DESTROY THE [format][color:kill]BARRIER[/format]
+CUR: 摧毁[format][color:kill]屏障[/format]
+
+KEY: M16_TXT_ADV_SC_05
+ENG: You start to desperately run back to the main room when your foot catches a loose flagstone.\n\nYou fall and break your neck.\n\nYou are dead.\n\nThanks for playing Dragons and Tears: Part 1 of The Spiraling Darkness Trilogy\n\n
+CUR: 你开始不顾一切地往主厅跑，脚下却被一块松动的石板绊了一下。\n\n你摔倒了，摔断了脖子。\n\n你死了。\n\n感谢游玩《龙与泪》——螺旋黑暗三部曲第一部\n\n
+
+KEY: M07_OBJ_FIND_OWNER
+ENG: FIND THE [format][color:location]OWNER[/format]
+CUR: 找到[format][color:location]老板[/format]
+
+KEY: M02_FAILURE_PLAYER_EJECTED
+ENG: YOU FELL OUT OF THE PLANE, AND DIED!
+CUR: 你从飞机上摔了出去，死掉了！
+
+KEY: m24_failure_killed_in_blast
+ENG: YOU WERE KILLED IN THE BLAST!
+CUR: 你被炸死了！
+
+KEY: M16_TXT_ADV_SC_06_CH3
+ENG: CAST A SPELL
+CUR: 施放法术
+
+KEY: M13_OBJ_DEFEND_THE_NORTH
+ENG: DEFEND THE [format][color:defend]NORTH[/format]
+CUR: 守住[format][color:defend]北侧[/format]
+
+KEY: M09_OBJ_DEFEND_HELI
+ENG: DEFEND [format][color:defend]CHOPPER[/format]
+CUR: 保护[format][color:defend]直升机[/format]
+
+KEY: MSN_PROTO_SELECT_OPTION_3
+ENG: CONFIRM PROTOTYPES
+CUR: 确认原型装备
+
+KEY: M16_TXT_ADV_SC_00_CH4
+ENG: TAKE A NAP
+CUR: 打个盹
+
+KEY: m15_failure_truck_destroyed
+ENG: SUPERCOMPUTER DESTROYED! \nUSE THE MACHINE GUN {TANK_FIRE_PRIMARY_IMG} TO SAFELY DESTROY IT'S TIRES.
+CUR: 超级计算机被摧毁了！ \n用机枪{TANK_FIRE_PRIMARY_IMG}安全地打爆它的轮胎。
+
+KEY: SH03_PROTECT_KINZIE
+ENG: DEFEND [format][color:defend]KINZIE[/format] 
+CUR: 保护[format][color:defend]金茜[/format] 
+
+KEY: M20_OBJ_ALIGN_HELI
+ENG: HOVER NEAR THE [format][color:location]VEHICLE[/format]
+CUR: 悬停在[format][color:location]车辆[/format]附近
+
+KEY: M06_OBJ_RIDE_BALL
+ENG: KILL [format][color:kill]TARGETS[/format]
+CUR: 消灭[format][color:kill]目标[/format]
+
+KEY: M04_OBJ_KILL_GOONS
+ENG: KILL THE [format][color:kill]MORNINGSTAR[/format]
+CUR: 消灭[format][color:kill]晨星帮[/format]
+
+KEY: M08_OBJ_ENTER_CHOPPER
+ENG: ENTER THE [format][color:use]HELICOPTER[/format]
+CUR: 登上[format][color:use]直升机[/format]
+
+KEY: M07_OBJ_GRAB_OWNER
+ENG: INTERROGATE THE [format][color:use]OWNER[/format]
+CUR: 审问[format][color:use]老板[/format]
+
+KEY: STRONGHOLD_START_MESSAGE_STAG
+ENG: START STAG STRONGHOLD
+CUR: 开始 STAG 根据地
+
+KEY: M20_OBJ_GET_UP_TO_SPEED
+ENG: GET THE [format][color:kill]CAR[/format] UP TO SPEED
+CUR: 把[format][color:kill]车[/format]开到全速
+
+KEY: M10_OBJ_CALL_ELEVATOR
+ENG: TRY CALLING THE [format][color:use]ELEVATOR[/format]
+CUR: 试着呼叫[format][color:use]电梯[/format]
+
+KEY: M05_Jump
+ENG: JUMP
+CUR: 跳
+
+KEY: M02_OBJ_KILL_GUARDS
+ENG: KILL THE [format][color:kill]GUARDS[/format]
+CUR: 杀掉[format][color:kill]守卫[/format]
+
+KEY: M16_TXT_ADV_SC_01_CH2
+ENG: TAKE A TORCH
+CUR: 拿起火把
+
+KEY: m15_failure_truck_crushed
+ENG: SUPERCOMPUTER DESTROYED! \nUSE THE MACHINE GUN {TANK_FIRE_PRIMARY_IMG} TO SAFELY DESTROY IT'S TIRES.
+CUR: 超级计算机被摧毁了！ \n用机枪{TANK_FIRE_PRIMARY_IMG}安全地打爆它的轮胎。
+
+KEY: m11_fail_stag
+ENG: YOU FAILED TO KEEP STAG'S ATTENTION.
+CUR: 你没能留住 STAG 的注意力。
+
+KEY: m04_failure_pierce_died
+ENG: PIERCE DIED!
+CUR: 皮尔斯阵亡！
+
+KEY: m01_failure_josh_died
+ENG: JOSH DIED!
+CUR: 乔什死了！
+
+KEY: M17_OBJ_FIND_BRIG
+ENG: FIND THE [format][color:location]BRIG[/format]
+CUR: 找到[format][color:location]禁闭室[/format]
+
+KEY: M14_OBJ_PLANT_TRANSMITTER
+ENG: PLANT [format][color:use]TRANSMITTER[/format]
+CUR: 安放[format][color:use]发射器[/format]
+
+KEY: M11_OBJ_KILL_ROADBLOCK
+ENG: CLEAR THE [format][color:kill]ROADBLOCK[/format]
+CUR: 清除[format][color:kill]路障[/format]
+
+KEY: m04_failure_car_destroyed
+ENG: CAR DESTROYED!
+CUR: 车被摧毁了！
+
+KEY: M14_LABEL_ACQUIRING_TARGET
+ENG: ACQUIRING TARGET
+CUR: 正在锁定目标
+
+KEY: M13_OBJ_TAKE_OUT_THE_SNIPERS
+ENG: KILL THE [format][color:kill]SNIPERS[/format]
+CUR: 干掉[format][color:kill]狙击手[/format]
+
+KEY: MSN_FAIL
+ENG: The cops smoked your asses!
+CUR: 警察把你们打得屁滚尿流！
+
+KEY: m14_failure_heli_abandoned
+ENG: YOU ABANDONED THE HELICOPTER!
+CUR: 你抛弃了直升机！
+
+KEY: METAGAME_SUCCESS_WIN
+ENG: You outscored your partner and won $%.0f!
+CUR: 你的得分超过了搭档，赢得了 $%.0f！
+
+KEY: M08_OBJ_REVIVE_PIERCE
+ENG: REVIVE [format][color:revive]PIERCE[/format]
+CUR: 救活[format][color:revive]皮尔斯[/format]
+
+KEY: m01_failure_gat_died
+ENG: GAT DIED!
+CUR: 盖特阵亡！
+
+KEY: M01_SET_EXPLOSIVES
+ENG: GO SET THE [format][color:use]EXPLOSIVES[/format]
+CUR: 去安放[format][color:use]炸药[/format]
+
+KEY: M01_TITLE
+ENG: BANK HEIST
+CUR: 银行劫案
+
+KEY: M16_TXT_ADV_SC_00_CH1
+ENG: OPEN THE DOOR
+CUR: 打开门
+
+KEY: M13_OBJ_TAKE_OUT_THE_VTOLS
+ENG: DESTROY THE [format][color:kill]VTOLS[/format]
+CUR: 摧毁[format][color:kill]VTOL[/format]
+
+KEY: M14_OBJ_GO_TO_HELI
+ENG: GO TO [format][color:location]HELICOPTER[/format]
+CUR: 前往[format][color:location]直升机[/format]
+
+KEY: m10_failure_oleg_dismissed
+ENG: OLEG WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 奥列格被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: m09_failure_zimos_abandoned
+ENG: ZIMOS WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 齐莫斯被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: m08_failure_zimos_died
+ENG: ZIMOS DIED!
+CUR: 齐莫斯阵亡！
+
+KEY: STRONGHOLD_START_MESSAGE_MORN
+ENG: START MORNINGSTAR STRONGHOLD
+CUR: 开始晨星帮根据地
+
+KEY: MSN_ACTIVITES_RESPECT_REPEAT_GERMAN
+ENG: Activities {MAP_IMG_UNKNOWN_ACT} earn Respect.  View the map to check for Activity locations.
+CUR: 活动{MAP_IMG_UNKNOWN_ACT}能赚取声望。查看地图确认活动位置。
+
+KEY: M14_OBJ_TARGET_VAN
+ENG: TARGET [format][color:use]BROADCAST VAN[/format]
+CUR: 瞄准[format][color:use]广播车[/format]
+
+KEY: M10_OBJ_SURVIVE
+ENG: SURVIVE
+CUR: 活下来
+
+KEY: M06_Y_FOR_NO_BOMB
+ENG: DISARM THE BOMB
+CUR: 拆除炸弹
+
+KEY: METAGAME_QUICK_KILL
+ENG: QUICK KILL
+CUR: 快速击杀
+
+KEY: M17_BRIG_DOORS
+ENG: ACTIVATE SECURITY DOORS
+CUR: 启动安保门
+
+KEY: M16_TXT_ADV_SC_03_CH3
+ENG: RUN BACK TO GET THE OTHER TORCH
+CUR: 跑回去拿另一支火把
+
+KEY: m13_failure_saints_hq_abandoned
+ENG: SAINTS HQ HAS BEEN ABANDONED!
+CUR: 圣徒总部被弃守了！
+
+KEY: M03_OBJ_PROTECT_THE_STASH
+ENG: PROTECT THE [format][color:defend]HELICOPTERS[/format]
+CUR: 保护[format][color:defend]直升机[/format]
+
+KEY: MSN_LUCH_START
+ENG: START LUCHADORE MISSION
+CUR: 开始摔跤手帮任务
+
+KEY: M08_OBJ_TAKE_COVER_BEHIND_BAR
+ENG: TAKE COVER [format][color:location]BEHIND THE BAR[/format] 
+CUR: 躲到[format][color:location]吧台[/format]后面 
+
+KEY: M04_OBJ_FIND_CLOTHES
+ENG: GO TO [format][color:location]PLANET SAINTS[/format]
+CUR: 前往[format][color:location]圣徒星球[/format]
+
+KEY: M03_OBJ_PROTECT_THE_BOMB
+ENG: PROTECT THE [format][color:defend]BOMB[/format]
+CUR: 保护[format][color:defend]炸弹[/format]
+
+KEY: m20_failure_vehicle_exit
+ENG: PASSENGER ESCAPED!
+CUR: 乘客逃跑了！
+
+KEY: M13_OBJ_GOTO_PENTHOUSE
+ENG: GO TO THE [format][color:location]PENTHOUSE[/format]
+CUR: 前往[format][color:location]顶层公寓[/format]
+
+KEY: M20_OBJ_RC_A_BOAT
+ENG: RC A [format][color:use]BOAT[/format]
+CUR: 遥控一艘[format][color:use]船[/format]
+
+KEY: M06_Y_FOR_BOMB
+ENG: ARM THE BOMB
+CUR: 启动炸弹
+
+KEY: SH02_OBJ_GET_VEHICLE
+ENG: GET INTO THE [format][color:use]VEHICLE[/format]
+CUR: 钻进[format][color:use]载具[/format]
+
+KEY: m14_failure_shaundi_died
+ENG: SHAUNDI DIED!
+CUR: 肖蒂阵亡！
+
+KEY: M13_PROMPT_THROW_JOSH_TO_CYRUS
+ENG: GIVE JOSH TO CYRUS
+CUR: 把乔什交给赛勒斯
+
+KEY: m07_failure_club_owner_died
+ENG: CLUB MANAGER DIED!\n KEEP HIM ALIVE UNTIL YOU'VE INTERROGATED HIM.
+CUR: 俱乐部经理死了！\n 审问完之前别让他死了。
+
+KEY: M03_FAILURE_ABANDON_HOMIE
+ENG: SHAUNDI ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!
+CUR: 肖蒂被抛弃了！\n圣徒可不能各自单飞！
+
+KEY: M03_OBJ_ACCESS_MAP_USE_MSG
+ENG: ACCESS CELL PHONE MAP
+CUR: 打开手机地图
+
+KEY: SH03_HACKING_TIME
+ENG: HACKING
+CUR: 入侵中
+
+KEY: M11_OBJ_GO_STAG_BASE
+ENG: GET TO THE [format][color:location]STAG BASE[/format]
+CUR: 赶到[format][color:location]STAG 基地[/format]
+
+KEY: M05_OBJ_KILL_LIEUTENANT
+ENG: KILL [format][color:kill]LIEUTENANT[/format]
+CUR: 干掉[format][color:kill]副官[/format]
+
+KEY: M01_Y_FOR_EXPLOSIVES
+ENG: PLANT THE EXPLOSIVES
+CUR: 安放炸药
+

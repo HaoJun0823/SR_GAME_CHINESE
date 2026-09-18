@@ -1,0 +1,9 @@
+﻿=== 游戏目录下 crash/dmp/log 文件 ===
+I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.log  3743  2026/9/17 22:19:30
+
+=== 用户设置目录 ===
+--- C:\Users\haojun0823\AppData\Local\Saints Row IV
+--- C:\Users\haojun0823\AppData\Roaming\Saints Row IV
+(not found)
+--- C:\Users\haojun0823\Documents\My Games\Saints Row IV
+(not found)

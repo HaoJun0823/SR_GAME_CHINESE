@@ -1,0 +1,153 @@
+==== Steam FORMAT @0x140cf9a00 (2304 字节窗口) ====
+  -- call 目标 --
+     +0013  call 0x141362e60
+     +018C  call 0x140cebea0
+     +01AA  call rax
+     +0277  call 0x140bf46f0
+     +0300  call 0x140cebea0
+     +03AF  call 0x140bf46f0
+     +04EE  call qword ptr [rip + 0x7074e4]
+     +0522  call 0x140cc3160
+     +055D  call rdx
+     +05AD  call rdx
+     +066A  call 0x140cebea0
+     +0681  call 0x140bf46f0
+     +0692  call 0x140cc9d40
+     +0753  call r8
+     +077A  call 0x141362ed0
+     +081E  call 0x140cfa460
+     +08B9  call rdx
+     +08BD  call 0x140c20aa0
+     +08DD  call rdx
+     +08E1  call 0x140c20aa0
+  -- 常量立即数（>=6 位十六进制） --
+     +001B  mov      rax, qword ptr [rip + 0xce5886]
+     +0074  movabs   r11, 0x3ff000100000200
+     +010E  movabs   r11, 0x3ff000100000200
+     +0191  mov      rcx, qword ptr [rip + 0x64c5ba0]
+     +0405  and      rax, 0xfffffffffffffffe
+     +0492  mov      esi, 0xffffffff
+     +049D  movabs   rcx, 0x100000201
+     +04D3  mov      r8, 0xffffffffffffffff
+     +0544  mov      rax, qword ptr [rip + 0x64c57ed]
+     +0596  mov      rax, qword ptr [rip + 0x64c579b]
+     +0733  mov      rcx, qword ptr [rip + 0x64c55fe]
+     +079D  mov      rax, qword ptr [rip + 0xce5104]
+     +0828  mov      edx, dword ptr [rip + 0xc8747a]
+     +08A0  mov      rax, qword ptr [rip + 0x64c5491]
+     +08C8  mov      rax, qword ptr [rip + 0x64c5469]
+  首个 ret 偏移 = 0x78b
+
+==== Steam SUBTITLE @0x1403d18f0 (1152 字节窗口) ====
+  -- call 目标 --
+     +00A7  call qword ptr [rip + 0x102f9f3]
+     +00C6  call qword ptr [rip + 0x102f9cc]
+     +00F1  call qword ptr [rip + 0x102f549]
+     +0120  call qword ptr [rip + 0x102f51a]
+     +0163  call 0x140cf1c50
+     +016A  call 0x140cf17b0
+     +0184  call 0x140cf17b0
+     +018E  call 0x140cf1c50
+     +01AB  call 0x140ad33d0
+     +01C5  call 0x140a11e60
+     +01F7  call 0x140cfbd50
+     +01FF  call 0x1404b5960
+     +0211  call 0x140cfbd50
+     +0247  call 0x140bf8d90
+     +0263  call qword ptr [rip + 0x102f81f]
+     +029C  call qword ptr [rip + 0x102f7f6]
+     +03BC  call qword ptr [rip + 0x102f796]
+     +03DA  call 0x14046db10
+     +0436  call 0x141362ed0
+  -- 常量立即数（>=6 位十六进制） --
+     +001F  mov      rax, qword ptr [rip + 0x160d992]
+     +0046  cmp      byte ptr [rip + 0x1401e07], 0
+     +004D  mov      byte ptr [rip + 0x5969746], 1
+     +0080  mov      rbx, 0xffffffffffffffff
+     +0144  mov      r12d, dword ptr [rip + 0x1401d1d]
+     +015D  mov      dword ptr [rip + 0x1401d05], eax
+     +0174  mov      eax, 0x55555556
+     +0196  mov      eax, 0x38e38e39
+     +0219  mov      eax, dword ptr [rip + 0x13e51dd]
+     +0369  mov      dword ptr [rbp - 0x28], 0xffffffff
+     +038E  mov      rdx, 0xffffffffffffffff
+     +046D  mov      rax, qword ptr [rip + 0x160d544]
+  首个 ret 偏移 = 0x457
+
+======== MS Store dump 语义锚点搜索 ========
+mov r8d,0xffdf  41 B8 DF FF 00 00              hits=2     ['0x140e92df4', '0x140e92ea9']
+                                               实际总数=2
+movabs r11 49 BB 00 02 00 00 01 00 FF 03       hits=2     ['0x140e92e02', '0x140e92e9c']
+                                               实际总数=2
+任意 movabs r11 49 BB                            hits=60    ['0x14005f6b3', '0x140066b25', '0x14006b9d7', '0x14007a66f', '0x14009dddd', '0x1400bdbe6', '0x1400bdd66', '0x1400bdee6', '0x140187643', '0x14018bc35', '0x14018bd42', '0x14018be27']
+                                               实际总数=132
+初始化标志：80 3D ???? 00 C6 05                      hits=4     ['0x1403fd964', '0x14053cbdb', '0x140634374', '0x1406361a0']
+                                               实际总数=4
+C6 05 ???? 01 (byte flag=1)                    hits=60    ['0x140001a8e', '0x140001b5a', '0x140001c1f', '0x140001cef', '0x140001dbe', '0x140001e8e', '0x140001f5f', '0x14000202f', '0x140002104', '0x1400021cf', '0x14000229f', '0x14000236f']
+                                               实际总数=1406
+cmp byte[rip],0 : 80 3D ???? 00 0F 84          hits=60    ['0x140066d05', '0x140068134', '0x1400686f0', '0x140068717', '0x14006a56c', '0x1400784de', '0x140078a0a', '0x14007ee04', '0x14007fa76', '0x140086bed', '0x140086d79', '0x14008764e']
+                                               实际总数=269
+Fmt-dup 4D 85 C0 0F 84 (test r8,r8;je)         hits=60    ['0x140078f4c', '0x14007aaa0', '0x14007db3f', '0x14007dd0f', '0x14009917e', '0x1400991a5', '0x1400a46c4', '0x1400a4f15', '0x1400a8c70', '0x1400aaf86', '0x1400c8264', '0x1400c859d']
+                                               实际总数=434
+Sub: mov r12d,r9d 45 8B E1                     hits=60    ['0x1400b26c1', '0x14037fdfc', '0x1403c167c', '0x14044e298', '0x14049f4d4', '0x1404ac167', '0x140566c1c', '0x140571284', '0x140572fb2', '0x140634760', '0x140663ef5', '0x140690bca']
+                                               实际总数=69
+Sub: movaps xmm6,xmm2 0F 28 F2                 hits=60    ['0x140065d56', '0x14008a824', '0x140099443', '0x1400b39f7', '0x1400cf24c', '0x1400d1208', '0x1400d299b', '0x1400d4486', '0x1400e0da4', '0x1400e0dc6', '0x1400f33b7', '0x1400f33e9']
+                                               实际总数=689
+Sub: movaps xmm8,xmm1 44 0F 28 C1              hits=60    ['0x1400b86c7', '0x1400ba6a8', '0x1400e1e07', '0x1400e24b2', '0x1400eca57', '0x1400f3e00', '0x14010d65c', '0x1401192ee', '0x14011b71b', '0x140127670', '0x14014a282', '0x140191766']
+                                               实际总数=190
+
+======== 初始化标志模式命中处的上下文 ========
+---- @0x1403fd964 ----
+   hex: 80 3D 55 DA 50 01 00 C6 05 6A 0D BE 05 01 74 18 E8 A7 79 04 00 83 F8 02 75 0E B2 01 0F B6 CA 48
+   +000  cmp                      byte ptr [rip + 0x150da55], 0
+   +007  mov                      byte ptr [rip + 0x5be0d6a], 1
+   +00E  je                       0x1403fd98c
+   +010  call                     0x140445320
+   +015  cmp                      eax, 2
+   +018  jne                      0x1403fd98c
+   +01A  mov                      dl, 1
+   +01C  movzx                    ecx, dl
+   +01F  add                      rsp, 0x28
+   +023  jmp                      0x1403fd7d0
+   +028  add                      rsp, 0x28
+   +02C  ret                      
+   +02D  int3                     
+   +02E  int3                     
+   +02F  int3                     
+---- @0x14053cbdb ----
+   hex: 80 3D 8F 2E D0 05 00 C6 05 87 2E D0 05 01 75 0E E8 C0 E4 09 00 48 85 C0 74 04 32 DB EB 02 B3 01
+   +000  cmp                      byte ptr [rip + 0x5d02e8f], 0
+   +007  mov                      byte ptr [rip + 0x5d02e87], 1
+   +00E  jne                      0x14053cbf9
+   +010  call                     0x1405db0b0
+   +015  test                     rax, rax
+   +018  je                       0x14053cbf9
+   +01A  xor                      bl, bl
+   +01C  jmp                      0x14053cbfb
+   +01E  mov                      bl, 1
+   +020  call                     0x140591640
+   +025  test                     rax, rax
+   +028  je                       0x14053cc27
+   +02A  call                     0x140591640
+---- @0x140634374 ----
+   hex: 80 3D 9B 65 16 06 00 C6 05 95 65 16 06 01 C7 05 44 A1 18 01 12 00 00 00 75 36 E8 AD D2 F5 FF 48
+   +000  cmp                      byte ptr [rip + 0x616659b], 0
+   +007  mov                      byte ptr [rip + 0x6166595], 1
+   +00E  mov                      dword ptr [rip + 0x118a144], 0x12
+   +018  jne                      0x1406343c4
+   +01A  call                     0x140591640
+   +01F  test                     rax, rax
+   +022  je                       0x1406343c4
+   +024  call                     0x140591640
+   +029  mov                      rcx, qword ptr [rax + 0x90]
+---- @0x1406361a0 ----
+   hex: 80 3D 70 47 16 06 00 C6 05 68 47 16 06 01 C7 05 18 83 18 01 12 00 00 00 75 32 E8 81 B4 F5 FF 48
+   +000  cmp                      byte ptr [rip + 0x6164770], 0
+   +007  mov                      byte ptr [rip + 0x6164768], 1
+   +00E  mov                      dword ptr [rip + 0x1188318], 0x12
+   +018  jne                      0x1406361ec
+   +01A  call                     0x140591640
+   +01F  test                     rax, rax
+   +022  je                       0x1406361ec
+   +024  call                     0x140591640
+   +029  mov                      rcx, qword ptr [rax + 0x90]

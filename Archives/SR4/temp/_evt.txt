@@ -1,0 +1,6 @@
+﻿=== Application Error / 1000 事件 (近 6 小时, sr_hv / SaintsRow) ===
+(无匹配事件)
+
+=== 所有 Provider 名含 Application Error / Werfault 的近 6 小时事件 ===
+2026/9/17 22:21:23  Microsoft-Windows-RestartManager  Id=10006  无法关闭应用程序或服务“Microsoft® VC compiler and tools experience improvement data uploader”。
+2026/9/17 21:01:33  Application Error  Id=1000  出错应用程序名称： Explorer.EXE，版本： 10.0.26100.9444，时间戳： 0x03f6c974

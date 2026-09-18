@@ -1,0 +1,50 @@
+﻿=== 游戏目录 I:\SteamLibrary\steamapps\common\Saints Row IV\ (顶层文件, 前 60) ===
+EmptySteamDepot\  dir
+mods\  dir
+packfiles\  dir
+redist\  dir
+scripts\  dir
+update\  dir
+videos\  dir
+binkw64.dll  260608
+display.ini  3368
+EOSSDK-Win64-Shipping.dll  19817936
+gamecontrollerdb.txt  349413
+installscript.vdf  968
+SaintsRowIV.exe  1093584
+SaintsRowIV.ini  76
+sriv_microsoft.exe  26999296
+sr_hv.exe  28780032
+sr_hv.exe.i64  434211505
+sr_hv_epic.exe  28756992
+sr_hv_epic.exe.i64  432925577
+sr_hv_gog.exe  28535808
+sr_hv_gog.exe.i64  429466657
+sr_hv_gog.exe.id0  316145664
+sr_hv_gog.exe.id1  112615424
+sr_hv_gog.exe.id2  266096
+sr_hv_gog.exe.nam  401408
+sr_hv_gog.exe.til  37824
+steam_api64.dll  298384
+winmm.dll  3615928
+【GOG和EPIC用这个覆盖STEAM的看看能不能行】黑道圣徒VI升级版 兼容补丁 测试.zip  308858
+必读！测试版有问题反馈，我会修的，谢谢.txt  2753
+黑道圣徒IV升级版 简体中文 HaoJun0823重译汉化 V2 测试.zip  40277025
+黑道圣徒IV升级版 简体中文 HaoJun0823重译汉化 V2.1.zip  40277025
+黑道圣徒VI升级版 简体中文 HaoJun0823重译汉化 V1.zip  40418076
+
+=== scripts 目录 ===
+dict  dir
+charlist.txt  9922
+DumpText.dtxt  8714
+SourceHanSansHWSC-VF.ttf  35415760
+SR4R_I18N.asi  738816
+SR4R_I18N.asi.bak  723968
+SR4R_I18N.asi.bak_20260912  726528
+SR4R_I18N.asi.bak_v1  725504
+SR4R_I18N.asi.bak_v12_20260917_2057  729088
+SR4R_I18N.asi.bak_v13pre_20260917_2110  733696
+SR4R_I18N.asi.bak_v13_20260917_2130  733696
+SR4R_I18N.asi.bak_v14_20260917_2202  735232
+SR4R_I18N.ini  2078
+SR4R_I18N.log  4316

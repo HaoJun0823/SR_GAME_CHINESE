@@ -1,0 +1,47 @@
+{"id": 4110, "en": "CANCEL", "tags": "plain"}
+{"id": 4111, "en": "The host is not accepting players at this time.", "tags": "plain"}
+{"id": 4112, "en": "QUIT", "tags": "plain"}
+{"id": 4113, "en": "CO-OP", "tags": "plain"}
+{"id": 4114, "en": "Friendly fire light turned on!\\nYou can now deal some damage to your partner.", "tags": "nl"}
+{"id": 4115, "en": "You were disconnected!", "tags": "plain"}
+{"id": 4116, "en": "GAME INVITE SENT", "tags": "plain"}
+{"id": 4117, "en": "Friendly fire turned on!\\nYou can now damage your partner.", "tags": "nl"}
+{"id": 4118, "en": "FINDING SERVER", "tags": "plain"}
+{"id": 4119, "en": "CONTINUE", "tags": "plain"}
+{"id": 4120, "en": "Waiting on host to accept connection.", "tags": "plain"}
+{"id": 4121, "en": "QUIT GAME", "tags": "plain"}
+{"id": 4122, "en": "%s PAUSED THE GAME", "tags": "fmt"}
+{"id": 4123, "en": "%ls can't join while you are in a Stronghold.\\nThey will join once you return to normal gameplay.", "tags": "fmt+nl"}
+{"id": 4124, "en": "The server is not available at this time. Please try again later.", "tags": "plain"}
+{"id": 4125, "en": "GAME TIE", "tags": "plain"}
+{"id": 4126, "en": "Unable to find any games.", "tags": "plain"}
+{"id": 4127, "en": "%ls IS JOINING THE GAME", "tags": "fmt"}
+{"id": 4128, "en": "INCORRECT MODE", "tags": "plain"}
+{"id": 4129, "en": "A connection error has occurred.\\nYou are being returned to the Main Menu.", "tags": "nl"}
+{"id": 4130, "en": "YOU WIN", "tags": "plain"}
+{"id": 4131, "en": "FIND GAME", "tags": "plain"}
+{"id": 4132, "en": "MULTIPLAYER", "tags": "plain"}
+{"id": 4133, "en": "Friendly fire turned off!\\nYou can no longer damage your partner.", "tags": "nl"}
+{"id": 4134, "en": "JOINING SERVER", "tags": "plain"}
+{"id": 4135, "en": "%ls would like to join your game.\\nWould you like to let them?", "tags": "fmt+nl"}
+{"id": 4136, "en": "KICK PLAYER AND CONTINUE GAME", "tags": "plain"}
+{"id": 4137, "en": "WAIT FOR ANY PLAYER", "tags": "plain"}
+{"id": 4138, "en": "LOAD", "tags": "plain"}
+{"id": 4139, "en": "%ls has left the game session", "tags": "fmt"}
+{"id": 4140, "en": "GAME INVITE FAILED", "tags": "plain"}
+{"id": 4141, "en": "You've been disconnected from the host so you must be returned to the main menu.\\nWould you like to save before exiting the level?", "tags": "nl"}
+{"id": 4142, "en": "SAVE AND QUIT GAME", "tags": "plain"}
+{"id": 4143, "en": "You were kicked from the game!", "tags": "plain"}
+{"id": 4144, "en": "DENY", "tags": "plain"}
+{"id": 4145, "en": "%ls HAS LEFT THE GAME SESSION", "tags": "fmt"}
+{"id": 4146, "en": "The Host is busy and has asked you to wait...", "tags": "plain"}
+{"id": 4147, "en": "CREATE NEW", "tags": "plain"}
+{"id": 4148, "en": "Searching for game.", "tags": "plain"}
+{"id": 4149, "en": "RECONNECTING TO %ls", "tags": "fmt"}
+{"id": 4150, "en": "This game is in progress or full.", "tags": "plain"}
+{"id": 4151, "en": "NO ONLINE", "tags": "plain"}
+{"id": 4152, "en": "SAVE AND CONTINUE GAME", "tags": "plain"}
+{"id": 4153, "en": "YOU LOSE", "tags": "plain"}
+{"id": 4154, "en": "The host has left the game session.\\nYou must return to the Main Menu.", "tags": "nl"}
+{"id": 4155, "en": "Could not send invite to {0}.", "tags": "fmt"}
+{"id": 4156, "en": "You must sign in with a profile to access this feature.", "tags": "plain"}

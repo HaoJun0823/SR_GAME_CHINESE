@@ -1,0 +1,214 @@
+HITS 160
+TOKEN kinzie 18
+TOKEN stronghold 17
+TOKEN friendly fire 17
+TOKEN ronin 10
+TOKEN shaundi 9
+TOKEN skeeters 6
+TOKEN ultor 6
+TOKEN nuke plant 6
+TOKEN impressions 5
+TOKEN kwilanna 4
+TOKEN eromenos museum 3
+TOKEN technically legal 3
+TOKEN brutella 3
+TOKEN trail blazing 3
+TOKEN rusty's needle 2
+TOKEN enigmus 2
+TOKEN space brutina 2
+TOKEN mr. zhen 2
+TOKEN rc possessor 2
+TOKEN k-8 krukov 2
+TOKEN cyber buster 2
+TOKEN viper laser rifle 2
+TOKEN smiling jacks 2
+TOKEN image as designed 2
+TOKEN legal lee 2
+TOKEN fuzz 1
+TOKEN wondermart 1
+TOKEN maero 1
+TOKEN grigor 1
+TOKEN dj enigmus 1
+TOKEN safeword 1
+TOKEN penthouse pets 1
+TOKEN rim jobs 1
+TOKEN heli assault 1
+TOKEN as3 ultimax 1
+TOKEN brickston 1
+TOKEN rondini's boat dock 1
+TOKEN shaundi's loft 1
+TOKEN kinzie's warehouse 1
+TOKEN zimos' pad 1
+TOKEN cyber blazing 1
+TOKEN satchel charges 1
+TOKEN ho traffic 1
+TOKEN high times 1
+TOKEN trafficking 1
+TOKEN kenshin 1
+TOKEN attrazione 1
+TOKEN d4th blossom 1
+TOKEN pimp slap 1
+TOKEN condor 1
+TOKEN let's pretend 1
+TOKEN cyber blaster 1
+TOKEN killbane 1
+activity | STRONGHOLD_FAILURE_SUB_TEXT | stronghold | 根据地 | EN=STRONGHOLD FAILED | ZH=据点失败
+activity | STRONGHOLD_FAILURE_CANCEL_TEXT | stronghold | 根据地 | EN=STRONGHOLD CANCELLED | ZH=据点已取消
+customize | LOGO_SKEETERS_3 | skeeters | 斯基特斯 | EN=SKEETERS 3 | ZH=蚊子 3
+customize | CUST_RONIN_COMPLIMENT_C | ronin | 罗宁帮 | EN=RONIN COMPLIMENT 3 | ZH=浪人赞美 3
+customize | CUST_VARIANT_ULTOR2 | ultor | 乌托尔 | EN=ULTOR 2 | ZH=阿尔托 2
+customize | CUST_ITEM_IMPRESSIONS_FEMALE_K | impressions | 印象刺青 | EN=IMPRESSIONS FEMALE K | ZH=印象·女 K
+customize | LOGO_FUZZ | fuzz | 警况 | EN=FUZZ | ZH=毛球
+customize | LOGO_RUSTY_S_NEEDLE_2 | rusty's needle | 锈针纹身 | EN=RUSTY'S NEEDLE 2 | ZH=拉斯蒂之针 2
+customize | CUST_ITEM_CF_SUIT_CYPHERSUIT | ultor | 乌托尔 | EN=ULTOR ASSASSIN | ZH=阿尔托刺客
+customize | CUST_RONIN_TAUNT_A | ronin | 罗宁帮 | EN=RONIN TAUNT 1 | ZH=浪人嘲讽 1
+customize | CUST_ITEM_IMPRESSIONS_FEMALE_R | impressions | 印象刺青 | EN=IMPRESSIONS FEMALE R | ZH=印象·女 R
+customize | LOGO_MUSEUM_ERO_1 | eromenos museum | 埃罗墨诺斯博物馆 | EN=EROMENOS MUSEUM 1 | ZH=EROMENOS 博物馆 1
+customize | LOGO_SKEETERS_6 | skeeters | 斯基特斯 | EN=SKEETERS 6 | ZH=蚊子 6
+customize | LOGO_SKEETERS_2 | skeeters | 斯基特斯 | EN=SKEETERS 2 | ZH=蚊子 2
+customize | CUST_VARIANT_ULTORSHIRT | ultor | 乌托尔 | EN=ULTOR | ZH=阿尔托
+customize | CUST_RONIN_COMPLIMENT_B | ronin | 罗宁帮 | EN=RONIN COMPLIMENT 2 | ZH=浪人赞美 2
+customize | LOGO_WONDERMART_1 | wondermart | 沃德玛特 | EN=WONDERMART 1 | ZH=惊奇超市 1
+customize | CUST_RONIN_TAUNT_D | ronin | 罗宁帮 | EN=RONIN TAUNT 4 | ZH=浪人嘲讽 4
+customize | STRONGHOLD_CUSTOMIZATION | stronghold | 根据地 | EN=STRONGHOLD CUSTOMIZATION | ZH=据点自定义
+customize | CUST_RONIN_TAUNT_C | ronin | 罗宁帮 | EN=RONIN TAUNT 3 | ZH=浪人嘲讽 3
+customize | CUST_TATTOO_LUPPARM_7 | ronin | 罗宁帮 | EN=FALL OF THE RONIN | ZH=浪人陨落
+customize | VEHICLE_PAINT_GANG_RONIN | ronin | 罗宁帮 | EN=RONIN | ZH=浪人
+customize | CUST_RONIN_COMPLIMENT_A | ronin | 罗宁帮 | EN=RONIN COMPLIMENT 1 | ZH=浪人赞美 1
+customize | LOGO_SKEETERS_1 | skeeters | 斯基特斯 | EN=SKEETERS 1 | ZH=蚊子 1
+customize | LOGO_SKEETERS_5 | skeeters | 斯基特斯 | EN=SKEETERS 5 | ZH=蚊子 5
+customize | LOGO_MUSEUM_ERO_2 | eromenos museum | 埃罗墨诺斯博物馆 | EN=EROMENOS MUSEUM 2 | ZH=厄洛墨诺斯博物馆 2
+customize | CUST_ITEM_CM_HAIR_TRIBALMULLET | maero | 马埃罗 | EN=THE MAERO MULLET | ZH=壮汉鲻鱼头
+customize | CUST_VARIANT_ULTOR_W_TIE | ultor | 乌托尔 | EN=ULTOR TIE | ZH=阿尔托领带
+customize | CUST_RONIN_TAUNT_B | ronin | 罗宁帮 | EN=RONIN TAUNT 2 | ZH=浪人嘲讽 2
+customize | VEHICLE_PAINT_GANG_ULTOR | ultor | 乌托尔 | EN=ULTOR | ZH=阿尔托
+customize | LOGO_RUSTY_S_NEEDLE_1 | rusty's needle | 锈针纹身 | EN=RUSTY'S NEEDLE 1 | ZH=拉斯蒂之针 1
+customize | LOGO_SKEETERS_4 | skeeters | 斯基特斯 | EN=SKEETERS 4 | ZH=蚊子 4
+customize | CUST_VARIANT_ULTOR1 | ultor | 乌托尔 | EN=ULTOR 1 | ZH=阿尔托 1
+customize | CUST_RONIN_COMPLIMENT_D | ronin | 罗宁帮 | EN=RONIN COMPLIMENT 4 | ZH=浪人赞美 4
+customize | LOGO_MUSEUM_ERO_3 | eromenos museum | 埃罗墨诺斯博物馆 | EN=EROMENOS MUSEUM 3 | ZH=EROMENOS 博物馆 3
+diversion | HITMAN_TARGET_12_DESCRIPTION | enigmus | 伊尼格玛斯 | EN=I can't take it any more!  That trance crap Enigmus plays is messin' w | ZH=我再也受不了了！恩尼格马斯放的那堆迷幻狗屁音乐，完全搅乱了我的节奏！去[format][color:em]萨兰德[/format]，[for
+diversion | DIVERSION_CHALLENGES_GRENADE_KILLS_D | friendly fire | 队友火力 | EN=We at Friendly Fire are considering offering a grenade sampler for the | ZH=我们「友好火力」正考虑在即将到来的节日旺季推一款榴弹试用装。你试试看，告诉我值不值。
+diversion | HITMAN_TARGET_62_DESCRIPTION | grigor | 格里戈尔 | EN=My faith in you was well placed.  The time has come for you to claim y | ZH=我对你的信任没有错付。是时候领取你的奖赏了。晨星帮正在转移一大笔现金。去[format][color:em]卡马诺广场码头[/format]
+diversion | HITMAN_TARGET_1_2 | dj enigmus | 伊尼格玛斯 | EN=DJ ENIGMUS | ZH=DJ 恩尼格马斯
+diversion | HITMAN_TARGET_1_2 | enigmus | 伊尼格玛斯 | EN=DJ ENIGMUS | ZH=DJ 恩尼格马斯
+dlc1 | DLC1_GB_OUT_BOBBY_03 | safeword | 安全词 | EN=Incredible!  That was - without a doubt - the most amazing individual  | ZH=不可思议！那绝对是——毫无争议——自从乒乓球波莉在 Safeword 周四夜场打工以来，我最惊艳的个人秀了！
+dlc2 | HOMIE_DLC2_SPACE_BRUTINA | space brutina | 太空猛女 | EN=SPACE BRUTINA | ZH=太空布鲁蒂娜
+dlc2 | DLC2_INTRO_PC_08 | shaundi | 肖恩蒂 | EN=Well I wouldn't get too worked up.  On camera is more of a Shaundi or  | ZH=呃，我也不至于太激动。镜头前的事更该是肖迪或皮尔斯的活儿。这剧本看得我一头雾水。
+dlc2 | DLC2_INTRO_KWILANNA_14 | mr. zhen | 郑先生 | EN=Oh, Mr. Zhen, I'm playing Kwilanna... | ZH=噢，甄先生，我演的是奎薇拉娜……
+dlc2 | DLC2_INTRO_KWILANNA_14 | kwilanna | 奎拉娜 | EN=Oh, Mr. Zhen, I'm playing Kwilanna... | ZH=噢，甄先生，我演的是奎薇拉娜……
+dlc2 | UNL_DESC_DLC2_GANG_PENTHOUSE | penthouse pets | 阁楼宝贝 | EN=You can now have Penthouse Pets in your gang. | ZH=你的帮派现在可以拥有阁楼女郎了。
+dlc2 | DLC2_INTRO_DIRECTOR_15 | kwilanna | 奎拉娜 | EN=Really?  I thought we were getting a NAME for Kwilanna. | ZH=真的？我还以为咱们要给奎薇拉娜起个名呢。
+dlc2 | UNL_DESC_DLC2_HOMIE_SPACE_BRUTINA | space brutina | 太空猛女 | EN=Space Brutina can be found in your Cell Phone \"PHONE\" menu. She will | ZH=太空布鲁蒂娜可在你的手机“PHONE”菜单中找到。她将在战斗中协助圣徒。
+dlc2 | DLC2_M02_MISSION_FAIL_DIDNT_PROTECT_HOMIE | kwilanna | 奎拉娜 | EN=YOU DIDN'T PROTECT KWILANNA! | ZH=你没能保护好奎薇拉娜！
+dlc2 | DLC2_OUTRO_PC_04 | kwilanna | 奎拉娜 | EN=Uhm... Kwilanna? | ZH=呃……奎薇拉娜？
+dlc2 | DLC2_INTRO_KWILANNA_12 | mr. zhen | 郑先生 | EN=It's nice to meet you Mr. Zhen! | ZH=甄先生，幸会！
+dlc3 | DLC3_M01_GET_BACK_TO_CLUB | technically legal | 法律边缘 | EN=GET BACK TO [format][color:location]TECHNICALLY LEGAL[/format] | ZH=回到[format][color:location]合规特区[/format]
+dlc3 | DLC3_M01_ABANDONED_STRIP_CLUB | technically legal | 法律边缘 | EN=YOU NEED TO WAIT FOR JIMMY INSIDE TECHNICALLY LEGAL | ZH=你得在合法地带里面等吉米
+dlc3 | HOMIE_DLC3_AISHA_BRUTELLA | brutella | 猛男芭比 | EN=AISHA BRUTELLA | ZH=艾莎·布鲁特拉
+dlc3 | DLC3_M01_LOOK_FOR_TAG | friendly fire | 队友火力 | EN=INVESTIGATE A [format][color:location]FRIENDLY FIRE[/format] | ZH=调查一家[format][color:location]友军火力[/format]
+dlc3 | DLC3_M01_GOTO_FRIENDLY_FIRE | friendly fire | 队友火力 | EN=GO TO [format][color:location]FRIENDLY FIRE[/format] | ZH=前往[format][color:location]友军火力[/format]
+dlc3 | UNL_DLC3_HOMIE_AISHA_BRUTELLA | brutella | 猛男芭比 | EN=HOMIE - AISHA BRUTELLA | ZH=兄弟 - 艾莎·布鲁特拉
+dlc3 | DLC3_M01_GOTO_STRIP_CLUB | technically legal | 法律边缘 | EN=GO TO [format][color:location]TECHNICALLY LEGAL[/format] | ZH=前往[format][color:location]合法地带[/format]
+dlc3 | UNL_DESC_DLC3_HOMIE_AISHA_BRUTELLA | brutella | 猛男芭比 | EN=Aisha Brutella can be found in your Cell Phone \"PHONE\" menu. She wil | ZH=艾莎·布鲁特拉可在你的手机“PHONE”菜单中找到。她将在战斗中协助圣徒。
+hud | TUT_TITLE_STORE_INTRO_MECHANIC | rim jobs | 边缘工坊 | EN=RIM JOBS | ZH=菊花保养行
+hud | TUT_TITLE_ACT_INTRO_HELI_ASSAULT | heli assault | 武直突击 | EN=HELI ASSAULT | ZH=直升机突击
+hud | TUT_STORE_INTRO_WEAPONS | friendly fire | 队友火力 | EN=You can purchase Weapons and Ammo as well as Upgrade your Weapons and  | ZH=你可以在友军火力枪店购买武器和弹药，还能升级武器和手榴弹。
+hud | SHOTGUN_POLICE | as3 ultimax | AS3 终极者 | EN=AS3 ULTIMAX | ZH=AS3 终极
+hud | TUT_PAUSE_MAP | friendly fire | 队友火力 | EN={MAP_MENU_IMG} ACCESS CELL PHONE MAP\nAccess your Cell Phone Map now a | ZH={MAP_MENU_IMG} 打开手机地图\n现在就打开手机地图，设定一条通往友军火力枪店的 GPS 路线。
+hud | TUT_TITLE_ACT_INTRO_CYBER_BLAZING | trail blazing | 烈火流星 | EN=TRAIL BLAZING | ZH=赛博流星
+hud | UNL_DESC_CASH_LIMIT_DECKER_3 | nuke plant | 核电站 | EN=Your City Income Transfer Limit is increased for upgrading the Nuke Pl | ZH=升级伯恩斯山核反应堆据点后，你的城市收入转账上限提升。
+hud | UNL_DESC_RESPECT_DECKER_1 | nuke plant | 核电站 | EN=You now receive a 5%% bonus to all Respect earned for acquiring the Nu | ZH=占领伯恩斯山核反应堆据点后，你获得的所有声望额外增加 5%%
+hud | FRIENDLY_FIRE_TURNED_ON__NYOU_CAN_NOW_DAMAGE_YOUR_PARTNER | friendly fire | 队友火力 | EN=FRIENDLY FIRE TURNED ON\\NYOU CAN NOW DAMAGE YOUR PARTNER | ZH=队友伤害已开启\N你现在可以打伤队友了
+hud | UNL_DESC_RESPECT_DECKER_3 | nuke plant | 核电站 | EN=You now receive a 15%% bonus to all Respect earned for upgrading the N | ZH=升级伯恩斯山核反应堆据点后，你获得的所有声望额外增加 15%%
+hud | UNL_DESC_CASH_LIMIT_DECKER_1 | nuke plant | 核电站 | EN=Your City Income Transfer Limit is increased for acquiring the Nuke Pl | ZH=占领伯恩斯山核反应堆据点后，你的城市收入转账上限提升。
+hud | FRIENDLY_FIRE_TURNED_OFF__NYOU_CAN_NO_LONGER_DAMAGE_YOUR_PARTNER | friendly fire | 队友火力 | EN=FRIENDLY FIRE TURNED OFF\\NYOU CAN NO LONGER DAMAGE YOUR PARTNER | ZH=关闭队友伤害\N你将无法再伤害你的队友
+hud | SPECIAL_RCVEHICLEGUN | rc possessor | 遥控夺取器 | EN=RC POSSESSOR | ZH=遥控夺车器
+hud | RIFLE_GANG | k-8 krukov | K-8 库鲁科夫 | EN=K-8 KRUKOV | ZH=K-8 克鲁科夫
+hud | STRONGHOLD_CANCEL_SUB_TEXT | stronghold | 根据地 | EN=STRONGHOLD CANCELED | ZH=据点已取消
+hud | UNL_DESC_WEP_CYBERSPACE_CANNON | cyber buster | 赛博克星 | EN=Equip the Cyber Buster at your Crib Weapon Cache. | ZH=在你的据点武器库中装备赛博破坏炮。
+hud | THEATER_PLAY_STRONGHOLD | stronghold | 根据地 | EN=PLAY STRONGHOLD | ZH=游玩据点
+hud | HUD_CANCEL_STRONGHOLD | stronghold | 根据地 | EN=RETRY OR EXIT STRONGHOLD | ZH=重试或退出据点
+hud | MISSION_COOP_CONFIRM_STRONGHOLD | stronghold | 根据地 | EN=CONFIRMING STRONGHOLD START WITH %ls | ZH=正在与 %ls 确认开始据点
+hud | FRIENDLY_FIRE_LIGHT_TURNED_ON__NYOU_CAN_NOW_DEAL_SOME_DAMAGE_TO_YOUR_PARTNER | friendly fire | 队友火力 | EN=Friendly fire light turned on!\nYou can now deal some damage to your p | ZH=轻量队友伤害已开启！\n你现在可以对你的搭档造成一定伤害。
+hud | UNL_DESC_CASH_LIMIT_DECKER_2 | nuke plant | 核电站 | EN=Your City Income Transfer Limit is increased for upgrading the Nuke Pl | ZH=升级伯恩斯山核反应堆据点后，你的城市收入转账上限提升。
+hud | HUD_TRIGGER_DISABLED_SH | stronghold | 根据地 | EN=YOU CAN'T VISIT HERE DURING THIS STRONGHOLD | ZH=此据点期间你不能来这里
+hud | HUD_PRESS_BACK_CANCEL_STRONGHOLD | stronghold | 根据地 | EN=HOLD %ls EXIT STRONGHOLD | ZH=按住 %ls 退出据点
+hud | RIFLE_STAG | viper laser rifle | 蝰蛇激光步枪 | EN=VIPER LASER RIFLE | ZH=毒蛇激光步枪
+hud | STRONGHOLD_COOP_START_MSG | stronghold | 根据地 | EN=Start Co-op Stronghold? | ZH=开始合作据点？
+hud | HOOD_NW_04 | brickston | 布里斯顿区 | EN=BRICKSTON | ZH=布里克斯顿
+hud | UNL_DESC_RESPECT_DECKER_2 | nuke plant | 核电站 | EN=You now receive a 10%% bonus to all Respect earned for upgrading the N | ZH=升级伯恩斯山核反应堆据点后，你获得的所有声望额外增加 10%%
+hud | STRONG_CANCEL_TEXT | stronghold | 根据地 | EN=Are you sure you want to leave the Stronghold?\nYou will lose all prog | ZH=确定要离开据点吗？\n你将丢失自上一个检查点以来的全部进度。
+menu | CAT_MOUSE_FRIENDLY_FIRE_WARNING | friendly fire | 队友火力 | EN=Turning off Friendly Fire will end Cat and Mouse. Are you sure? | ZH=关闭友军火力将结束猫鼠游戏。确定吗？
+menu | COOP_MENU_FRIENDLY_FIRE | friendly fire | 队友火力 | EN=FRIENDLY FIRE | ZH=友军伤害
+menu | MENU_STRONGHOLD_CUSTOMIZATION | stronghold | 根据地 | EN=STRONGHOLD CUSTOMIZATION | ZH=据点自定义
+menu | CRIB_NAME_DOCK | rondini's boat dock | 龙迪尼船坞 | EN=RONDINI'S BOAT DOCK | ZH=罗迪尼船坞
+menu | CRIB_NAME_SHAUNDI | shaundi | 肖恩蒂 | EN=SHAUNDI'S LOFT | ZH=姗蒂的阁楼
+menu | CRIB_NAME_SHAUNDI | shaundi's loft | 肖恩蒂的阁楼 | EN=SHAUNDI'S LOFT | ZH=姗蒂的阁楼
+menu | CRIB_NAME_KINZIE | kinzie | 金吉 | EN=KINZIE'S WAREHOUSE | ZH=金齐的仓库
+menu | CRIB_NAME_KINZIE | kinzie's warehouse | 金吉的仓库 | EN=KINZIE'S WAREHOUSE | ZH=金齐的仓库
+menu | CRIB_NAME_ZIMOS | zimos' pad | 齐莫斯的宅子 | EN=ZIMOS' PAD | ZH=齐莫斯的住所
+mission | MM_K_01_obj_meet_kinzie | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | M03_OBJ_GO_TO_WEAPON_STORE | friendly fire | 队友火力 | EN=GO TO [format][color:location]FRIENDLY FIRE[/format] | ZH=前往[format][color:location]友军火力[/format]
+mission | MSN_PRE_CALL_OBJ_M15 | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | SH03_CALL_CHOPPA | kinzie | 金吉 | EN=!!KINZIE: Let me call a friend for some ariel assistance | ZH=!!金齐：我喊个朋友来空中支援
+mission | SH03_KINZIE_DIED | kinzie | 金吉 | EN=Kinzie Died! | ZH=金齐死了！
+mission | MISSION_NAME_MM_K_01 | cyber blazing | 赛博流星 | EN=CYBER BLAZING | ZH=赛博烈焰
+mission | MSN_PROTO_SELECT_SATCHEL_TITLE | satchel charges | 炸药包 | EN=SATCHEL CHARGES | ZH=背包炸药
+mission | MSN_PRE_CALL_OBJ_SH03 | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S[/format] | ZH=前往[format][color:location]金齐处[/format]
+mission | MM06_OBJ_MEET_PIERCE | smiling jacks | 微笑杰克 | EN=MEET PIERCE AT [format][color:location]SMILING JACKS'[/format] | ZH=在[format][color:location]笑面杰克的店[/format]与皮尔斯碰头
+mission | MSN_PRE_CALL_OBJ_M17 | image as designed | 天生设计 | EN=GO TO [format][color:location]IMAGE AS DESIGNED[/format] | ZH=前往[format][color:location]意象工坊[/format]
+mission | MSN_PRE_CALL_OBJ_MMK05 | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | sh01_failure_shaundi_died | shaundi | 肖恩蒂 | EN=SHAUNDI DIED! | ZH=肖迪死了！
+mission | MSN_PRE_CALL_OBJ_M16 | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | MM_K_02_KINZIE_ABANDONDED | kinzie | 金吉 | EN=KINZIE WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER! | ZH=金齐被抛弃了！\n圣徒必须团结一致！
+mission | MSN_PRE_CALL_OBJ_MMK01 | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | M22_OI_SHAUNDI_BODY_TEXT | shaundi | 肖恩蒂 | EN=Save Shaundi but Killbane will escape | ZH=救下肖迪，但杀霸会逃走
+mission | M13_PROMPT_THROW_JOSH_TO_SHAUNDI | shaundi | 肖恩蒂 | EN=GIVE JOSH TO SHAUNDI | ZH=把乔什交给肖迪
+mission | MSG_PLAY_TB | trail blazing | 烈火流星 | EN=START TRAIL BLAZING | ZH=开始烈焰开路
+mission | MISSION_NAME_MM_A_02 | trail blazing | 烈火流星 | EN=TRAIL BLAZING | ZH=烈焰开路
+mission | M22_OBJ_KILLBANE_OR_SHAUNDI | shaundi | 肖恩蒂 | EN=[format][color:red]ELIMINATE KILLBANE[/format] OR [format][color:defen | ZH=[format][color:red]除掉杀霸[/format] 或 [format][color:defend]救下肖迪[/format]
+mission | MM_K_06_obj_meet_kinzie | kinzie | 金吉 | EN=GO TO [format][color:location]KINZIE'S HIDEOUT[/format] | ZH=前往[format][color:location]金齐的藏身处[/format]
+mission | sh01_failure_abandon_shaundi | shaundi | 肖恩蒂 | EN=SHAUNDI WAS ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER! | ZH=肖迪被抛弃了！\n圣徒必须团结一致！
+mission | MISSION_NAME_MM_Z_02 | ho traffic | 皮肉生意 | EN=HO TRAFFIC | ZH=妓女运输
+mission | SH03_KINZIE_ABANDONDED | kinzie | 金吉 | EN=You abandoned Kinzie! | ZH=你抛弃了金齐！
+mission | MM07_OBJ_MEET_PIERCE | smiling jacks | 微笑杰克 | EN=MEET PIERCE AT [format][color:location]SMILING JACKS'[/format] | ZH=在[format][color:location]笑面杰克的店[/format]与皮尔斯碰头
+mission | MM_K_02_KINZIE_DIED | kinzie | 金吉 | EN=KINZIE DIED! | ZH=金齐死了！
+mission | MISSION_NAME_MM_Z_05 | high times | 醉生梦死 | EN=HIGH TIMES | ZH=嗨翻时刻
+mission | M13_OBJ_THROW_JOSH | shaundi | 肖恩蒂 | EN=GIVE [format][color:use]JOSH[/format] TO [format][color:purple]SHAUNDI | ZH=把[format][color:use]乔什[/format]交给[format][color:purple]肖迪[/format] 或 [
+mission | M07_ACTION_UNTIE_KINZIE | kinzie | 金吉 | EN=UNTIE KINZIE | ZH=解开金齐
+mission | m22_failure_shaundi_died | shaundi | 肖恩蒂 | EN=SHAUNDI DIED!\n USE THE GRENADES TO SEPARATE KIA AND SHAUNDI, THEN BLA | ZH=肖迪死了！\n 用手榴弹把琪亚和肖迪分开，再轰掉琪亚。
+multiplayer | COOP_FREINDLY_FIRE_LIGHT | friendly fire | 队友火力 | EN=Friendly fire light turned on!\nYou can now deal some damage to your p | ZH=轻微误伤已开启！\n你现在可以对搭档造成少量伤害。
+multiplayer | COOP_FREINDLY_FIRE_ON | friendly fire | 队友火力 | EN=Friendly fire turned on!\nYou can now damage your partner. | ZH=误伤友军已开启！\n你现在可以伤害你的搭档。
+multiplayer | COOP_FREINDLY_FIRE_OFF | friendly fire | 队友火力 | EN=Friendly fire turned off!\nYou can no longer damage your partner. | ZH=误伤友军已关闭！\n你再也无法伤害你的搭档。
+static | POC2_STRONHOLD_UPRGADE | stronghold | 根据地 | EN=UPGRADE STRONGHOLD | ZH=升级据点
+static | MAP_ICON_DRUG_TRAFFICKING | trafficking | 黑货押运 | EN=TRAFFICKING | ZH=毒品交易
+static | COMERCIAL_6 | friendly fire | 队友火力 | EN=25% OFF AT FRIENDLY FIRE | ZH=友军火力店 25% 折扣
+static | COMERCIAL_8 | impressions | 印象刺青 | EN=25% OFF AT IMPRESSIONS | ZH=印象店 25% 折扣
+static | DROP_KENSHIN | kenshin | 剑心 | EN=GIVE KENSHIN | ZH=召唤建真
+static | GIVE_RCGUN | rc possessor | 遥控夺取器 | EN=GIVE RC POSSESSOR | ZH=召唤遥控附身枪
+static | EXIT_STRONGHOLD | stronghold | 根据地 | EN=EXIT STRONGHOLD | ZH=退出据点
+static | DROP_ATTRAZIONE | attrazione | 阿特拉齐奥内 | EN=GIVE ATTRAZIONE | ZH=召唤引力号
+static | COMERCIAL_7 | impressions | 印象刺青 | EN=15% OFF AT IMPRESSIONS | ZH=印象店 15% 折扣
+static | IMAGE_DESIGNED_NAME | image as designed | 天生设计 | EN=IMAGE AS DESIGNED | ZH=改头换面
+static | GIVE_D4THBLOSSOM | d4th blossom | D4TH 花瓣 | EN=GIVE D4TH BLOSSOM | ZH=召唤四绽花
+static | STRONGHOLD_START_TEXT | stronghold | 根据地 | EN=PRESS %s TO START %s STRONGHOLD | ZH=按 %s 启动 %s 据点
+static | GIVE_CYBER | cyber buster | 赛博克星 | EN=GIVE CYBER BUSTER | ZH=召唤电子终结者
+static | COMERCIAL_5 | friendly fire | 队友火力 | EN=15% OFF AT FRIENDLY FIRE | ZH=友军火力店 15% 折扣
+static | GIVE_PIMPSLAP | pimp slap | 老鸨巴掌 | EN=GIVE PIMP SLAP | ZH=召唤皮条客耳光
+static | CELL_FRIENDLY_FIRE | friendly fire | 队友火力 | EN=FRIENDLY FIRE | ZH=友军火力
+static | GIVE_SLM8 | viper laser rifle | 蝰蛇激光步枪 | EN=GIVE VIPER LASER RIFLE | ZH=召唤毒蛇激光步枪
+static | GIVE_KRUKOV | k-8 krukov | K-8 库鲁科夫 | EN=GIVE K-8 KRUKOV | ZH=召唤 K-8 克鲁科夫
+static | MAP_ICON_TSS_STRONGHOLD | stronghold | 根据地 | EN=3RD SREET SAINTS STRONGHOLD | ZH=第3街圣徒据点
+static | IMPRESSIONS_NAME | impressions | 印象刺青 | EN=IMPRESSIONS | ZH=印象店
+static | DROP_CONDOR | condor | 秃鹫号 | EN=GIVE CONDOR | ZH=召唤神鹰
+static | COMPLETION_EXIT_STRONGHOLD_CONFIRMATION | stronghold | 根据地 | EN=Are you sure you wish to quit the stronghold? | ZH=你确定要退出据点吗？
+static | COSTUME_NAME | let's pretend | 假装一下 | EN=LET'S PRETEND | ZH=角色扮演
+static | GIVE_CYBERSMG | cyber blaster | 赛博冲击枪 | EN=GIVE CYBER BLASTER | ZH=召唤电子冲击枪
+subtitle | Story16_Zscene02_03_Player_BM | kinzie | 金吉 | EN=I'm sure Kinzie can figure it out. | ZH=金齐肯定能琢磨明白。
+subtitle | Story12_In_09_Player_BM | legal lee | 律师李 | EN=Remind me to call Legal Lee about this. | ZH=提醒我给李律师打个电话说说这事。
+subtitle | Story21_In_10_Bobby | killbane | 杀霸 | EN=History is writing itself tonight, Zach!  After his questionable loss  | ZH=历史今夜正在书写，扎克！几年前那场胜负存疑的败仗之后，安吉尔就从地球上消失了。如果你是屠杀格斗的粉丝，今晚注定是你人生最棒的一夜。
+subtitle | CTO_Kinzie01_07_Player_BM | kinzie | 金吉 | EN=You're killing me, Kinzie. | ZH=你真要我命了，金齐。
+subtitle | Story22_In_02_Pierce | legal lee | 律师李 | EN=Heard back from Legal Lee.  Studio wants you to do a screen test for G | ZH=李律师回话了。片方想让你去试镜《太空黑帮》。
+subtitle | Story23_Out_06_Player_BM | kinzie | 金吉 | EN=Kinzie, you in the booth? | ZH=金齐，你在播报亭里吗？
+subtitle | Story23_Out_01_Player_BM | kinzie | 金吉 | EN=Kinzie, round up every Saint we can find...we're going on a field trip | ZH=金齐，把能找到的圣徒都集结起来……咱们要出门踏青了。

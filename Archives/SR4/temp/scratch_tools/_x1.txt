@@ -1,0 +1,7 @@
+﻿== target dir ==
+exists = True
+SR4R_dump  <DIR>  09-17 21:16:42
+SR4R_I18N.log  5548B  09-17 21:17:12
+== SR4R_dump ==
+SR4R_dump_text.bin  19389215B  09-17 21:16:42
+SR4R_dump_text.map  603B  09-17 21:16:42

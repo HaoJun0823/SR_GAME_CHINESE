@@ -1,0 +1,5 @@
+﻿SR4R_dump_text.bin 19389215B
+SR4R_dump_text.map 603B
+SR4R_I18N.log 5548B
+== src PE files ==
+  dump_ms

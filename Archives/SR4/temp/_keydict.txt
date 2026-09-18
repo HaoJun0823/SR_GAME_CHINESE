@@ -1,0 +1,5 @@
+﻿le_string/zh: 21 鏂囦欢 / 28592 琛?
+  鍙閿?1280  ->  鏈変腑鏂囧€?1265  ->  鍘婚噸鍚?1260锛堝悓閿鐩?5锛?
+  璺宠繃 HASH_ 妲戒綅鍚?27177锛涜烦杩囦富鏈哄钩鍙拌〃 ['platform_ggp_us.txt', 'platform_nx64_us.txt']
+鍐欏嚭 resource\dict\zh\le_string_keys.txt  (1260 鏉?
+鍐欏嚭 resource\dict\en\le_string_keys.txt  (1260 鏉? en 闀滃儚)

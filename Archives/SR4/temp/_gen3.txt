@@ -1,0 +1,26 @@
+﻿le_string/zh: 21 鏂囦欢 / 28592 琛?
+  鍙閿?1280  ->  鏈変腑鏂囧€?1265  ->  涓㈠純(鍚?) 4  ->  鍘婚噸鍚?1256锛堝悓閿鐩?5锛?
+  璺宠繃 HASH_ 妲戒綅鍚?27177锛涜烦杩囦富鏈哄钩鍙拌〃 ['platform_ggp_us.txt', 'platform_nx64_us.txt']
+  en 琛ㄧ己瀵瑰簲椤?12锛堝洖閫€鐢ㄩ敭鍚嶅崰浣嶏級
+  鎵嬪伐鍏滃簳 EXTRA_KEYS 5 鏉?
+  --- [S1] 鍥犺瘧鏂囧惈 % 杞崲绗﹁€屼涪寮?4 鏉?---
+    platform_pc_us.txt       PC_RECORD_MODE_PROGRESS                      specs=['d']  val=瑙嗛淇濆瓨涓細%d%%%% 瀹屾垚
+    platform_pc_us.txt       HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE         specs=['l', 'l']  val=灏?%ls 涓?%ls 浜掓崲
+    platform_pc_us.txt       HUD_PICK_UP_MESSAGE                          specs=['l']  val=鎷惧彇  %ls
+    platform_pc_us.txt       HUD_DROP_ITEM_MESSAGE                        specs=['l']  val=涓㈠純 %ls
+  --- [澶嶆牳] 鍊煎惈娓告垙鏍囪/鑺辨嫭鍙峰崰浣嶇 6 鏉★紙妯℃澘涓? 瑁?KEY 璺緞涓?{n} 涓嶄細灞曞紑锛?--
+    M01_OBJ_KILL_ZINYAK                          涓?[format][color:kill]娲ヤ簹鍏媅/format] 鎴樻枟
+    M18_GO_IN_OFFICE                             杩涘叆[format][color:location]鍔炲叕瀹/format]
+    M18_KILL_ATTACKERS                           娑堢伃[format][color:kill]鏀诲嚮鑰匸/format]
+    TUT_TAUNTING_PC                              {TAUNT_TWO_IMG} 鍢茶 
+{TAUNT_THREE_IMG} 鎭淮 
+涓庝汉缇や簰鍔紝閫氳繃鍢茶澶栨槦浜哄苟鍑绘潃瀹冧滑鏉ヨ幏寰梉format][color:pu
+    CELL_CHEAT_ACTIVIATE_DIALOG_BODY             [format][color:#edc300FF]{0}[/format]
+{1}浣跨敤绉樼睄灏嗚浣犳棤娉曡幏寰楁垚灏憋紝涓旇嚜鍔ㄤ繚瀛樹細琚鐢ㄣ€?
+
+浣犱粛瑕佹縺娲绘绉樼睄鍚楋紵
+    PC_RECORD_MODE_TEXT                          鍚敤褰曞埗妯″紡鍙皢浣犳渶鍚庢椂鍒荤殑娓告垙鐢婚潰鐩存帴淇濆瓨涓鸿棰戙€傛寜 ([format][color:#9400C5]{0}[/format]) 瀵煎嚭銆?
+
+瑙嗛淇濆瓨鑷筹細
+鍐欏嚭 resource\dict\zh\le_string_keys.txt  (1256 鏉?le_string + 5 鏉″厹搴?  鏍￠獙 OK, 0 bad line
+鍐欏嚭 resource\dict\en\le_string_keys.txt  (1256 鏉?le_string + 5 鏉″厹搴?  鏍￠獙 OK, 0 bad line

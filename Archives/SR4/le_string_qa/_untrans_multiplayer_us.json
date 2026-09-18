@@ -1,0 +1,18 @@
+{
+ "HASH_698DA423": "INVITE SENT",
+ "HASH_C5C23CA8": "You must be using the same version of Saints Row IV as the host to play LAN games.  Please make sure everyone has downloaded the latest title update.",
+ "HASH_5BA6A90B": "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure everyone has downloaded the latest title update.",
+ "HASH_8C806C4B": "You must sign in to Xbox Live to access this feature.",
+ "HASH_ECA4FBEB": "You have been signed out.\\nReturning to title screen.",
+ "HASH_65B006EF": "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure you have downloaded the latest patch.",
+ "HASH_E45265F0": "Ethernet connection has been lost.",
+ "HASH_47DACB11": "This Mission must be restarted to allow %ls to join your game right now.  By restarting you will lose all current checkpoint progress through this mission.\\nContinue joining?",
+ "HASH_8184B8F2": "A connection error has occurred.\\nYou are being returned to the title screen.",
+ "HASH_F099B5B2": "INVITE FAILED",
+ "HASH_C602DD13": "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure everyone has downloaded the latest title update from Xbox Live.",
+ "HASH_23F07E33": "You've been disconnected from the host so you must be returned to the title screen.\\nWould you like to save before exiting the level?",
+ "HASH_C9B002D5": "Co-op player disconnected.",
+ "HASH_4848E318": "You must be using the same version of Saints Row IV as the host to play System Link.  Please make sure everyone has downloaded the latest title update from Xbox Live.",
+ "HASH_D96AAD1C": "A connection error has occurred.\\nYou are being returned to the title screen.",
+ "HASH_DD865FBD": "Invite sent to {0}."
+}

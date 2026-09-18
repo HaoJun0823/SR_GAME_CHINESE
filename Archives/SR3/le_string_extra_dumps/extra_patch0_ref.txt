@@ -1,0 +1,10 @@
+// extra_dumps ref: patch0 - JP/CZ reference for keys in extra_patch0_us.txt
+"DLC_STORE_PURCHASE_INSTALLED_CONFIRM": "JP: このダウンロードコンテンツは既にインストールされています。\n購入しますか？ || CZ: Tento stažitelný obsah už máš nainstalovaný a přístupný. Chceš pokračovat v nákupu?"
+"DLC_STORE_ITEM_SEASON_PASS": "JP: [image:ui_text_star] シーズンパス コンテンツ || CZ: [image:ui_text_star] Obsah pro permanentku"
+"DLC_STORE_SEASON_PASS_PREREQ_CONFIRM": "JP: このダウンロードコンテンツはシーズンパスがインストールされるまで使用できません。\nダウンロードしますか？ || CZ: Tento stažitelný obsah se ve hře zpřístupní teprve tehdy, až si nainstaluješ permanentku. Chceš jej stáhnout?"
+"UNL_DESC_COMMUNITY_ASSET02": "JP: VOLITIONシャツを装備できるようになった || CZ: Odteď můžeš nosit tričko Volition"
+"UNL_COMMUNITY_ASSET02": "JP: VOLITIONシャツ || CZ: PŘEDMĚT - TRIČKO VOLITION"
+"UNL_COMMUNITY_ASSET01": "JP: セインツメンバーシャツ || CZ: PŘEDMĚT - TŘIČKO ČLEN ULICE"
+"UNL_DESC_COMMUNITY_ASSET01": "JP: セインツメンバーシャツを装備できるようになった || CZ: Odteď můžeš nosit tričko člen ulice"
+"UNL_COMMUNITY_ASSET03": "JP: フルール・ド・セインツパーカー || CZ: PŘEDMĚT - MIKINA FLEUR DE SAINTS"
+"UNL_DESC_COMMUNITY_ASSET03": "JP: フルール・ド・セインツパーカーを装備できるようになった || CZ: Odteď můžeš nosit mikinu Fleur de Saints"

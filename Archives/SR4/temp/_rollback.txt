@@ -1,0 +1,37 @@
+﻿=== 回滚后 scripts 关键文件 ===
+SR4R_I18N.asi.bak                            723968  2026/9/12 11:54:54  5D85175D
+SR4R_I18N.asi.bak_v1                         725504  2026/9/12 12:12:36  FDC9E3D6
+SR4R_I18N.asi.bak_20260912                   726528  2026/9/12 12:12:36  9D41AE48
+SR4R_I18N.asi.bak_v12_20260917_2057          729088  2026/9/17 20:07:53  9A082704
+SR4R_I18N.asi.bak_v13pre_20260917_2110       733696  2026/9/17 20:56:40  CCD140BF
+SR4R_I18N.asi.bak_v13_20260917_2130          733696  2026/9/17 21:10:19  A1FFADC4
+SR4R_I18N.asi.bak_v14_20260917_2202          735232  2026/9/17 21:30:49  043D8833
+SR4R_I18N.asi                                735232  2026/9/17 21:30:49  043D8833
+
+=== 当前生效的 SR4R_I18N.asi ===
+size=735232  md5=043D8833D54426CE2B25C0A99F967E35  mtime=2026/9/17 21:30:49
+
+=== dict 目录(应无 le_string_keys.txt) ===
+exe_hardcoded.txt
+le_data_supplement.txt
+voice_001.txt
+voice_002.txt
+voice_003.txt
+voice_004.txt
+voice_005.txt
+voice_006.txt
+voice_007.txt
+voice_008.txt
+voice_009.txt
+voice_010.txt
+voice_011.txt
+voice_012.txt
+voice_013.txt
+voice_014.txt
+voice_015.txt
+voice_016.txt
+voice_017.txt
+
+=== 隔离区 ===
+le_string_keys.broken_20260917.txt  66313
+SR4R_I18N.v15_crash_20260917.asi  738816

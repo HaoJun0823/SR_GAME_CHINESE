@@ -1,0 +1,38 @@
+======== 1) Steam 内 call 目标枚举 ========
+SUBTITLE call 点 (6 处): ['0x1403d6aaa', '0x1403d6ba4', '0x140ad878e', '0x140adad43', '0x140adae1d', '0x140ae3101']
+FORMAT call 点 (4 处): ['0x1402a6290', '0x140cdfa5a', '0x140cdfb45', '0x140cf371a']
+DRAWWIDE call 点 (5 处): ['0x14023f2d3', '0x14023f371', '0x140d5b0b3', '0x140d5b151', '0x140dc2c90']
+
+======== 2) MS dump 内『新形态大栈帧前导』枚举 ========
+home4 前缀 4C 89 4C 24 20 4C 89 44 24 18 命中=59
+符合『新形态大栈帧』的函数入口（1 个）:
+  VA             帧          chkstk     xmm6   xmm8   cookie  
+  0x140e92da0    0xFFFFD0A8 0x3058     True   False  False   
+
+======== 3) 候选入口反汇编（找 Subtitle: wchar_t*, float, double, int） ========
+---- @0x140e92da0 帧=0xFFFFD0A8 chkstk=0x3058 ----
+   hex: 4C 89 4C 24 20 4C 89 44 24 18 48 89 4C 24 08 55 53 56 41 56 48 8D AC 24 A8 D0 FF FF B8 58 30 00 00 E8 BA 13 13 00 48 2B E0 4D 8B F0 48 8B DA 48 8B F1 48 85 C9 0F 84 A3 06 00 00 48 85 D2 0F 84 9A 06 00 00 4D 85 C0 0F 84 91 06 00 00 44 8B 95 A0 2F 00 00 41 B8 DF FF 00 00 48 89 BC 24 88 30 00 00 49 BB 00 02 00 00 01 00 FF 03 4C 89 A4 24
+   +00  mov                      qword ptr [rsp + 0x20], r9
+   +05  mov                      qword ptr [rsp + 0x18], r8
+   +0A  mov                      qword ptr [rsp + 8], rcx
+   +0F  push                     rbp
+   +10  push                     rbx
+   +11  push                     rsi
+   +12  push                     r14
+   +14  lea                      rbp, [rsp - 0x2f58]
+   +1C  mov                      eax, 0x3058
+   +21  call                     0x140fc4180
+   +26  sub                      rsp, rax
+   +29  mov                      r14, r8
+   +2C  mov                      rbx, rdx
+   +2F  mov                      rsi, rcx
+   +32  test                     rcx, rcx
+   +35  je                       0x140e9347e
+   +3B  test                     rdx, rdx
+   +3E  je                       0x140e9347e
+   +44  test                     r8, r8
+   +47  je                       0x140e9347e
+   +4D  mov                      r10d, dword ptr [rbp + 0x2fa0]
+   +54  mov                      r8d, 0xffdf
+   +5A  mov                      qword ptr [rsp + 0x3088], rdi
+   +62  movabs                   r11, 0x3ff000100000200

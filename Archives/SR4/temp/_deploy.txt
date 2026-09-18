@@ -1,0 +1,43 @@
+﻿=== 部署结果 ===
+exe_hardcoded.txt  268204
+le_data_supplement.txt  914814
+le_string_keys.txt  66313
+voice_001.txt  100081
+voice_002.txt  93321
+voice_003.txt  96420
+voice_004.txt  93055
+voice_005.txt  99067
+voice_006.txt  106795
+voice_007.txt  95611
+voice_008.txt  96784
+voice_009.txt  95289
+voice_010.txt  94997
+voice_011.txt  99839
+voice_012.txt  91497
+voice_013.txt  97462
+voice_014.txt  95325
+voice_015.txt  91837
+voice_016.txt  91446
+voice_017.txt  73478
+
+=== 目标文件前 20 行 ===
+// SR4R le_string_keys.txt (zh) 鈥斺€?鏈湴鍖?KEY -> 涓枃
+// 鐢熸垚: Tools/gen_keydict.py
+// 鐢ㄩ€? 寮曟搸璇█鏈嶅姟瑙ｆ瀽澶辫触鏃? 鏂囨湰瀵硅薄浼氬洖閫€鍒板師濮?KEY 妯℃澘
+//       (灞忓箷涓婄洿鎺ユ樉绀?MENU_BACK / PLT_xxx)銆傛湰琛ㄦ妸杩欑被鍙 KEY 鐩存帴鏄犲皠涓鸿瘧鏂囥€?
+// 鏉ユ簮: resource/le_string/zh/*.txt + 鎵嬪伐鍏滃簳 EXTRA_KEYS
+// 鍕挎墜鏀? 閲嶆柊鐢熸垚鍗冲彲 (鍏滃簳閿敼 Tools/gen_keydict.py 鐨?EXTRA_KEYS)銆?
+
+// ---- 鎵嬪伐鍏滃簳: PC 鐗?le_string 涓笉瀛樺湪鐨?UI 閿?----
+// 鍙栨秷鎸夐挳锛堥厤瀵瑰厹搴曪級
+"CONTROL_NO": "鍚?;
+// 纭鎸夐挳
+"CONTROL_YES": "鏄?;
+// 杩斿洖鎸夐挳锛堥珮棰戯級
+"MENU_BACK": "杩斿洖";
+// 鎭㈠榛樿璁剧疆
+"MENU_RESTORE_DEFAULTS": "鎭㈠榛樿璁剧疆";
+// [鎺ㄦ柇] 寮€濮嬫彁绀?
+"PLT_PRESS_START": "鎸夊紑濮嬮敭";
+
+// ---- le_string 鍙閿?(鑷姩鐢熸垚) ----

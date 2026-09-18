@@ -1,0 +1,24 @@
+﻿===== 产物 =====  736256 B  mtime=2026/9/17 22:50:57
+md5 = EA338576C55C5006385E499EB07BB682
+
+===== A) 应【存在】(v1.7 标识 / 保留的加固) =====
+  SR4R v1.7 active                   FOUND @0x92AB0
+  SR4R_I18N v1.7                     FOUND @0x92465
+  ATTACH SR4R v1.7                   FOUND @0x92B9A
+  dict-selftest                      FOUND @0x91D58
+  REJECT unsafe trans                FOUND @0x91ABD
+  d3d: device/context captured       FOUND @0x912C8
+
+===== B) 应【消失】(已剥离的运行时探针格式串) =====
+  alive: %s                          已清除 OK
+  fmt#%-3ld                          已清除 OK
+  early#%-3ld                        已清除 OK
+  drawin#%-3ld                       已清除 OK
+  stats2: calls                      已清除 OK
+  [KEYLIKE]                          已清除 OK
+  a1(string) ->                      已清除 OK
+
+===== C) 旧版本串残留检查 =====
+  SR4R v1.6 active                   已清除 OK
+  SR4R_I18N v1.6                     已清除 OK
+  ATTACH SR4R v1.6                   已清除 OK

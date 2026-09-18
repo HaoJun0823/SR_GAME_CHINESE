@@ -1,0 +1,63 @@
+﻿=== 日志存在, 行数: 74
+
+=== 前 60 行 ===
+[21:41:40.927 T33580] [Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N
+[21:41:40.927 T33580] [DllMain] ATTACH SR4R v1.4
+[21:41:40.927 T7864] ==== SR4R_I18N v1.4: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 鏈煡鏋勫缓鑷В, L1/L2/L3 涓夊眰鐗瑰緛鐮? ====
+[21:41:40.928 T7864] cfg: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SR4R_I18N.ini loaded (dict_dir=dict origin_dir=origin font_file=SourceHanSansHWSC-VF.ttf charlist=charlist.txt dump=1 early=1 diag=1 sub=1 textdump=2 exe=auto)
+[21:41:40.928 T7864] exe: MSStore (via PE fingerprint, score=3/3) | file=sriv.exe TimeDateStamp=5E58CEF8 EntryPoint=00FC44FC SizeOfImage=07E6D000
+[21:41:40.928 T7864] origin: folder C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\origin not found (GLE=3), ID/HASH_ dict keys will be skipped
+[21:41:40.931 T7864] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\exe_hardcoded.txt bad line: // 
+[21:41:40.939 T7864] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\le_data_supplement.txt bad line: // Format: "English": "Chinese translation";
+[21:41:40.953 T7864] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_001.txt bad line: // Format: "English": "Chinese translation";
+[21:41:40.957 T7864] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_002.txt bad line: // Format: "English": "Chinese translation";
+[21:41:40.959 T7864] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_003.txt bad line: // Format: "English": "Chinese translation";
+[21:41:41.001 T7864] dict: 19 files, 34689 lines, 37647 keys, 0 HASH_ skipped, 29816 cjk, 19 bad, arena 9164/131072 KB
+[21:41:41.002 T7864] charlist: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\charlist.txt merged 282 new chars (total 3296, rankPos 3278, lines 82)
+[21:41:41.004 T7864] dump: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\DumpText.dtxt opened (append)
+[21:41:41.588 T7864] globals: dynamic resolve OK | FontLookup=0x140E0A530 fontTab=0x146CFCDB0 fontCount=0x146CFCDA8
+[21:41:41.616 T7864] locate FORMAT: L1/L2 钀界┖(0/0 hits) -> L3 鎹唬鏋勫缓鐗瑰緛鐮佸懡涓?@0x140E92DA0
+[21:41:41.768 T7864] locate SUBTITLE: L1/L2 钀界┖(0/0 hits) -> L3 鎹唬鏋勫缓鐗瑰緛鐮佸懡涓?@0x140488A60
+[21:41:41.877 T7864] hook DRAW_WIDE @0000000140EF6D40 installed (via aob)
+[21:41:41.974 T7864] hook FORMAT @0000000140E92DA0 installed (via aob-l3)
+[21:41:42.076 T7864] hook FONT_LOOKUP @0000000140E0A530 installed (via aob)
+[21:41:42.228 T7864] hook TEXOBJ @0000000140DEAF00 installed (via aob)
+[21:41:42.392 T7864] hook SRV_RESOLVE @00000001411DFE30 installed (via aob)
+[21:41:42.548 T7864] hook LANG_CUR @0000000140E92770 installed (via aob)
+[21:41:42.687 T7864] hook LANG_TXT @0000000140E92750 installed (via aob)
+[21:41:42.831 T7864] hook SUBTITLE @0000000140488A60 installed (via aob-l3)
+[21:41:42.832 T7864] SR4R v1.4 active: dict=37647 keys (19 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[21:41:42.832 T22776] font: charset 3371 chars (dict) + extras
+[21:41:42.854 T22776] font: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SourceHanSansHWSC-VF.ttf (35415760 bytes)
+[21:41:42.854 T22776] font: stbtt ok (numGlyphs=65535)
+[21:41:48.560 T33580] font0: upgrade requested (first CJK text)
+[21:41:48.634 T8636] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[21:41:48.634 T8636] d3d: device/context captured from SRV (version-agnostic path)
+[21:41:48.646 T8636] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[21:41:48.647 T8636] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[21:41:48.677 T8636] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[21:41:53.215 T24992] wrap: LEARN  pend="button text gjq"
+[21:41:53.215 T24992] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[21:41:53.215 T24992] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="button text gjq" new="TEXT_LOCALIZED"
+[21:41:53.215 T24992] font1: upgrade requested (first CJK text)
+[21:41:53.344 T24840] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[21:41:53.344 T24840] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[21:41:53.414 T24840] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[21:41:53.420 T24840] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[21:41:53.663 T24840] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+[21:41:58.215 T33580] wrap: CONCAT-MISS  pre="SAVE_WARNING_BOOT" | suf="
+[21:41:58.219 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="SAVE_WARNING_BOOT" new="button text gjq"
+[21:42:05.137 T33580] wrap: TTL-EXPIRED  pend="MAINMENU_EXTRAS"
+[21:42:05.138 T33580] wrap: LEARN  pend="MENU_BACK"
+[21:42:07.093 T33580] wrap: CONCAT-MISS  pre="MENU_BACK" | suf="Esc"
+[21:42:07.093 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="MENU_BACK" new="MENU_RESTORE_DEFAULTS"
+[21:42:10.404 T33580] wrap: CONCAT-MISS  pre="MENU_OPTIONS_GAMEPLAY_AIRPLANE_TIP" | suf="Esc"
+[21:42:10.404 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="MENU_OPTIONS_GAMEPLAY_AIRPLANE_TIP" new="MENU_BACK"
+[21:42:12.848 T27268] stats: draw hit=0 miss=0 | format hit=0 miss=527 | wrap=0 | sub hit=0 miss=0 | dumped=65 | fonts=0
+[21:42:13.702 T33580] wrap: CONCAT-MISS  pre="MENU_BACK" | suf="Esc"
+[21:42:13.702 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="MENU_BACK" new="MENU_RESTORE_DEFAULTS"
+[21:42:16.752 T33580] wrap: CONCAT-MISS  pre="PLT_MENU_WINDOWED" | suf="
+[21:42:16.777 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="PLT_MENU_WINDOWED" new="PLT_MENU_DISPLAY_MODE_TOOLTIP"
+[21:42:20.054 T33580] wrap: CONCAT-MISS  pre="PLT_MENU_ASPECT_TOOLTIP" | suf="
+[21:42:21.903 T33580] wrap: REPLACE-pend (鏂?prefix 椤舵帀鏃ф1)  old="PLT_MENU_ASPECT_TOOLTIP" new="PLT_MENU_WINDOWED"
+[21:42:23.410 T33580] wrap: CONCAT-MISS  pre="PLT_TRILINEAR" | suf="

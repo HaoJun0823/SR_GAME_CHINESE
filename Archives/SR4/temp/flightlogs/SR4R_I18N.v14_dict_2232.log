@@ -1,0 +1,44 @@
+[22:32:54.710 T12272] [Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N
+[22:32:54.710 T12272] [DllMain] ATTACH SR4R v1.4
+[22:32:54.710 T65952] ==== SR4R_I18N v1.4: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====
+[22:32:54.710 T65952] cfg: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.ini loaded (dict_dir=dict origin_dir=origin font_file=SourceHanSansHWSC-VF.ttf charlist=charlist.txt dump=1 early=1 diag=1 sub=1 textdump=2 exe=auto)
+[22:32:54.710 T65952] exe: Steam (via PE fingerprint, score=3/3) | file=sr_hv.exe TimeDateStamp=642AD908 EntryPoint=013635C4 SizeOfImage=07CF8000
+[22:32:54.710 T65952] origin: folder I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\origin not found (GLE=3), ID/HASH_ dict keys will be skipped
+[22:32:54.710 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\exe_hardcoded.txt bad line: // 
+[22:32:54.713 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\le_data_supplement.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.720 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_001.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.721 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_002.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.722 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_003.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.734 T65952] dict: 20 files, 35963 lines, 38908 keys, 0 HASH_ skipped, 31077 cjk, 19 bad, arena 9375/131072 KB
+[22:32:54.734 T65952] charlist: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\charlist.txt merged 282 new chars (total 3296, rankPos 3278, lines 82)
+[22:32:54.734 T65952] dump: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\DumpText.dtxt opened (append)
+[22:32:54.743 T65952] globals: dynamic resolve OK | FontLookup=0x140BF8550 fontTab=0x146AE7060 fontCount=0x146AE504C
+[22:32:54.846 T65952] hook DRAW_WIDE @00007FF64E2E36A0 installed (via aob)
+[22:32:54.904 T65952] hook FORMAT @00007FF64E219A00 installed (via aob)
+[22:32:54.959 T65952] hook FONT_LOOKUP @00007FF64E118550 installed (via aob)
+[22:32:55.015 T65952] hook TEXOBJ @00007FF64E09AF30 installed (via aob)
+[22:32:55.074 T65952] hook SRV_RESOLVE @00007FF64E34C9E0 installed (via aob)
+[22:32:55.129 T65952] hook LANG_CUR @00007FF64E211980 installed (via aob)
+[22:32:55.186 T65952] hook LANG_TXT @00007FF64E211960 installed (via aob)
+[22:32:55.251 T65952] hook SUBTITLE @00007FF64D8F18F0 installed (via aob)
+[22:32:55.251 T65952] SR4R v1.4 active: dict=38908 keys (20 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[22:32:55.251 T53604] font: charset 3371 chars (dict) + extras
+[22:32:55.258 T53604] font: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SourceHanSansHWSC-VF.ttf (35415760 bytes)
+[22:32:55.259 T53604] font: stbtt ok (numGlyphs=65535)
+[22:32:58.894 T12272] font0: upgrade requested (first CJK text)
+[22:32:58.925 T17224] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[22:32:58.925 T17224] d3d: device/context captured from SRV (version-agnostic path)
+[22:32:58.927 T17224] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[22:32:58.927 T17224] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[22:32:58.938 T17224] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[22:33:03.509 T29400] wrap: LEARN  pend="button text gjq"
+[22:33:03.509 T29400] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[22:33:03.509 T29400] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="button text gjq" new="TEXT_LOCALIZED"
+[22:33:03.509 T29400] font1: upgrade requested (first CJK text)
+[22:33:03.576 T33260] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[22:33:03.576 T33260] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[22:33:03.591 T33260] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[22:33:03.593 T33260] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[22:33:03.646 T33260] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+[22:33:08.501 T12272] wrap: CONCAT-MISS  pre="New Sticker" | suf="
+[22:33:08.503 T12272] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="New Sticker" new="button text gjq"

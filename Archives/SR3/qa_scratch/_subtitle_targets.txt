@@ -1,0 +1,1080 @@
+KEY: Story05_Out_04_Phillipe
+ENG: The Saints are no more than a white noise of empty threats.
+CUR: 圣徒不过是空洞威胁拼凑的白噪音罢了。
+
+KEY: Story02_In_31_Gat
+ENG: I'll fly it back to Stilwater.
+CUR: 我来把飞机开回斯蒂尔沃特。
+
+KEY: Story18_In_03_Trooper
+ENG: I heard gunfire, this way!
+CUR: 我听见枪声了，这边！
+
+KEY: Story17_Mid_10_Agent
+ENG: Don't you look at the Commander!
+CUR: 不许看指挥官！
+
+KEY: Story03_Out_04_Pierce
+ENG: Girl, you don't get messy.  Let us take care of business.
+CUR: 姑娘，这种事不用你弄脏手。交给我们来办。
+
+KEY: Story13_In_02_Shaundi
+ENG: I'm good.
+CUR: 我没事。
+
+KEY: Story06_Out01_01_Player_BM
+ENG: It's time we went back home and buried Johnny.
+CUR: 是时候回家给强尼下葬了。
+
+KEY: Story17_Out_08_Cyrus
+ENG: He'll fall in line, they all will.
+CUR: 他会归顺的，他们全都会。
+
+KEY: Story13_Out_08_Kia
+ENG: I'll find her.
+CUR: 我会找到她的。
+
+KEY: Story10_Out_05_Cyrus
+ENG: When we win the war on urban terror, you and your families will be safe again.
+CUR: 等我们打赢城市反恐这场仗，你们和你们的家人就能重获安全。
+
+KEY: Story08_In_09_Pierce
+ENG: OH SHIT! These ho's ain't ho's!
+CUR: 我操！这帮妹子根本不是妹子！
+
+KEY: Story19_In_08_Player
+ENG: Burt-fucking-Reynolds?!
+CUR: 伯特·他妈的·雷诺兹？！
+
+KEY: SH_Morningstar01_01_Player_BM
+ENG: Lotta people with guns in there.  We'll go in the back way.
+CUR: 里面一帮持枪的家伙。咱们从后面绕进去。
+
+KEY: Story02_In_27_Gat
+ENG: Boss--you gotta bail!
+CUR: 老大——快跳伞！
+
+KEY: Story09_Out_03_Killbane
+ENG: I am the general, I'm the czar, I'm the Walking Apocalypse, and I make the decisions--not you!
+CUR: 我是将军，我是沙皇，我是行走的末日——拿主意的是我，不是你！
+
+KEY: Story08_Out_10_Killbane
+ENG: Apology accepted.  I'll comp you a VIP pass to Murderbrawl, that'll cheer you up.
+CUR: 道歉我收下了。送你一张屠杀格斗的VIP通行证，保管让你心情好起来。
+
+KEY: Story02_In_09_Viola
+ENG: Which is precisely why our employer wishes to speak with you.
+CUR: 这正是我们雇主想找你谈的原因。
+
+KEY: Story13_In_04_Shaundi
+ENG: What.
+CUR: 什么。
+
+KEY: Story02_In_25_Phillipe
+ENG: And I had so hoped to come to a rational business arrangement.
+CUR: 我原本还满心希望，咱们能理性地谈成一桩生意呢。
+
+KEY: Story01_In_04_Shaundi
+ENG: You're just a ride-a-long, man--
+CUR: 哥们儿，你就是个跟着凑热闹的——
+
+KEY: Story15_Out_04_Kinzie
+ENG: Funny.  I'll explain it all once this thing's set up.
+CUR: 真有意思。等这台玩意儿架好了，我再统统解释给你听。
+
+KEY: Story12_In_05_Kid
+ENG: Um... excuse me?
+CUR: 呃……打扰一下？
+
+KEY: Story05_Out_01_Matt
+ENG: The Saints aren't going to back down...
+CUR: 圣徒是不会就此罢手的……
+
+KEY: Story15_In_04_Kinzie
+ENG: Sleep is forbidden.
+CUR: 禁止睡觉。
+
+KEY: Story06_Mid_06_Pierce
+ENG: Why you still strung up if they already cloned your ass?
+CUR: 既然都能克隆你了，他们干嘛还把你吊在这儿？
+
+KEY: Story02_In_28_Player_BM
+ENG: Not without you.
+CUR: 没有你我不走。
+
+KEY: Story02_In_16_Phillipe
+ENG: Evidently not, or you wouldn't have robbed our bank. Perhaps you wonder why you're still breathing at this point.
+CUR: 显然不是，不然你们也不会抢我们的银行。也许你正琢磨，自己到这会儿怎么还能喘气。
+
+KEY: Story01_In_22_Player_BM
+ENG: That is my plan.
+CUR: 我就是这么打算的。
+
+KEY: Story09_In_02_Player_BM
+ENG: And once it's ours the Morningstar's sex operation is done.
+CUR: 等这地方归了我们，晨星帮的皮肉生意也就到头了。
+
+KEY: Story08_In_03_Zimos
+ENG: I was saddled up in a human pony show, but you see me crying about it, little girl?
+CUR: 我被套上鞍子在人肉小马秀里供人骑，可你见过我为此哭鼻子吗，小姑娘？
+
+KEY: Story02_Out_02_Phillipe
+ENG: ...Viola and Kiki will spread the word: Steelport belongs to the Syndicate, and the Saints are not welcome.
+CUR: ……薇奥拉和琦琦会把话放出去：钢埠属于辛迪加，圣徒在这儿不受欢迎。
+
+KEY: Story02_In_15_Shaundi
+ENG: Never heard of it.
+CUR: 没听说过。
+
+KEY: CTO_Pierce02_09_Player_BM
+ENG: I don't have time for a stripper.
+CUR: 我可没工夫搭理什么脱衣舞女。
+
+KEY: Story22_OutB_05_Monica
+ENG: Like or not...the Saints are heroes.
+CUR: 不管你愿不愿意……圣徒都是英雄。
+
+KEY: Story11_Out_07_Monica
+ENG: Absolutely not.
+CUR: 绝对不行。
+
+KEY: Story10_In_08_Viola
+ENG: I get to watch Killbane suffer.
+CUR: 我能亲眼看着杀霸受罪。
+
+KEY: Story09_In_03_Zimos
+ENG: How you gonna move all the bitches?
+CUR: 这帮娘们你打算怎么运走？
+
+KEY: Story02_In_22_Player_BM
+ENG: Listen, you French fuck--
+CUR: 听着，你个法国混蛋——
+
+KEY: Story02_In_07_Gat
+ENG: Is that what it's all about?
+CUR: 合着就为这个？
+
+KEY: Story01_In_06_Josh
+ENG: I am a Method actor.  If I'm gonna play a Saint with any degree of emotional truth, I gotta make it real.
+CUR: 我可是方法派演员。要想把圣徒演出几分真实的情感，我就得来真的。
+
+KEY: Story16_Out_01_Killbane
+ENG: I really wish you'd reconsider, Matty.  These hands of mine were meant to rend bone, not hunt and peck on a keyboard.
+CUR: 马蒂，我真希望你能再想想。我这双手天生是用来撕筋碎骨的，不是用来二指禅戳键盘的。
+
+KEY: Story02_Out_01_Phillipe
+ENG: Gentlemen, negotiations  were... less than successful.
+CUR: 先生们，谈判的结果……不太成功。
+
+KEY: Story07_Out_03_Killbane
+ENG: I had someone else in mind.
+CUR: 我心里另有人选。
+
+KEY: SH_Morningstar01_04_Pierce
+ENG: What about the inside, motherfucker?
+CUR: 那里面呢，混账东西？
+
+KEY: Story02_In_01_Player_BM
+ENG: The fuck is this, we paid up this month.
+CUR: 搞什么鬼，这个月我们可是交过钱了。
+
+KEY: Story19_In_13_Player
+ENG: Uh, yeah, great!  What do you need?
+CUR: 呃，好啊，太棒了！您有什么吩咐？
+
+KEY: Story17_Mid_07_Agent
+ENG: I can take these two down to detention for you, sir.
+CUR: 长官，我可以把这两个人押去拘留室。
+
+KEY: Story06_Mid_05_Oleg
+ENG: Phillipe likes his things custom-made--and for his brutes, I am the master pattern, you see.
+CUR: 菲利普喜欢定制的东西——而他那些壮汉打手，都是照着我的模子造的，明白吗？
+
+KEY: Story22_OutA_04_Monica
+ENG: You were right, Commander.  Bring in the Daedelus.
+CUR: 你说得对，指挥官。让 Daedelus 进场。
+
+KEY: Story19_In_04_Viola
+ENG: Repeat after me: Don't fuck with the Mayor.
+CUR: 跟我念：别惹市长。
+
+KEY: Story22_In_01_Player_BM
+ENG: So what's up?
+CUR: 所以，出什么事了？
+
+KEY: Story03_Out_08_Player_BM
+ENG: Relax, Shaundi--we got it all covered.
+CUR: 放松点，肖迪——全都包在我们身上。
+
+KEY: Story02_In_06_Player_BM
+ENG: Our brand's worth a shitload of money..
+CUR: 咱们这块牌子值他妈一大笔钱……
+
+KEY: Story12_Out_03_Cyrus
+ENG: They have Birk.
+CUR: 伯克在他们手里。
+
+KEY: Story20_In_05_Viola
+ENG: Take Killbane's mask and all that's left is Eddie Pryor.  It's worse than killing him.
+CUR: 摘掉杀霸的面具，剩下的就只有埃迪·普赖尔。那比要了他的命还狠。
+
+KEY: Story14_In_06_Anna
+ENG: Killbane, there are some who claim you're a criminal.
+CUR: 杀霸，有人说你是个罪犯。
+
+KEY: Story12_In_12_Viola
+ENG: My name's Viola.
+CUR: 我叫薇奥拉。
+
+KEY: Story03_Out_06_Player_BM
+ENG: Alright.  Well...if we're gonna bring in the boys, we're gonna need a new place.
+CUR: 行。嗯……既然要把兄弟们接过来，咱们就得找个新据点。
+
+KEY: Story22_In_08_Player_BM
+ENG: We gotta get down there.
+CUR: 咱们得赶到那儿去。
+
+KEY: Story20_In_04_Player_BM
+ENG: Can't we just kill the bastard?
+CUR: 咱们就不能直接宰了那混蛋吗？
+
+KEY: SH_Decker_06_Oleg
+ENG: NEMO--Neurological Electro Magnetic Onieroscope.  The KGB destroyed the only one in existence.
+CUR: NEMO——神经电磁梦境观测仪。克格勃早就毁掉了世上唯一一台。
+
+KEY: Story12_In_01_Viola
+ENG: Oh look - Pierce can read.
+CUR: 哟，快看——皮尔斯还识字呢。
+
+KEY: Story07_In_09_Oleg
+ENG: He's the Syndicate's attack dog.
+CUR: 他是辛迪加豢养的恶犬。
+
+KEY: Story06_Mid_10_Oleg
+ENG: Trust me--I'm still strong enough to kill Phillipe.
+CUR: 相信我——要杀菲利普，我的力气还够用。
+
+KEY: SH_Morningstar01_02_Pierce
+ENG: You don't think the back's guarded?
+CUR: 你觉得后面就没人守吗？
+
+KEY: Story03_Out_02_Player_BM
+ENG: What's next is you go back to Stilwater.
+CUR: 下一步就是：你先回斯蒂尔沃特去。
+
+KEY: HASH_29CD6718
+ENG: I know I have.
+CUR: 我知道我有。
+
+KEY: Story09_Out_07_Monica
+ENG: My Esteemed Colleagues.  The time is now...we have deployed STAG to Steelport.
+CUR: 各位尊敬的同僚。时机已到……我们已将 STAG 部署至钢埠。
+
+KEY: Story06_In_02_Shaundi
+ENG: Give me the god damn gun, Pierce.
+CUR: 把那把该死的枪给我，皮尔斯。
+
+KEY: Story07_In_08_Player_BM
+ENG: Kill-who?
+CUR: 杀……什么霸？
+
+KEY: Story05_In_04_Player_BM
+ENG: Let's do it.
+CUR: 干吧。
+
+KEY: Story02_In_19_Viola
+ENG: You may continue to operate the Saints/Ultor media group as you see fit, in exchange for 66 percent of your monthly gross revenue.
+CUR: 圣徒/乌托尔传媒集团随你们继续经营，作为交换，我们要抽走你们每月总收入的66%。
+
+KEY: Story01_Zscene03_01_Player_BM
+ENG: Go!  Go!  Go!
+CUR: 快！快！快！
+
+KEY: Story22_OutA_01_Pierce
+ENG: You kill that sonofbitch?
+CUR: 那狗娘养的让你给宰了？
+
+KEY: Story06_Mid_07_Oleg
+ENG: The copies are flawed.  They have my brawn but not my brain.  I can help you.
+CUR: 那些复制品有缺陷。他们有我的蛮力，却没有我的脑子。我可以帮你们。
+
+KEY: Story12_In_15_Player_BM
+ENG: Works for me.
+CUR: 我没意见。
+
+KEY: SH_Morningstar02_04_Player_BM
+ENG: What the hell is the \"STAG Initiative\"...?
+CUR: 这个“STAG 计划”到底是什么鬼……？
+
+KEY: Story08_In_08_Pierce
+ENG: Damn, girl--life is for the living and shit, know what I'm sayin'?
+CUR: 我说姑娘——人活着就得及时行乐嘛，你懂我意思吧？
+
+KEY: Story14_In_04_Anna
+ENG: ...Eddie \"Killbane\" Pryor.  Thanks for being here, Eddie.
+CUR: ……埃迪·“杀霸”·普赖尔。谢谢你来到现场，埃迪。
+
+KEY: Story06_In_03_Player_BM
+ENG: Let's give that motherfucker what's comin' to him.
+CUR: 让那狗娘养的尝尝他应得的下场。
+
+KEY: Story16_Out_02_Matt
+ENG: Well, if typing's the issue, I can recommend some good voice recognition software--
+CUR: 呃，要是打字是问题，我可以推荐几款好用的语音识别软件——
+
+KEY: Story05_Out_05_Matt
+ENG: With respect, sir...
+CUR: 恕我直言，先生……
+
+KEY: Story18_Out_01_Player_BM
+ENG: Fuck my life.
+CUR: 操，我这破命。
+
+KEY: Story12_Out_02_Cyrus
+ENG: Get me Monica Hughes.
+CUR: 给我接莫妮卡·休斯。
+
+KEY: Story23_Out_14_Pierce
+ENG: It's a horrible idea. I'm in.
+CUR: 这主意烂透了。算我一个。
+
+KEY: Story12_In_04_Pierce
+ENG: Set it up right, we'll get the drop on those motherfuckers.
+CUR: 只要布置得当，咱们就能打那帮狗娘养的一个措手不及。
+
+KEY: Story13_Out_02_Kia
+ENG: I see congratulations are in order, Commander.
+CUR: 看来该道声恭喜了，指挥官。
+
+KEY: Story08_In_07_Shaundi
+ENG: Whatever.
+CUR: 随便。
+
+KEY: Story05_In_03_Shaundi
+ENG: The crew's ready downstairs--say the word and we crash the party.
+CUR: 兄弟们都在楼下候着了——你一声令下，我们就去砸场子。
+
+KEY: CTO_Zimos02_02_Zimos
+ENG: You fucking Phillistine!  What you know about art?  That's a DeWynter Sisters original!  Bought that back in the day when me and the twins were all \"live and let live\".
+CUR: 你这个俗不可耐的土包子！你懂什么叫艺术？这可是德温特姐妹的原作！当年我和那对双胞胎还“井水不犯河水”的时候买下的。
+
+KEY: Story24_Out_09_Asst_Director
+ENG: Settle!  We are rolling--
+CUR: 都安静！准备开拍——
+
+KEY: Story01_In_21_Gat
+ENG: You got a plan, or we just shooting all these motherfuckers?
+CUR: 你有啥计划没，还是说咱们直接把这帮狗娘养的全突突了？
+
+KEY: Story22_In_06_Pierce
+ENG: God.  Damn it.
+CUR: 我的。老天啊。
+
+KEY: SH_Luchadore_03_Player_BM
+ENG: Alright, how do we do that?
+CUR: 行，那咱们怎么干？
+
+KEY: Story17_Mid_06_Cyrus
+ENG: Thanks for the offer...you...but I  wanna process these two A-SAP.
+CUR: 谢谢你的好意……老兄……但这两个人我要立刻处理。
+
+KEY: Story14_Out_06_Shaundi
+ENG: I had him!
+CUR: 我刚才差一点就得手了！
+
+KEY: Story14_In_03_Anna
+ENG: ...Fortunately this exclusive footage has come to light, and with us live the man responsible...
+CUR: ……幸好这段独家影像得以曝光，此刻负责此事的先生正在我们直播现场……
+
+KEY: Story12_In_02_Pierce
+ENG: Girl, I don't gotta explain myself to you.  STAG is using Nyte Blayde as their mascot.  We snatch the punk...
+CUR: 姑娘，这事我还真不用跟你交代。STAG 把夜刃当成他们的吉祥物。咱们把那小子掳来……
+
+KEY: Story09_In_01_Zimos
+ENG: Lotta pussy on that thing.
+CUR: 这上面可全是娘们啊。
+
+KEY: Story06_Mid_09_Shaundi
+ENG: What could he do anyway?  Those wires and shit are probably keeping him alive.
+CUR: 反正他还能干什么？那堆电线和乱七八糟的玩意儿八成就是他续命的家伙。
+
+KEY: Story01_In_10_Josh
+ENG: Ultra-post-modernism. I love it.
+CUR: 超后现代主义。我爱死了。
+
+KEY: Story17_In_01_Pierce
+ENG: This is the worst idea you've ever had.
+CUR: 这是你这辈子出过最烂的主意。
+
+KEY: Story14_Out_05_Player_BM
+ENG: You alright?
+CUR: 你没事吧？
+
+KEY: Story08_In_01_Shaundi
+ENG: Johnny's dead, and you're throwing a fucking party?!
+CUR: 强尼人都死了，你们还在开派对？！
+
+KEY: Story18_In_02_Player_BM
+ENG: No doubt!
+CUR: 那还用说！
+
+KEY: Story14_Out_02_Shaundi
+ENG: Gotcha.
+CUR: 明白。
+
+KEY: Story10_Out_07_Cyrus
+ENG: Let me tell you about Jessica Parish, a girl from Stilwater who ran away from home to be with her tough-guy boyfriend.  Jessica thought her life was pretty sweet, until a gang banger kidnapped her, threw her in the trunk of a car, and laughed as her boyfriend crushed her in a monster truck rally.  If Jessica Parish was your daughter...how far would you want me to go?
+CUR: 我来给你讲讲杰西卡·帕里什的故事吧。一个斯蒂尔沃特的姑娘，为了跟她的硬汉男友在一起离家出走。杰西卡本以为自己日子过得挺美，直到一个黑帮分子绑架了她，把她塞进汽车后备箱，然后在她男友开着怪物卡车把她活活碾死的场地里开怀大笑。如果杰西卡·帕里什是你的女儿……你希望我做到哪一步为止？
+
+KEY: Story02_In_17_Gat
+ENG: Actually, I wonder why my foot's not up your ass at this point.
+CUR: 话说回来，我都纳闷儿这会儿我的脚怎么还没踹你屁股上。
+
+KEY: Story13_In_01_Josh
+ENG: Put the gun down. I won't run.
+CUR: 把枪放下。我不会跑的。
+
+KEY: Story07_In_01_Monica
+ENG: When I left Stilwater for the Senate, I vowed not to forget my hometown roots.  My husband gave his life defending Stilwater from gang violence.  It is my greatest privilege to honor him with this bridge.
+CUR: 当年我离开斯蒂尔沃特进军参议院时，我发誓绝不忘记故乡的根。我的丈夫为保卫斯蒂尔沃特、抵御黑帮暴行献出了生命。能以这座桥向他致敬，是我最大的荣幸。
+
+KEY: Story01_In_12_Josh
+ENG: NOBODY MOVES, NOBODY DIES!!
+CUR: 谁动谁死！！
+
+KEY: Story07_Out_01_Killbane
+ENG: Well, ladies and gentleman, Phillipe is dead and we are at a crossroads.  And the question is: who will lead The Syndicate to a new era.
+CUR: 好了，女士们先生们，菲利普死了，我们正站在十字路口。问题是：谁将带领辛迪加走向新时代。
+
+KEY: Story14_Out_08_Player_BM
+ENG: Shit!
+CUR: 操！
+
+KEY: Story12_In_14_Viola
+ENG: You can't be serious--!
+CUR: 你不是认真的吧——！
+
+KEY: Story12_In_03_Player_BM
+ENG: And we draw out STAG.
+CUR: 还能把 STAG 引出来。
+
+KEY: SH_Morningstar02_12_Player_BM
+ENG: Fuck.  That.
+CUR: 妈的。不干。
+
+KEY: Story05_Out_06_Matt
+ENG: I'd say \"empty\" is no longer applicable.
+CUR: 我想说，“空城”这词已经不适用了。
+
+KEY: Story01_In_14_Josh
+ENG: Sorry, jumped his line.  Can we go again?
+CUR: 抱歉，抢了他的词儿。能再来一遍吗？
+
+KEY: Story10_In_16_Kia
+ENG: The Saints have taken cover with one of the DeWynter sisters.  We're about to move in.
+CUR: 圣徒正和德温特姐妹中的一个躲在掩体里。我们准备突入。
+
+KEY: Story08_Out_08_Killbane
+ENG: Viola, your sun is setting, but it's not too late.  There's still time to grab Apollo's chariot and drive that fucker back across the sky.  You feel me?
+CUR: 薇奥拉，你的太阳正在西沉，但现在回头还不晚。还有时间抓住阿波罗的太阳战车，赶着那玩意儿横跨天穹杀回来。听懂了吗？
+
+KEY: Story02_Out_03_Phillipe
+ENG: Mr. Killbane, gather your Luchadores and bring me their leader's head.  Mr. Miller, hack into the Saints' accounts, and leave them nothing.
+CUR: 杀霸先生，带上你的摔跤手帮，把他们老大的脑袋给我带来。米勒先生，黑进圣徒的账户，一分钱都别给他们留。
+
+KEY: Story19_In_16_Reynolds
+ENG: Zombies.
+CUR: 丧尸。
+
+KEY: Story15_In_10_Kinzie
+ENG: If I could worm into their mainframe I'd do all sorts of naughty things.  But I don't have the gear for that.
+CUR: 要是能钻进他们的主机，我能干出一票淘气的坏事。可我手头没那套装备。
+
+KEY: Story06_Mid_12_Pierce
+ENG: You want some clothes, man?
+CUR: 兄弟，要不要弄身衣服穿？
+
+KEY: Story02_In_08_Viola
+ENG: It is always about the money, Mr. Gat.
+CUR: 盖特先生，这世上永远绕不开一个钱字。
+
+KEY: Story06_Mid_14_Pierce
+ENG: Man, like I said, the last time a big naked dude ...
+CUR: 哥们儿，我说过了，上次那个光屁股的大块头……
+
+KEY: Story07_Out_05_Viola
+ENG: Excuse me?
+CUR: 你说什么？
+
+KEY: Story02_In_02_Cop
+ENG: Someone paid more.
+CUR: 有人出的价更高。
+
+KEY: SH_Morningstar02_09_Zimos
+ENG: That's an invitation to kick the Morningstar right in their collective pussy.  They're having an auction tonight--flash the card, and you're in.
+CUR: 这等于是在邀请咱们朝晨星帮的娘们窝狠狠踹上一脚。他们今晚有场拍卖会——亮出那张卡，你就能进门。
+
+KEY: Story06_In_01_Pierce
+ENG: Little big for you.
+CUR: 你穿这号有点大。
+
+KEY: Story01_In_01_Josh
+ENG: Japanese commercials.  Easiest money you'll ever make.
+CUR: 拍日本广告。这钱挣得比什么都容易。
+
+KEY: Story08_Out_09_Viola
+ENG: Yes, Killbane.
+CUR: 是，杀霸。
+
+KEY: Story02_In_14_Phillipe
+ENG: A remarkable likeness.  These visions are Viola and Kiki.  And I am Phillipe Loren, chairman of a multi-national organization called the Syndicate.
+CUR: 还原度相当高。这两位佳人便是薇奥拉和琦琦。而我，是菲利普·洛伦，跨国组织辛迪加的主席。
+
+KEY: Story14_In_12_Kinzie
+ENG: I might be able to triangulate where they're shooting if you go to the broadcast towers and -
+CUR: 要是你去广播塔那儿，我兴许能三角定位出他们的拍摄位置——
+
+KEY: Story06_Mid_13_Oleg
+ENG: No time.
+CUR: 没时间了。
+
+KEY: Story06_Mid_08_Pierce
+ENG: The last time a big naked dude said he could help me, it did not end well.
+CUR: 上次有个光屁股的大块头跟我说他能帮我，结果下场可不太妙。
+
+KEY: Story21_In_01_Zach
+ENG: Tonight's been a great night and it's not slowing up, Bobby!
+CUR: 今晚真是太精彩了，而且势头一点没减，鲍比！
+
+KEY: SH_Decker_11_Player_BM
+ENG: OK, nerd time is over! What is this thing--and Kinzie--for fuck's sake, keep it simple!
+CUR: 行了，书呆子时间到此为止！这玩意儿到底是啥——还有金吉——看在老天的份上，说人话！
+
+KEY: Story10_Out_03_Cyrus
+ENG: There is no \"occupation\".  We have the full support of Mayor Reynolds.
+CUR: 根本不存在什么“占领”。我们得到了雷诺兹市长的全力支持。
+
+KEY: Story02_In_18_Phillipe
+ENG: Like it or not, Mr. Gat, our organization is expanding into Stilwater.  I am offering you the chance to leverage your assets against your lives.  Ladies?
+CUR: 由不得你，盖特先生，我们组织正在向斯蒂尔沃特扩张。我给你一个机会，拿你们的命抵你们的产业。两位美女？
+
+KEY: Story13_In_05_Josh
+ENG: Forbidden love.
+CUR: 禁忌之恋。
+
+KEY: Story01_In_16_Josh
+ENG: Get in line, bitch!
+CUR: 排队去，贱人！
+
+KEY: Story01_Zscene01_06_Josh
+ENG: So what's Plan B, we drill it?
+CUR: 那 B 计划是啥，咱们凿开它？
+
+KEY: Story15_In_02_Player_BM
+ENG: It's...homey.
+CUR: 这儿……还挺温馨。
+
+KEY: Story09_Out_01_Killbane
+ENG: What the hell were you thinking, Matty?
+CUR: 你当时脑子里在想什么，马蒂？
+
+KEY: Story14_In_09_Player_BM
+ENG: Where are they?
+CUR: 他们在哪儿？
+
+KEY: Story11_Out_09_Monica
+ENG: Well you ensure Josh Birk's safety or I'll find someone who can.  Understand?
+CUR: 那么你要么保证乔什·伯克的安全，要么我就换个能保证的人来。明白了吗？
+
+KEY: Story12_Out_01_Cyrus
+ENG: Check the bodies.
+CUR: 检查尸体。
+
+KEY: Story01_In_03_Josh
+ENG: No worries--I do my own stunts.
+CUR: 放心——特技都是我自己上。
+
+KEY: Story17_In_07_Player_BM
+ENG: Yeah, you and Pierce.  I'm bringing you in.
+CUR: 没错，就你跟皮尔斯。我带你们进去。
+
+KEY: SH_Decker_10_Oleg
+ENG: Clever...
+CUR: 有意思……
+
+KEY: Story08_Out_07_Killbane
+ENG: Relax.  We only need one of 'em.
+CUR: 放松。她们之中我们只需要留一个。
+
+KEY: Story10_In_02_Viola
+ENG: We never really had the chance to chat, what with you being a science experiment.
+CUR: 咱们一直没机会好好聊聊，毕竟你当时就是个科学实验品。
+
+KEY: Story09_Out_05_Killbane
+ENG: We buckle down.  We focus.  We don't do a run in, we hit 'em with a Montreal screw-job.
+CUR: 咱们咬牙死磕。专心致志。不搞莽撞冲锋，给他们来一记蒙特利尔黑哨阴招。
+
+KEY: Story09_Out_04_Matt
+ENG: My bad, mate.  So what happens now?
+CUR: 我的错，伙计。那现在怎么办？
+
+KEY: Story08_Out_05_Kiki
+ENG: There's a reason Phillipe left the thinking to us.  We're done here.
+CUR: 菲利普把动脑子的事交给咱们是有原因的。这里没我们的事了。
+
+KEY: Story02_In_26_Pilot
+ENG: What the hell's goi-
+CUR: 搞什么——
+
+KEY: Story10_Out_08_Cyrus
+ENG: Thank you for your time.
+CUR: 感谢你们抽出时间。
+
+KEY: Story10_In_11_Viola
+ENG: What is that--?
+CUR: 那是什么——？
+
+KEY: Story01_In_23_Gat
+ENG: Works for me.
+CUR: 正合我意。
+
+KEY: Story15_In_08_Kinzie
+ENG: You can do a lot worse.  If Matt gets the Decker Use-Net plugged into the central powergrid it's...trust me, it's bad.
+CUR: 你还能碰上更糟的呢。要是让马特把赛博帮的 Use-Net 接进中央电网，那可就……相信我，后果很严重。
+
+KEY: Story14_In_10_Kinzie
+ENG: No idea, they're broadcasting from an undisclosed location.
+CUR: 不清楚，他们的播出地点是保密的。
+
+KEY: Story13_Out_06_Cyrus
+ENG: If it were easy I wouldn't waste your time.
+CUR: 要是简单到那地步，我就不浪费你的时间了。
+
+KEY: SH_Morningstar01_03_Player_BM
+ENG: There's like 2 punks.
+CUR: 统共就俩小毛贼。
+
+KEY: Story21_Out_03_Zach
+ENG: You gotta love it - against all odds, the Saints are still standing!
+CUR: 你不得不爱这一幕——万般绝境之下，圣徒依然屹立不倒！
+
+KEY: Story19_In_26_Viola
+ENG: Stop being a fanboy.
+CUR: 别一副脑残粉的样子。
+
+KEY: Story20_Out_04_Player_BM
+ENG: Oh my God, quit being a bitch and put your mask up.
+CUR: 我的天，别磨磨唧唧跟个娘们似的，快把面罩戴上。
+
+KEY: Story16_Out_07_Killbane
+ENG: Matty.
+CUR: 马蒂。
+
+KEY: Story16_In_03_Kinzie
+ENG: You can survive a gunshot. But if your mind takes too much shock in this chair, you'll go brain dead.
+CUR: 枪伤你能扛过去。但要是在这椅子上精神受到太大冲击，你就脑死亡了。
+
+KEY: Story09_In_04_Player_BM
+ENG: Just let me worry about that.  Now let's go, I wanna meet my new employees.
+CUR: 这个你不用操心。走吧，我想去会会我的新员工。
+
+KEY: Story07_In_10_Shaundi
+ENG: What he did to Johnny's funeral...  that's over the fucking limit.
+CUR: 他对强尼葬礼干的事……早就他妈的越界了。
+
+KEY: Story19_In_17_Oleg
+ENG: You mean metaphorically - the celebrity obsessed, media drugged masses, yes?
+CUR: 你是说比喻意义上的——那些追星成痴、被媒体喂饱了迷药的乌合之众，对吧？
+
+KEY: Story19_In_12_Reynolds
+ENG: Viola says the Saints are the new game in town.  If that's the case, I want in.
+CUR: 薇奥拉说圣徒是钢埠的新霸主。果真如此的话，算我一个。
+
+KEY: SH_Morningstar01_05_Shaundi
+ENG: Put in your tampons and let's do this.
+CUR: 都把卫生棉条塞上，干活了。
+
+KEY: Story19_In_11_Reynolds
+ENG: Excuse me, hon.
+CUR: 借过，亲爱的。
+
+KEY: Story08_In_06_Player_BM
+ENG: He's right.
+CUR: 他说得对。
+
+KEY: Story01_In_18_Josh
+ENG: You call yourselves gang bangers?  You're a bunch of pussies!  We should be all up in their shit, like--
+CUR: 你们也配叫黑帮？一群怂包软蛋！咱们早该踩到他们头上拉屎了，就像——
+
+KEY: Story15_Out_01_Player_BM
+ENG: So you're set, right?
+CUR: 那这边就交给你了，行吧？
+
+KEY: Story13_Out_01_Cyrus
+ENG: Kia, do you read me?
+CUR: 琪亚，收到请回答。
+
+KEY: Story01_In_20_Player_BM
+ENG: Well, that's different.
+CUR: 嗯，这可就新鲜了。
+
+KEY: Story01_In_05_Shaundi
+ENG: So don't get all Hong Kong-style in there.
+CUR: 所以待会儿在里面，可别整港片那一套。
+
+KEY: Story11_Out_10_Cyrus
+ENG: Yes, Ma'am.
+CUR: 是，女士。
+
+KEY: Story08_In_05_Pierce
+ENG: Shaundi, we can't mourn Gat forever.  Eventually, you gotta get back on the horse.  No offense, brother.
+CUR: 肖恩蒂，咱们不能永远悼念盖特。总有一天，你得重新上马。无意冒犯，老哥。
+
+KEY: Story19_In_07_Reynolds
+ENG: Viola - is this the kid you were talking about?
+CUR: 薇奥拉——这就是你说的那小子？
+
+KEY: Story08_Out_02_Viola
+ENG: They came highly recommended.
+CUR: 他们可是有人极力推荐的。
+
+KEY: Story10_In_15_Cyrus
+ENG: Kia - Status?
+CUR: 琪亚——状况如何？
+
+KEY: Story02_In_13_Phillipe
+ENG: Of course.
+CUR: 当然。
+
+KEY: Story02_In_03_Gat
+ENG: What happened?
+CUR: 出什么事了？
+
+KEY: Story07_In_11_Oleg
+ENG: He doesn't care about rules of engagement.
+CUR: 他压根不讲什么交战规则。
+
+KEY: Story02_In_23_Phillipe
+ENG: Please.  I am Belgian!
+CUR: 拜托。我可是比利时人！
+
+KEY: Story02_In_10_Kiki
+ENG: If you will indulge us...?
+CUR: 不知二位可否赏光……？
+
+KEY: Story23_In_01_Player_BM
+ENG: We've lost a lot of friends getting to where we are, and that's never easy.  But at least we know that wherever Gat is, he's got friends giving Saint Peter some hell.
+CUR: 咱们一路走到今天，失去了太多弟兄，这从来都不容易。但至少我们知道，不管盖特身在何处，都有兄弟陪着他一块儿折腾圣彼得。
+
+KEY: Story22_In_07_Player_BM
+ENG: The hell is going on?
+CUR: 他妈的到底怎么回事？
+
+KEY: Story15_In_13_Kinzie
+ENG: That's one of the most powerful learning computers in North America...  And STAG'S got one.
+CUR: 那可是全北美最强大的学习型计算机之一……而 STAG 手里就有一台。
+
+KEY: Story24_Out_07_Asst_Director
+ENG: Everybody back to one!
+CUR: 全体归位，再来一条！
+
+KEY: Story22_In_04_Player_BM
+ENG: What's that--?
+CUR: 那是什么——？
+
+KEY: Story20_In_08_Player_BM
+ENG: He's more scared of Angel than me?
+CUR: 比起我，他更怕安吉尔？
+
+KEY: SH_Decker_01_Kinzie
+ENG: I'll explain it again, real slow:
+CUR: 我再解释一遍，慢——慢——讲：
+
+KEY: Story13_Out_07_Kia
+ENG: Understood, sir--
+CUR: 明白，长官——
+
+KEY: Story11_Out_01_Josh
+ENG: I'm Joshua Birk.  On TV I play Nyte Blayde, an exceptionally good looking but misunderstood vampire who risks life and limb every week to keep the world safe.
+CUR: 我叫乔什·伯克。在电视上，我扮演夜刃——一个帅得没天理却总被世人误解的吸血鬼，每周都豁出性命去保卫世界安全。
+
+KEY: Story07_Out_04_Player_BM
+ENG: The Syndicate has to answer for what they did...  and this time, we're taking the fight to them.
+CUR: 辛迪加必须为他们干下的好事付出代价……这一次，换我们打上门去。
+
+KEY: Story10_In_06_Viola
+ENG: Johnny's dead because he thought he could do everything on his own.
+CUR: 强尼会死，就因为他觉得自己什么都能单干。
+
+KEY: Story03_Out_07_Shaundi
+ENG: You're worried about real-estate?  We have guns, let's use 'em.
+CUR: 你还操心上房产了？咱们手里有枪，用就完了。
+
+KEY: Story19_In_23_Player
+ENG: Aren't you worried about pissing off STAG?
+CUR: 你就不怕把 STAG 给惹毛了？
+
+KEY: SH_Decker_05_Player_BM
+ENG: A what chair?
+CUR: 啥椅子？
+
+KEY: Story07_Out_06_Killbane
+ENG: The barbarians are at the gate--we need a general not an ambassador!
+CUR: 蛮族都打到家门口了——我们要的是将军，不是大使！
+
+KEY: Story08_In_02_Pierce
+ENG: Well, you say it like that, sure it sounds bad.
+CUR: 呃，你这么一说，确实听着挺糟。
+
+KEY: Story07_Out_09_Player_BM
+ENG: Since we don't know Steelport I brought in some people who do.  This is Kinzie, Zimos, and  Angel..
+CUR: 钢埠咱们人生地不熟，所以我找来几个门儿清的。这位是金吉、齐莫斯，还有安吉尔……
+
+KEY: Story03_Out_05_Shaundi
+ENG: Fuck you, I'm doing this for Johnny.
+CUR: 操你的，我做这一切都是为了强尼。
+
+KEY: Story02_In_24_Gat
+ENG: So make yourself a fuckin' waffle. We're done here.
+CUR: 那你他妈自己烙个华夫饼吃去。咱们到此为止。
+
+KEY: Story01_Zscene01_03_Gat
+ENG: No way we're cracking this thing.  Ready for Plan B?
+CUR: 这玩意儿根本撬不开。准备好上 B 计划了吗？
+
+KEY: Story22_OutB_13_Player_BM
+ENG: Alright people, when we started tracking down this son of a bitch we said we'd follow him to the ends of the Earth...And we did.
+CUR: 都听好了，各位。当初开始追这个狗娘养的时，我们说过，哪怕天涯海角也要把他揪出来……我们做到了。
+
+KEY: Story15_In_16_Player_BM
+ENG: Wait--that punk kid is Matt?
+CUR: 等等——那小屁孩就是马特？
+
+KEY: Story15_In_15_Kinzie
+ENG: Damn it...
+CUR: 该死……
+
+KEY: Story14_In_13_Player_BM
+ENG: We're on it.
+CUR: 这就去办。
+
+KEY: Story01_In_07_Player_BM
+ENG: Trust me, Birk.  It'll be real.
+CUR: 相信我，伯克。绝对来真的。
+
+KEY: Story17_Out_14_Kia
+ENG: It's about damn time we took off the kid gloves.
+CUR: 咱们早他妈该收起那套手下留情的把戏了。
+
+KEY: Story10_In_12_Player_BM
+ENG: Nothing good--let's go!
+CUR: 没好事——走！
+
+KEY: Story07_In_06_Pierce
+ENG: Whoever this crew is, they float pretty damn good.
+CUR: 管这帮家伙是哪路的，这漂着的排场可是真够足的。
+
+KEY: Story06_Out02_01_Player_BM
+ENG: We're gonna have to do something about the pink.
+CUR: 这身粉色，咱们得想想办法了。
+
+KEY: Story03_Out_01_Shaundi
+ENG: So what's next?
+CUR: 那接下来呢？
+
+KEY: SH_Morningstar02_08_Player_BM
+ENG: Very discreet.
+CUR: 可真够低调的。
+
+KEY: Story05_In_02_Player_BM
+ENG: Some asshole is in my pool.
+CUR: 有个混蛋在我家泳池里。
+
+KEY: Story23_In_05_Kinzie
+ENG: Oh my God.
+CUR: 我的天。
+
+KEY: Story09_Out_02_Matt
+ENG: It just seemed like a waste to lose all those girls.
+CUR: 白白折损那么多姑娘，怪可惜的。
+
+KEY: SH_Morningstar02_06_Player_BM
+ENG: So what's the lead?
+CUR: 那线索是什么？
+
+KEY: Story17_Out_15_Cyrus
+ENG: Two little words, Kia.  Shock and awe.
+CUR: 就四个字，琪亚——震撼威慑。
+
+KEY: Story13_In_11_Player_BM
+ENG: All right--let's go stag hunting.
+CUR: 好——走，猎 STAG 去。
+
+KEY: Story16_In_01_Pierce
+ENG: You ready to fuck things up in virtual reality?
+CUR: 准备好进虚拟现实里大搞破坏了吗？
+
+KEY: Story15_In_17_Matt
+ENG: That punk kid is the cyber god who just crashed your helicopter. Cheers!
+CUR: 那个小屁孩，就是刚把你直升机干下来的赛博之神。干杯！
+
+KEY: Story12_In_10_Player_BM
+ENG: So how do we find Birk?  The chump could be anywhere.
+CUR: 那咱们上哪儿找伯克？那废物没准儿躲在哪个犄角旮旯。
+
+KEY: Story21_Out_06_Killbane
+ENG: It's my fucking reputation!
+CUR: 这可是老子他妈的名声！
+
+KEY: Story17_Mid_09_Pierce
+ENG: What the fuck!
+CUR: 他妈的搞什么！
+
+KEY: Story03_Out_03_Shaundi
+ENG: What? No - this is my fight, too.
+CUR: 什么？不——这也是我的战斗。
+
+KEY: Story10_In_10_Oleg
+ENG: I am always a gentleman.
+CUR: 我一向是个绅士。
+
+KEY: Story02_In_33_Gat
+ENG: Details, details--just cover the boss! Go--I got this!
+CUR: 行行行，细节回头再抠——掩护老大就行！走——这儿我来！
+
+KEY: Story21_Zscene01_06_Bobby
+ENG: OH MY GOD A CHAINSAW!
+CUR: 我的天哪，电锯！！
+
+KEY: Story21_Out_07_Killbane
+ENG: This is my city! I am its Caesar!
+CUR: 这是我的城市！我就是这座城的凯撒！
+
+KEY: Story13_Out_03_Cyrus
+ENG: Not quite.  The Saints are still at large.  I'm sending some intel over...
+CUR: 还没完。圣徒仍逍遥法外。我这就传一份情报过去……
+
+KEY: Story24_Out_06_Sci_Fi_Killbane
+ENG: You'll get it next time.
+CUR: 下次再收拾你们！
+
+KEY: Story14_In_11_Shaundi
+ENG: Well, fucking disclose it.
+CUR: 那你他妈倒是说啊。
+
+KEY: Story11_In_03_Pierce
+ENG: Damn--!
+CUR: 妈的——！
+
+KEY: Story11_In_05_Pierce
+ENG: This isn't over.  What's up?
+CUR: 这事还没完。出什么事了？
+
+KEY: SH_Morningstar02_03_Monica
+ENG: The STAG Initiative marks a milestone in taking back the streets of America!
+CUR: STAG 计划，标志着美国夺回街头的重要里程碑！
+
+KEY: Story02_In_29_Gat
+ENG: There's like, half a dozen guys?  I can take 'em.
+CUR: 统共也就六个人吧？我搞得定。
+
+KEY: Story14_In_08_Anna
+ENG: We get it.
+CUR: 我们明白了。
+
+KEY: Story06_Out02_02_Oleg
+ENG: You'd prefer a more manly shade, like purple?
+CUR: 你是想要更爷们儿一点的颜色？比如紫色？
+
+KEY: SH_Morningstar02_13_Zimos
+ENG: Oh, quit being a bitch and get in the van.
+CUR: 行了，别磨磨唧唧跟个娘们儿似的，上车。
+
+KEY: Story07_In_07_Oleg
+ENG: They're Killbane's thugs.
+CUR: 他们是杀霸的打手。
+
+KEY: SH_Decker_09_Kinzie
+ENG: They're keeping it here.
+CUR: 他们把它存放在这儿。
+
+KEY: Story10_In_17_Cyrus
+ENG: Roger that.  Contact me once you secure the area.
+CUR: 收到。拿下那片区域后立刻联系我。
+
+KEY: Story08_Out_04_Kiki
+ENG: Tell me something, Matt.  Did you have a plan?  How about you, Eddie?
+CUR: 说说吧，马特。你到底有没有计划？你呢，埃迪？
+
+KEY: Story08_In_04_Shaundi
+ENG: I swear to God I will shove that thing down your throat-hole.
+CUR: 我对天发誓，我会把那玩意儿整个塞进你的嗓子眼。
+
+KEY: Story07_Out_08_Killbane
+ENG: What did you call me?
+CUR: 你刚才叫我什么？
+
+KEY: Story07_In_17_Monica
+ENG: Can you believe this?  On my husband's bridge!  No, no, I will not calm down.  I'm heading back to the Hill.  Book an emergency session.  Goddamn it--this is war!
+CUR: 你能相信吗？就在我丈夫的桥上！不，不，我不会冷静的。我现在就回国会山。给我安排一场紧急会议。妈的——这是战争！
+
+KEY: Story14_Out_03_Shaundi
+ENG: DAMN IT!  What did you do!
+CUR: 妈的！你们干了什么！
+
+KEY: Story05_Out_02_Killbane
+ENG: Matty, there's nothing to worry about.
+CUR: 马蒂，没什么好担心的。
+
+KEY: Story17_Mid_01_Pierce
+ENG: Next time you get to be the fucking prisoner.
+CUR: 下回换你来当这个他妈的俘虏。
+
+KEY: Story10_In_13_Viola
+ENG: Damn it!
+CUR: 妈的！
+
+KEY: Story01_In_13_Gat
+ENG: Birk!
+CUR: 伯克！
+
+KEY: SH_Morningstar02_07_Zimos
+ENG: I got you hooked up, Slim.
+CUR: 都给你安排妥了，老弟。
+
+KEY: Story13_In_09_Oleg
+ENG: Allow me, friend.
+CUR: 朋友，让我来。
+
+KEY: Story07_Out_02_Matt
+ENG: Viola and Kiki were Mr. Loren's right hands.  Shouldn't they be the ones who-
+CUR: 薇奥拉和琦琦是洛伦先生的左膀右臂。按理说接班的应该是她们——
+
+KEY: Story07_Out_11_Killbane
+ENG: Something.  Anything!  Before I wonder why I keep you  bookends around.
+CUR: 想个辙。随便什么都行！趁我还没开始纳闷儿，留着你们这对书立到底图什么。
+
+KEY: Story05_In_01_Pierce
+ENG: Whatchu thinkin?
+CUR: 想啥呢？
+
+KEY: Story12_In_08_Pierce
+ENG: Dude, it's Johnny's comic...he sold his likeness to Ultor, they're making a movie outta this shit.
+CUR: 哥们儿，那是强尼的漫画……他把肖像权卖给乌托尔了，人家正拿这破玩意儿拍电影呢。
+
+KEY: Story02_In_05_Gat
+ENG: No, to us.  Birk's right--we traded our dicks in for pussies. Seriously... Movie deals?  Commercials?  The Saints name used to mean more than body spray and some ass-tasting energy drink.
+CUR: 不，敬咱们。伯克说得对——咱们把爷们的老二，都换成娘们儿裤裆了。说真的……电影合约？商业代言？圣徒这块招牌过去代表的，可远不止一瓶身体喷雾、一罐屁股味的能量饮料。
+
+KEY: Story01_In_09_Gat
+ENG: Hell yeah.  Who doesn't wanna be Johnny Gat?
+CUR: 那必须的。谁不想当强尼·盖特？
+
+KEY: Story21_Zscene01_01_Bobby
+ENG: OH MY GOD Angel is out of the ring!
+CUR: 我的天哪，安吉尔被摔出擂台了！
+
+KEY: Story16_Zscene02_02_Matt
+ENG: I can clear your name, prove that you didn't destroy that bridge.
+CUR: 我能还你们清白，证明那座桥不是你们炸的。
+

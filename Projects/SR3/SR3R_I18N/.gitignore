@@ -1,0 +1,14 @@
+x64/
+*.user
+*.pdb
+*.iobj
+*.ipdb
+*.log
+*.tlog
+*.obj
+*.pch
+*.recipe
+*.FileListAbsolute.txt
+*.dt.d.json
+*.dt.module.json
+*.dt.module.json.command

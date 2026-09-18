@@ -1,0 +1,9 @@
+# TODO: Translate to Simplified Chinese
+# Source: dlc7_us.txt
+# Format: "KEY": "Chinese translation"
+# Total entries: 4
+
+"HASH_EAEE44C8": "新载具和服装已放入你的车库和武器库。"
+"cm_suit_digidino": "数码恐龙"
+"HASH_BF78969A": "儿童乐包"
+"cm_suit_robomonkey": "机器黑猩猩"

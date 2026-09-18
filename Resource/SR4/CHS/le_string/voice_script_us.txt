@@ -1,0 +1,6 @@
+# TODO: Translate to Simplified Chinese
+# Source: voice_script_us.txt
+# Format: "KEY": "Chinese translation"
+# Total entries: 1
+
+"AMFRAT_SOS08_CUT02_1": "我需要那个！"

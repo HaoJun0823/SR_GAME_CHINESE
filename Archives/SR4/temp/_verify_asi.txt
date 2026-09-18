@@ -1,0 +1,43 @@
+﻿===== scripts 目录全部 SR4R 相关文件（按时间） =====
+SR4R_I18N.asi.bak                           723968  mtime=2026/9/12 11:54:54  md5=5D85175D95
+SR4R_I18N.asi.bak_v1                        725504  mtime=2026/9/12 12:12:36  md5=FDC9E3D6F5
+SR4R_I18N.asi.bak_20260912                  726528  mtime=2026/9/12 12:12:36  md5=9D41AE48B3
+SR4R_I18N.asi.bak_v12_20260917_2057         729088  mtime=2026/9/17 20:07:53  md5=9A08270461
+SR4R_I18N.asi.bak_v13pre_20260917_2110      733696  mtime=2026/9/17 20:56:40  md5=CCD140BFBB
+SR4R_I18N.ini                                 2078  mtime=2026/9/17 20:57:46  md5=BDF4593434
+SR4R_I18N.asi.bak_v13_20260917_2130         733696  mtime=2026/9/17 21:10:19  md5=A1FFADC4CE
+SR4R_I18N.asi.bak_v14_20260917_2202         735232  mtime=2026/9/17 21:30:49  md5=043D8833D5
+SR4R_I18N.asi                               735232  mtime=2026/9/17 21:30:49  md5=043D8833D5
+SR4R_I18N.log                                 4690  mtime=2026/9/17 22:28:53  md5=E4B0AA6295
+
+===== 当前生效 asi 详情 =====
+path  = I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.asi
+size  = 735232
+mtime = 2026/9/17 21:30:49 / ctime = 2026/9/12 11:56:53
+md5   = 043D8833D54426CE2B25C0A99F967E35
+
+===== 备份/隔离区 =====
+le_string_keys.broken_20260917.txt           66313  mtime=2026/9/17 22:14:10
+SR4R_I18N.v15_crash_20260917.asi            738816  mtime=2026/9/17 22:02:15
+
+===== dict 目录 =====
+exe_hardcoded.txt                  268204
+le_data_supplement.txt             914814
+voice_001.txt                      100081
+voice_002.txt                       93321
+voice_003.txt                       96420
+voice_004.txt                       93055
+voice_005.txt                       99067
+voice_006.txt                      106795
+voice_007.txt                       95611
+voice_008.txt                       96784
+voice_009.txt                       95289
+voice_010.txt                       94997
+voice_011.txt                       99839
+voice_012.txt                       91497
+voice_013.txt                       97462
+voice_014.txt                       95325
+voice_015.txt                       91837
+voice_016.txt                       91446
+voice_017.txt                       73478
+含 le_string_keys.txt? False

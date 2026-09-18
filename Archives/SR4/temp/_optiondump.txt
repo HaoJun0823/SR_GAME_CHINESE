@@ -1,0 +1,115 @@
+================================================================================================
+sr_hv.exe OPTION_ / CONTROL_YES 邻域转储   文件大小 28780032
+================================================================================================
+
+--- file_off 0x143F0CD  (RVA 0x143ECCD) ---
+  +-60  _power_strength_max........disab  5F 70 6F 77 65 72 5F 73 74 72 65 6E 67 74 68 5F
+  +-40  le_super_movement..disable_radia  6C 65 5F 73 75 70 65 72 5F 6D 6F 76 65 6D 65 6E
+  +-20  l_powers...super_power.cvg.CELL_  6C 5F 70 6F 77 65 72 73 00 00 00 73 75 70 65 72
+  +000  OPTION_CHEATS......COOP_REMOTE_C  4F 50 54 49 4F 4E 5F 43 48 45 41 54 53 00 00 00
+  +020  HEAT_STARTING......COOP_REMOTE_C  48 45 41 54 5F 53 54 41 52 54 49 4E 47 00 00 00
+  +040  HEAT_KICK..COOP_REMOTE_CHEAT_CON  48 45 41 54 5F 4B 49 43 4B 00 00 43 4F 4F 50 5F
+
+--- file_off 0x145834D  (RVA 0x1457F4D) ---
+  +-60  .O.R.T.)...T.A.N.Y.A.......V.I.C  00 4F 00 52 00 54 00 29 00 00 00 54 00 41 00 4E
+  +-40  .E. .P.R.E.S.I.D.E.N.T.....orang  00 45 00 20 00 50 00 52 00 45 00 53 00 49 00 44
+  +-20  e_tod_override.todx........MENU_  65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E 74
+  +000  OPTION_TOD_VENG....red_tod_overr  4F 50 54 49 4F 4E 5F 54 4F 44 5F 56 45 4E 47 00
+  +020  ide.todx...MENU_OPTION_TOD_RAGE.  69 64 65 2E 74 6F 64 78 00 00 00 4D 45 4E 55 5F
+  +040  ...violet_tod_override.todx.....  00 00 00 76 69 6F 6C 65 74 5F 74 6F 64 5F 6F 76
+
+--- file_off 0x145837D  (RVA 0x1457F7D) ---
+  +-60  .E.N.T.....orange_tod_override.t  00 45 00 4E 00 54 00 00 00 00 00 6F 72 61 6E 67
+  +-40  odx........MENU_OPTION_TOD_VENG.  6F 64 78 00 00 00 00 00 00 00 00 4D 45 4E 55 5F
+  +-20  ...red_tod_override.todx...MENU_  00 00 00 72 65 64 5F 74 6F 64 5F 6F 76 65 72 72
+  +000  OPTION_TOD_RAGE....violet_tod_ov  4F 50 54 49 4F 4E 5F 54 4F 44 5F 52 41 47 45 00
+  +020  erride.todx........MENU_OPTION_T  65 72 72 69 64 65 2E 74 6F 64 78 00 00 00 00 00
+  +040  OD_REUNITED........blue_pd_tod_o  4F 44 5F 52 45 55 4E 49 54 45 44 00 00 00 00 00
+
+--- file_off 0x14583B5  (RVA 0x1457FB5) ---
+  +-60  OD_VENG....red_tod_override.todx  4F 44 5F 56 45 4E 47 00 00 00 00 72 65 64 5F 74
+  +-40  ...MENU_OPTION_TOD_RAGE....viole  00 00 00 4D 45 4E 55 5F 4F 50 54 49 4F 4E 5F 54
+  +-20  t_tod_override.todx........MENU_  74 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E 74
+  +000  OPTION_TOD_REUNITED........blue_  4F 50 54 49 4F 4E 5F 54 4F 44 5F 52 45 55 4E 49
+  +020  pd_tod_override.todx.......MENU_  70 64 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +040  OPTION_TOD_EMPOWERED.......sunri  4F 50 54 49 4F 4E 5F 54 4F 44 5F 45 4D 50 4F 57
+
+--- file_off 0x14583F5  (RVA 0x1457FF5) ---
+  +-60  t_tod_override.todx........MENU_  74 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E 74
+  +-40  OPTION_TOD_REUNITED........blue_  4F 50 54 49 4F 4E 5F 54 4F 44 5F 52 45 55 4E 49
+  +-20  pd_tod_override.todx.......MENU_  70 64 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +000  OPTION_TOD_EMPOWERED.......sunri  4F 50 54 49 4F 4E 5F 54 4F 44 5F 45 4D 50 4F 57
+  +020  se_tod_override.todx.......MENU_  73 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +040  OPTION_TOD_FREE....nm_cheat_tod_  4F 50 54 49 4F 4E 5F 54 4F 44 5F 46 52 45 45 00
+
+--- file_off 0x1458435  (RVA 0x1458035) ---
+  +-60  pd_tod_override.todx.......MENU_  70 64 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +-40  OPTION_TOD_EMPOWERED.......sunri  4F 50 54 49 4F 4E 5F 54 4F 44 5F 45 4D 50 4F 57
+  +-20  se_tod_override.todx.......MENU_  73 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +000  OPTION_TOD_FREE....nm_cheat_tod_  4F 50 54 49 4F 4E 5F 54 4F 44 5F 46 52 45 45 00
+  +020  override.todx......MENU_OPTION_T  6F 76 65 72 72 69 64 65 2E 74 6F 64 78 00 00 00
+  +040  OD_NIGHTMARE.......noir_tod_over  4F 44 5F 4E 49 47 48 54 4D 41 52 45 00 00 00 00
+
+--- file_off 0x1458475  (RVA 0x1458075) ---
+  +-60  se_tod_override.todx.......MENU_  73 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +-40  OPTION_TOD_FREE....nm_cheat_tod_  4F 50 54 49 4F 4E 5F 54 4F 44 5F 46 52 45 45 00
+  +-20  override.todx......MENU_OPTION_T  6F 76 65 72 72 69 64 65 2E 74 6F 64 78 00 00 00
+  +000  OD_NIGHTMARE.......noir_tod_over  4F 44 5F 4E 49 47 48 54 4D 41 52 45 00 00 00 00
+  +020  ride.todx..MENU_OPTION_TOD_NOIR.  72 69 64 65 2E 74 6F 64 78 00 00 4D 45 4E 55 5F
+  +040  ...classic_tod_override.todx....  00 00 00 63 6C 61 73 73 69 63 5F 74 6F 64 5F 6F
+
+--- file_off 0x14584B5  (RVA 0x14580B5) ---
+  +-60  override.todx......MENU_OPTION_T  6F 76 65 72 72 69 64 65 2E 74 6F 64 78 00 00 00
+  +-40  OD_NIGHTMARE.......noir_tod_over  4F 44 5F 4E 49 47 48 54 4D 41 52 45 00 00 00 00
+  +-20  ride.todx..MENU_OPTION_TOD_NOIR.  72 69 64 65 2E 74 6F 64 78 00 00 4D 45 4E 55 5F
+  +000  ...classic_tod_override.todx....  00 00 00 63 6C 61 73 73 69 63 5F 74 6F 64 5F 6F
+  +020  ...MENU_OPTION_TOD_NICOLOR.vinta  00 00 00 4D 45 4E 55 5F 4F 50 54 49 4F 4E 5F 54
+  +040  ge_tod_override.todx.......MENU_  67 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+
+--- file_off 0x14584F5  (RVA 0x14580F5) ---
+  +-60  ride.todx..MENU_OPTION_TOD_NOIR.  72 69 64 65 2E 74 6F 64 78 00 00 4D 45 4E 55 5F
+  +-40  ...classic_tod_override.todx....  00 00 00 63 6C 61 73 73 69 63 5F 74 6F 64 5F 6F
+  +-20  ...MENU_OPTION_TOD_NICOLOR.vinta  00 00 00 4D 45 4E 55 5F 4F 50 54 49 4F 4E 5F 54
+  +000  ge_tod_override.todx.......MENU_  67 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +020  OPTION_TOD_VINTAGE.modern_tod_ov  4F 50 54 49 4F 4E 5F 54 4F 44 5F 56 49 4E 54 41
+  +040  erride.todx........MENU_OPTION_T  65 72 72 69 64 65 2E 74 6F 64 78 00 00 00 00 00
+
+--- file_off 0x1458535  (RVA 0x1458135) ---
+  +-60  ...MENU_OPTION_TOD_NICOLOR.vinta  00 00 00 4D 45 4E 55 5F 4F 50 54 49 4F 4E 5F 54
+  +-40  ge_tod_override.todx.......MENU_  67 65 5F 74 6F 64 5F 6F 76 65 72 72 69 64 65 2E
+  +-20  OPTION_TOD_VINTAGE.modern_tod_ov  4F 50 54 49 4F 4E 5F 54 4F 44 5F 56 49 4E 54 41
+  +000  erride.todx........MENU_OPTION_T  65 72 72 69 64 65 2E 74 6F 64 78 00 00 00 00 00
+  +020  OD_BAYSTYLE........infrared_tod_  4F 44 5F 42 41 59 53 54 59 4C 45 00 00 00 00 00
+  +040  override.todx......MENU_OPTION_T  6F 76 65 72 72 69 64 65 2E 74 6F 64 78 00 00 00
+
+--- file_off 0x1458575  (RVA 0x1458175) ---
+  +-60  OPTION_TOD_VINTAGE.modern_tod_ov  4F 50 54 49 4F 4E 5F 54 4F 44 5F 56 49 4E 54 41
+  +-40  erride.todx........MENU_OPTION_T  65 72 72 69 64 65 2E 74 6F 64 78 00 00 00 00 00
+  +-20  OD_BAYSTYLE........infrared_tod_  4F 44 5F 42 41 59 53 54 59 4C 45 00 00 00 00 00
+  +000  override.todx......MENU_OPTION_T  6F 76 65 72 72 69 64 65 2E 74 6F 64 78 00 00 00
+  +020  OD_INFRARED........Astro_Gaming.  4F 44 5F 49 4E 46 52 41 52 45 44 00 00 00 00 00
+  +040  ...Crooks_and_Castles..HeyDey...  00 00 00 43 72 6F 6F 6B 73 5F 61 6E 64 5F 43 61
+
+--- file_off 0x1462110  (RVA 0x1461D10) ---
+  +-60  ..J@....`6K@.....5K@....p7K@....  90 C2 4A 40 01 00 00 00 60 36 4B 40 01 00 00 00
+  +-40  PC......US DE ES FR JP IT RU PL.  50 43 00 00 00 00 00 00 55 53 20 44 45 20 45 53
+  +-20  charlist_%s.dat.CONTROL_OKAY....  63 68 61 72 6C 69 73 74 5F 25 73 2E 64 61 74 00
+  +000  CONTROL_YES.....CONTROL_NO..le..  43 4F 4E 54 52 4F 4C 5F 59 45 53 00 00 00 00 00
+  +020  %s_%s.%s_strings....!.!.........  25 73 5F 25 73 2E 25 73 5F 73 74 72 69 6E 67 73
+  +040  platform_%s.....!.!.U.n.r.e.c.o.  70 6C 61 74 66 6F 72 6D 5F 25 73 00 00 00 00 00
+
+================================================================================================
+对照：sr_hv.exe 中 CONTROL_YES / CONTROL_NO 邻域
+================================================================================================
+
+--- CONTROL_YES @0x1462110 ---
+  PC......US DE ES FR JP IT RU PL.  50 43 00 00 00 00 00 00 55 53 20 44 45 20 45 53
+  charlist_%s.dat.CONTROL_OKAY....  63 68 61 72 6C 69 73 74 5F 25 73 2E 64 61 74 00
+  CONTROL_YES.....CONTROL_NO..le..  43 4F 4E 54 52 4F 4C 5F 59 45 53 00 00 00 00 00
+  %s_%s.%s_strings....!.!.........  25 73 5F 25 73 2E 25 73 5F 73 74 72 69 6E 67 73
+
+--- CONTROL_NO @0x1462120 ---
+   FR JP IT RU PL.charlist_%s.dat.  20 46 52 20 4A 50 20 49 54 20 52 55 20 50 4C 00
+  CONTROL_OKAY....CONTROL_YES.....  43 4F 4E 54 52 4F 4C 5F 4F 4B 41 59 00 00 00 00
+  CONTROL_NO..le..%s_%s.%s_strings  43 4F 4E 54 52 4F 4C 5F 4E 4F 00 00 6C 65 00 00
+  ....!.!.........platform_%s.....  00 00 00 00 21 00 21 00 00 00 00 00 00 00 00 00

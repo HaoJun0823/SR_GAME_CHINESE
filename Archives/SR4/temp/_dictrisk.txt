@@ -1,0 +1,61 @@
+﻿============================================================================
+FILE: G:\Projects\SR4R_DLL\resource\dict\zh\le_string_keys.txt
+  physical lines: 1359
+  parsed entries: 1216
+  UNPARSEABLE (bad line) : 109
+  [R1] value contains %% specifier : 4
+  [R4] key contains %% / quote / newline : 0
+  [R5] value contains {n} : 0
+  --- first 12 unparseable lines ---
+    line 136   "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "[format][color:#edc300FF]{0}[/format]
+    line 137   {1}浣跨敤绉樼睄灏嗚浣犳棤娉曡幏寰楁垚灏憋紝涓旇嚜鍔ㄤ繚瀛樹細琚鐢ㄣ€?
+    line 139   浣犱粛瑕佹縺娲绘绉樼睄鍚楋紵";
+    line 146   "COMMUNITY_SITE_BLURB": "涓婁紶浣犵殑棣栦釜瑙掕壊鍗冲彲鑾峰緱涓€椤规垚灏便€?
+    line 148   鍦ㄧ嚎娴忚瑙掕壊骞跺湪娓告垙涓娇鐢ㄥ畠浠€?
+    line 150   杩借釜浣犵殑缁熻鏁版嵁骞朵笌濂藉弸姣旇緝杩涘害銆?
+    line 152   娴忚鐢ㄦ埛鍒涘缓鐨勬父鎴忓唴鎴浘銆?
+    line 154   鑾峰彇浠呴檺绀惧尯鐨勩€婇粦閬撳湥寰掋€嬪懆杈逛笌娓告垙鍐呭浼樻儬銆?;
+    line 156   "COOP_JOIN_CHEAT": "浣犵殑鍚堜綔闃熷弸姝ｅ湪浣跨敤浣滃紛銆備箣鍚庢柊寤虹殑瀛樻。閮戒細榛樿寮€鍚綔寮娿€?
+    line 157   鑷姩瀛樻。宸插仠鐢紝浣犱篃鏃犳硶鍐嶈幏寰椾换浣曟垚灏便€?;
+    line 158   "COOP_REMOTE_CHEAT_STARTING": "浣犵殑鍚堜綔鎼。姝ｅ湪浣跨敤绉樼睄銆備换浣曟柊寤虹殑瀛樻。閮藉皢鍚敤绉樼睄銆?
+    line 159   鑷姩淇濆瓨宸茬鐢紝浣犲皢鏃犳硶鍐嶈幏寰椾换浣曟垚灏便€?;
+  --- ALL R1 entries (value has %%) ---
+    line 190   key=HUD_DROP_ITEM_MESSAGE                      specs=['l']
+           val=涓㈠純 %ls
+    line 192   key=HUD_PICK_UP_MESSAGE                        specs=['l']
+           val=鎷惧彇  %ls
+    line 193   key=HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE       specs=['l', 'l']
+           val=灏?%ls 涓?%ls 浜掓崲
+    line 472   key=PC_RECORD_MODE_PROGRESS                    specs=['d']
+           val=瑙嗛淇濆瓨涓細%d%%%% 瀹屾垚
+============================================================================
+FILE: G:\Projects\SR4R_DLL\resource\dict\en\le_string_keys.txt
+  physical lines: 1360
+  parsed entries: 1215
+  UNPARSEABLE (bad line) : 111
+  [R1] value contains %% specifier : 4
+  [R4] key contains %% / quote / newline : 0
+  [R5] value contains {n} : 0
+  --- first 12 unparseable lines ---
+    line 136   "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "[format][color:#edc300FF]{0}[/format]
+    line 137   {1}Using cheats prevents you from earning achievements and autosaves are disabled. 
+    line 139   Would you still like to activate this cheat?";
+    line 146   "COMMUNITY_SITE_BLURB": "Upload your first character to earn an achievement.
+    line 148   Browse characters online and play with them in game.
+    line 150   Track your stats and compare your progress to your friends.
+    line 152   Browse user created in-game screenshots.
+    line 154   Receive community-only deals on Saints Row merchandise and game content.";
+    line 156   "COOP_JOIN_CHEAT": "Your co-op partner is using cheats. Any new save games created will ha
+    line 157   Autosaving has been disabled and you will not be able to earn any more Achievments.";
+    line 158   "COOP_REMOTE_CHEAT_STARTING": "Your co-op partner is using Cheats. Any new save games crea
+    line 159   Autosaving has been disabled and you will not be able to earn any more Achievements.";
+  --- ALL R1 entries (value has %%) ---
+    line 190   key=HUD_DROP_ITEM_MESSAGE                      specs=['l']
+           val=DROP %ls
+    line 192   key=HUD_PICK_UP_MESSAGE                        specs=['l']
+           val=PICK UP  %ls
+    line 193   key=HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE       specs=['l', 'l']
+           val=SWAP %ls WITH %ls
+    line 473   key=PC_RECORD_MODE_PROGRESS                    specs=['d']
+           val=SAVING VIDEO: %d%%%% COMPLETE
+============================================================================

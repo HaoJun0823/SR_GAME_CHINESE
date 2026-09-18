@@ -1,0 +1,69 @@
+﻿===== 源表里含 '保存中' 的条目 =====
+resource\dict\zh\le_data_supplement.txt :6027
+    "Saving...": "保存中……";
+resource\dict\zh\le_data_supplement.txt :6609
+    "SAVING...": "保存中…";
+resource\dict\zh\le_data_supplement.txt :10457
+    "SAVING VIDEO: %d%%%% COMPLETE": "视频保存中：%d%%%% 完成";
+resource\le_string\zh\menu_us.txt :216
+    "HASH_D9EBD61D": "保存中……"
+resource\le_string\zh\menu_us.txt :798
+    "HASH_BC40AFEF": "保存中…"
+resource\le_string\zh\platform_pc_us.txt :58
+    "PC_RECORD_MODE_PROGRESS": "视频保存中：%d%%%% 完成"
+
+===== 源表里含 '黑道圣徒IV' 且带后缀符号的条目 =====
+resource\dict\zh\le_data_supplement.txt :5934
+    "Upload characters created or modified in the Inauguration Station to play with them in Saints Row IV.\n\nTip: You can download your Saints Row: The Third characters to update them for Saints Row IV.\n\nBrowse an online gallery to view thousands of shared community characters.": "上传在就职站中创建或修改的角色，即可在《黑道圣徒IV》中使用它们。\n\n提示：你可以下载《黑道圣徒：第三》的角色，并将其更新用于《黑道圣徒IV》。\n\n浏览在线图库，查看社区玩家分享的数千个角色。";
+resource\dict\zh\le_data_supplement.txt :6042
+    "Saints Row IV: Re-Elected:  From the crack house, to the penthouse, to the White House.": "《黑道圣徒IV：Re-Elected》：从黑货窝到顶层豪宅，再到白宫。";
+resource\dict\zh\le_data_supplement.txt :6050
+    "Saints Row® IV™ is a game and is not real. All characters, locations, and events in this game are entirely fictional. This game also contains objectionable language and simulated acts of violence and therefore probably shouldn't be played by anyone who takes themselves too seriously.": "《黑道圣徒IV》™ 是游戏，并非现实。本作中的全部角色、地点与事件均纯属虚构。本作亦含有粗俗语言与模拟暴力情节，因此自视甚高者或许不宜游玩。";
+resource\dict\zh\le_data_supplement.txt :6058
+    "The Saints Row IV server is not available at this time.  Please try again later.": "《黑道圣徒IV》服务器当前不可用，请稍后重试。";
+resource\dict\zh\le_data_supplement.txt :6100
+    "The Saints Row IV server is not available at this time.  Please try again later.": "《黑道圣徒IV》服务器当前不可用，请稍后重试。";
+resource\dict\zh\le_data_supplement.txt :6190
+    "Go to this website to access your free Saints Row IV digital manual. \n \n www.saintsrow.com \n": "访问此网站以获取免费的《黑道圣徒IV》电子手册。\n\nwww.saintsrow.com\n";
+resource\dict\zh\le_data_supplement.txt :6296
+    "Welcome to Saints Row IV: Re-Elected.": "欢迎来到《黑道圣徒IV：Re-Elected》。";
+resource\dict\zh\le_data_supplement.txt :8427
+    "You must be using the same version of Saints Row IV as the host to play LAN games.  Please make sure everyone has downloaded the latest title update.": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩局域网游戏。 请确保所有人都已下载最新的标题更新。";
+resource\dict\zh\le_data_supplement.txt :8435
+    "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure everyone has downloaded the latest title update.": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保所有人都已下载最新的标题更新。";
+resource\dict\zh\le_data_supplement.txt :8443
+    "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure you have downloaded the latest patch.": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保你已下载最新的补丁。";
+resource\dict\zh\le_data_supplement.txt :8455
+    "You must be using the same version of Saints Row IV as the host to play a co-op game.  Please make sure everyone has downloaded the latest title update from Xbox Live.": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保所有人都已从 Xbox Live 下载最新的标题更新。";
+resource\dict\zh\le_data_supplement.txt :8464
+    "You must be using the same version of Saints Row IV as the host to play System Link.  Please make sure everyone has downloaded the latest title update from Xbox Live.": "你必须使用与主机相同的《黑道圣徒IV》版本才能通过系统链接游玩。 请确保所有人都已从 Xbox Live 下载最新的标题更新。";
+resource\dict\zh\le_data_supplement.txt :10902
+    "EXPORT WITH A SAINTS ROW IV LOGO IN THE CORNER": "导出时在角落添加《黑道圣徒IV》标志";
+resource\dict\zh\le_string_keys.txt :482
+    "PC_WATERMARK_HINT": "导出时在角落添加《黑道圣徒IV》标志";
+resource\le_string\zh\menu_us.txt :123
+    "HASH_62D41C10": "上传在就职站中创建或修改的角色，即可在《黑道圣徒IV》中使用它们。\n\n提示：你可以下载《黑道圣徒：第三》的角色，并将其更新用于《黑道圣徒IV》。\n\n浏览在线图库，查看社区玩家分享的数千个角色。"
+resource\le_string\zh\menu_us.txt :231
+    "HASH_BBF5D89F": "《黑道圣徒IV：Re-Elected》：从黑货窝到顶层豪宅，再到白宫。"
+resource\le_string\zh\menu_us.txt :239
+    "HASH_E54474A1": "《黑道圣徒IV》™ 是游戏，并非现实。本作中的全部角色、地点与事件均纯属虚构。本作亦含有粗俗语言与模拟暴力情节，因此自视甚高者或许不宜游玩。"
+resource\le_string\zh\menu_us.txt :247
+    "HASH_159A2221": "《黑道圣徒IV》服务器当前不可用，请稍后重试。"
+resource\le_string\zh\menu_us.txt :289
+    "HASH_89ECAE28": "《黑道圣徒IV》服务器当前不可用，请稍后重试。"
+resource\le_string\zh\menu_us.txt :379
+    "HASH_251102B7": "访问此网站以获取免费的《黑道圣徒IV》电子手册。\n\nwww.saintsrow.com\n"
+resource\le_string\zh\menu_us.txt :485
+    "HASH_D5E9D948": "欢迎来到《黑道圣徒IV：Re-Elected》。"
+resource\le_string\zh\multiplayer_us.txt :27
+    "HASH_C5C23CA8": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩局域网游戏。 请确保所有人都已下载最新的标题更新。"
+resource\le_string\zh\multiplayer_us.txt :35
+    "HASH_5BA6A90B": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保所有人都已下载最新的标题更新。"
+resource\le_string\zh\multiplayer_us.txt :43
+    "HASH_65B006EF": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保你已下载最新的补丁。"
+resource\le_string\zh\multiplayer_us.txt :55
+    "HASH_C602DD13": "你必须使用与主机相同的《黑道圣徒IV》版本才能游玩合作游戏。 请确保所有人都已从 Xbox Live 下载最新的标题更新。"
+resource\le_string\zh\multiplayer_us.txt :64
+    "HASH_4848E318": "你必须使用与主机相同的《黑道圣徒IV》版本才能通过系统链接游玩。 请确保所有人都已从 Xbox Live 下载最新的标题更新。"
+resource\le_string\zh\platform_pc_us.txt :503
+    "PC_WATERMARK_HINT": "导出时在角落添加《黑道圣徒IV》标志"

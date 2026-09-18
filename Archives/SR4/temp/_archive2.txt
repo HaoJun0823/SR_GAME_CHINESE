@@ -1,0 +1,21 @@
+﻿=== 已存档 ===
+DumpText.v14_dict_2232.dtxt                 11486  2026/9/17 22:33:12
+DumpText.v16_CRASH_2246.dtxt                11486  2026/9/17 22:33:12
+SR4R_I18N.v14_dict_2232.log                  4566  2026/9/17 22:33:08
+SR4R_I18N.v16_CRASH_2246.log                 3867  2026/9/17 22:46:08
+
+=== 22:32 成功日志 (v1.4+词典) 尾部 14 行 ===
+[22:32:58.927 T17224] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[22:32:58.927 T17224] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[22:32:58.938 T17224] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[22:33:03.509 T29400] wrap: LEARN  pend="button text gjq"
+[22:33:03.509 T29400] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[22:33:03.509 T29400] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="button text gjq" new="TEXT_LOCALIZED"
+[22:33:03.509 T29400] font1: upgrade requested (first CJK text)
+[22:33:03.576 T33260] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[22:33:03.576 T33260] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[22:33:03.591 T33260] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[22:33:03.593 T33260] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[22:33:03.646 T33260] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+[22:33:08.501 T12272] wrap: CONCAT-MISS  pre="New Sticker" | suf="
+[22:33:08.503 T12272] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="New Sticker" new="button text gjq"

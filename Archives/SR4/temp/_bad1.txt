@@ -1,0 +1,18 @@
+﻿=== 生成文件里含 CELL_CHEAT_ACTIVIATE_DIALOG_BODY 的行 ===
+136 :: "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "[format][color:#edc300FF]{0}[/format]
+
+=== 生成文件里含 COMMUNITY_SITE_BLURB 的行 ===
+146 :: "COMMUNITY_SITE_BLURB": "上传你的首个角色即可获得一项成就。
+
+=== 源表里 CELL_CHEAT_ACTIVIATE_DIALOG_BODY ===
+platform_ggp_us.txt 91 :: "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "["
+platform_nx64_us.txt 55 :: "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "["
+platform_pc_us.txt 100 :: "CELL_CHEAT_ACTIVIATE_DIALOG_BODY": "[format][color:#edc300FF]{0}[/format]\n{1}使用秘籍将让你无法获得成就，且自动保存会被禁用。\n\n你仍要激活此秘籍吗？"
+
+=== 源表里 COMMUNITY_SITE_BLURB (en/zh) ===
+\en\platform_ggp_us.txt 286 :: "COMMUNITY_SITE_BLURB": "U"
+\en\platform_nx64_us.txt 21 :: "COMMUNITY_SITE_BLURB": "U"
+\en\platform_pc_us.txt 312 :: "COMMUNITY_SITE_BLURB": "Upload your first character to earn an achievement.\n\nBrowse characters online and play with them in game.\n\nTrack your stats and compare your progress to your friends.\n\nBrowse user created in-game screenshots.\n\nReceive community-only deals on Saints Row merchandise and game content."
+\zh\platform_ggp_us.txt 291 :: "COMMUNITY_SITE_BLURB": "U"
+\zh\platform_nx64_us.txt 26 :: "COMMUNITY_SITE_BLURB": "U"
+\zh\platform_pc_us.txt 317 :: "COMMUNITY_SITE_BLURB": "上传你的首个角色即可获得一项成就。\n\n在线浏览角色并在游戏中使用它们。\n\n追踪你的统计数据并与好友比较进度。\n\n浏览用户创建的游戏内截图。\n\n获取仅限社区的《黑道圣徒》周边与游戏内容优惠。"

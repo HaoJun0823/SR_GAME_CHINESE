@@ -1,0 +1,32 @@
+﻿
+
+    目录: G:\Projects\SR4R_DLL\Tools
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+d-----          2026/9/7      7:07                __pycache__                  
+-a----         2026/9/17     21:28           2671 aob_relaxed_report.txt       
+-a----         2026/9/17     22:50           3104 build.log                    
+-a----         2026/9/17     20:55           5005 build.py                     
+-a----         2026/9/17     23:11           5269 dump_xrefs.py                
+-a----         2026/9/17     21:28             50 gen_aob_relaxed.out          
+-a----         2026/9/17     21:27          30764 gen_aob_relaxed.py           
+-a----         2026/9/17     22:26          13802 gen_keydict.py               
+-a----          2026/9/7      0:52           8136 sr4le_extract.py             
+-a----          2026/9/7      1:02          12786 sr4le_repack.py              
+-a----          2026/9/6     23:17           4120 sr4_vpp.py                   
+-a----          2026/9/7      7:15           5908 sr4_vpp_pack.py              
+-a----         2026/9/17     23:13          17370 verify_hooks.py              
+-a----         2026/9/17     20:03           7780 verify_runtime_globals.py    
+-a----         2026/9/17     22:24           2655 _probe_charset.py            
+-a----         2026/9/17     22:23           3084 _probe_dictrisk.py           
+-a----         2026/9/17     22:11           1918 _probe_dumpkeys.py           
+-a----         2026/9/17     22:09           2089 _probe_exe_str.py            
+-a----         2026/9/17     22:12           2525 _probe_hashname.py           
+-a----         2026/9/17     22:13           3202 _probe_keyreport.py          
+-a----         2026/9/17     23:07           8278 _probe_msaob.py              
+-a----         2026/9/17     23:09           6041 _probe_msbytes.py            
+-a----         2026/9/17     22:44           4282 _probe_pe.py                 
+
+

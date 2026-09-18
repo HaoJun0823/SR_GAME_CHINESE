@@ -1,0 +1,36 @@
+Story01_In_19_Josh||FUCK!!
+Story15_In_14_Matt||Thanks for the tip Agent Kensington.
+SH_Morningstar02_10_Player_BM||So what, I pretend to be an eccentric millionaire?
+Story07_In_05_Killbane||Time for the high spot, boys.
+Story02_In_04_Shaundi||We got arrested.
+Story19_In_10_Player||Sir, I am a huge fan.
+SH_Decker_12_Kinzie||I need the chair to stop the Deckers.
+Story07_In_12_Player_BM||No rules?  I can work with that.
+Story02_In_11_Phillipe||Take them off.
+Story01_In_17_Shaundi||Hey--don't be a dick.
+Story17_Out_02_Pierce||We might've overdone it.
+Story16_Out_05_Killbane||I do run a demanding workplace.  Matty, I appreciate how you've shared your concerns.  I mean, the way Viola and Kiki handled their...departures just made me want to kill someone, ya know?
+Story11_In_01_Player_BM||Pack it up, we gotta move.
+Story10_In_07_Player_BM||So what's in it for you?
+Story10_In_14_Oleg||Ladies first.
+Story10_In_03_Player_BM||I wouldn't piss off the big guy.
+Story07_In_16_Oleg||There are others who hate the Syndicate as much as you do.  I will take you to them.
+Story02_In_21_Kiki||That is before taxes, of course.
+SH_Decker_13_Player_BM||Thank you.
+Story15_In_03_Pierce||I don't see a bed.
+Story08_Out_01_Killbane||HOOKER ASSASSINS?
+Story02_In_32_Shaundi||Johnny, you can't even drive stick--how you gonna fly a plane?
+Story05_Out_03_Phillipe||My thoughts exactly, Mr. Killbane.
+Story01_In_15_Player_BM||You all know the drill.
+Story10_In_04_Viola||Look - I'm not here to fight.  We need to work together.
+SH_Morningstar02_02_Monica||Those responsible for this act of terror will be found and held accountable.
+Story12_In_13_Pierce||Your name's the Bloody Canoness.
+Story01_In_11_Player_BM||Alright people--
+Story16_In_04_Player_BM||Great plan, Kinzie.
+Story11_Out_02_Josh||The men and women of STAG put their lives on the line every day to protect your city against gang violence.  Want to be a real world hero? Talk to your STAG recruiter today.  I know I have.
+Story08_Out_03_Matt||Ladies, it was a pretty shit plan.
+Story07_Out_07_Kiki||Calm down, Eddie...
+Story11_In_02_Pierce||I got 20k on this game!
+Story02_In_12_Player_BM||You have any idea who you're fucking with here?
+Story01_In_08_Josh||You're robbing a bank dressed like yourselves?
+Story01_In_02_Gat||Grand larceny's right up there. You ready for this?

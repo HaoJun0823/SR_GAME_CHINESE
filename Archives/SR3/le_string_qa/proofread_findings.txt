@@ -1,0 +1,131 @@
+======================================================================
+SR3 简体中文 schinese/ 校对报告（终版）
+======================================================================
+
+【总览】文件21 / 条目6224
+  漏翻(可译文本未译): 0 处（132条‘整条英文’经逐条确认均为代码/品牌/电台台标/随机路人名/引擎占位符/字体测试串，本应保留英文）
+  格式完整性: 通过（无 token 失配、无空值漏填；check_format 全21文件 PASS）
+  术语不一致: 12 组定名被偏离，合计约116处实例 ← 主要问题
+  低质量抽检: 抽样对白/任务文读起来自然，无明显机翻腔；未逐条通读6224条
+
+【术语不一致明细】（对照 terms_cand.md 定名列）
+英文                   偏离译法           应改定名         实例数
+The Deckers          迪克帮            赛博帮          23  (译法混用：部分用了谐音梗"迪克帮")
+The Luchadores       摔角手            摔跤手帮         21  (译法混用：摔角(港台)/摔跤(大陆))
+Murderbrawl          谋杀乱斗/杀戮乱斗      屠杀格斗         4  (全偏离)
+Gangstas in Space    太空匪帮           太空黑帮         2  (全偏离)
+Professor Genki      元气教授           元气博士         1  (1处偏离)
+Genkibowl            吉尼斯碗           元气杯/第七届元气杯   7  (疑似错译：Genki≠Guinness)
+Sad Panda            悲伤熊猫           忧郁熊猫         4  (全偏离)
+Sad Panda Skyblazing 悲伤熊猫·飞天焰/悲伤熊猫·飞天 忧郁熊猫飞天       6  (全偏离)
+Verminator           害虫终结者          鼠辈终结者        2  (全偏离)
+Cheapy               廉价哥            抠抠           3  (全偏离)
+Money Shot           金钱射击           一击命中         3  (全偏离)
+Crib                 藏身处            据点           20  (译法混用)
+  合计待统一实例数 ≈ 96
+
+【逐项需修改的 KEY 清单】
+
+● The Deckers → 应统一为「赛博帮」
+  命中 23 处，例如：
+    [dlc2] cm_dkr01_suit
+    [dlc2] CM_DKR02_OUTFIT
+    [dlc2] cm_dkr01_hdphones
+    [dlc2] UNL_DESC_DLC2_ASSET03_OUTFITS06
+    [dlc2] CM_DKR01_OUTFIT
+    [dlc2] UNL_DESC_DLC2_ASSET03_OUTFITS05
+    [menu] HUMAN_TEAM_DECKERS
+    [mission] SH03_FAIL_CHAIR
+    [mission] M16_OBJ_KILL_ALL_ENEMIES
+    [mission] MISSION_NAME_M16
+    [mission] SH03_OBJ_KILL_TARGETS
+    [mission] M14_OBJ_CLEAR_DECKERS
+    …（其余 11 处见脚本复核）
+
+● The Luchadores → 应统一为「摔跤手帮」
+  命中 21 处，例如：
+    [diversion] HITMAN_TARGET_H12_DESCRIPTION
+    [dlc2] UNL_DESC_DLC2_ASSET03_OUTFITS01
+    [dlc2] UNL_DESC_DLC2_ASSET03_OUTFITS02
+    [dlc2] CUST_ITEM_CM_DLC_LU02
+    [dlc2] CUST_ITEM_DLC_HAT_LU02
+    [dlc2] CUST_ITEM_DLC_SUIT_LU02
+    [mission] M20_OBJ_RC_THE_CAR
+    [mission] M20_OBJ_GO_TO_BOAT
+    [mission] M20_OBJ_KILL_THE_LAST_WRESTLER
+    [mission] M20_OBJ_WAIT_FOR_ENTER
+    [mission] M20_OBJ_RC_THE_BOAT
+    [mission] SH04_OBJ_DESTROY_LUCHADORES
+    …（其余 9 处见脚本复核）
+
+● Murderbrawl → 应统一为「屠杀格斗」
+  命中 4 处，例如：
+    [customize] CUST_ITEM_LEFT_UPPER_ARM_BARB_WIRE_01
+    [mission] MISSION_NAME_M21
+    [mission] MSN_PRE_CALL_OBJ_M21
+    [subtitle] Story21_In_10_Bobby
+
+● Gangstas in Space → 应统一为「太空黑帮」
+  命中 2 处，例如：
+    [mission] MISSION_NAME_M24
+    [subtitle] Story22_In_02_Pierce
+
+● Professor Genki → 应统一为「元气博士」
+  命中 1 处，例如：
+    [dlc1] UNL_DESC_SKYBLAZING_ALL
+
+● Genkibowl → 应统一为「元气杯/第七届元气杯」
+  命中 7 处，例如：
+    [dlc1] DLC1_MM_06
+    [dlc1] DLC1_GB_IN_BOBBY_03
+    [dlc1] UNL_DLC1_STORY02_ALERT
+    [dlc1] DLC1_GB_IN_ZACH_02
+    [dlc1] UNL_SKYBLAZING_ALL
+    [dlc1] DLC1_GB_IN_ZACH_04
+    [dlc1] UNL_DESC_GESCORT_02
+
+● Sad Panda → 应统一为「忧郁熊猫」
+  命中 4 处，例如：
+    [dlc1] UNL_SKYBLAZING
+    [dlc1] UNL_DESC_SKYBLAZING
+    [dlc1] HOMIES_PANDA_DESC
+    [dlc1] DLC1_MM_05
+
+● Sad Panda Skyblazing → 应统一为「忧郁熊猫飞天」
+  命中 3 处，例如：
+    [dlc1] UNL_SKYBLAZING
+    [dlc1] UNL_DESC_SKYBLAZING
+    [dlc1] DLC1_MM_05
+
+● Verminator → 应统一为「鼠辈终结者」
+  命中 2 处，例如：
+    [dlc1] UNL_DLC1_VEH_MOUSE_ATV_ALERT
+    [dlc1] UNL_DLC1_STORY02_VEHICLE_ATV
+
+● Cheapy → 应统一为「抠抠」
+  命中 3 处，例如：
+    [dlc1] UNL_DLC1_ASSET07_HOMIES01
+    [dlc1] UNL_DLC1_ASSET07_ALERT
+    [dlc1] HOMIES_CHEAPY
+
+● Money Shot → 应统一为「一击命中」
+  命中 3 处，例如：
+    [menu] MAIN_MENU_MS_OUTFIT_UNLOCKED
+    [menu] MAIN_MENU_MS_GUN_UNLOCKED
+    [menu] MAIN_MENU_MS_BIKE_UNLOCKED
+
+● Crib → 应统一为「据点」
+  命中 20 处，例如：
+    [menu] COOP_CLIENT_CRIB_CUST_TRIGGER
+    [menu] MENU_EXIT_CRIB
+    [menu] MAIN_MENU_MS_OUTFIT_UNLOCKED
+    [menu] MENU_CRIB_TITLE
+    [menu] MAIN_MENU_MS_BIKE_UNLOCKED
+    [mission] MM_K_01_obj_meet_kinzie
+    [mission] MSN_PRE_CALL_OBJ_M15
+    [mission] MSN_PRE_CALL_OBJ_MMK05
+    [mission] MSN_PRE_CALL_OBJ_M16
+    [mission] MSN_PRE_CALL_OBJ_MMK01
+    [mission] MM_K_06_obj_meet_kinzie
+    [static] WPNSTOR_CRIB_TAKE_BLANK_FULL
+    …（其余 8 处见脚本复核）

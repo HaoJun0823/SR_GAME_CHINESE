@@ -1,0 +1,19 @@
+# exe PE 指纹（对照 dllmain.cpp kBuildFp 表）
+
+| exe | 大小 | TDS | EntryPoint | SizeOfImage | 形态 | 指纹命中 |
+|---|---|---|---|---|---|---|
+| `sr_hv.exe` | 28780032 | 0x642AD908 | 0x013635C4 | 0x07CF8000 | PE32+, 7 sect | **Steam** (score=3/3) |
+| `sr_hv_epic.exe` | 28756992 | 0x65DE7B82 | 0x0135E464 | 0x07CDE000 | PE32+, 7 sect | **EPIC** (score=3/3) |
+| `sr_hv_gog.exe` | 28535808 | 0x63FCCC27 | 0x0130DC54 | 0x07CAD000 | PE32+, 7 sect | **GOG** (score=3/3) |
+| `sriv_microsoft.exe` | 26999296 | — | — | — | ⚠ 无 MZ 签名（首2字节 7193） | — |
+
+## kBuildFp 参照表
+
+| key | name | TDS | EntryPoint | SizeOfImage |
+|---|---|---|---|---|
+| `steam` | Steam | 0x642AD908 | 0x013635C4 | 0x07CF8000 |
+| `gog` | GOG | 0x63FCCC27 | 0x0130DC54 | 0x07CAD000 |
+| `epic` | EPIC | 0x65DE7B82 | 0x0135E464 | 0x07CDE000 |
+| `msstore` | MSStore | 0x5E58CEF8 | 0x00FC44FC | 0x07E6D000 |
+
+> 未命中的构建会走「未知构建自解」；`text_dump = auto` 只在 hook 定位失败时才落盘。

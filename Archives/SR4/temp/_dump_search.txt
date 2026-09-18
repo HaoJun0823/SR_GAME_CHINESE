@@ -1,0 +1,17 @@
+﻿########## A) SR4R_dump* 可执行段裸映像 ##########
+--- G:\Projects\SR4R_DLL
+G:\Projects\SR4R_DLL\.temp\dump_ms\SR4R_dump_text.bin  18.49 MB  2026/9/17 21:16:42
+G:\Projects\SR4R_DLL\.temp\dump_ms\SR4R_dump_text.map  0 MB  2026/9/17 21:16:42
+--- I:\SteamLibrary\steamapps\common\Saints Row IV
+(无)
+--- G:\Downloads
+(无)
+
+########## B) MS Store 包目录 ##########
+Test-Path: False
+sriv.exe                 (不存在/不可见)
+sriv_microsoft.exe       (不存在/不可见)
+sr_hv.exe                (不存在/不可见)
+
+########## C) Steam 目录里的 sriv_microsoft.exe ##########
+size=26999296  first8=71 93 20 8E 9A 60 34 2F

@@ -1,0 +1,304 @@
+﻿=== git diff dllmain.cpp (全文) ===
+git : warning: in the working copy of 'SR4R_I18N/dllmain.cpp', LF will be repla
+ced by CRLF the next time Git touches it
+所在位置 行:450 字符: 10
++ $out += (git --no-pager diff --no-color HEAD -- SR4R_I18N/dllmain.cpp ...
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+diff --git a/SR4R_I18N/dllmain.cpp b/SR4R_I18N/dllmain.cpp
+index bbea3bf..39e373a 100644
+--- a/SR4R_I18N/dllmain.cpp
++++ b/SR4R_I18N/dllmain.cpp
+@@ -1437,6 +1437,125 @@ static FontLookup_t g_origFontLookup = nullptr;
+ static TexObj_t     g_origTexObj     = nullptr;
+ static SrvResolve_t g_origSrvResolve = nullptr;
+ 
++// =====================================================================
++// v1.5 诊断: hook 存活探针 + 文本/返回值采样（仅 early_diag=1 时输出）
++//   动机: MS Store 与 Steam 两版日志里 format hit 恒为 0（3442 次调用零命中）,
++//   而 Format 收到的串形如 MENU_BACK / PLT_MENU_WINDOWED —— 都是 le_string 的
++//   **本地化 KEY**（见 resource/le_string/{en,zh}/platform_pc_us.txt、menu_us.txt）,
++//   而词典键是英文原文。于是必须区分三种可能:
++//     (1) 引擎在这条链路上传的是 KEY（解析发生在别处）-> 词典方向根本不对
++//     (2) 挂错了函数（Format 落点是别的 swprintf 类函数）-> 输入全是内部/调试串
++//     (3) 词典表本身查不中 -> 由 LoadDictDir 末尾的 dict-selftest 排除
++//   手段: 采样 Format 的**调用者模块内偏移**(ra=+0x…, 可与 Steam 侧已知调用点常量
++//   RA_FMT_* 或 MS dump 反汇编直接对上) + 采样 F/G 语言服务的**返回串**。
++// =====================================================================
++enum { HC_A = 0, HC_B, HC_C, HC_D, HC_E, HC_J, HC_N };
++static volatile LONG g_hookCalls[HC_N];     // 各 hook 被调用次数（0 = 该 hook 从未触发）
++
++static void DiagAlive(const char* name, volatile LONG* once, volatile LONG* counter)
++{
++    InterlockedIncrement(counter);
++    if (InterlockedIncrement(once) == 1)
++        Log("alive: %s  (first call)", name);
++}
++
++static void DiagStr(char* dst, size_t cap, const wchar_t* s)
++{
++    size_t w = 0;
++    for (const wchar_t* p = s; *p && w + 6 < cap; ++p)
++    {
++        wchar_t c = *p;
++        if      (c == L'\\')            { dst[w++] = '\\'; dst[w++] = '\\'; }
++        else if (c == L'"')             { dst[w++] = '\\'; dst[w++] = '"';  }
++        else if (c == L'\n')            { dst[w++] = '\\'; dst[w++] = 'n';  }
++        else if (c == L'\r')            { dst[w++] = '\\'; dst[w++] = 'r';  }
++        else if (c == L'\t')            { dst[w++] = '\\'; dst[w++] = 't';  }
++        else if (c >= 0x20 && c < 0x7F) dst[w++] = (char)c;
++        else if (c < 0x20)              dst[w++] = '.';
++        else                            dst[w++] = '#';   // 非拉丁字符: 占位（避免日志编码歧义）
++    }
++    dst[w] = '\0';
++}
++
++// 形如 MENU_BACK / PLT_MENU_WINDOWED / HASH_A1360200 —— 判据: 仅 [A-Z0-9_]
++static bool DiagKeyLike(const wchar_t* s)
++{
++    bool any = false;
++    for (const wchar_t* p = s; *p; ++p)
++    {
++        any = true;
++        if (!((*p >= L'A' && *p <= L'Z') || (*p >= L'0' && *p <= L'9') || *p == L'_'))
++            return false;
++    }
++    return any;
++}
++
++static uint64_t DiagModBase()
++{
++    return reinterpret_cast<uint64_t>(GetModuleHandleW(nullptr));
++}
++
++#define DIAG_FMT_SAMPLE 64
++static volatile LONG g_fmtSampleN = 0;
++static void DiagFmtSample(uint64_t raCaller, const wchar_t* s)
++{
++    if (!g_cfg.earlyDiag || !s || !*s) return;
++    LONG n = InterlockedIncrement(&g_fmtSampleN);
++    if (n > DIAG_FMT_SAMPLE) return;
++    char buf[256];
++    DiagStr(buf, sizeof(buf), s);
++    Log("fmt#%-3ld len=%-4zu ra=+0x%-8llX %s\"%s\"", n, wcslen(s),
++        (unsigned long long)(raCaller - DiagModBase()),
++        DiagKeyLike(s) ? "[KEYLIKE] " : "", buf);
++}
++
++#define DIAG_EARLY_SAMPLE 32
++static volatile LONG g_earlySampleN = 0;
++
++// 仅确认"页可读"后才解引用 —— 避免把 32 位哈希值当成指针读崩
++static bool DiagReadable(const void* p)
++{
++    if (!p) return false;
++    MEMORY_BASIC_INFORMATION mbi;
++    if (VirtualQuery(p, &mbi, sizeof(mbi)) != sizeof(mbi)) return false;
++    if (mbi.State != MEM_COMMIT) return false;
++    if (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD)) return false;
++    return true;
++}
++
++// 尝试把参数当 wchar_t* 读出可打印串。判据: 首字符可打印且能在 96 字符内见到 NUL。
++//   成功 => 该参数是"文本指针"（英文/KEY）; 失败 => 大概率是哈希/句柄/整数。
++static bool DiagWideAt(uint64_t p, char* out, size_t cap)
++{
++    if (p < 0x10000 || !DiagReadable(reinterpret_cast<const void*>(p))) return false;
++    const wchar_t* s = reinterpret_cast<const wchar_t*>(p);
++    if (s[0] < 0x20 || s[0] == 0xFFFF) return false;
++    size_t n = 0;
++    while (n < 96 && s[n]) ++n;
++    if (n == 0) return false;
++    DiagStr(out, cap, s);
++    return true;
++}
++
++static void DiagEarlySample(const char* which, const wchar_t* s,
++                            uint64_t a1, uint64_t a2, uint64_t a3, uint64_t a4)
++{
++    if (!g_cfg.earlyDiag) return;
++    LONG n = InterlockedIncrement(&g_earlySampleN);
++    if (n > DIAG_EARLY_SAMPLE) return;
++
++    char buf[256];
++    if (s) DiagStr(buf, sizeof(buf), s); else buf[0] = '\0';
++    Log("early#%-3ld %-8s a1=0x%-12llX a2=0x%llX a3=0x%llX a4=0x%llX ret=\"%s\"",
++        n, which, (unsigned long long)a1, (unsigned long long)a2,
++        (unsigned long long)a3, (unsigned long long)a4, buf);
++
++    char k1[256], k2[256], k3[256];
++    if (DiagWideAt(a1, k1, sizeof(k1))) Log("         %-8s a1(string) -> \"%s\"", which, k1);
++    if (DiagWideAt(a2, k2, sizeof(k2))) Log("         %-8s a2(string) -> \"%s\"", which, k2);
++    if (DiagWideAt(a3, k3, sizeof(k3))) Log("         %-8s a3(string) -> \"%s\"", which, k3);
++}
++
+ // 官方对象 -> fontTab 槽位号（找不到返回 0xFFFFFFFF）
+ static uint32_t ResolveSlot(void* off);
+ static bool     FinishFont(FakeFont* f);
+@@ -1469,6 +1588,9 @@ static void EnsureFontReady(void* off, uint32_t slotHint)
+ 
+ static void* __fastcall HookFontLookup(int fontId)
+ {
++    static volatile LONG once = 0;
++    DiagAlive("FONT_LOOKUP", &once, &g_hookCalls[HC_C]);
++
+     void* off = g_origFontLookup(fontId);
+     if (!off) return off;
+ 
+@@ -1510,6 +1632,9 @@ static void* __fastcall HookFontLookup(int fontId)
+ // ---------- Hook D: 纹理对象查询 ----------
+ static void* __fastcall HookTexObj(int texId)
+ {
++    static volatile LONG once = 0;
++    DiagAlive("TEXOBJ", &once, &g_hookCalls[HC_D]);
++
+     uint32_t t = (uint32_t)texId;
+     if (t >= MAGIC_TEXID_BASE && t < MAGIC_TEXID_BASE + FAKE_FONT_MAX)
+     {
+@@ -1522,6 +1647,9 @@ static void* __fastcall HookTexObj(int texId)
+ // ---------- Hook E: texId -> SRV ----------
+ static void* __fastcall HookSrvResolve(unsigned int texId, char useStream)
+ {
++    static volatile LONG once = 0;
++    DiagAlive("SRV_RESOLVE", &once, &g_hookCalls[HC_E]);
++
+     if (texId >= MAGIC_TEXID_BASE && texId < MAGIC_TEXID_BASE + FAKE_FONT_MAX)
+     {
+         FakeFont* f = &g_fake[texId - MAGIC_TEXID_BASE];
+@@ -2393,8 +2521,18 @@ static DrawWide_t g_origDrawWide = nullptr;
+ static __int64 __fastcall HookDrawWide(void* a1, float x, float y, const wchar_t* text,
+                                         float scale, char flag, unsigned int fontId, void* a8)
+ {
++    static volatile LONG once = 0;
++    DiagAlive("DRAW_WIDE", &once, &g_hookCalls[HC_A]);
++
+     if (text && *text)
+     {
++        if (g_cfg.earlyDiag && InterlockedCompareExchange(&once, 0, 0) <= 6)
++        {
++            char buf[256];
++            DiagStr(buf, sizeof(buf), text);
++            Log("drawin#%-3ld fontId=%-4u len=%-4zu \"%s\"",
++                once, fontId, wcslen(text), buf);
++        }
+         const DictNode* r = LookupNode(text, &g_hitA, &g_missA);
+         if (r) text = r->trans;
+         // 文本含中文字符（无论替换来自 Hook A 还是 Hook B）-> 确保该字体已升级
+@@ -2412,8 +2550,12 @@ static __int64 __fastcall HookFormat(wchar_t* dst, const wchar_t* fmt,
+     // 必须先捕获: _ReturnAddress() 在函数入口 = Format 真正调用者的返回地址
+     // （任何后续 call 都会覆盖它 -> 归因必须用此刻的值）
+     uint64_t raCaller = reinterpret_cast<uint64_t>(_ReturnAddress());
++    static volatile LONG once = 0;
++    DiagAlive("FORMAT", &once, &g_hookCalls[HC_B]);
++
+     if (fmt && *fmt)
+     {
++        DiagFmtSample(raCaller, fmt);          // v1.5: 前 64 条输入 + 调用者偏移
+         const DictNode* r = LookupNode(fmt, &g_hitB, &g_missB);
+         if (r)
+         {
+@@ -2476,11 +2618,12 @@ static void DiagFmtOrigin(uint64_t raCaller, const wchar_t* s)
+ //   - 含 % / \n: 模板或显式多行, 交给 Format hook / 引擎, 不提前拦
+ //   - 长度 <4(图标/占位) 或 >= WRAP_MAX_CHARS(超长): 原样
+ //   命中: 返回译文(中文整句, 引擎布局自行按 CJK 切行); miss: 返回原文。
+-static const wchar_t* EarlySub(LangGet_t orig,
++static const wchar_t* EarlySub(const char* which, LangGet_t orig,
+                                uint64_t a1, uint64_t a2, uint64_t a3, uint64_t a4,
+                                volatile LONG* hit, volatile LONG* miss)
+ {
+     const wchar_t* s = orig(a1, a2, a3, a4);   // 完整透传调用者参数, 不破坏槽位语义
++    DiagEarlySample(which, s, a1, a2, a3, a4);   // v1.5: 采样入参 + 语言服务返回串
+     if (!s || !*s || !g_dictReady) return s;
+     if (wcschr(s, L'%') || wcschr(s, L'\n')) return s;
+     size_t n = wcslen(s);
+@@ -2512,12 +2655,12 @@ static const wchar_t* EarlySub(LangGet_t orig,
+ 
+ static const wchar_t* __fastcall HookLangCur(uint64_t a1, uint64_t a2, uint64_t a3, uint64_t a4)
+ {
+-    return EarlySub(g_origLangCur, a1, a2, a3, a4, &g_earlyCurHit, &g_earlyCurMiss);
++    return EarlySub("LANG_CUR", g_origLangCur, a1, a2, a3, a4, &g_earlyCurHit, &g_earlyCurMiss);
+ }
+ 
+ static const wchar_t* __fastcall HookLangTxt(uint64_t a1, uint64_t a2, uint64_t a3, uint64_t a4)
+ {
+-    return EarlySub(g_origLangTxt, a1, a2, a3, a4, &g_earlyTxtHit, &g_earlyTxtMiss);
++    return EarlySub("LANG_TXT", g_origLangTxt, a1, a2, a3, a4, &g_earlyTxtHit, &g_earlyTxtMiss);
+ }
+ 
+ // ---------- 字幕/HUD 绘制入口整串替换 (sub_140476D80) ----------
+@@ -2553,6 +2696,9 @@ static size_t SubBodyLen(const wchar_t* s, size_t len)
+ 
+ static double __fastcall HookSubtitle(const wchar_t* text, float a2, double a3, int a4)
+ {
++    static volatile LONG once = 0;
++    DiagAlive("SUBTITLE", &once, &g_hookCalls[HC_J]);
++
+     if (text && *text && g_dictReady && !wcschr(text, L'%'))
+     {
+         size_t len = wcslen(text);
+@@ -2771,6 +2917,12 @@ static bool LoadOriginDir(const wchar_t* dir)
+     return files > 0;
+ }
+ 
++// v1.5: 词典自检样本（加载完成后回查, 证明哈希表端到端可用）
++//   目的: 把「查不中」的两种成因分开 —— 表坏了(自检失败) vs 输入不是键(自检通过)
++static constexpr int  DICT_SELFTEST_N = 8;
++static const wchar_t* g_selfKeys[DICT_SELFTEST_N];
++static int            g_selfKeyN = 0;
++
+ // 处理一条 key/val: ID/HASH_ 键经 origin 联表转英文原文; 其余按原文键入表
+ static void AddDictEntry(const wchar_t* key, const wchar_t* val,
+                          uint32_t* loaded, uint32_t* hashKeys, uint32_t* cjkEntries)
+@@ -2810,7 +2962,11 @@ static void AddDictEntry(const wchar_t* key, const wchar_t* val,
+     memcpy(origW, effKey, effLen * sizeof(wchar_t));
+     origW[effLen] = L'\0';
+ 
+-    if (DictInsert(origW, (uint32_t)effLen, transW)) ++*loaded;
++    if (DictInsert(origW, (uint32_t)effLen, transW))
++    {
++        ++*loaded;
++        if (g_selfKeyN < DICT_SELFTEST_N) g_selfKeys[g_selfKeyN++] = origW;   // v1.5 自检样本
++    }
+ 
+     // 空格规范化副本键（KEY 含连续空格时, 引擎侧永远以单空格形态到来）
+     {
+@@ -2947,6 +3103,18 @@ static DWORD WINAPI StatsThread(LPVOID)
+         Sleep(STATS_PERIOD_MS);
+         Log("stats: draw hit=%ld miss=%ld | format hit=%ld miss=%ld | wrap=%ld | sub hit=%ld miss=%ld | dumped=%u | fonts=%ld",
+             g_hitA, g_missA, g_hitB, g_missB, g_wrapHits, g_hitJ, g_missJ, g_dumpCount, g_fidCacheN);
++        // v1.5: hook 存活/调用量 + 语言服务层计数 + wrap 事件 + Format 调用点分类
++        //   calls: 每个 hook 的真实被调用次数（0 = 该 hook 在本构建从未触发 ->
++        //          A=0 说明 DrawWide 落点不是本构建 UI 的绘制入口）
++        //   early: F/G 语言服务的 hit/miss（双双为 0 且无 early# 采样 = 该层未参与）
++        Log("stats2: calls A=%ld B=%ld C=%ld D=%ld E=%ld J=%ld | early cur=%ld/%ld txt=%ld/%ld | fmtFrom=[%ld,%ld,%ld,%ld,%ld,%ld,%ld,%ld] | wrapEv=[L%ld T%ld C%ld R%ld S%ld O%ld]",
++            g_hookCalls[HC_A], g_hookCalls[HC_B], g_hookCalls[HC_C], g_hookCalls[HC_D],
++            g_hookCalls[HC_E], g_hookCalls[HC_J],
++            g_earlyCurHit, g_earlyCurMiss, g_earlyTxtHit, g_earlyTxtMiss,
++            g_fmtFrom[0], g_fmtFrom[1], g_fmtFrom[2], g_fmtFrom[3],
++            g_fmtFrom[4], g_fmtFrom[5], g_fmtFrom[6], g_fmtFrom[7],
++            g_wrapCnt[WD_LEARN], g_wrapCnt[WD_TTLEXP], g_wrapCnt[WD_CONCAT],
++            g_wrapCnt[WD_REPLACE], g_wrapCnt[WD_STABLE], g_wrapCnt[WD_TOKEOVER]);
+         // v7.5.2: v7.4 探针统计（early/setText/setTag/refresh/wrapEv）不再输出，计数仍维护;
+         //   需要时临时恢复下三行 Log 调试。
+         // 周期落盘 dump 收集（替代逐条 fflush, 防切界面卡顿; 崩溃最多丢本轮周期数据）
+@@ -3324,7 +3492,7 @@ static void DumpExecutableSections(const wchar_t* dir, const char* why)
+ // ---------- 主线程 ----------
+ static DWORD WINAPI MainThread(LPVOID hSelf)
+ {
+-    Log("==== SR4R_I18N v1.4: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====");
++    Log("==== SR4R_I18N v1.5: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====");
+     wchar_t dir[MAX_PATH], iniPath[MAX_PATH], dictDir[MAX_PATH], dtxt[MAX_PATH];
+     GetModuleFileNameW((HMODULE)hSelf, dir, MAX_PATH);
+     wchar_t* slash = wcsrchr(dir, L'\\');
+@@ -3551,7 +3719,7 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
+     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
+ 
+     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
+-    Log("SR4R v1.4 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, idling",
++    Log("SR4R v1.5 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, idling",
+         g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j);
+     return 0;
+ }

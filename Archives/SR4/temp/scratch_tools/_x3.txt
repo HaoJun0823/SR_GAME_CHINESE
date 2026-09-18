@@ -1,0 +1,28 @@
+﻿venv py = True
+== 找离线参照 exe ==
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv.exe  28780032B  2026-09-06
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv_epic.exe  28756992B  2026-09-12
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv_gog.exe  28535808B  2026-09-08
+== Steam 目录顶层 ==
+binkw64.dll  260608B
+EOSSDK-Win64-Shipping.dll  19817936B
+SaintsRowIV.exe  1093584B
+sriv_microsoft.exe  26999296B
+sr_hv.exe  28780032B
+sr_hv_epic.exe  28756992B
+sr_hv_gog.exe  28535808B
+steam_api64.dll  298384B
+winmm.dll  3615928B
+== Tools ==
+aob_relaxed_report.txt 1206B
+build.log 972B
+build.py 5005B
+gen_aob_relaxed.out 77B
+gen_aob_relaxed.py 19493B
+sr4le_extract.py 8136B
+sr4le_repack.py 12786B
+sr4_vpp.py 4120B
+sr4_vpp_pack.py 5908B
+verify_runtime_globals.py 7780B
+_x1.txt 214B
+_x2.txt 110B

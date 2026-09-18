@@ -1,0 +1,1933 @@
+"SCREEN_CAPTURE_UPLOAD_QUOTA_FAIL_TEXT": "Your image failed to upload because you have reached your upload limit.  Please visit SaintsRow.com to manage your uploaded content."
+
+"COMMUNITY_CREATE_NEW": "ǃȠǞǧƷ"
+
+"MINIMAP_STATIC": "Ȣƞ"
+
+"INFO_UNLOCKABLES_STRONGHOLDS": "STRONGHOLDS"
+
+"CONTROL_CHANGE_TRACK": "CHANGE TRACK"
+
+"DLC_PREVIEW": "PREVIEW PACKS"
+"PAUSE_MAP_STAG_TAKEOVER_HINT": "ƿƩȕǕ"
+
+"CELL_CAMERA_MODE_DISABLED": "ǪűƠ"
+
+"COMMUNITY_INVALID_NAME": "ȑƺżǺ"
+
+"PAUSE_INFO_UNLOCKABLE_EMPTY": "ȑ"
+
+"PLAYLIST_PREVIEW_TRACK": "PREVIEW"
+
+"MAP_RESPECT_BLANK_OF_BLANK": "RESPECT: %d/%d"
+
+"INFO_UNLOCKABLES_DAMAGE": "DAMAGE"
+
+"CONTROLS_STICK": "{ANALOG_LS_IMG} ACCEL/BRAKE"
+
+"CONTROLS_DESC_KICK": "KICK"
+
+"HASH_9DE4FE82": "You must be signed in to Epic Account \nto use online features."
+
+"CREDITS_AUDIO": "Ƴƅ"
+
+"MENU_DISTRICT_CONTROL": "ƋƖǓƃ"
+
+"COOP_LOBBY_IS_READY": "{0}\nis ready."
+
+"COMMUNITY_ERROR_PASSWORD_INCORRECT": "The username or password is incorrect."
+
+"MENU_CONTROL_OPTIONS": "CONTROL OPTIONS"
+
+"MENU_OPTIONS_XBOX_LIVE": "Xbox Live"
+
+"MAP_ICON_SNATCH": "SNATCH"
+
+"CONTROL_DESC_FOOT_COMPLIMENT": "COMPLIMENT"
+
+"COMMUNITY_LOGOUT_TITLE": "You Are Currently Logged In"
+
+"STORE_CHARACTER_GALLERY": "ǹŹȓǾ"
+
+"SAVELOAD_NO_PROFILE_FOUND": "ǆ€ǴƴǧƷ"
+
+"PAUSE_INFO_DRIVING_STUNTS": "DRIVING STUNTS"
+
+"CONTROLS_INVERT_ROTATION": "INVERT CAMERA ROTATION"
+
+"CELL_OPTION_PHONEBOOK": "PHONE BOOK"
+
+"HASH_B98FE004": "Ƙƕ HDR ƇǊ"
+
+"CREDITS_LOGO": ""
+
+"PAUSE_MAP_STAG_ASSIST_TITLE": "ƿƩǿƧ"
+
+"COMMUNITY_NEW_USER_NAME_LONG_DESC": "Please enter a desired username"
+
+"HUMAN_TEAM_DECKERS": "DECKERS"
+
+"CUSTOMIZE_OUTFIT_YOURE_NAKED_TITLE": "ƚȄ"
+
+"CANNOT_CREATE_OUTFIT_BODY": "There is no more room in your wardrobe for outfits.\nRemove an old outfit to create a new one."
+
+"SAVELOAD_IMPORT_SUCCESS": "Import successful."
+
+"PAUSE_MAP_FILTER_LOCKED": "LOCKED"
+
+"MENU_STYLE_DIALOG_CONTINUE": "CONTINUE"
+
+"MAINMENU_OPTIONS": "OPTIONS"
+
+"INFO_COLLECTIONS_CHOPSHOP": "CHOP SHOP"
+
+"COMPLETION_UNLOCKED": "UNLOCKED"
+
+"CELL_VEHICLE_DIALOG_NO_CASH_BODY": "You do not have enough cash to repair and retreive this vehicle."
+
+"ADD_BOOKMARK": "ADD BOOKMARK"
+
+"HASH_C6347785": "    SCREEN SPACE REFLECTIONS"
+
+"MAINMENU_CHECK_MESSAGES": "ƶƈǅǖ"
+
+"CELL_CAMERA_MODE_VIEW_TITLE": "VIEW SCREENSHOTS"
+
+"MANAGE_DATA": "MANAGE DATA"
+
+"SB_DETAILS_LOCATION": "LOCATION"
+
+"MENU_SEARCHING": "SEARCHING..."
+
+"COOP_SERVER_SAVEGAME_LOADING": "%ls is loading a save game.\nWould you like to save your progress before rejoining?"
+
+"MP3_CONFIRM_DELETE_LIST_TITLE": "DELETE PLAYLIST"
+
+"COMPLETION_STRONGHOLD": "STRONGHOLD"
+
+"COMMUNITY_NO_PASSWORD": "You must enter matching passwords."
+
+"DLT_HARDCORE": "HARDCORE"
+
+"CONTROLS_RESET_DEFUALT_CONFIRM1": "RESET TO DEFAULT?"
+
+"CONTROL_DESC_FOOT_MOVE": "MOVE"
+
+"DEMO_QUIT_DEMO": "QUIT INITIATION STATION"
+
+"DLC_INSTALL_RETURN_TO_MENU": "New downloadable content detected. Please return to the Main Menu to activate this content."
+
+"START_GAME_OUT_OF_STORAGE_SPACE_AUTOSAVE": "The storage device you have selected does not have enough space to create an autosave. You may Continue without Saving or Select a new Device."
+
+"COMMUNITY_EXISTING_PASSWORD": "PASSWORD"
+
+"PAUSE_MENU_COOP": "CO-OP"
+
+"PHONE_OPTION_3": "DIAL"
+
+"CONTROL_SCHEME_B": "SCHEME B"
+
+"CONTROL_DESC_VEH_RUDDER_RIGHT": "TURN RIGHT"
+
+"DLC_CORRUPT_PACKAGE_FOUND": "One of your Downloadable content packages has been corrupted. Some content may be unavailable. Please re-download the package."
+
+"COOP_CLIENT_CRIB_CUST_TRIGGER": "CLIENTS CANNOT CUSTOMIZE THE SERVER'S CRIBS"
+
+"MENU_DISPLAY_MONITOR_ADJUSTMENT": "DISPLAY SETTINGS"
+
+"CELL_VEHICLE_DIALOG_NO_CASH_HEADER": "NOT ENOUGH CASH"
+
+"MAINMENU_SINGLEPLAYER": "ƍǁǙǋ"
+
+"PAUSE_MENU_OPTIONS": "ȀȊ"
+
+"PLAYLIST_ADD_TRACK": "ADD TRACK"
+
+"MENU_OPTIONS_WIRELESS_CAPS": "WIRELESS"
+
+"MENU_OPTIONS_QUIT_GAME": "QUIT GAME"
+
+"MENU_OPTIONS_GAMMA": "GAMMA"
+
+"INVALID_SAVE_TITLE": "INVALID SAVE"
+
+"COMPLETION_NEIGHBORHOODS_OWNED": "HOODS OWNED"
+
+"HASH_F6F93B8A": "SHARPENING"
+
+"HASH_8F4F040A": "Maximum ui brightness, a.k.a. paper white"
+
+"COMMUNITY_EXISTING_FOUND_TITLE": "EXISTING ID"
+
+"COMMUNITY_VALIDATING_USERNAME": "VALIDATING USERNAME"
+
+"DLT_CHALLENGE": "GIVE ME A CHALLENGE"
+
+"CONTROL_DESC_PRESS": "PRESS"
+
+"COMPLETION_CASH": "CASH"
+
+"DLC_COOP_DLC_MAIN_BODY": "You do not have the Online Pass required for cooperative play. Redeem your code now, or enter the store to purchase it."
+
+"CELL_CAMERA_MODE_VIEW_HOW_TO": "Go to [format][color:saints]www.saintsrow.com[/format] to see your screenshots and share with your friends."
+
+"SAVELOAD_NOT_ENOUGH_SPACE_NEW": "There is not enough room for a new save game. You may overwrite an old saved game or select a different storage device."
+
+"ADD_CHEAT": "ADD CHEAT"
+
+"COMMUNITY_LOGIN_EXISTING_TITLE": "LINK TO EXISTING ACCOUNT"
+
+"COMMUNITY_EXISTING_USER_NAME_EXT": "Please enter your THQ ID."
+
+"HELP_TEXT_THROW_PUNCH": "PRESS {ATTACK_PRIMARY_IMG} TO THROW A PUNCH"
+
+"DOWNLOADABLE_REMOVED_CANCEL": "EXIT TO THE MAIN MENU"
+
+"AMMO_MAX_REACHED": "MAX"
+
+"HASH_6143AB8C": "ADJUST CONTRAST FOR HIGH FREQUENCY DETAILS"
+
+"CELL_CAMERA_MODE_UPLOAD_PROMPT": "Would you like to upload this image?"
+
+"WPN_STORE_EXPLOSIVE_TITLE": "EXPLOSIVES"
+
+"MSN_NO_RESPECT_TEXT": "You don't have enough\nrespect to start mission."
+
+"HASH_D7B70F8C": "LOADING {0}%%%"
+
+"MENU_XBOX_LIVE_STARTUP": "SIGN ME IN AT STARTUP"
+
+"MAINMENU_NEW": "NEW GAME"
+
+"INFO_HELP": "HELP"
+
+"DLC_MISSION": "MISSION PACKS"
+
+"CRIB_CASH_TRANSFER_COMPLETE": "TRANSFER COMPLETE"
+
+"CRIB_CASH_INCOME": "HOURLY CITY INCOME"
+
+"OPT_UPDATE_TITLE": "OPTIONS UPDATE"
+
+"COMMUNITY_ERROR_TIMED_OUT": "The connection to the Community Site timed out."
+
+"MUSIC_TRACK_UNLOCKED": "FREE MUSIC TRACK"
+
+"SAVELOAD_DEVICE_UNAVAILABLE": "DEVICE UNAVAILABLE"
+
+"PAUSE_MENU_OF": "{0} OF {1}"
+
+"OPT_UPDATE_DISCARD": "DISCARD"
+
+"CONTROL_DESC_VEH_CRUISE_CONTROL": "CRUISE CONTROL"
+
+"HUD_SNIPER_ZOOM_IN": "ZOOM IN"
+
+"DEMO_MENU_CUST_TATTOO": "CUSTOMIZE TATTOOS"
+
+"COOP_LOBBY_MAP": "ȕŲ"
+
+"COOP_LOBBY_START_GAME": "START SINGLE PLAYER"
+
+"COMMUNITY_AGE_FIELD": "DATE OF BIRTH"
+
+"MAP_ACTIVITY_HARD": "DIFFICULTY: HARD"
+
+"SAVELOAD_DURING_MISSION_CONTINUE": "Continue?"
+
+"CONTROLS_RESET_DEFAULT": "RESET TO DEFAULT"
+
+"COMMUNITY_SITE_BLURB_DEMO": "Upload characters created in the Initiation Station to play with them in Saints Row: The Third.\n\nBrowse an online gallery to view thousands of shared community characters.\n\nReceive community-only deals on Saints Row merchandise and game content."
+
+"COMMUNITY_INVALID_LOGIN_TEXT": "The credentials stored for your THQ ID appear to be incorrect. Please re-enter your details."
+
+"HUMAN_TEAM_MORNINGSTAR": "MORNING STAR"
+
+"MENU_AUDIO_MUSIC": "MUSIC"
+
+"CONTROL_DESC_FOOT_ACTION": "ACTION/ENTER VEHICLE"
+
+"CELL_OPTION_END": "END"
+
+"HASH_1FEFDA11": "You must be connected to the internet and GOG must not be in offline mode in order to use online features."
+
+"SAVELOAD_PRIMARY_SAVE_DEVICE_PULLED": "You do not have a storage device selected.  You will not be able to save or load your progress.  Would you like to select one now?"
+
+"MENU_MISSION_NAME": "MISSION NAME"
+
+"COOP_MENU_PRIVACY": "PRIVACY"
+
+"MENU_UPGRADES": "ǻǢ"
+
+"HUMAN_TEAM_NEUTRAL_GANG": "NEUTRAL"
+
+"SAVELOAD_LOAD_ABORT": "RESUME WITHOUT LOADING"
+
+"SAVELOAD_CORRUPT_DISPLAY_NAME": "DAMAGED SAVEGAME"
+
+"PHONE_OPTION_2": "PHONE BOOK"
+
+"MENU_AUDIO_AMBIENCE": "AMBIENCE"
+
+"INFO_OBJECTIVES_TITLE": "OBJECTIVES"
+
+"CONTROL_SCHEME_C": "SCHEME C"
+
+"MENU_CHARACTER_UPLOAD_COMPLETE": "Upload complete.\n\nLog in to your account at SaintsRow.com to manage your uploaded characters and screenshots."
+
+"COOP_MENU_OPEN": "OPEN TO ALL"
+
+"SAVELOAD_SAVE_GAME_CONFIRM_EXPOSITION": "Are you sure you want to overwrite this save?\nAll previous save game progress will be overwritten."
+
+"CONTROL_DESC_VEH_HANDBRAKE": "DRIFT"
+
+"COMMUNITY_VALIDATING_AGE": "VALIDATING AGE"
+
+"PAUSE_STATS_TITLE": "STATISTICS"
+
+"MENU_CONTROL_SCHEMES": "CONTROL SCHEMES"
+
+"MENU_OPTIONS_TITLE": "OPTIONS"
+
+"COMPLETION_RETRY_STRONGHOLD": "RETRY STRONGHOLD"
+
+"COMMUNITY_ERROR_EMAIL_IN_USE": "The E-Mail address provided is already linked to a THQ ID."
+
+"PLAYLIST_SELECT_STATION": "SELECT STATION"
+
+"MISSION_RESTART_TITLE": "MISSION FAILED"
+
+"MENU_RESUME": "źƊ"
+
+"Hidden_DESC": "HIDDEN"
+
+"HELP_TEXT_SKYDIVE_STEER_CONTROL": "USE {ANALOG_RS_IMG} TO STEER LEFT/RIGHT"
+
+"CONTROL_DESC_VEH_LOOK_RIGHT": "LOOK RIGHT"
+
+"CONTROL_CHEAT_NO": "BACK"
+
+"COMPLETION_COOP_DISCONNECT": "DISCONNECT"
+
+"HASH_2ABD9695": "FPS LOCK"
+
+"COOP_LOBBY_JOINED": "{0}\njoined the game."
+
+"MENU_NO_GAMES_FOUND": "NO GAMES FOUND"
+
+"SAVELOAD_FAILED_TO_SAVE_PROFILE": "Not enough space on HDD.\nPlease delete saves to make room or return to the XMB."
+
+"INFO_COLLECTIONS_STUNT_JUMPS": "STUNT JUMPS"
+
+"CHECKING_STORAGE_TITLE": "CHECKING STORAGE"
+
+"STATS_PAGE": "PAGE {0}/{1}"
+
+"CONTROL_DESC_VEH_ACTION": "ACTION/EXIT VEHICLE"
+
+"HUD_SNIPER_ZOOM_OUT": "ZOOM OUT"
+
+"DEMO_MENU_CUST_CLOTHING": "CUSTOMIZE CLOTHING"
+
+"COOP_MENU_FULL_DAMAGE": "FULL DAMAGE"
+
+"DLT_DESC_HARDCORE": "You like to feel the rush of danger."
+
+"CONTROL_DESC_CLICK": "PRESS"
+
+"COMPLETION_MISSION_COMPLETE": "{0} COMPLETE"
+
+"CAT_MOUSE_FRIENDLY_FIRE_WARNING": "Turning off Friendly Fire will end Cat and Mouse. Are you sure?"
+
+"COMMUNITY_ERROR_ONESITE": "An error occurred while communicating with the Community Site."
+
+"DIALOG_PAUSE_START_TO_DISCONNECT": "The co-op player has paused the game.\nPress {MAP_MENU_CLOSE_IMG} to disconnect."
+
+"OPT_UPDATE_KEEP_CONFIRMATION": "Would you like to keep changes made to game options?"
+
+"MENU_CONTROLS_INVERT_ROTATION": "INVERT CAMERA ROTATION"
+
+"CONTROLS_SETUP_DRIVING_SCHEMES": "DRIVING CONTROL  SCHEMES"
+
+"CONTROL_DESC_VEH_HELI_UP": "(HELI) UP"
+
+"MENU_VSYNC_WARNING_TEXT": "Enabling v-sync will reduce the possibility of\nscreen \"tearing\", but will lower the overall framerate.\nAre you sure you want to enable v-sync?"
+
+"HELP_TEXT_WIELDABLE_PROP": "PRESS {ATTACK_PRIMARY_IMG} TO SWING THE PROP OR {ATTACK_SECONDARY_IMG} TO THROW IT"
+
+"HASH_C6C7161A": "    FILM GRAIN"
+
+"CREDITS_PROGRAMMING": "PROGRAMMING"
+
+"MENU_DATE": "DATE"
+
+"MENU_MISSIONS_TITLE": "ȟǭ"
+
+"CHEAT_UNLOCKED": "CHEAT UNLOCKED"
+
+"HELP_TEXT_CHEATS_TITLE": "CHEATS"
+
+"MAP_SALE_PERCENT_OFF": "SALE - %d%%%% OFF"
+
+"MAINMENU_START_DEMO": "PLAY DEMO"
+
+"MAINMENU_MULTI": "MULTIPLAYER"
+
+"CONTROLS_SENSE_H": "HORIZONTAL SENSITIVITY"
+
+"CONTROL_DESC_FOOT_CROUCH": "CROUCH"
+
+"COMMUNITY_NEW_AGE_DAY_SHORT_DESC": "Enter Birth Day"
+
+"COOP_LOBBY_CONTINUE_WAVE": "CONTINUE (WAVE {0})"
+
+"COMMUNITY_INVALID_PASSWORD_CHARACTERS": "A password must consist of only alphanumeric characters and the symbols -_.@"
+
+"HUMAN_TEAM_LUCHADORES": "LUCHADORES"
+
+"DLC_STORE_NO_DLC": "No Downloadable Content available at this time"
+
+"DEMO_MENU_UPLOAD_CHARACTER": "UPLOAD CHARACTER"
+
+"CELL_CAMERA_MODE_ENABLED": "ǪƙƠ"
+
+"SCREEN_CAPTURE_UPLOAD_CANCEL": "Cancel"
+
+"COMMUNITY_CREATING_ACCOUNT_EXT": "CREATING YOUR THQ ID"
+
+"COMMUNITY_NEW_AGE_SHORT_DESC": "DATE OF BIRTH"
+
+"MENU_GPS": "GPS"
+
+"COOP_MENU_FRIENDLY_FIRE": "FRIENDLY FIRE"
+
+"DIALOG_PAUSE_DISCONNECT_PROMPT": "Are you sure you want to disconnect?"
+
+"GAMER_PROFILE_REINSERT_TEXT": "The Storage Device associated with your Gamer Profile has been removed."
+
+"CONTROLS_SETUP_VCAM_NEAR": "NEAR"
+
+"CONTROLS_SETUP_CROUCH_TOG": "CROUCH TOGGLE"
+
+"HASH_26CC161D": "PAPER WHITE"
+
+"MENU_DELETE_SAVE": "Are you sure you want to delete this save game?"
+
+"COMMUNITY_LOGGING_IN": "LOGGING IN"
+
+"COMMUNITY_PASSWORD_FIELD": "PASSWORD"
+
+"PAUSE_STORY_NONE": "NO STORY AVAILABLE"
+
+"MINIMAP_ROTATIONAL": "ROTATIONAL"
+
+"INFO_ACTIVITIES_TITLE": "ACTIVITIES"
+
+"COMPLETION_COOP_WAITING": "WAITING FOR {0}"
+
+"COMPLETION_FAILED": "FAILED"
+
+"CACHING_PERCENT": "% COMPLETE"
+
+"AUTOSAVING": "Saving..."
+
+"MENU_STRONGHOLD_CUSTOMIZATION": "STRONGHOLD CUSTOMIZATION"
+
+"CHEAT_NOT_FOUND_DESC": "The code you entered does not match any of the cheats."
+
+"COMMUNITY_ERROR_PLATFORM_ACCOUNT_NOT_LOGGED_IN": "You are not currently logged in."
+
+"SAVELOAD_SELECT_DEVICE_NOW": "You do not have a storage device selected.\nWould you like to select one now?"
+
+"SAVELOAD_LOAD_DEVICE_UNAVAILABLE_LINE2": "Storage Device is no longer available."
+
+"MENU_RADIO": "RADIO"
+
+"Hidden": "HIDDEN"
+
+"COMPLETION_EXIT_ACTIVITY_CONFIRMATION": "Do you want to exit the activity?"
+
+"NEWSTICKER_LOCAL_MOTD_10": "Strap it on."
+
+"COMMUNITY_NEW_AGE_YEAR_SHORT_DESC": "Enter Birth Year"
+
+"COMMUNITY_SUCCESS_EXT": "You have successfully logged into the community site!"
+
+"SAVELOAD_SAVE_GAME_TOO_MANY_TITLE": "NO SLOTS"
+
+"SAVELOAD_DEFAULT_NAME": "DEFAULT"
+
+"MENU_STYLE_DIALOG_HEADER": "STYLE INCREASED"
+
+"CONTROL_DESC_VEH_PLANE_BRAKE_REV": "(PLANE) BRAKE/REVERSE"
+
+"CONTROL_DESC_VEH_TOGGLE_CAM_2": "HOLD TO TOGGLE CAMERA"
+
+"HASH_16D897A0": "Adjust color vibrance to match display's color gamut"
+
+"HASH_BBDB05A0": "SATURATION"
+
+"CRIB_NAME_DOCK": "RONDINI'S BOAT DOCK"
+
+"OPTIONS_MENU_DEFAULTS_DESC": "Are you sure you would like to reset to the default options?"
+
+"LINEUP_DOWNLOAD_CHARACTER": "DOWNLOAD CHARACTER"
+
+"MENU_EXIT_CRIB": "Exit Crib\n\nAre you sure?"
+
+"COMMUNITY_LINK_EXISTING": "LINK TO EXISTING ID"
+
+"COMMUNITY_ERROR_INTERNET_CONNECTION_FAILURE": "The Saints Row: The Third server is not available at this time.  Please try again later."
+
+"SAVELOAD_NEW_SAVE_GAME": "NEW SAVE GAME"
+
+"MAP_RESPECT_BLANK": "RESPECT: %d"
+
+"CONTROL_DESC_VEH_PLANE_ACCELERATE": "(PLANE) ACCELERATE"
+
+"CONTROL_DESC_CANCEL_ACT": "QUIT GAMEPLAY MODE"
+
+"SAVELOAD_AUTOSAVE_NO_DEVICE": "No device selected. You must select a device to perform auto save.\nSelect device now?"
+
+"RADIO_STATION_GENRE_KRUNCH": "HARD ROCK MUSIC"
+
+"INFO_COLLECTIONS_SECRET_AREAS": "SECRET AREAS"
+
+"CONTROL_DESC_FOOT_NXT_TRK": "NEXT TRACK (AUDIO PLAYER)"
+
+"HASH_3BA42DA3": "TAA"
+
+"MENU_PC_SIGN_IN_ERROR": "You must be connected to the internet and Steam must not be in offline mode in order to use online features."
+
+"MENU_OPTIONS_DELETE": "ƄƱ"
+
+"COOP_LOBBY_CLIENT_READY": "ǔȍ"
+
+"COOP_LOBBY_QUIT": "RETURN TO MAIN MENU"
+
+"MENU_AUDIO_SPEAKERS": "SPEAKERS"
+
+"HASH_A91AEAA3": "PRESS [format][scale:0.5][color:full_bright][image:uhd_ui_xbox_ctrl-a][/format]"
+
+"CONTROLS_DESC_CHANGE_RADIO": "CHANGE RADIO STATION"
+
+"COMMUNITY_NO_USERNAME": "You must enter a valid username."
+
+"CRIB_CASH_TRANSFER_FROM_BANK": "CITY INCOME LAUNDERED"
+
+"SAVELOAD_LOAD_DEVICE_UNAVAILABLE_LINE1": "THE LOAD PROCESS HAS FAILED BECAUSE THE DEFAULT"
+
+"MENU_TIME": "TIME"
+
+"GAMER_PROFILE_MU_MISSING": "Please Re-Insert the Storage Device containing your gamer profile."
+
+"SAVELOAD_MUST_SIGN_IN_PROMPT": "You must sign in to load a game. Sign in now?"
+
+"STORE_DOWNLOAD_CHARACTER": "DOWNLOAD CHARACTER"
+
+"STORE_UPLOAD_CHARACTER": "UPLOAD CHARACTER"
+
+"CHEAT_CATEGORY_WEAPONS": "WEAPONS"
+
+"SB_CAT_ASSASSINATION": "ASSASSINATIONS"
+
+"MENU_REFRESH_SYSLINK": "REFRESH"
+
+"PAUSE_MENU_QUIT_TEXT": "Do you really want to quit?\n(Any unsaved progress will be lost.)"
+
+"INFO_DIVERSIONS_GAMES": "MINIGAMES"
+
+"MAIN_MENU_CONTINUE_UNAVAILABLE": "There are no saved games available to continue. Would you like to start a new game?"
+
+"CRIB_CASH_TRANSFER_CAP": "TRANSFER LIMIT"
+
+"SAVELOAD_TIME_DEFAULT": "NOW!"
+
+"SAVELOAD_FAILED_TO_SAVE": "There was not enough free space to complete your save.\nPlease make room on the harddrive before trying again."
+
+"SAVELOAD_CONFIRM_QUERY": "Continue?"
+
+"RADIO_STATION_GENRE_KRHYME": "HIP HOP AND RAP MUSIC"
+
+"DLT_DESC_CASUAL": "You like to kick ass at your own pace."
+
+"CONTROL_DESC_FOOT_QUICKTHROW": "THROW HUMAN SHIELD"
+
+"MENU_GAME_COMPLETED": "GAME COMPLETED"
+
+"COMMUNITY_EXISTING_USER_NAME": "USERNAME"
+
+"SAVELOAD_SAVEFILE_CORRUPT_DELETE": "DELETE THIS SAVED GAME"
+
+"INFO_UNLOCKABLES": "UNLOCKABLE REWARDS"
+
+"INFO_OBJECTIVES": "OBJECTIVES"
+
+"COMPLETION_RESPECT": "RESPECT"
+
+"MAIN_MANU_FAILED_MU_LOAD": "Failed to load save game from the memory unit"
+
+"SAVELOAD_NOT_ENOUGH_SPACE_AUTO_PS3": "There is not enough space for an autosave. You need %dkb free in order to save a new game. You must delete an old save game or continue without saving."
+
+"COMMUNITY_VALIDATING_TITLE": "VALIDATING"
+
+"COMMUNITY_ERROR_UNABLE_TO_CONNECT": "The Saints Row: The Third server is not available at this time.  Please try again later."
+
+"PAUSE_ACT_CHOP_VIEW_VEHICLE": "VIEW VEHICLE"
+
+"OPTIONS_MENU_DEFAULTS_TITLE": "RESTORE DEFAULTS?"
+
+"MENU_OPTIONS_WIRELESS": "WIRELESS"
+
+"MAP_ICON_SAVE": "SAVE POINT"
+
+"CONTROL_DESC_MP_FAST_WEAPON_SWITCH": "WEAPON SWITCH"
+
+"REDEEM_CODE": "REDEEM CODE"
+
+"SAVELOAD_MISSION_WARNING": "Mission Checkpoints are not saved. If you load this save game your progress will be restored from prior to starting the mission."
+
+"COMMUNITY_CONFIRM_PASSWORD_FIELD": "CONFIRM PASSWORD"
+
+"SAVELOAD_SAVE_GAME_DEVICE_FULL_ABORT": "RESUME WITHOUT SAVING"
+
+"SAVELOAD_HDR_MISSIONS": "{0} MISSIONS COMPLETED"
+
+"SAVELOAD_CANCEL_JOIN": "CANCEL JOIN IN PROGRESS"
+
+"PAUSE_OBJECTIVES_NONE": "NO OBJECTIVES"
+
+"INFO_STATS": "STATISTICS"
+
+"HELP_TEXT_MELEE_LOCK": "HOLD {SHOULDER_CAMERA_IMG} WHILE UNARMED, TO LOCK ONTO A SINGLE TARGET"
+
+"CONTROL_DESC_FOOT_FINEAIM": "FINE AIM"
+
+"CHEAT_CATEGORY_WEATHER": "WEATHER"
+
+"SAVELOAD_IMPORT_CORRUPT_ABORT": "RETURN TO PLAYER CUSTOMIZATION"
+
+"MENU_REMOVE_GPS": "REMOVE GPS"
+
+"MENU_DISPLAY_CALIBRATION": "DISPLAY CALIBRATION"
+
+"RADIO_LIFE_LIKE": "MANUALLY"
+
+"PHONE_OPTION_1": "HOMIES"
+
+"MENU_CHECK_UPDATES_TITLE": "CHECK UPDATES"
+
+"DOWNLOADABLE_REMOVED_CONFIRM_QUERY": "RECONNECT STORAGE DEVICE AND CONTINUE"
+
+"HASH_D751C22C": "HDR"
+
+"MAIN_MENU_UNAVAILABLE_SESSION": "You've been returned to the main menu because the session is no longer available."
+
+"COMMUNITY_LOG_OUT": "LOG OUT OF COMMUNITY SITE"
+
+"COMMUNITY_EXISTING_PASSWORD_EXT": "Please enter your THQ ID password."
+
+"SAVELOAD_ONLINE_PROFILE_SUBTITLE": "ONLINE PROFILE"
+
+"MUSIC_STORE_DISCOUNT": "100%% MUSIC STORE DISCOUNT"
+
+"PAUSE_MENU_QUIT_NO_SAVE_CONFIRM_TEXT": "Quit without saving.\n \nAre you sure?"
+
+"SAVELOAD_LOAD_FAILED": "LOAD FAILED"
+
+"OPT_UPDATE_KEEP": "KEEP"
+
+"CELL_HEADER_DEACTIVATED": "DEACTIVATED"
+
+"SAVELOAD_OVERWRITE": "OVERWRITE"
+
+"PAUSE_ACT_CHOP_VIEW": "VIEW SHOP"
+
+"PLAYLIST_HEADER_STATIONS": "STATIONS"
+
+"DISCONNECT_SCREEN_QUIT": "PRESS %s TO QUIT"
+
+"CONTROL_DESC_SEC_ATTACK": "SECONDARY ATTACK"
+
+"ACHIEVE_NOW": "Accomplishment Unlocked!  "
+
+"DLC_STORE_LOADING": "Retrieving Downloadable Content"
+
+"COMMUNITY_USER_NAME_FIELD": "DESIRED USERNAME"
+
+"MAP_ICON_PROPERTY": "PROPERTY"
+
+"INFO_UNLOCKABLES_DISCOUNTS": "BONUSES"
+
+"INFO_ACTIVITIES": "ACTIVITIES"
+
+"CONTROL_DESC_MP_SCORE": "SCOREBOARD"
+
+"CONTROL_DESC_FOOT_CLICK_CROUCH": "CROUCH"
+
+"COMMUNITY_LOGOUT_DESC": "Would you like to log out of the community site?"
+
+"PAUSE_MAP_STAG_ASSIST_INSTRUCTION": "SELECT HOOD TO TAKEOVER"
+
+"MENU_NONE": "ȑ"
+
+"SAVELOAD_DURING_MISSION_ABORT": "RESUME WITHOUT SAVING"
+
+"SAVELOAD_DURING_ACTIVITY_ABORT": "RESUME WITHOUT SAVING"
+
+"MAP_PLAYER_CASH": "CASH"
+
+"DLC_GAMEPLAY": "GAMEPLAY PACKS"
+
+"LINEUP_DOWNLOAD_CHARACTER_DESC": "If you've selected characters from the Saints Row Community Site, download them here."
+
+"SAVELOAD_SAVEFILE_CORRUPT_TITLE": "DAMAGED SAVED GAME"
+
+"DLT_EXPERIENCED": "EXPERIENCED"
+
+"CONTROL_DESC_VEH_ACCELERATE": "ACCELERATE"
+
+"COMPLETION_COMPLETE": "COMPLETE"
+
+"MENU_CAMERA": "CAMERA"
+
+"MAP_CITY_NAME": "STEELPORT"
+
+"RADIO_STATION_GENRE_GEN_X": "MODERN ROCK MUSIC"
+
+"PAUSE_ACTIVITIES_NONE": "NO ACTIVITIES AVAILABLE"
+
+"PAUSE_INFO_SWITCH_ACTIVITY": "SWITCH ACTIVITY"
+
+"GAMER_PROFILE_REINSERT_TITLE": "STORAGE DEVICE UNAVAILABLE"
+
+"HASH_32E0BB33": "QUALITY OF VOLUMETRIC GOD RAYS"
+
+"SAVELOAD_NOT_ENOUGH_SLOTS_NEW": "There are not enough slots for a new save.  You may delete an old save or overwrite one to continue."
+
+"SB_CHOP_SHOP_DESC": "Several chop shops in Steelport will give you money and respect for a little help with Vehicle Theft.  Check here for updated lists on what to boost.  Find everything for a single shop and they'll even throw in a bonus."
+
+"COOP_MENU_KICK": "KICK PLAYER"
+
+"VCUST_PERFORMANCE_WARNING": "You can not equip both hydraulics and nitrous.\nPurchase anyway?"
+
+"SAVELOAD_IMPORT_DEVICE_UNAVAILABLE_FULL": "The Import Process has failed because the default\nStorage Device is no longer available."
+
+"SAVELOAD_DURING_MISSION_EXPOSITION": "Progress made during the current mission will not be saved!\nContinue?"
+
+"HELP_TEXT_SKYDIVE_MOVE_CONTROL": "USE {ANALOG_LS_IMG} TO MOVE FORWARD/BACK AND TO STRAFE LEFT/RIGHT"
+
+"COOP_LOBBY_RECONNECT": "RECONNECT"
+
+"COUNTDOWN_GO": "GO!"
+
+"CRIB_NAME_SHAUNDI": "SHAUNDI'S LOFT"
+
+"MAIN_MENU_MS_OUTFIT_UNLOCKED": "Cypher's Outfit has been unlocked through Saints Row: Money Shot. Find it in your Crib Wardrobe."
+
+"MENU_CHARACTER_DOWNLOAD_WAITING": "Download in progress."
+
+"MENU_CHARACTER_UPLOAD_CONFIRM": "Are you sure you want to upload your character?"
+
+"COMMUNITY_ERROR_AGE_GATE": "The age your entered does not pass the restrictions."
+
+"SAVELOAD_SAVE_FAILED": "SAVE FAILED"
+
+"MENU_CONTROLS_TITLE": "CONTROLS"
+
+"DLT_DESC_NORMAL": "You like it the way it was meant to be played."
+
+"CONTROL_DESC_VEH_HELI_DOWN": "(HELI) DOWN"
+
+"COMMUNITY_NEW_AGE_YEAR_LONG_DESC": "Enter the two digits of your birth year."
+
+"SAVELOAD_CANT_ENTER_JOINING": "This menu can not be accessed while your partner is joining the game. Please try again when your partner has finished joining."
+
+"PAUSE_MAP_STAG_POPUP_BODY": "You currently own {0}%%% of this hood. Taking over this hood will complete remaining activities, gang operations and purchase all properties. Are you sure?"
+
+"MAIN_MENU_MS_GUN_UNLOCKED": "Due to your success in Saints Row: Money Shot, Cypher's Rifle has been unlocked."
+
+"SB_TARGET_SELECTED": "TARGET SELECTED"
+
+"SAVELOAD_SAVE_GAME_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"SAVELOAD_LOAD_GAME": "LOAD GAME"
+
+"MENU_AUDIO_MIC_NONE": "NO MIC"
+
+"GAME_CACHING": "CACHING"
+
+"CONTROL_DESC_VEH_LOOK_LEFT": "LOOK LEFT"
+
+"CONTROL_DESC_FOOT_SPRINT": "SPRINT"
+
+"COMMUNITY_NEW_PASSWORD_CONF_SHORT_DESC": "Password Confirmation"
+
+"INVITE_ONLY": "The game has been set to invite only."
+
+"HASH_5DB182B7": "Game has not finished downloading. Saving game and returning to main menu."
+
+"MAINMENU_DIGITAL_MANUAL_TEXT": "Go to this website to access your free Saints Row: The Third digital manual. \n \n www.thq.com/manual \n"
+
+"CRIB_NAME_3COUNT": "3 COUNT"
+
+"COMMUNITY_CREATING_ACCOUNT": "CREATING ACCOUNT"
+
+"COMMUNITY_VALIDATING_EMAIL": "VALIDATING E-MAIL ADDRESS"
+
+"SB_CAT_CHOP_SHOP": "VEHICLE THEFTS"
+
+"RADIO_ALWAYS_ON": "ALWAYS"
+
+"MP3_CONFIRM_DELETE_LIST_BODY": "Once deleted, this playlist cannot be recovered. Are you sure?"
+
+"CONTROL_DESC_FOOT_PRV_TRK": "PREVIOUS TRACK (AUDIO PLAYER)"
+
+"CRIB_NAME_SAINTSHQ": "SAINTS HQ"
+
+"COMMUNITY_EULA_TITLE": "EULA"
+
+"INFO_UNLOCKABLES_WEAPONS": "COMBAT"
+
+"CONTROLS_TITLE": "CONTROLS"
+
+"CONTROL_DESC_VEH_RUDDER_LEFT": "TURN LEFT"
+
+"CONTROL_DESC_CHANGE_CAMERA_VIEW": "CHANGE CAMERA VIEW"
+
+"HASH_768EAF39": "LOCK MAXIMUM FRAMERATE TO ACHIEVE STABLE PERFORMANCE"
+
+"COMMUNITY_FORGOT_PASSWORD": "FORGOT MY PASSWORD"
+
+"SAVELOAD_LOAD_GAME_COOP_CLIENT_EXPOSITION": "Data from save game loaded."
+
+"SAVELOAD_HDR_HOODS": "{0}/{1} NEIGHBORHOODS OWNED"
+
+"PAUSE_MENU_ZOMBIE_HOMIE": "ZOMBIE CARLOS"
+
+"MENU_PLAYLIST": "MIXTAPE"
+
+"INFO_STATS_TITLE": "STATISTICS"
+
+"GAMER_PROFILE_REINSERT_TRY_AGAIN": "RECONNECT STORAGE DEVICE AND TRY AGAIN"
+
+"CONTROLS_DESC_CHANGE_AUDIO": "CHANGE AUDIO TRACK"
+
+"CELL_CHEAT_ACTIVIATE_DIALOG_HEADER": "Activate Cheat?"
+
+"DLC_STORE_PRIVILEGE_DENIED": "Online service access is denied for this account. Check your account settings."
+
+"MENU_WEAPON_RELOADING": "RELOADING"
+
+"MAINMENU_WHORED": "WHORED MODE"
+
+"MAP_ACTIVITY_NOT_STARTED": "NOT STARTED"
+
+"REPLAY_LEVEL_REPLAY": "REPLAY LEVEL"
+
+"CELL_HEADER_GARAGE": "GARAGE"
+
+"DLC_PARSING": "Parsing Downloadable Content"
+
+"SAVELOAD_HDR_CHEATS_ENABLED": "Cheats Enabled"
+
+"PAUSE_MAP_STAG_POPUP_BODY_CLIENT": "You currently own {0}%%% of this hood. Taking over this hood will complete remaining activities, gang operations and purchase all properties. Are you sure?\n\nNote: Changes to your city map will be visible the next time you play in single player or as the host in coop Co-Op"
+
+"CUTSCENE01_PROHIBITED": "PROHIBITED IN CALIFORNIA"
+
+"MENU_STATS": "STATS"
+
+"PAUSE_ACT_CHOP_TITLE": "CHOP SHOP"
+
+"OBJECTIVES_NEED_RESPECT": "PLAY ACTIVITIES AND DIVERSIONS TO EARN ENOUGH RESPECT TO PLAY MISSIONS"
+
+"INFO_STORY": "STORY"
+
+"MENU_STRONGHOLD_PREVIOUS_UPGRADE": "Previous upgrade required."
+
+"DIRTY_DISK_TITLE": "DIRTY DISK"
+
+"CONTROL_DESC_VEH_RADIO_NEXT": "CHANGE RADIO"
+
+"CELL_OPTION_DIAL": "DIAL"
+
+"HASH_02DA883D": "HDR SETTINGS"
+
+"CRIB_NAME_POWDER": "POWDER"
+
+"COOP_OPTIONS": "CO-OP OPTIONS"
+
+"MENU_CHEATS": "CHEATS"
+
+"COOP_LOBBY_COOP_START": "START CO-OP GAME"
+
+"COMMUNITY_INVALID_USERNAME_LENGTH": "A username must consist of 3 to 32 characters."
+
+"COMMUNITY_ERROR_USERNAME_IN_USE": "The Username selected is already in use."
+
+"SAVELOAD_NOTHING_TO_LOAD": "NO SAVE GAMES"
+
+"SAVELOAD_ERROR": "WARNING"
+
+"SAVELOAD_DATE_DEFAULT": "NOW!"
+
+"PAUSE_MAP_FILTER_MISSIONS": "MISSIONS"
+
+"MENU_QUICKMATCH_TYPE": "GAME TYPE"
+
+"CONTROL_SCHEME_A": "SCHEME A"
+
+"COMPLETION_EXIT": "EXIT"
+
+"CHEAT_CATEGORY_VEHICLES": "Ǜǵ"
+
+"CRIB_CASH_NO_MONEY": "BANK ACCOUNT IS EMPTY"
+
+"MENU_VSYNC_GAMEPLAY_TEXT": "    V-SYNC (GAMEPLAY)"
+
+"COMPLETION_EXIT_MISSION_CONFIRMATION": "Do you want to exit the mission?"
+
+"AUTOSAVING_NOW": "Updating Profile..."
+
+"COMMUNITY_NEW_AGE_MONTH_LONG_DESC": "Enter the two digits of your birth month."
+
+"COOP_LOBBY_WAVE": "WAVE {0}"
+
+"STATS_ACHIEVES_NONE": "NO ACHIEVEMENTS"
+
+"RADIO_STATION_GENRE_K12FM": "ELECTRONIC MUSIC"
+
+"MENU_CONTROLS_SUBTITLES": "SHOW SUBTITLES"
+
+"MENU_RESTORE_DEFAULTS": "RESTORE TO DEFAULTS"
+
+"COMPLETION_EXIT_STRONGHOLD": "EXIT STRONGHOLD"
+
+"HASH_7BC8E8C1": "Defines how bright a paper white surface is"
+
+"DLC_INVITE_FAILED_MISSING_PACKAGE": "An invitation to a co-op game failed, you are not allowed to join without the Online Pass."
+
+"CHEAT_CATEGORY_GAMEPLAY": "ǙǋǍ"
+
+"COMMUNITY_NEW_EMAIL_SHORT_DESC": "E-MAIL"
+
+"CANNOT_CREATE_OUTFIT_TITLE": "WARDROBE FULL"
+
+"SAVELOAD_LOAD_GAME_TITLE": "LOAD GAME"
+
+"SAVELOAD_CHECK_FREE_SPACE": "There is insufficient space on your HDD\nfor a master game save and user profile.\nPlease return to the system menu to\nmake room for approximately %iKB."
+
+"MAP_PLAYER_INCOME": "HOURLY INCOME"
+
+"MAINMENU_QUIT_DEMO": "QUIT DEMO"
+
+"HASH_A4A446C2": "FILM GRAIN"
+
+"SIXAXIS_CAMERA": "CAR CAMERA"
+
+"SAVELOAD_SAVE_GAME": "ƑǂǙǋ"
+
+"RADIO_STATION_GENRE_MIX": "80S AND 90S POP AND ROCK"
+
+"PHONE_OPTION_CHEATS": "CHEATS"
+
+"SCREEN_CAPTURE_UPLOAD_FAIL_TEXT": "Your image failed to upload."
+
+"COOP_LOBBY_CHARACTER": "CHARACTER"
+
+"COMMUNITY_NEW_PASSWORD_CONF_LONG_DESC": "Please enter your password again for confirmation"
+
+"CUSTOMIZE_OUTFIT_YOURE_NAKED_BODY": "You must be wearing something to create an outfit."
+
+"PLAYER_CREATION_IMPORT": "IMPORT FROM SAVE"
+
+"PHONE_CALLING": "CALLING..."
+
+"MSGLOG_TITLE_TUT": "TUTORIAL"
+
+"MAP_SALE_CASH_OFF": "SALE - $%d OFF"
+
+"INFO_ACHIEVE": "ACHIEVEMENTS"
+
+"HELP_TEXT_MELEE_BLOCK": "PRESS {ATTACK_SECONDARY_IMG} TO BLOCK ENEMY ATTACKS"
+
+"CONTROL_DESC_VEH_HYDRAULICS": "HORN/HYDRAULICS"
+
+"HASH_5A242A44": "Enable HDR to get higher contrast ratio and color accuracy"
+
+"HASH_331ED6C4": "FILM GRAIN DURING GAMEPLAY"
+
+"DLC_TOO_NEW_PACKAGE_FOUND": "You have downloadable content installed that requires a title update to the game. Please download the latest title update to access this downloadable content.  "
+
+"CRIB_CASH_READY": "ǔȍ"
+
+"SAVELOAD_SELECT_DEVICE": "SELECT DEVICE"
+
+"SAVELOAD_SAVEFILE_CORRUPT_EXPOSITION": "This saved game is damaged and may no longer be used."
+
+"SAVELOAD_DEVICE_UNAVAILABLE_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"MAINMENU_LOAD": "LOAD GAME"
+
+"CONTROLS_CONFIRM2": "Are you sure?"
+
+"CONTROL_DESC_FOOT_MV_CAM": "CAMERA"
+
+"STORE_APPLY_ITEM": "ȜƠ"
+
+"RADIO_STATION_GENRE_EZZZY": "EASY LISTENING"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_01": "Welcome to the Initiation Station for Saints Row: The Third!"
+
+"MENU_XBOX_LIVE_QUICKMATCH": "QUICKMATCH OPTIONS"
+
+"MAINMENU_DOWNLOADABLE_CONTENT_REMOVED_EXPOSITION": "You have been returned to the Main Menu\nbecause a storage device containing\ndownloadable content was removed."
+
+"CANCEL_JOIN_IN_PROGRESS": "CANCEL JOIN IN PROGRESS"
+
+"DLC_STORE_LOST_INTERNET": "Lost Internet connection while retrieving Downloadble Content"
+
+"DLC_STORE_CATASTROPHIC_FAILURE": "There is no content available for download at this time.  Please try again later."
+
+"NEWSTICKER_LOCAL_MOTD_04": "SaintsRow.com is the place to visit for everything Saints Row.  Talk with other fans, share characters and screenshots, and read up on breaking news."
+
+"SAVELOAD_DEVICE_UNAVAILABLE_ABORT": "źƊ"
+
+"MAP_ICON_COLLECTIBLE_MONEY": "MONEY PALLET"
+
+"CONTROL_DESC_PAUSE_MP": "OPTIONS"
+
+"CANCEL_LOAD_SAVEGAME": "CANCEL LOAD SAVEGAME"
+
+"NEWSTICKER_LOCAL_MOTD_01": "Welcome to Steelport."
+
+"CELL_CAMERA_MODE_TAKE_SNAPSHOT": "TAKE SCREENSHOT"
+
+"MENU_CHARACTER_UPLOAD_FAILED": "Your character failed to upload."
+
+"COOP_MENU_PRIVATE": "PRIVATE"
+
+"SAVELOAD_INVALID_SELECT_DEVICE_NOW": "The selected storage device is not available.  Choose a different storage device."
+
+"RANDOM_WARNING_BODY": "Randomizing may change some or all of your changes.\nThis action cannot be reverted.\n\nContinue?"
+
+"SAVELOAD_IMPORT_FAILED": "IMPORT FAILED"
+
+"MENU_XBOX_LIVE_OFFLINE": "APPEAR OFFLINE"
+
+"DIRTY_DISK_TEXT": "CANNOT READ FILE FROM DISK"
+
+"CONTROLS_SETUP_FOOT": "ON FOOT CONTROLS"
+
+"HASH_BA599A49": "DEPTH OF FIELD DURING GAMEPLAY"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_04": "The characters you create here can be used in the full release of Saints Row: The Third in November."
+
+"CRIB_CASH_TRANSFER": "TRANSFERRING"
+
+"SAVELOAD_PROFILE_SUBTITLE": "PROFILE"
+
+"MECHANIC_UNAVAILABLE": "UNAVAILABLE DUE TO NOTORIETY"
+
+"MAP_STORE_CLOSED": "CLOSED"
+
+"DLT_NORMAL": "NORMAL"
+
+"DEVICE_FULL_OR_REMOVED_TEXT": "The Storage Device associated with your Gamer Profile has been removed or is full."
+
+"SAVELOAD_BAD_VERSION": "Invalid Save Game Version"
+
+"COOP_LOBBY_JOINING": "{0}\nis joining the game."
+
+"SB_CHALLENGES_DESC": "One way to get money and respect in Steelport is to go big or go home.  It's not much to kill 1 brute, but kill 50 and people will notice.  Complete Challenges by doing something repeatedly and see what you can earn."
+
+"MAP_ACTIVITY_EASY": "DIFFICULTY: EASY"
+
+"OPTIONS_TITLE": "OPTIONS"
+
+"OPT_PAUSE_AUDIO_W_GAME": "PAUSE AUDIO PLAYER WITH GAME"
+
+"MENU_GAME_PAUSED": "GAME PAUSED"
+
+"HASH_A995724B": "UI/VIDEO BRIGHTNESS"
+
+"HASH_48877ECB": "PEAK DISPLAY BRIGHTNESS"
+
+"HASH_85D59E4B": "GAME INSTALL INCOMPLETE"
+
+"MENU_COMPLETION": "COMPLETION"
+
+"MAIN_MENU_NAT_WARNING": "Your NAT is not set to \"Open.\"  This may prevent you from joining some games."
+
+"CHEAT_NOT_FOUND": "CHEAT NOT FOUND"
+
+"MAP_COLLECTIBLE": "COLLECTIBLE"
+
+"SAVELOAD_LOAD_GAME_NO_CLIENT": "You cannot load a game if you are not the host in a co-op game and you are playing a mission, stronghold or activity."
+
+"REPLAY_LEVEL_SKIP": "SKIP LEVEL"
+
+"DLT_SAINTS": "GIVE ME SAINTS ROW"
+
+"MAINMENU_DIGITAL_MANUAL": "DIGITAL MANUAL"
+
+"SB_DETAILS_CASH": "CASH"
+
+"MENU_PHONE": "PHONE"
+
+"SAVELOAD_NO_SAVEGAME_FOUND": "COULD NOT FIND A SAVE GAME TO IMPORT"
+
+"MENU_AUDIO_OVERALL": "OVERALL VOLUME"
+
+"INFO_COLLECTIONS_BARNSTORMING": "BARNSTORMING"
+
+"CONTROLS_CROUCH_TOGGLE": "CROUCH TOGGLE"
+
+"COMPLETION_CONTINUE": "CONTINUE"
+
+"COMMUNITY_NO_EMAIL": "You must enter a valid e-mail address."
+
+"COMMUNITY_LOGIN_TITLE": "LOG IN TO COMMUNITY SITE"
+
+"MAP_ACTIVITY_ALL_LEVELS_COMPLETE": "ALL LEVELS COMPLETE"
+
+"SAVELOAD_AUTOSAVE_DEVICE_FULL": "There is not enough room on the current device. You must select a different device to perform auto save.\nSelect a different device now?"
+
+"RADIO_STATION_GENRE_KLASSIC": "CLASSICAL MUSIC"
+
+"CONTROL_DESC_NOT_USED": "NOT USED"
+
+"COOP_MENU_INVITE": "INVITE FRIEND"
+
+"PLAYLIST_NO_ITEMS": "NO TRACKS IN PLAYLIST"
+
+"INFO_COLLECTIONS_HITMAN": "HITMAN"
+
+"CONTROL_DESC_VEH_CLICK_HORN": "HORN"
+
+"COOP_LOBBY_WAITING": "WAITING FOR PLAYER..."
+
+"MAP_ACTIVITY_MEDIUM": "DIFFICULTY: MEDIUM"
+
+"SAVELOAD_AUTOSAVING": "Saving..."
+
+"SAVE_LOAD_JOIN_IN_PROGRESS_TITLE": "JOIN IN PROGRESS"
+
+"SAVE_BEFORE_JOINING_TITLE": "JOINING NEW GAME"
+
+"MENU_OPTIONS_GAMEPLAY": "GAMEPLAY"
+
+"INFO_UNLOCKABLES_PLAYER_ABILITIES": "ABILITIES"
+
+"CELL_OPTION_CHEATS": "CHEATS"
+
+"MENU_NORMAL": "NORMAL"
+
+"GO_DLC_STORE": "ENTER DOWNLOADABLE CONTENT STORE"
+
+"HUMAN_TEAM_POLICE": "POLICE"
+
+"CHANGE_MAP": "CHANGE MAP"
+
+"OUTFIT_NAME_TAG": "OUTFIT"
+
+"SAVELOAD_TIME": "--:--:--"
+
+"SAVELOAD_SIGN_IN": "SIGN IN"
+
+"SAVELOAD_SAVE_GAME_TOO_MANY_ABORT": "RESUME WITHOUT SAVING"
+
+"MENU_DISPLAY_BRIGHTNESS": "BRIGHTNESS"
+
+"MAP_ADD_BOOKMARK": "ADD BOOKMARK"
+
+"COMPLETION_RESTART_CHECKPOINT": "RETRY FROM CHECKPOINT"
+
+"NEWSTICKER_LOCAL_MOTD_05": "Join the community at SaintsRow.com and gain access to exclusive videos and screenshots, breaking news, and of course, special contests and giveaways!"
+
+"COMMUNITY_ERROR_THQ_ID_NOT_FOUND": "This username could not be found."
+
+"MENU_RESUME_GAME": "RESUME GAME"
+
+"PAUSE_MAP_FILTERS": "CHANGE FILTERS"
+
+"PAUSE_ACT_CHOP_SWITCH_SELECT": "SWITCH ACTIVITY / SELECT SHOP"
+
+"COOP_LOBBY_GAME_STARTING": "GAME STARTING IN {0}"
+
+"COMMUNITY_ERROR": "COMMUNITY ERROR"
+
+"SAVELOAD_CORRUPT_DISPLAY_TIME": "XX:XX:XX"
+
+"PLAYLIST_MOVE_TRACK": "MOVE"
+
+"CONTROL_DESC_FOOT_TAUNT": "TAUNT"
+
+"COOP_SINGLE_PLAYER_KICK_MSG": "Starting a single player game will kick the joining player. Continue?"
+
+"SAVELOAD_LOAD_NOT_AS_CLIENT": "If you want to load a save game, you must quit back to the main menu and re-join."
+
+"PLAYLIST_REMOVE_TRACK": "DELETE"
+
+"CONTROLS_MINIMAP_VIEW": "MINI MAP VIEW"
+
+"CREDITS_SPECIAL_THANKS": "SPECIAL THANKS"
+
+"COOP_MENU_LIGHT_DAMAGE": "LIGHT DAMAGE"
+
+"COMPLETION_RESTART_BEGINNING": "RETRY FROM MISSION START"
+
+"START_GAME_OUT_OF_STORAGE_SPACE": "The storage device you have selected does not have enough space to create a new save. Select a new device or select another game to overwrite?"
+
+"SAVELOAD_MULT_FILES_MSG": "Two autosave files have been detected on the selected device.\nOnly the most recent autosave will be used."
+
+"SAVELOAD_LOAD_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"RADIO_HIJACK_ON": "HIJACK"
+
+"MENU_AUDIO_RADIO": "VEHICLE RADIO"
+
+"INFO_UNLOCKABLES_CUSTOMIZATION": "CUSTOMIZATION ITEMS"
+
+"GAMER_PROFILE_REINSERT_EXIT": "EXIT TO THE MAIN MENU"
+
+"CONTROL_DESC_VEH_RADIO_PREV": "CHANGE RADIO"
+
+"CONTROL_DESC_MP_HEAL": "HEAL"
+
+"CONTROL_CHANGE_OPTION": "CHANGE OPTION"
+
+"COMPLETION_MISSION_FAILED": "{0} FAILED"
+
+"COMPLETION_CONTINUE_ACTIVITY": "CONTINUE ACTIVITY"
+
+"COMMUNITY_FORGOT_PASSWORD_EXT": "Please visit www.saintsrow.com to request a password reminder."
+
+"SAVELOAD_DEVICE_UNAVAILABLE_EXPOSITION": "The default Storage Device is no longer available."
+
+"PAUSE_MENU_REVERT": "REVERT"
+
+"PAUSE_MAP_FILTER_PROPERTIES": "PROPERTIES"
+
+"MENU_QUICKMATCH_OVERSIZED": "INCLUDE OVERSIZED"
+
+"HELP_TEXT_CHARGED_MELEE_ATTACK": "HOLDING {ATTACK_PRIMARY_IMG} LONGER WILL BUILD A MORE POWERFUL CHARGED MELEE ATTACK"
+
+"CONTROL_DESC_GRENADE": "GRENADE"
+
+"CONTROL_DESC_JUMP": "JUMP"
+
+"DLC_FEATURE": "FEATURE PACKS"
+
+"DLC_STORE_CAT_ALL": "ALL DOWNLOADABLE CONTENT"
+
+"COMMUNITY_NEW_AGE_MONTH_SHORT_DESC": "Enter Birth Month"
+
+"SAVELOAD_NO_DEVICE": "You must select a device to save or load a game. Select a device?"
+
+"SB_DETAILS_RESPECT": "RESPECT"
+
+"HUMAN_TEAM_CIVILIAN": "CIVILIAN"
+
+"MENU_QUICKMATCH_TITLE": "QUICKMATCH OPTIONS"
+
+"MENU_BACK": "BACK"
+
+"MAP_ICON_COLLECTIBLE_PHOTO_OP": "PHOTO OP"
+
+"MAINMENU_QUIT_DEMO_CONFIRM_TEXT": "Are you sure you want to quit Saints Row?"
+
+"CONTROL_SETUP_CHANGE_SCHEME": "CHANGE SCHEME"
+
+"CONTROL_DESC_VEH_STEER": "STEER"
+
+"CONTROL_DESC_FOOT_RELOAD": "RELOAD"
+
+"MENU_BRIGHTNESS_CALIBRATION_DESCRIPTION_ONE_TIME": "Adjust the brightness so that the shape is barely visible. You can change this setting at any time in the Options menu."
+
+"SAVELOAD_AUTOSAVE_OVERWRITE": "An autosave is present. Continuing will overwrite the existing Autosave. Continue?"
+
+"COMMUNITY_ERROR_OTHER": "An error has occurred with community features.  Please try accessing this feature at a later time."
+
+"CRIB_CASH_PLAYER_CASH": "YOUR CASH"
+
+"CELL_CAMERA_MODE_OVERVIEW": "Camera mode allows you to take screenshots and share them with your friends."
+
+"MENU_LIST_ALL_CHARACTERS": "Ï"
+
+"MAP_GANG_OPERATION": "GANG OPERATION"
+
+"SAVELOAD_NEW_GAME_MSG": "This will skip loading a savegame and you will instead have to create a new character.  Continue?"
+
+"SAVELOAD_IMPORT_GAME_CONFIRM_EXPOSITION": "Importing from a save game will change\nany other changes you have made already!"
+
+"PAUSE_MAP_FILTER_STORES": "STORES"
+
+"MAINMENU_WIRELESS": "WIRELESS"
+
+"JOIN_IN_PROGRESS": "JOIN IN PROGRESS"
+
+"INFO_HELP_TITLE": "HELP"
+
+"CONTROL_DESC_MP_TAUNT_1": "TAUNT"
+
+"HASH_9CB6005A": "FXAA"
+
+"MENU_TRANSFER_COMPLETE": "TRANSFER COMPLETE"
+
+"SIGN_IN_DENIAL_CONFIRM": "Are you sure you don't want to sign in? Progress for this game will not be saved!"
+
+"COMMUNITY_LOADING": "COMMUNICATING WITH COMMUNITY SITE..."
+
+"MENU_DIFFICULTY": "DIFFICULTY"
+
+"HUMAN_TEAM_STAG": "STAG"
+
+"RANDOM_WARNING_HEADING": "WARNING"
+
+"SAVELOAD_MUST_SELECT_DEVICE": "You must select a storage device to use save/load."
+
+"SAVELOAD_HDR_DIFFICULTY": "DIFFICULTY: {0}"
+
+"CONTROL_DESC_PAUSE": "PAUSE MENU"
+
+"CELL_OPTION_OK": "OK"
+
+"HASH_407EA65B": "Adjust the output brightness so that shape is barely visible to match output brightness to display capabilities"
+
+"MENU_VEHICLE_CAMERA_SNAP": "VEHICLE CAMERA SNAP"
+
+"CONTROLS_SETUP_AIRCRAFT": "AIRCRAFT CONTROLS"
+
+"CHECKING_STORAGE_MESSAGE": "Checking storage device..."
+
+"MENU_MUSIC": "ƳŻ"
+
+"SAVELOAD_AUTOSAVE_DEVICE_FULL_ERROR": "Your hard drive is full. Unable to perform auto save."
+
+"PLAYLIST_HEADER_TRACKS": "TRACKS"
+
+"MENU_DISPLAY_TITLE": "DISPLAY"
+
+"MAP_ICON_TRAILBLAZING": "TRAIL BLAZING"
+
+"DLT_CASUAL": "CASUAL"
+
+"CONTROLS_INVERT_Y": "INVERT CAMERA Y AXIS"
+
+"CELL_OPTION_HOMIES": "HOMIES"
+
+"HASH_F5B78E5C": "    MOTION BLUR"
+
+"DIALOG_COOP_DLC_BODY": "You do not have the Online Pass. Go to the main menu and enter the Downloadable Content Store to purchase or use redeem code."
+
+"SAVELOAD_CANT_ENTER_AUTOSAVE": "This menu can not be accessed while an autosave is in progress. Please try again when the autosave completes."
+
+"SCREEN_CAPTURE_UPLOAD_RETRY": "Retry"
+
+"UI_TEST_FONT_US": "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]' | \\{{ \\}} ¡¢£©ª®°´º¿ÀÁÂÄÆÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜÝĄĆČĎĘĚŁŃŇŒŘŚŠŤŮŹŻŽЁАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-''‚\"\"„...€™\\^_"
+
+"COMMUNITY_SUCCESS": "ƹǎ"
+
+"COMMUNITY_INVALID_PASSWORD_LENGTH": "A password must consist of 6 to 16 characters."
+
+"COOP_CLIENT_GANG_CUST_TRIGGER": "CLIENTS CANNOT CUSTOMIZE THE SERVER'S GANG"
+
+"SAVELOAD_SAVE_DEVICE_UNAVAILABLE_LINE1": "THE SAVE PROCESS HAS FAILED BECAUSE THE DEFAULT"
+
+"PLAYLIST_NO_STATION_ITEMS": "NO TRACKS IN STATION LIST"
+
+"MENU_VSYNC_CUTSCENE_TEXT": "V-SYNC (CUTSCENE)"
+
+"MAP_ICON_COLLECTIBLE_DRUG": "DRUG PACKAGE"
+
+"CONTROL_DESC_FOOT_DISMISS": "(HOLD) DISMISS FOLLOWERS"
+
+"SAVELOAD_SAVES_NONE": "There are no saved games\non this device."
+
+"INFO_DIVERSIONS_COLLECTION": "COLLECTION"
+
+"INFO_ACHIEVE_TITLE": "ACHIEVEMENTS"
+
+"CONTROL_DESC_VEH_NOS": "NITROUS"
+
+"MENU_CHARACTER_DOWNLOAD_CONFIRM": "Are you sure you want to use this character?  Your current character will be replaced."
+
+"MENU_CHARACTER_UPLOAD_WAITING": "Upload in progress."
+
+"COOP_LOBBY_LEFT": "{0}\nleft the game."
+
+"MENU_SET_GPS": "SET GPS"
+
+"NO_NETWORK_CONNECTION": "A network connection is needed to access this feature."
+
+"SAVELOAD_CHEATS_ENABLED": "Cheats are currently enabled.\nAre you sure you want to save while they are enabled?"
+
+"PAUSE_MENU_DRIVEUP_HOMIE": "STORED VEHICLE DELIVERY"
+
+"HASH_B08AF75F": "    VOLUMETRIC FOG"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_05": "Visit SaintsRow.com to view all of the characters created with the Initiation Station and vote for your favorites!"
+
+"MENU_SAINTS_BOOK": "SAINTS\nBOOK"
+
+"COOP_DISCONNECT": "Press {MAP_MENU_CLOSE_IMG} to disconnect."
+
+"MAP_ICON_COLLECTIBLE_SEX_DOLL": "SEX DOLL"
+
+"COMPLETION_CASH_PER_DAY": "CASH PER HOUR"
+
+"HASH_89D87AE0": "GAME INSTALL INCOMPLETE"
+
+"DLC_STORE_ITEM_PURCHASED": "[image:ui_text_star] Purchased"
+
+"MENU_ERROR": "ȁƟ"
+
+"MENU_CHARACTER_UPLOAD_QUOTA_FAILED": "Your character failed to upload because you have reached your upload limit.  Please visit SaintsRow.com to manage your uploaded content."
+
+"SB_CAT_ALL": "ALL"
+
+"MENU_MAP": "MAP"
+
+"SAVELOAD_SAVE_ABORT": "RESUME WITHOUT SAVING"
+
+"PAUSE_MESSAGES_NONE": "NO MESSAGES"
+
+"PAUSE_INFO_UNKNOWN_HOOD": "UNKNOWN HOOD"
+
+"CONTROL_SETUP_RETURN": "RETURN TO CONTROLS"
+
+"CRIB_NAME_KINZIE": "KINZIE'S WAREHOUSE"
+
+"MAINMENU_COOP": "ƀƂƤǡ"
+
+"SB_SELECT_TARGET": "SELECT TARGET"
+
+"PAUSE_ACT_CHOP_SELECT_VEHICLE": "SELECT VEHICLE"
+
+"MENU_AUDIO_VOICE": "VOICE"
+
+"MAP_ICON_RUNNING_MAN": "PROF. GENKI"
+
+"CUTSCENE_TITLE_DEFAULT": "CUTSCENE PLAY"
+
+"CONTROL_CHEAT_YES": "ACTIVATE CHEAT"
+
+"HASH_ED68EA62": "MOTION BLUR DURING GAMEPLAY"
+
+"CRIB_NAME_HANGAR": "AIRPLANE HANGAR"
+
+"PAUSE_INFO_UNKNOWN_DISTRICT": "UNKNOWN DISTRICT"
+
+"PAUSE_ACT_CHOPSHOP_EMPTY": "NO CHOP SHOP VEHICLES"
+
+"MENU_XBOX_LIVE_TITLE": "Xbox Live"
+
+"INFO_STORY_TITLE": "STORY"
+
+"SAVELOAD_NOT_ENOUGH_SLOTS_NEW_PS3": "There are not enough slots for a new save.  You may delete an old save or overwrite one to continue."
+
+"COOP_MENU_FRIENDS_ONLY": "FRIENDS ONLY"
+
+"SAVELOAD_CANCEL_LOAD": "CANCEL LOAD SAVEGAME"
+
+"DLT_STORY": "GIVE ME A STORY"
+
+"CONTROLS_SETUP_TITLE": "CONTROL SETUP"
+
+"CONTROL_DESC_PRIM_ATTACK": "PRIMARY ATTACK"
+
+"CONTROL_DESC_MP_TAUNT_2": "TAUNT"
+
+"CELL_CHEAT_ACTIVATE_INSTRUCTIONS": "Go to the Cheats option in the cellphone to activate unlocked cheats."
+
+"HASH_7AD27A64": "MOTION BLUR"
+
+"NEWSTICKER_LOCAL_MOTD_03": "Remember to access the Upgrade store via your cell phone to add new abilities for your character."
+
+"MENU_DISPLAY_CALIBRATION_DESCRIPTION_ONE_TIME": "Adjust the gamma settings to your personal preference. You can change this setting at any time in the Options menu."
+
+"COMMUNITY_LOGGING_IN_EXT": "LOGGING IN TO COMMUNITY SITE"
+
+"COOP_CREATION_IN_PROGRESS": "Waiting for %ls to finish creating their player.\nYou can access the pause menu with the %ls button."
+
+"SAVELOAD_LOAD_GAME_CONFIRM_EXPOSITION": "You will lose all unsaved progress if you load a saved game.\nContinue?"
+
+"SAVE_BEFORE_JOINING_BODY": "Joining a new game will cause you to leave the current one.  Would you like to save first?"
+
+"MENU_TITLE_WARNING": "WARNING"
+
+"MENU_OPTIONS_DISPLAY": "DISPLAY"
+
+"MENU_AUDIO_SFX": "EFFECTS"
+
+"MAINMENU_CONTINUE": "CONTINUE"
+
+"CONTROL_DESC_VEH_VTOL_TRANSFORM": "(VTOL) SWITCH FLIGHT MODE"
+
+"MENU_ADVANCED": "ȃǢ"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_06": "Strap it on."
+
+"DIALOG_COOP_DLC_TITLE": "ONLINE PASS MISSING"
+
+"CRIB_NAME_ZIMOS": "ZIMOS' PAD"
+
+"COMMUNITY_LOGGED_IN_TEXT": "You are currently logged in to the community site."
+
+"COMMUNITY_EMAIL_FIELD": "E-MAIL ADDRESS"
+
+"MENU_EXTRAS": "EXTRAS"
+
+"HUMAN_TEAM_PLAYERS": "SAINTS"
+
+"PAUSE_MENU_CONTROL_CLICK": "(PRESS)"
+
+"COMPLETION_CONTROL_PER_DAY": "${0} PER HOUR"
+
+"HASH_57487C66": "The color saturation of the displayed picture"
+
+"MENU_DELAYED": "DELAYED"
+
+"MAINMENU_CAMPAIGN": "ȔŵžƯ"
+
+"CRIB_NAME_ANGEL": "ANGEL'S GYM"
+
+"MENU_REWARDS": "REWARDS"
+
+"COMMUNITY_NEW_PASSWORD_LONG_DESC": "Please enter a password."
+
+"SAVELOAD_SAVE_GAME_DEVICE_FULL_TITLE": "DEVICE FULL"
+
+"SAVELOAD_SAVE_DEVICE_UNAVAILABLE_LINE2": "Storage Device is no longer available."
+
+"PAUSE_MAP_FILTER_SAVE": "SAVE POINTS"
+
+"MENU_TITLE_CONFIRM": "CONFIRM"
+
+"INFO_UNLOCKABLES_SPECIALS": "SPECIALS"
+
+"COMMUNITY_NEW_AGE_DAY_LONG_DESC": "Enter the day of your birth day"
+
+"COMMUNITY_NO_AGE": "You must enter a valid age."
+
+"COMMUNITY_FORGOT_PASSWORD_TITLE": "FORGOT PASSWORD"
+
+"SAVELOAD_HDR_CHEATS": "CHEATS ENABLED"
+
+"PAUSE_MENU_QUIT_TITLE": "QUIT GAME?"
+
+"DOWNLOADABLE_REMOVED_EXPOSITION": "You have removed a storage device that\n contains downloadable content."
+
+"CONTROLS_SETUP_VCAM_FAR": "FAR"
+
+"COMPLETION_EXIT_ACTIVITY": "EXIT ACTIVITY"
+
+"DLC_REDEEMING_CODE": "Redeeming Code"
+
+"DLC_STORE_LOST_ETHERNET": "Lost Ethernet Connection while retrieving Downloadable Content"
+
+"MAINMENU_COOP_OPTION": "ƀƂžƯ"
+
+"CHEAT_CATEGORY_WORLD": "WORLD"
+
+"CRIB_CASH_DO_CONTINUE": "źƊ"
+
+"SAVELOAD_SAVE_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"RADIO_NORMAL": "NORMAL"
+
+"PAUSE_MENU_SECONDS": "{0} SECONDS"
+
+"PAUSE_MAP_FILTER_COLLECTIBLES": "COLLECTIBLES"
+
+"PAUSE_ACHIEVES_TITLE": "ACHIEVEMENTS"
+
+"MM_LOAD_LOADING": "LOADING"
+
+"MAP_REMOVE_BOOKMARK": "REMOVE BOOKMARK"
+
+"CONTROL_DESC_VEH_CLICK_HYDRAULICS": "NITROUS/HYDRAULICS"
+
+"MENU_CONGRATULATIONS": "CONGRATULATIONS"
+
+"CONTINUE_WITHOUT_SAVING": "CONTINUE WITHOUT SAVING"
+
+"COMMUNITY_NEW_USER_NAME_SHORT_DESC": "Desired Username"
+
+"SAVELOAD_SAVE_GAME_TOO_MANY_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"SAVELOAD_DURING_ACTIVITY_EXPOSITION": "Progress made during the current Activity will not be saved!\nContinue?"
+
+"PAUSE_MENU_STATION_SELECTION": "STATION SELECTION"
+
+"PLAYLIST_HEADER_PLAYLIST": "PLAYLIST"
+
+"MENU_OPTIONS_NONE": "NO OPTIONS AVAILABLE"
+
+"CONTROL_DESC_PAUSE_MAP": "CELL PHONE"
+
+"HASH_7B16A56A": "HDR STYLE"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_03": "Check out each shop in the Initiation Station and create your perfect character."
+
+"MENU_MISSIONS_COMPLETED": "MISSIONS COMPLETED"
+
+"CELL_CAMERA_MODE_TITLE": "CAMERA MODE"
+
+"CHEAT_ENTRY_LONG": "Enter a code that unlocks a cheat here"
+
+"SB_DESELECT_TARGET": "DESELECT TARGET"
+
+"SB_CAT_CHALLENGES": "Ȟž"
+
+"MENU_MISSIONS": "MISSIONS"
+
+"COOP_REVIVAL_PENDING": "YOU HAVE %d SECONDS TO BE REVIVED"
+
+"SAVELOAD_SAVE_WARNING": "The flashing HDD access light indicates that your system is saving.\nPlease do not turn off your system during this time.\n"
+
+"RADIO_STATION_GENRE_ADULT_SWIM": "ADULT SWIM AND CARTOON NETWORK"
+
+"INFO_UNLOCKABLES_VEHICLES": "VEHICLES"
+
+"CONTROL_DESC_VEH_LOOK_BACK": "LOOK BEHIND"
+
+"NEWSTICKER_LOCAL_MOTD_06": "Tip: Vehicle feeling slow?  Head to Rim Jobs and add custom upgrades to your ride."
+
+"DLC_FAILED_TO_JOIN_MISSING_COOP": "You can not join a co-op game, you need the Online Pass."
+
+"MENU_CRIB_TITLE": "CRIB"
+
+"SB_TITLE": "SAINTSBOOK"
+
+"CONTROL_DESC_FOOT_HUMANSHIELD_KILL": "KILL SHIELD"
+
+"BUILDING_PURCHASE_BUILDING": "Do you wish to purchase {0:text_tag_crc} for ${1}?"
+
+"MENU_RADIO_TOGGLE_STATION": "TOGGLE STATION"
+
+"DEFAULT_PLAYER_NAME": "PLAYER"
+
+"NEWSTICKER_LOCAL_MOTD_08": "Feel like cheating?  Dial in a few numbers and have some fun."
+
+"COOP_CLIENT_PROPERTY_TRIGGER": "CLIENTS CANNOT PURCHASE PROPERTY IN CO-OP"
+
+"SAVELOAD_DURING_ACTIVITY_CONTINUE": "Continue?"
+
+"PAUSE_MENU_ACCEPT": "ACCEPT"
+
+"Control_Scheme": "SCHEME"
+
+"COMPLETION_NEIGHBORHOOD_GAINED": "NEIGHBORHOOD GAINED"
+
+"COMPLETION_EXIT_MISSION": "EXIT MISSION"
+
+"DEMO_MENU_CUST_CHARACTER": "CUSTOMIZE CHARACTER"
+
+"CRIB_NAME_NUKE": "BURNS HILL REACTORS"
+
+"SAVELOAD_CORRUPT_DISPLAY_DATE": "XX.XX.XX"
+
+"MENU_OPTIONS_AUDIO": "AUDIO"
+
+"CELL_VEHICLE_DIALOG_REPAIRS_HEADER": "Repair and Retrieve Vehicle?"
+
+"HASH_7BD026EE": "COLOR VIBRANCE"
+
+"MENU_WEAPON_LEVEL": "{0:text_tag_crc}\n[format][color:#AAAAAA]LEVEL {1}[/format]"
+
+"MENU_ACCOUNT_EMPTY": "Your Bank Account is currently empty.\nPlay Activities, complete Gang Operations, and purchase Stores / Properties to increase your Hourly City Income."
+
+"MAINMENU_DLC": "ƔǛǥț"
+
+"COMMUNITY_NEW_PASSWORD_SHORT_DESC": "PASSWORD"
+
+"SB_USE_ICON": "Use this Icon to locate your target."
+
+"SAVELOAD_SAVING_MESSAGE_TITLE": "SAVING"
+
+"OPT_CONTROL_DISABLED": "DISABLED"
+
+"INFO_UNLOCKABLES_MISSIONS": "MISSIONS"
+
+"INFO_DIVERSIONS_JOBS": "JOBS"
+
+"CONTROL_DESC_FOOT_HUMANSHIELD": "HOLD HUMAN SHIELD"
+
+"SAVE_WARNING_GAME": "SAVING..."
+
+"SAVELOAD_ACTIVITY_WARNING": "Activity Progress is not saved. If you load this save game your progress will be restored from prior to starting this activity."
+
+"SAVELOAD_IMPORT_BODY_TITLE": "IMPORT BODY"
+
+"SAVELOAD_DATE": "--.--.--"
+
+"MISSION_RESTART_PROMPT": "Would you like to replay this mission?"
+
+"MENU_OPTIONS_SELECT_STORAGE": "SELECT STORAGE DEVICE"
+
+"COMPLETION_ACTIVITY_LEVEL_FAILED": "LEVEL {0} FAILED"
+
+"START_GAME_OUT_OF_SAVE_SLOTS": "You do not have any free Save Game slots. Continue without saving?"
+
+"MENU_EXIT_PHONE": "EXIT PHONE"
+
+"SAVELOAD_LOADING_MESSAGE_TITLE": "ǛȎƛ"
+
+"MSGLOG_TITLE_SR": "SAINTS ROW"
+
+"PLAYLIST_TITLE_PLAYLIST": "MIXTAPE"
+
+"INFO_UNLOCKABLES_HOMIES": "GANG ABILITIES"
+
+"CONTROL_DESC_VEH_TOGGLE_CAM": "TOGGLE CAMERA"
+
+"COMPLETION_CONTROL": "{0}\\NDISTRICT CONTROL"
+
+"CELL_OPTION_CALL": "CALL"
+
+"CREDITS_QUALITY_ASSURANCE": "QUALITY ASSURANCE"
+
+"MENU_NO_FRIENDS_FOUND": "NO FRIENDS FOUND"
+
+"SAVELOAD_NO_MISSIONS": "NO MISSIONS COMPLETED"
+
+"COMMUNITY_NO_INFO_ENTERED": "You must enter your username and password."
+
+"SB_CAT_COMPLETED": "{0}/{1} COMPLETE"
+
+"OBJECTIVES_HAVE_RESPECT": "You've earned enough respect to play a Mission."
+
+"MSN_NO_RESPECT_TITLE": "NO RESPECT!"
+
+"CONTROLS_SETUP_DRIVING": "DRIVING CONTROLS"
+
+"COMPLETION_RETRY_ACTIVITY": "RETRY ACTIVITY"
+
+"COMPLETION_ACTIVITY_LEVEL_COMPLETE": "LEVEL {0} COMPLETE"
+
+"CELL_OPTION_CLR": "CLR"
+
+"CELL_PHONEBOOK_NONE": "NO ENTRIES"
+
+"NEWSTICKER_LOCAL_MOTD_02": "View and share thousands of custom characters on the official website of Saints Row: The Third, SaintsRow.com. "
+
+"SAVELOAD_NOT_ENOUGH_SPACE_NEW_PS3": "There is not enough space for a new save. You need %dkb free in order to save a new game. You may overwrite or delete an old save game."
+
+"CHEAT_ENTRY_SHORT": "Enter Cheat"
+
+"COOP_LOBBY": "ƀƂƤǡ"
+
+"SAVELOAD_HDR_STATUS": "{0} COMPLETED           {1}"
+
+"INFO_DIVERSIONS_FRENZY": "SPECIAL"
+
+"CONTROL_DESC_VEH_BRAKE_REV": "BRAKE/REVERSE"
+
+"MENU_TITLE_NOTICE": "NOTICE"
+
+"INFO_DIVERSIONS": "DIVERSIONS"
+
+"MENU_CHARACTER_DOWNLOAD_NONE": "You have no characters available for download.\n\nLog in to your account at SaintsRow.com to populate your list of downloadable characters."
+
+"STORE_WEAR_ITEM": "WEAR"
+
+"MAIN_MENU_MS_BIKE_UNLOCKED": "Cypher's Bike has been unlocked through Saints Row: Money Shot. Find it in your Crib Helipad."
+
+"COMMUNITY_NEW_EMAIL_LONG_DESC": "Please enter a valid e-mail address."
+
+"COMMUNITY_ERROR_PASSWORD_CONFIRM": "The passwords provided do not match."
+
+"MENU_DISPLAY_CALIBRATION_DESCRIPTION": "Adjust the gamma settings to your personal preference."
+
+"MENU_SELECT": "ȀŰ"
+
+"MAP_ACTIVITY_LEVELS_U_OF_U_COMPLETE": "%u OF %u LEVELS COMPLETED"
+
+"SAVELOAD_SAVE_GAME_TOO_MANY_EXPOSITION": "There are no more saved game slots available on this storage device."
+
+"PAUSE_MAP_FILTER_ACTIVITIES": "ACTIVITIES"
+
+"MENU_AUDIO_MICAUDIO": "AUDIO MIC"
+
+"INVALID_SAVE_MSG": "The Saved Game that you have attempted to load\nis either corrupt or not supported by this title."
+
+"GAME_LOADING": "LOADING"
+
+"CONTROL_DESC_FOOT_RECRUIT": "RECRUIT FOLLOWERS"
+
+"COMPLETION_ENOUGH_RESPECT": "YOU HAVE ENOUGH RESPECT TO PLAY MORE MISSIONS"
+
+"COMMUNITY_ACCOUNT_VERIFICATION_CODE": "ACCOUNT VERIFICATION CODE"
+
+"SAVELOAD_CANCEL_DURING_COOP_JOIN": "Are you sure you want to cancel loading a game? You will create a new character upon entering the game."
+
+"PAUSE_MAP_STAG_POPUP_TITLE": "ƿƩȕǕ"
+
+"SAVELOAD_IMPORT_ABORT": "RESUME WITHOUT IMPORTING"
+
+"MENU_OPTIONS_CONTROLS": "Ǔƃ"
+
+"MENU_CONTROLS_INVERT_Y": "INVERT CAMERA Y AXIS"
+
+"MENU_AUDIO_HEADSET": "HEADSET"
+
+"MAINMENU_EXTRAS": "EXTRAS"
+
+"INFO_DIVERSIONS_STUNTS": "STUNTS"
+
+"CELL_CALL_CALLING": "CALLING"
+
+"CELL_PHONE_BUSY": "BUSY..."
+
+"DEMO_EXIT_WARNING_BODY": "Are you sure you want to exit the Initiation Station?"
+
+"DLC_MISSING_PACKAGE_FROM_SAVE": "You are missing Downloadable Content that was previously available. Some content may be unavailable. Please re-download the content."
+
+"STATS_STATS_NONE": "NO STATISTICS"
+
+"MAP_BLANK_DISTRICT": "%ls DISTRICT"
+
+"COMPLETION_MISSION_NUMBER": "MISSION {0}"
+
+"MAINMENU_WHORED_COOP_OPTION": "START CO-OP WHORED MODE"
+
+"CRIB_CASH_DO_TRANSFER": "TRANSFER"
+
+"SIXAXIS_SENSOR": "MOTION SENSOR"
+
+"REMOVE_BOOKMARK": "REMOVE BOOKMARK"
+
+"PAUSE_MAP_FILTER_NONE": "NONE"
+
+"UI_FONT_HIRA_KATA_SUBTITLES_JPN": "List of Hiragana, Katakana, Japanese punctuation, and Japanese subtitle characters"
+
+"MAIN_MENU_NO_WHORED_MODE_DLC": "Missing Whored Mode downloadable content pack"
+
+"SB_COMPLETED": "COMPLETED"
+
+"SB_GPS_TO_TARGET": "GPS TO TARGET"
+
+"MAP_D_PERCENT_CONTROL": "%d%%%% CONTROL"
+
+"PAUSE_MAP_FILTER_FLASHPOINTS": "GANG OPERATIONS"
+
+"CONTROLS_SIXAXIS_BRAKE": "SIXAXIS ACCEL/BRAKE"
+
+"CONTROL_DESC_FOOT_RADIAL": "INVENTORY"
+
+"CELL_PHONE_IN_CALL": "IN CALL..."
+
+"CRIB_NAME_BDSM": "SAFEWORD"
+
+"MAINMENU_COMMUNITY": "„Ƌ"
+
+"CONTROL_CREATE_ACCOUNT": "CREATE ACCOUNT"
+
+"MENU_STYLE_DIALOG_BODY": "[format][color:yellow]Style level {0}[/format] granted. You now earn [format][color:yellow]{1} percent more respect[/format] during activites and diversions."
+
+"INFO_COLLECTION": "COLLECTION"
+
+"CONTROLS_SENSE_V": "VERTICAL SENSITIVITY"
+
+"COMPLETION_BONUS": "{0}%%% BONUS"
+
+"HASH_AB781E7A": "HDR"
+
+"NEWSTICKER_LOCAL_MOTD_09": "Tip:  At any time, visit Image As Designed and create a brand new character."
+
+"COOP_LOBBY_WAITING_FOR_HOST": "Waiting for {0}\nto start the game."
+
+"MENU_BRIGHTNESS_CALIBRATION_DESCRIPTION": "Adjust the output brightness so that shape is barely visible to match output brightness to display capabilities"
+
+"SAVELOAD_SAVE_GAME_DEVICE_FULL_OPEN_DEVICE_SELECTOR": "SELECT ANOTHER DEVICE"
+
+"SAVELOAD_MUST_SIGN_IN": "You must sign in to use save/load."
+
+"CONTROLS_SETUP_VCAM_DIST": "VEHICLE CAMERA DISTANCE"
+
+"CONTROL_DESC_VEH_HELI_SECONDARY_FIRE": "(HELICOPTER) ALT ATTACK"
+
+"MENU_AIRPLANE_CONTROLS": "AIRPLANE CONTROLS"
+
+"CELL_CAMERA_MODE_UPLOAD_SNAPSHOT": "UPLOAD SCREENSHOT"
+
+"RADIO_STATION_MY_RADIO": "MY RADIO 85.5"
+
+"RADIO_STATION_GENRE_KABRON": "URBAN LATIN AND RAEGGAETON"
+
+"INFO_MESSAGES_TITLE": "MESSAGE LOG"
+
+"HASH_B4D3C27C": "SHARPENING"
+
+"HASH_E64E117C": "Game has not finished installing. Please try again later."
+
+"MENU_INSTANT": "INSTANT"
+
+"NEWSTICKER_LOCAL_MOTD_DEMO_02": "Make sure to register your official SaintsRow.com community account so that you can upload and share your characters!"
+
+"PAUSE_MAP_FILTER_ALL": "ALL"
+
+"NO_MISSIONS_COMPLETED": "NO MISSIONS COMPLETED"
+
+"INFO_UNLOCKABLES_ACTIVITIES": "ACTIVITIES"
+
+"NEWSTICKER_LOCAL_MOTD_07": "Your city.  Your rules.  Welcome to Saints Row: The Third."
+
+"SB_ASSASSINATION_DESC": "Want a little more money and respect? Then sometimes you have to get your hands dirty. Check back here for Assassination targets to eliminate on behalf of various people in the Steelport."
+
+"PAUSE_MAP_FILTER_OBJECTIVES": "Ǐ…"
+
+"MAINMENU_CREDITS": "CREDITS"
+
+"HELP_TEXT_SKYDIVE_FLIP": "PRESS {JUMP_CLIMB_IMG} TO FLIP OVER"
+
+"CONTROLS_DESC_BLOCK": "BLOCK"
+
+"HASH_276536FE": "    DEPTH OF FIELD"
+
+"COMMUNITY_INVALID_USERNAME_CHARACTERS": "A username must consist of only alphanumeric characters and the symbols -_.@"
+
+"COMMUNITY_NEW_AGE_LONG_DESC": "Enter your date of birth"
+
+"COMMUNITY_EULA": "To view the End User Licensing Agreement (EULA), please visit www.saintsrow.com/eula."
+
+"PRESET_WARNING_BODY1": "You will lose all the changes you have made.\nThis action cannot be reverted.\n\nContinue?"
+
+"ACTIVITY_COOP_SKIP_TEXT": "You have already played %s of %s as the client in a coop game.\nWould you like to replay the level or skip it?"
+
+"SAVELOAD_SAVE_GAME_TITLE": "ƑǂǙǋ"
+
+"PAUSE_MAP_FILTER_CRIBS": "CRIBS"
+
+"INFO_UNLOCKABLES_HEALTH": "HEALTH"
+
+"INFO_MESSAGES": "MESSAGE LOG"
+
+"CONTROLS_SETUP_FOOT_SCHEMES": "ON FOOT CONTROL SCHEMES"
+
+"CONTROL_DESC_FOOT_SEL_WPN": "SELECT WEAPON"
+
+"CELL_HEADER_ACTIVATED": "ACTIVATED"
+
+"HASH_7B795C7F": "INCREASED REFLECTION QUALITY WITH DYNAMIC OBJECTS"
+
+"MAINMENU_WHORED_OPTION": "START WHORED MODE"
+
+"MAP_STORE_PURCHASE_AMOUNT": "PURCHASE %ls: %ls"
+
+"ACTIVITY_COOP_TITLE": "CO-OP ACTIVITY"
+
+"SAVELOAD_SAVEFILE_CORRUPT_ABORT": "RETURN TO THE SAVE/LOAD MENU"
+
+"MENU_DISPLAY_SUBTITLES": "SUBTITLES"
+
+"MAINMENU_DOWNLOADS": "DOWNLOADABLE CONTENT"
+
+"INFO_DIVERSIONS_TITLE": "DIVERSIONS"
+
+"CONTROL_DESC_FOOT_PICKUP": "(HOLD) PICKUP WEAPON/OBJECT"
+
+"CELL_VEHICLE_DIALOG_REPAIRS_BODY": "Would you like repair and retreive your vehicle for ${0}?"
+

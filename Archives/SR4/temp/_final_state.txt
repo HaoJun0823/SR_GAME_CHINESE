@@ -1,0 +1,13 @@
+﻿=== 产物文件 ===
+le_string_keys.txt  64922 B  2026/9/17 22:27:13  md5=9412C23F
+le_string_keys.txt  65703 B  2026/9/17 22:27:13  md5=BDFE9E4A
+
+=== 抽样: MENU_BACK / PLT_MENU_WINDOWED / COMMUNITY_SITE_BLURB ===
+//       (屏幕上直接显示 MENU_BACK / PLT_xxx)。本表把这类可读 KEY 直接映射为译文。
+"MENU_BACK": "返回";
+"COMMUNITY_SITE_BLURB": "上传你的首个角色即可获得一项成就。\n\n在线浏览角色并在游戏中使用它们。\n\n追踪你的统计数据并与好友比较进度。\n\n浏览用户创建的游戏内截图。\n\n获取仅限社区的《黑道圣徒》周边与游戏内容优惠。";
+"PLT_MENU_WINDOWED": "窗口化";
+
+=== Steam 回滚状态复核 ===
+asi: 735232 B  md5=043D8833D54426CE2B25C0A99F967E35
+dict 文件数: 19  (含 le_string_keys.txt? False)

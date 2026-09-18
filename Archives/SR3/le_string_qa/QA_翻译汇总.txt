@@ -1,0 +1,70 @@
+《黑道圣徒3 重制版》(Saints Row The Third Remastered) 简体中文翻译 — 全量 QA 汇总
+==============================================================================
+
+完成状态：✅ 全量完成（21 文件 / 6224 条英文 VALUE 全部译为中文）
+
+一、逐文件进度（O=源条目数 / S=译条目数）
+---------------------------------------------------------------------------
+FILE                    O     S   状态
+activity_us.txt       436   436  ✅
+customize_us.txt     1656  1656  ✅
+diversion_us.txt     370   370  ✅
+dlc1_us.txt           84    84  ✅
+dlc2_us.txt          116   116  ✅
+dlc3_us.txt           66    66  ✅
+hud_us.txt           872   872  ✅
+menu_us.txt          508   508  ✅
+mission_us.txt       401   401  ✅
+multiplayer_us.txt    48    48  ✅
+patch0_us.txt         19    19  ✅
+platform_pc_us.txt   289   289  ✅
+platform_ps3_us.txt   73    73  ✅
+platform_ps4_us.txt   80    80  ✅
+platform_ps5_us.txt   80    80  ✅
+platform_xb1_us.txt   61    61  ✅
+platform_xbox360_us.txt 57  57  ✅
+platform_xbs_us.txt   62    62  ✅
+static_us.txt        576   576  ✅
+subtitle_us.txt      369   369  ✅
+voice_script_us.txt    1     1  ✅
+---------------------------------------------------------------------------
+合计                6224  6224
+
+二、质量校验（全部通过）
+---------------------------------------------------------------------------
+1. KEY 奇偶校验：21 文件 O==S，missing=0 / extra=0 / dup=0
+2. 编码：schinese/*.txt 全部 UTF-8 无 BOM（首字节 22="，非 ef bb bf）
+3. 格式校验 check_format.py all：21/21 [PASS]，0 问题
+4. 格式 token 保真：
+   - [format][color:*/location]...[/format] 配对，逐文件计数一致
+   - %s/%d/%ls/%i/%f/%% 占位符原样保留
+   - {*_IMG}/{0}/${0} 占位符原样保留
+   - 字面 \n（dlc1 ×5、dlc2 ×1）写入为 2 字符反斜杠-n，未变真实换行
+   - 英文 \" 等价规则：源含 \"PHONE\" 的条目（subtitle×5、dlc1×1、dlc2×2、
+     dlc3×2）均用 2 个全角引号 “ ” 等价替换，bs_quote 计数一致
+5. ASCII 扫描（Humanize）：无 markdown 套话 / chatbot 词汇 / ASCII em-dash；
+   中文标准破折号 ——（U+2014）属合法标点，非机翻腔 artifact
+6. 尾部空格：cm_valve_demo / cm_dkr01_hdphones / CUST_ITEM_DLC_FOOT_WITCH /
+   CUST_ITEM_DLC_FOOT_WITCH 等源含尾部空格者均忠实保留
+
+三、翻译风格
+---------------------------------------------------------------------------
+- 黑色幽默基调保留，暴力/色情/犯罪用语适度柔化以适配国内发行尺度
+- 专有名词统一（见 terms_cand.md）：圣徒 / 钢埠 / 晨星帮 / 迪克帮 / 杀霸 /
+  皮尔斯 / 盖特 / 约翰尼·塔格 / 吉尼斯碗 / 元气博士 / 末日元气 等
+
+四、git 提交记录（按批次）
+---------------------------------------------------------------------------
+批1  1bb95fe 平台/系统类 10 文件
+批2  12a0675 static/menu
+批3  b32515e hud   |   c2592df customize
+批4  54991f1 activity | 3e26a3b diversion | 8cb4a63 mission
+批5  c7e240a subtitle
+批6  eb5faee dlc1 | 2766ded dlc2 | 09674a0 dlc3
+
+五、已知约束 / 备注
+---------------------------------------------------------------------------
+- 平台类文件（platform_xbox*/ps*/xb1 等）约 85% 值为 [format][image:...]
+  图片标签与 XBOX LIVE 品牌词，按规范保留原文，属正确而非漏译。
+- 各 .qa/translate_*.py 为逐行映射脚本（KEY 取自源行防拼写错），当前未纳入
+  版本库（仅提交 schinese 译文文件），如需归档可另行 git add。

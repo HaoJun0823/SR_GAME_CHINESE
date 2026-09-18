@@ -1,0 +1,117 @@
+﻿=========== 1) 游戏根目录 exe ===========
+SaintsRowIV.exe                       1093584  mtime=2026/9/6 19:34:59  md5=9ADE4A2999
+sr_hv.exe                            28780032  mtime=2026/9/6 19:34:59  md5=F9E79E5D37
+sr_hv_epic.exe                       28756992  mtime=2026/9/12 9:25:41  md5=CC56B51FF4
+sr_hv_gog.exe                        28535808  mtime=2026/9/8 9:49:18  md5=792924F6D5
+sriv_microsoft.exe                   26999296  mtime=2026/9/17 19:13:15  md5=F5850865AA
+
+=========== 2) scripts 目录 SR4R* ===========
+SR4R_I18N.asi                                   735232  mtime=2026/9/17 21:30:49  md5=043D8833D5
+SR4R_I18N.asi.bak                               723968  mtime=2026/9/12 11:54:54  md5=5D85175D95
+SR4R_I18N.asi.bak_20260912                      726528  mtime=2026/9/12 12:12:36  md5=9D41AE48B3
+SR4R_I18N.asi.bak_v1                            725504  mtime=2026/9/12 12:12:36  md5=FDC9E3D6F5
+SR4R_I18N.asi.bak_v12_20260917_2057             729088  mtime=2026/9/17 20:07:53  md5=9A08270461
+SR4R_I18N.asi.bak_v13_20260917_2130             733696  mtime=2026/9/17 21:10:19  md5=A1FFADC4CE
+SR4R_I18N.asi.bak_v13pre_20260917_2110          733696  mtime=2026/9/17 20:56:40  md5=CCD140BFBB
+SR4R_I18N.asi.bak_v14_20260917_2202             735232  mtime=2026/9/17 21:30:49  md5=043D8833D5
+SR4R_I18N.ini                                     2078  mtime=2026/9/17 20:57:46  md5=BDF4593434
+SR4R_I18N.log                                     4566  mtime=2026/9/17 22:33:08  md5=8ED67B9A64
+
+=========== 3) scripts\dict ===========
+exe_hardcoded.txt                  268204
+le_data_supplement.txt             914814
+le_string_keys.txt                  64922
+voice_001.txt                      100081
+voice_002.txt                       93321
+voice_003.txt                       96420
+voice_004.txt                       93055
+voice_005.txt                       99067
+voice_006.txt                      106795
+voice_007.txt                       95611
+voice_008.txt                       96784
+voice_009.txt                       95289
+voice_010.txt                       94997
+voice_011.txt                       99839
+voice_012.txt                       91497
+voice_013.txt                       97462
+voice_014.txt                       95325
+voice_015.txt                       91837
+voice_016.txt                       91446
+voice_017.txt                       73478
+
+=========== 4) 最新日志头 40 行 ===========
+log size=4566 mtime=2026/9/17 22:33:08
+[22:32:54.710 T12272] [Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N
+[22:32:54.710 T12272] [DllMain] ATTACH SR4R v1.4
+[22:32:54.710 T65952] ==== SR4R_I18N v1.4: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====
+[22:32:54.710 T65952] cfg: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.ini loaded (dict_dir=dict origin_dir=origin font_file=SourceHanSansHWSC-VF.ttf charlist=charlist.txt dump=1 early=1 diag=1 sub=1 textdump=2 exe=auto)
+[22:32:54.710 T65952] exe: Steam (via PE fingerprint, score=3/3) | file=sr_hv.exe TimeDateStamp=642AD908 EntryPoint=013635C4 SizeOfImage=07CF8000
+[22:32:54.710 T65952] origin: folder I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\origin not found (GLE=3), ID/HASH_ dict keys will be skipped
+[22:32:54.710 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\exe_hardcoded.txt bad line: // 
+[22:32:54.713 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\le_data_supplement.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.720 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_001.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.721 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_002.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.722 T65952] dict: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\dict\voice_003.txt bad line: // Format: "English": "Chinese translation";
+[22:32:54.734 T65952] dict: 20 files, 35963 lines, 38908 keys, 0 HASH_ skipped, 31077 cjk, 19 bad, arena 9375/131072 KB
+[22:32:54.734 T65952] charlist: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\charlist.txt merged 282 new chars (total 3296, rankPos 3278, lines 82)
+[22:32:54.734 T65952] dump: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\DumpText.dtxt opened (append)
+[22:32:54.743 T65952] globals: dynamic resolve OK | FontLookup=0x140BF8550 fontTab=0x146AE7060 fontCount=0x146AE504C
+[22:32:54.846 T65952] hook DRAW_WIDE @00007FF64E2E36A0 installed (via aob)
+[22:32:54.904 T65952] hook FORMAT @00007FF64E219A00 installed (via aob)
+[22:32:54.959 T65952] hook FONT_LOOKUP @00007FF64E118550 installed (via aob)
+[22:32:55.015 T65952] hook TEXOBJ @00007FF64E09AF30 installed (via aob)
+[22:32:55.074 T65952] hook SRV_RESOLVE @00007FF64E34C9E0 installed (via aob)
+[22:32:55.129 T65952] hook LANG_CUR @00007FF64E211980 installed (via aob)
+[22:32:55.186 T65952] hook LANG_TXT @00007FF64E211960 installed (via aob)
+[22:32:55.251 T65952] hook SUBTITLE @00007FF64D8F18F0 installed (via aob)
+[22:32:55.251 T65952] SR4R v1.4 active: dict=38908 keys (20 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[22:32:55.251 T53604] font: charset 3371 chars (dict) + extras
+[22:32:55.258 T53604] font: I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SourceHanSansHWSC-VF.ttf (35415760 bytes)
+[22:32:55.259 T53604] font: stbtt ok (numGlyphs=65535)
+[22:32:58.894 T12272] font0: upgrade requested (first CJK text)
+[22:32:58.925 T17224] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[22:32:58.925 T17224] d3d: device/context captured from SRV (version-agnostic path)
+[22:32:58.927 T17224] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[22:32:58.927 T17224] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[22:32:58.938 T17224] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[22:33:03.509 T29400] wrap: LEARN  pend="button text gjq"
+[22:33:03.509 T29400] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[22:33:03.509 T29400] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="button text gjq" new="TEXT_LOCALIZED"
+[22:33:03.509 T29400] font1: upgrade requested (first CJK text)
+[22:33:03.576 T33260] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[22:33:03.576 T33260] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[22:33:03.591 T33260] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+
+=========== 5) ini 文件 ===========
+; SR4R_I18N 配置（与 SR4R_I18N.asi 同目录; UTF-8）
+; SR4R v1.3: 从 SR3R v7.5.2 移植, 适配 Saints Row IV (Steam / GOG / EPIC + 未知构建自解, L1/L2 双层特征码)
+; dict_dir / origin_dir 均为可选 - 目录缺失时自动进入 font-only 模式(内置字符集)
+; dict_dir   = 词典文件夹（相对本目录; 可选, 仅调试文本替换时使用）
+; origin_dir = 联表文件夹（相对本目录; 可选）
+; font_file  = 中文字体 TTF 文件名（相对本目录; 需 TrueType, 建议思源黑体 HW SC）
+; dump_enabled = 是否收集未命中文本到 DumpText.dtxt（建议 1 用于首次测试）
+; lang_early = 语言服务返回层整句替换（默认 1; 命中词典的完整句提前换中文）
+; early_diag = 诊断日志（默认 1; 记录早期替换命中/Format 调用点归类, 验证完可设 0）
+; subtitle_early = 字幕绘制入口整句替换（默认 1; 折行前换中文整句）
+; charlist_file = 字符清单文件名（相对本目录; 可选, 缺省即 charlist.txt）
+; text_dump = 可执行段落盘（0=关, 1=总是, auto=仅 hook 定位失败时, 默认 auto）
+;       用途: Microsoft Store(MSIXVC)版的 exe 是密文, 离线取不到特征码;
+;       注入进程内的 DLL 看到的是明文映像 —— 落盘后即可离线为新构建生成特征码。
+;       本 DLL 正常时(8 条 hook 全命中)auto 不产生任何文件。
+; exe = 强制指定游戏版本: auto / steam / gog / epic
+;       默认 auto = 按 exe 的 PE 指纹(时间戳等)自动识别, 正常情况下无需设置。
+;       [!] 不要依赖 exe 文件名来区分版本 —— EPIC 官方安装的可执行文件同样叫
+;           sr_hv.exe（与 Steam 同名）, 按文件名判别会把 EPIC 误认成 Steam,
+;           导致字形表读错、文字完全不显示。仅在自动识别失败时手工指定。
+
+[settings]
+dict_dir = dict
+origin_dir = origin
+font_file = SourceHanSansHWSC-VF.ttf
+charlist_file = charlist.txt
+dump_enabled = 1
+lang_early = 1
+early_diag = 1
+subtitle_early = 1
+text_dump = auto
+exe = auto

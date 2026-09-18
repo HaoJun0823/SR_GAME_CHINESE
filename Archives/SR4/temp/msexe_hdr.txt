@@ -1,0 +1,3 @@
+﻿file_size=26999296
+pe_offset=0xC947EA6
+--- sections ---

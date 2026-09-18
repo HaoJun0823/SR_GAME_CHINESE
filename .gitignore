@@ -1,0 +1,47 @@
+# ============================================================
+# SR_GAME_CHINESE — 仓库忽略规则
+# 原则：忽略规则只作用于「会产生构建产物的地方」，即 Projects/。
+#       Archives/ 是留档区，其内容一律入库（原样保存，便于日后追溯）。
+# ============================================================
+
+# ---- 版本控制 / IDE ----
+.vs/
+*.suo
+*.ipch
+*.vsidx
+
+# ---- 构建产物（仅 Projects 下）----
+Projects/**/x64/
+Projects/**/Debug/
+Projects/**/Release/
+Projects/**/*.obj
+Projects/**/*.pch
+Projects/**/*.tlog
+Projects/**/*.lastbuildstate
+Projects/**/*.FileListAbsolute.txt
+Projects/**/*.recipe
+Projects/**/*.asi
+Projects/**/*.dll
+Projects/**/*.pdb
+Projects/**/*.lib
+Projects/**/*.exp
+Projects/**/*.ilk
+Projects/**/*.log
+
+# ---- NuGet 还原产物（packages.config 驱动，clone 后 restore 自动回来）----
+Projects/**/packages/
+*.nupkg
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ---- 工作区记忆（个人笔记，不分发）----
+.workbuddy/
+
+# ---- 例外：Archives 留档区一律保留 ----
+!Archives/**
+!**/.gitkeep

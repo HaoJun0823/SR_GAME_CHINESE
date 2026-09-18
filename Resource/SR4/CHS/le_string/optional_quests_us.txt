@@ -1,0 +1,9 @@
+# TODO: Translate to Simplified Chinese
+# Source: optional_quests_us.txt
+# Format: "KEY": "Chinese translation"
+# Total entries: 4
+
+"HASH_49D64480": "菲尔!!!!1!"
+"HASH_083B2AA8": "已创建并保存角色到你的档案。你现在是个真正的圣徒了！"
+"HASH_2477722E": "创建并保存角色到你的档案。"
+"HASH_FCB2B21E": "金吉要你从西北岛屿收集数据"

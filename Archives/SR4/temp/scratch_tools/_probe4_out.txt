@@ -1,0 +1,324 @@
+======== 1) 0x140E92C00..0x140E92F60 反汇编（找 Format 入口） ========
+  0x140e92c00  test                       eax, eax
+  0x140e92c02  je                         0x140e92c27
+  0x140e92c04  cmp                        qword ptr [rax + 0x18], 0
+  0x140e92c09  je                         0x140e92c27
+  0x140e92c0b  call                       0x140e927e0
+  0x140e92c10  cmp                        ebx, dword ptr [rax]
+  0x140e92c12  je                         0x140e92c27
+  0x140e92c14  mov                        rax, qword ptr [rip + 0x6386395]
+  0x140e92c1b  mov                        ecx, ebx
+  0x140e92c1d  call                       qword ptr [rax + 0x18]
+  0x140e92c20  call                       0x140e927e0
+  0x140e92c25  mov                        dword ptr [rax], ebx
+  0x140e92c27  add                        rsp, 0x20
+  0x140e92c2b  pop                        rbx
+  0x140e92c2c  ret                           <-- ret
+  0x140e92c2d  int3                          <-- padding
+  0x140e92c2e  int3                          <-- padding
+  0x140e92c2f  int3                          <-- padding
+  0x140e92c30  mov                        rax, qword ptr [rip + 0x6386379]
+  0x140e92c37  test                       rax, rax
+  0x140e92c3a  je                         0x140e92c48
+  0x140e92c3c  mov                        rdx, qword ptr [rax + 0x40]
+  0x140e92c40  test                       rdx, rdx
+  0x140e92c43  je                         0x140e92c48
+  0x140e92c45  jmp                        rdx
+  0x140e92c48  ret                           <-- ret
+  0x140e92c49  int3                          <-- padding
+  0x140e92c4a  int3                          <-- padding
+  0x140e92c4b  int3                          <-- padding
+  0x140e92c4c  int3                          <-- padding
+  0x140e92c4d  int3                          <-- padding
+  0x140e92c4e  int3                          <-- padding
+  0x140e92c4f  int3                          <-- padding
+  0x140e92c50  mov                        rax, qword ptr [rip + 0x6386359]
+  0x140e92c57  test                       rax, rax
+  0x140e92c5a  je                         0x140e92c71
+  0x140e92c5c  mov                        r10, qword ptr [rax + 0x60]
+  0x140e92c60  test                       r10, r10
+  0x140e92c63  je                         0x140e92c71
+  0x140e92c65  movzx                      eax, byte ptr [rsp + 0x38]
+  0x140e92c6a  mov                        byte ptr [rsp + 0x38], al
+  0x140e92c6e  jmp                        r10
+  0x140e92c71  ret                           <-- ret
+  0x140e92c72  int3                          <-- padding
+  0x140e92c73  int3                          <-- padding
+  0x140e92c74  int3                          <-- padding
+  0x140e92c75  int3                          <-- padding
+  0x140e92c76  int3                          <-- padding
+  0x140e92c77  int3                          <-- padding
+  0x140e92c78  int3                          <-- padding
+  0x140e92c79  int3                          <-- padding
+  0x140e92c7a  int3                          <-- padding
+  0x140e92c7b  int3                          <-- padding
+  0x140e92c7c  int3                          <-- padding
+  0x140e92c7d  int3                          <-- padding
+  0x140e92c7e  int3                          <-- padding
+  0x140e92c7f  int3                          <-- padding
+  0x140e92c80  mov                        rax, qword ptr [rip + 0x6386329]
+  0x140e92c87  test                       rax, rax
+  0x140e92c8a  je                         0x140e92c98
+  0x140e92c8c  mov                        rdx, qword ptr [rax + 0x78]
+  0x140e92c90  test                       rdx, rdx
+  0x140e92c93  je                         0x140e92c98
+  0x140e92c95  jmp                        rdx
+  0x140e92c98  xor                        al, al
+  0x140e92c9a  ret                           <-- ret
+  0x140e92c9b  int3                          <-- padding
+  0x140e92c9c  int3                          <-- padding
+  0x140e92c9d  int3                          <-- padding
+  0x140e92c9e  int3                          <-- padding
+  0x140e92c9f  int3                          <-- padding
+  0x140e92ca0  mov                        qword ptr [rip + 0x6386341], rcx
+  0x140e92ca7  ret                           <-- ret
+  0x140e92ca8  int3                          <-- padding
+  0x140e92ca9  int3                          <-- padding
+  0x140e92caa  int3                          <-- padding
+  0x140e92cab  int3                          <-- padding
+  0x140e92cac  int3                          <-- padding
+  0x140e92cad  int3                          <-- padding
+  0x140e92cae  int3                          <-- padding
+  0x140e92caf  int3                          <-- padding
+  0x140e92cb0  mov                        qword ptr [rip + 0x6386329], rcx
+  0x140e92cb7  ret                           <-- ret
+  0x140e92cb8  int3                          <-- padding
+  0x140e92cb9  int3                          <-- padding
+  0x140e92cba  int3                          <-- padding
+  0x140e92cbb  int3                          <-- padding
+  0x140e92cbc  int3                          <-- padding
+  0x140e92cbd  int3                          <-- padding
+  0x140e92cbe  int3                          <-- padding
+  0x140e92cbf  int3                          <-- padding
+  0x140e92cc0  mov                        qword ptr [rip + 0x6386309], rcx
+  0x140e92cc7  ret                           <-- ret
+  0x140e92cc8  int3                          <-- padding
+  0x140e92cc9  int3                          <-- padding
+  0x140e92cca  int3                          <-- padding
+  0x140e92ccb  int3                          <-- padding
+  0x140e92ccc  int3                          <-- padding
+  0x140e92ccd  int3                          <-- padding
+  0x140e92cce  int3                          <-- padding
+  0x140e92ccf  int3                          <-- padding
+  0x140e92cd0  mov                        qword ptr [rip + 0x6386301], rcx
+  0x140e92cd7  ret                           <-- ret
+  0x140e92cd8  int3                          <-- padding
+  0x140e92cd9  int3                          <-- padding
+  0x140e92cda  int3                          <-- padding
+  0x140e92cdb  int3                          <-- padding
+  0x140e92cdc  int3                          <-- padding
+  0x140e92cdd  int3                          <-- padding
+  0x140e92cde  int3                          <-- padding
+  0x140e92cdf  int3                          <-- padding
+  0x140e92ce0  mov                        qword ptr [rip + 0x63862e1], rcx
+  0x140e92ce7  ret                           <-- ret
+  0x140e92ce8  int3                          <-- padding
+  0x140e92ce9  int3                          <-- padding
+  0x140e92cea  int3                          <-- padding
+  0x140e92ceb  int3                          <-- padding
+  0x140e92cec  int3                          <-- padding
+  0x140e92ced  int3                          <-- padding
+  0x140e92cee  int3                          <-- padding
+  0x140e92cef  int3                          <-- padding
+  0x140e92cf0  mov                        qword ptr [rip + 0x63852a9], rcx
+  0x140e92cf7  ret                           <-- ret
+  0x140e92cf8  int3                          <-- padding
+  0x140e92cf9  int3                          <-- padding
+  0x140e92cfa  int3                          <-- padding
+  0x140e92cfb  int3                          <-- padding
+  0x140e92cfc  int3                          <-- padding
+  0x140e92cfd  int3                          <-- padding
+  0x140e92cfe  int3                          <-- padding
+  0x140e92cff  int3                          <-- padding
+  0x140e92d00  mov                        qword ptr [rip + 0x63862a9], rcx
+  0x140e92d07  ret                           <-- ret
+  0x140e92d08  int3                          <-- padding
+  0x140e92d09  int3                          <-- padding
+  0x140e92d0a  int3                          <-- padding
+  0x140e92d0b  int3                          <-- padding
+  0x140e92d0c  int3                          <-- padding
+  0x140e92d0d  int3                          <-- padding
+  0x140e92d0e  int3                          <-- padding
+  0x140e92d0f  int3                          <-- padding
+  0x140e92d10  mov                        qword ptr [rip + 0x6385291], rcx
+  0x140e92d17  ret                           <-- ret
+  0x140e92d18  int3                          <-- padding
+  0x140e92d19  int3                          <-- padding
+  0x140e92d1a  int3                          <-- padding
+  0x140e92d1b  int3                          <-- padding
+  0x140e92d1c  int3                          <-- padding
+  0x140e92d1d  int3                          <-- padding
+  0x140e92d1e  int3                          <-- padding
+  0x140e92d1f  int3                          <-- padding
+  0x140e92d20  mov                        qword ptr [rip + 0x6386291], rcx
+  0x140e92d27  ret                           <-- ret
+  0x140e92d28  int3                          <-- padding
+  0x140e92d29  int3                          <-- padding
+  0x140e92d2a  int3                          <-- padding
+  0x140e92d2b  int3                          <-- padding
+  0x140e92d2c  int3                          <-- padding
+  0x140e92d2d  int3                          <-- padding
+  0x140e92d2e  int3                          <-- padding
+  0x140e92d2f  int3                          <-- padding
+  0x140e92d30  mov                        qword ptr [rsp + 8], rbx
+  0x140e92d35  push                       rdi
+  0x140e92d36  sub                        rsp, 0x20
+  0x140e92d3a  mov                        edi, edx
+  0x140e92d3c  mov                        ebx, ecx
+  0x140e92d3e  call                       0x140e927e0
+  0x140e92d43  mov                        dword ptr [rax + 4], ebx
+  0x140e92d46  mov                        rbx, qword ptr [rsp + 0x30]
+  0x140e92d4b  mov                        dword ptr [rax + 8], edi
+  0x140e92d4e  add                        rsp, 0x20
+  0x140e92d52  pop                        rdi
+  0x140e92d53  ret                           <-- ret
+  0x140e92d54  int3                          <-- padding
+  0x140e92d55  int3                          <-- padding
+  0x140e92d56  int3                          <-- padding
+  0x140e92d57  int3                          <-- padding
+  0x140e92d58  int3                          <-- padding
+  0x140e92d59  int3                          <-- padding
+  0x140e92d5a  int3                          <-- padding
+  0x140e92d5b  int3                          <-- padding
+  0x140e92d5c  int3                          <-- padding
+  0x140e92d5d  int3                          <-- padding
+  0x140e92d5e  int3                          <-- padding
+  0x140e92d5f  int3                          <-- padding
+  0x140e92d60  mov                        qword ptr [rsp + 8], rbx
+  0x140e92d65  push                       rdi
+  0x140e92d66  sub                        rsp, 0x20
+  0x140e92d6a  mov                        edi, dword ptr [rip + 0x6386284]
+  0x140e92d70  mov                        ebx, dword ptr [rip + 0x638627a]
+  0x140e92d76  call                       0x140e927e0
+  0x140e92d7b  mov                        dword ptr [rax + 4], ebx
+  0x140e92d7e  mov                        rbx, qword ptr [rsp + 0x30]
+  0x140e92d83  mov                        dword ptr [rax + 8], edi
+  0x140e92d86  add                        rsp, 0x20
+  0x140e92d8a  pop                        rdi
+  0x140e92d8b  ret                           <-- ret
+  0x140e92d8c  int3                          <-- padding
+  0x140e92d8d  int3                          <-- padding
+  0x140e92d8e  int3                          <-- padding
+  0x140e92d8f  int3                          <-- padding
+  0x140e92d90  mov                        qword ptr [rip + 0x6386229], rcx
+  0x140e92d97  ret                           <-- ret
+  0x140e92d98  int3                          <-- padding
+  0x140e92d99  int3                          <-- padding
+  0x140e92d9a  int3                          <-- padding
+  0x140e92d9b  int3                          <-- padding
+  0x140e92d9c  int3                          <-- padding
+  0x140e92d9d  int3                          <-- padding
+  0x140e92d9e  int3                          <-- padding
+  0x140e92d9f  int3                          <-- padding
+  0x140e92da0  mov                        qword ptr [rsp + 0x20], r9
+  0x140e92da5  mov                        qword ptr [rsp + 0x18], r8
+  0x140e92daa  mov                        qword ptr [rsp + 8], rcx
+  0x140e92daf  push                       rbp
+  0x140e92db0  push                       rbx
+  0x140e92db1  push                       rsi
+  0x140e92db2  push                       r14
+  0x140e92db4  lea                        rbp, [rsp - 0x2f58]
+  0x140e92dbc  mov                        eax, 0x3058
+  0x140e92dc1  call                       0x140fc4180
+  0x140e92dc6  sub                        rsp, rax
+  0x140e92dc9  mov                        r14, r8
+  0x140e92dcc  mov                        rbx, rdx
+  0x140e92dcf  mov                        rsi, rcx
+  0x140e92dd2  test                       rcx, rcx
+  0x140e92dd5  je                         0x140e9347e
+  0x140e92ddb  test                       rdx, rdx
+  0x140e92dde  je                         0x140e9347e
+  0x140e92de4  test                       r8, r8
+  0x140e92de7  je                         0x140e9347e
+  0x140e92ded  mov                        r10d, dword ptr [rbp + 0x2fa0]
+  0x140e92df4  mov                        r8d, 0xffdf   <<<<< 锚点常量
+  0x140e92dfa  mov                        qword ptr [rsp + 0x3088], rdi
+  0x140e92e02  movabs                     r11, 0x3ff000100000200   <<<<< 锚点常量
+  0x140e92e0c  mov                        qword ptr [rsp + 0x3050], r12
+  0x140e92e14  mov                        r12, rcx
+  0x140e92e17  mov                        qword ptr [rsp + 0x3048], r13
+  0x140e92e1f  mov                        qword ptr [rsp + 0x3040], r15
+  0x140e92e27  xor                        r15d, r15d
+  0x140e92e2a  mov                        r13d, r15d
+  0x140e92e2d  lea                        ecx, [r15 + 0x25]
+  0x140e92e31  lea                        edx, [rcx + 0x56]
+  0x140e92e34  nop                        dword ptr [rax]
+  0x140e92e38  nop                        dword ptr [rax + rax]
+  0x140e92e40  movzx                      eax, word ptr [rbx]
+  0x140e92e43  mov                        rdi, r15
+  0x140e92e46  cmp                        ax, 0x25
+  0x140e92e4a  jne                        0x140e92fe1
+  0x140e92e50  movzx                      eax, word ptr [rbx + 2]
+  0x140e92e54  add                        rbx, 2
+  0x140e92e58  cmp                        ax, 0x25
+  0x140e92e5c  jne                        0x140e92ef5
+  0x140e92e62  mov                        word ptr [r12], cx
+  0x140e92e67  add                        r12, 2
+  0x140e92e6b  add                        rbx, 2
+  0x140e92e6f  movzx                      eax, word ptr [rbx]
+  0x140e92e72  mov                        word ptr [r12], ax
+  0x140e92e77  add                        r12, 2
+  0x140e92e7b  cmp                        word ptr [rbx], 0
+  0x140e92e7f  je                         0x140e92eb9
+  0x140e92e81  add                        rbx, 2
+  0x140e92e85  mov                        r10d, dword ptr [rbp + 0x2fa0]
+  0x140e92e8c  mov                        rcx, r12
+  0x140e92e8f  mov                        r9, qword ptr [rbp + 0x2f98]
+  0x140e92e96  sub                        rcx, rsi
+  0x140e92e99  sar                        rcx, 1
+  0x140e92e9c  movabs                     r11, 0x3ff000100000200   <<<<< 锚点常量
+  0x140e92ea6  cmp                        rcx, r14
+  0x140e92ea9  mov                        r8d, 0xffdf   <<<<< 锚点常量
+  0x140e92eaf  mov                        ecx, 0x25
+  0x140e92eb4  lea                        edx, [rcx + 0x56]
+  0x140e92eb7  jb                         0x140e92e40
+  0x140e92eb9  mov                        r13, qword ptr [rsp + 0x3048]
+  0x140e92ec1  sub                        r12, rsi
+  0x140e92ec4  mov                        rdi, qword ptr [rsp + 0x3088]
+  0x140e92ecc  sar                        r12, 1
+  0x140e92ecf  mov                        eax, r12d
+  0x140e92ed2  mov                        word ptr [rsi + r14*2 - 2], r15w
+  0x140e92ed8  mov                        r12, qword ptr [rsp + 0x3050]
+  0x140e92ee0  mov                        r15, qword ptr [rsp + 0x3040]
+  0x140e92ee8  add                        rsp, 0x3058
+  0x140e92eef  pop                        r14
+  0x140e92ef1  pop                        rsi
+  0x140e92ef2  pop                        rbx
+  0x140e92ef3  pop                        rbp
+  0x140e92ef4  ret                           <-- ret
+  0x140e92ef5  sub                        ax, 0x53
+  0x140e92ef9  test                       r8w, ax
+  0x140e92efd  jne                        0x140e92e6f
+  0x140e92f03  cmp                        r13d, r10d
+  0x140e92f06  jae                        0x140e92fd9
+  0x140e92f0c  mov                        eax, r13d
+  0x140e92f0f  lea                        rdx, [rsp + 0x40]
+  0x140e92f14  mov                        r8d, 0x1000
+  0x140e92f1a  lea                        rcx, [rax + rax*2]
+  0x140e92f1e  lea                        rcx, [r9 + rcx*8]
+  0x140e92f22  call                       0x140e97ca0
+  0x140e92f27  mov                        rcx, qword ptr [rip + 0x638609a]
+  0x140e92f2e  test                       rcx, rcx
+  0x140e92f31  je                         0x140e92f4e
+  0x140e92f33  mov                        rax, qword ptr [rcx]
+  0x140e92f36  test                       rax, rax
+  0x140e92f39  je                         0x140e92f4e
+  0x140e92f3b  lea                        rcx, [rsp + 0x40]
+  0x140e92f40  call                       rax
+  0x140e92f42  mov                        rdi, rax
+  0x140e92f45  test                       rax, rax
+  0x140e92f48  jne                        0x140e92fd9
+  0x140e92f4e  cmp                        byte ptr [rsp + 0x40], 0x80
+  0x140e92f53  lea                        rcx, [rbp + 0xf40]
+  0x140e92f5a  jne                        0x140e92fbb
+
+======== 2) Subtitle 语义锚点 ========
+参数搬运 45 8B E1 0F 28 F2 44 0F 28 C1       总数=0     []
+div3 magic B8 56 55 55 55                总数=118   ['0x1400f38ca', '0x140160ef7', '0x14020b804', '0x14020c166', '0x140224aaf', '0x140312e80', '0x140397fa4', '0x1403a4917', '0x14040fdc5', '0x14040fde4', '0x140488b22', '0x1404c6b3b', '0x1404d1992', '0x1404d27be']
+div9 magic B8 39 8E E3 39                总数=0     []
+mov eax,0x38e38e39                       总数=30    ['0x14009a936', '0x1401ee894', '0x140294536', '0x1402945ab', '0x140323042', '0x14032d422', '0x1403ed8fe', '0x1403efb1e', '0x140488b44', '0x1404a5a1f', '0x1404fe7df', '0x14051faab', '0x14051fc0c', '0x14052151a']
+xmm6->[r11-x] 41 0F 29 73                总数=316   ['0x1400a8f96', '0x1400b842b', '0x1400c3e72', '0x1400ebaa3', '0x1400f333e', '0x1400fd2d5', '0x140109bd6', '0x14010ef94', '0x14011c937', '0x14011e4bc', '0x140124b46', '0x140125906', '0x140129161', '0x1401345b0']
+xmm8->[r11-x] 45 0F 29 43                总数=248   ['0x1400a8fcc', '0x1400b84d1', '0x1400c3e80', '0x1400dfe79', '0x1400f3348', '0x14010ef9e', '0x14011c975', '0x14011e4c1', '0x140124b4b', '0x140129172', '0x1401360a3', '0x14013b491', '0x14014421c', '0x1401a0fde']
+movaps [rbp-x],xmm6 0F 29 B5             总数=139   ['0x1400cc98e', '0x1400cc9b9', '0x1400ccf6b', '0x1400ccfaa', '0x140190e73', '0x1401f8e9d', '0x140262b8d', '0x140270f75', '0x1402781b6', '0x14027859a', '0x1402a1f43', '0x1402a1f5e', '0x1403e50d3', '0x1404d255b']
+
+======== 3) 『45 8B E1 0F 28 F2 44 0F 28 C1』命中处上下文 ========

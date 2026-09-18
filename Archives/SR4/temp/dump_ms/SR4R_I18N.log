@@ -1,0 +1,46 @@
+[21:16:40.773 T21620] [Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N
+[21:16:40.774 T21620] [DllMain] ATTACH SR4R v1.3
+[21:16:40.774 T11484] ==== SR4R_I18N v1.3: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC + 未知构建自解, L1/L2 双层特征码) ====
+[21:16:40.784 T11484] cfg: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SR4R_I18N.ini loaded (dict_dir=dict origin_dir=origin font_file=SourceHanSansHWSC-VF.ttf charlist=charlist.txt dump=1 early=1 diag=1 sub=1 textdump=2 exe=auto)
+[21:16:40.784 T11484] exe: PE 指纹未命中 -> hook VA 回退表按 Steam 填 (仅供 AOB 失效时兜底)
+[21:16:40.784 T11484] exe: !! NEWBUILD file=sriv.exe TimeDateStamp=5E58CEF8 EntryPoint=00FC44FC SizeOfImage=07E6D000
+[21:16:40.784 T11484] exe: 全局变量将走运行时自解 (fontTab/fontCount 反解 + SRV 反查 D3D 设备), 不再依赖版本表; 若日志出现 'globals: dynamic resolve FAILED' 请上报上面那行原文
+[21:16:40.785 T11484] origin: folder C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\origin not found (GLE=3), ID/HASH_ dict keys will be skipped
+[21:16:40.845 T11484] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\exe_hardcoded.txt bad line: // 
+[21:16:40.864 T11484] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\le_data_supplement.txt bad line: // Format: "English": "Chinese translation";
+[21:16:40.886 T11484] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_001.txt bad line: // Format: "English": "Chinese translation";
+[21:16:40.898 T11484] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_002.txt bad line: // Format: "English": "Chinese translation";
+[21:16:40.913 T11484] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_003.txt bad line: // Format: "English": "Chinese translation";
+[21:16:41.097 T11484] dict: 19 files, 34689 lines, 37647 keys, 0 HASH_ skipped, 29816 cjk, 19 bad, arena 9164/131072 KB
+[21:16:41.108 T11484] charlist: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\charlist.txt merged 282 new chars (total 3296, rankPos 3278, lines 82)
+[21:16:41.110 T11484] dump: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\DumpText.dtxt opened (append)
+[21:16:41.681 T11484] globals: dynamic resolve OK | FontLookup=0x140E0A530 fontTab=0x146CFCDB0 fontCount=0x146CFCDA8
+[21:16:41.817 T11484] hook DRAW_WIDE @0000000140EF6D40 installed (via aob)
+[21:16:41.830 T11484] locate FORMAT: L1 0 hits, L2 0 hits -> 均落空, 回退版本 VA 表
+[21:16:41.830 T11484] hook FORMAT @0000000140CF9A00 (via va): signature mismatch, ABORT (game updated?)
+[21:16:41.975 T11484] hook FONT_LOOKUP @0000000140E0A530 installed (via aob)
+[21:16:42.157 T11484] hook TEXOBJ @0000000140DEAF00 installed (via aob)
+[21:16:42.355 T11484] hook SRV_RESOLVE @00000001411DFE30 installed (via aob)
+[21:16:42.540 T11484] hook LANG_CUR @0000000140E92770 installed (via aob)
+[21:16:42.727 T11484] hook LANG_TXT @0000000140E92750 installed (via aob)
+[21:16:42.747 T11484] locate SUBTITLE: L1 0 hits, L2 0 hits -> 均落空, 回退版本 VA 表
+[21:16:42.747 T11484] hook SUBTITLE @00000001403D18F0 (via va): signature mismatch, ABORT (game updated?)
+[21:16:42.747 T11484] dump: 触发可执行段落盘 (text_dump=2, 2/8 hooks 定位失败 (A=1 B=0 C=1 D=1 E=1 F=1 G=1 J=0))
+[21:16:42.762 T11484] dump: 可执行段已落盘 19389215 字节 -> C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SR4R_dump\SR4R_dump_text.bin (+ .map)
+[21:16:42.763 T11484] SR4R v1.3 active: dict=37647 keys (19 files), hooks A=1 B=0 C=1 D=1 E=1 F=1 G=1 J=0, idling
+[21:16:42.763 T8480] font: charset 3371 chars (dict) + extras
+[21:16:42.799 T8480] font: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SourceHanSansHWSC-VF.ttf (35415760 bytes)
+[21:16:42.800 T8480] font: stbtt ok (numGlyphs=65535)
+[21:16:51.701 T21620] font0: upgrade requested (first CJK text)
+[21:16:51.761 T14472] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[21:16:51.761 T14472] d3d: device/context captured from SRV (version-agnostic path)
+[21:16:51.769 T14472] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[21:16:51.770 T14472] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[21:16:51.799 T14472] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[21:16:56.363 T29396] font1: upgrade requested (first CJK text)
+[21:16:56.499 T29128] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[21:16:56.499 T29128] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[21:16:56.560 T29128] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[21:16:56.565 T29128] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[21:16:56.835 T29128] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+[21:17:12.773 T21160] stats: draw hit=0 miss=0 | format hit=0 miss=0 | wrap=0 | sub hit=0 miss=0 | dumped=0 | fonts=0

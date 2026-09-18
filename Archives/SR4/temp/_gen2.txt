@@ -1,0 +1,12 @@
+﻿le_string/zh: 21 鏂囦欢 / 28592 琛?
+  鍙閿?1280  ->  鏈変腑鏂囧€?1265  ->  涓㈠純(鍚?) 4  ->  鍘婚噸鍚?1256锛堝悓閿鐩?5锛?
+  璺宠繃 HASH_ 妲戒綅鍚?27177锛涜烦杩囦富鏈哄钩鍙拌〃 ['platform_ggp_us.txt', 'platform_nx64_us.txt']
+  en 琛ㄧ己瀵瑰簲椤?12锛堝洖閫€鐢ㄩ敭鍚嶅崰浣嶏級
+  鎵嬪伐鍏滃簳 EXTRA_KEYS 5 鏉?
+  --- [S1] 鍥犺瘧鏂囧惈 % 杞崲绗﹁€屼涪寮?4 鏉?---
+    platform_pc_us.txt       PC_RECORD_MODE_PROGRESS                      specs=['d']  val=瑙嗛淇濆瓨涓細%d%%%% 瀹屾垚
+    platform_pc_us.txt       HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE         specs=['l', 'l']  val=灏?%ls 涓?%ls 浜掓崲
+    platform_pc_us.txt       HUD_PICK_UP_MESSAGE                          specs=['l']  val=鎷惧彇  %ls
+    platform_pc_us.txt       HUD_DROP_ITEM_MESSAGE                        specs=['l']  val=涓㈠純 %ls
+鍐欏嚭 resource\dict\zh\le_string_keys.txt  (1256 鏉?le_string + 5 鏉″厹搴?  鏍￠獙 OK, 0 bad line
+鍐欏嚭 resource\dict\en\le_string_keys.txt  (1256 鏉?le_string + 5 鏉″厹搴?  鏍￠獙 OK, 0 bad line

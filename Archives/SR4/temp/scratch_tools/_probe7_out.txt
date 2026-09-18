@@ -1,0 +1,185 @@
+======== div3/div9 反推入口 = 0x1404889b0 附近反汇编 ========
+   hex: 00 00 48 8B 82 68 52 00 00 0F B7 8C 01 EC 0E 00 00 66 0F 6E C1 0F 5B C0 F3 0F 5E 05 18 4D E0 00 F3 0F 11 43 10 48 83 C4 20 5B C3 CC CC CC CC CC FF 05 6E 76 BC 05 48 8B C1 C6 05 68 76 BC 05 00 48 89 11 C3 CC CC CC CC CC CC CC CC CC CC CC CC 48 83 EC 38 48 C7 44 24 20 FE FF FF FF FF 0D 41 76 BC 05 80 3D 3E 76 BC 05 00 75 20 48 8B 09 E8 4C 23 0D 00 90 48 8B C8 45 33 C9 F3 0F 10 15 15 C1 07 01 0F 57 C9 E8 65 00 00 00 90 48 83 C4 38 C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 83 EC 38 F3 0F 10 05 28 C0 07 01 0F 29 74 24 20 E8 8A AC A0 00 0F 28 F0 E8 22 25 0D 00 83 F8
+   0x140488970  add                      byte ptr [rax], al
+   0x140488972  mov                      rax, qword ptr [rdx + 0x5268]
+   0x140488979  movzx                    ecx, word ptr [rcx + rax + 0xeec]
+   0x140488981  movd                     xmm0, ecx
+   0x140488985  cvtdq2ps                 xmm0, xmm0
+   0x140488988  divss                    xmm0, dword ptr [rip + 0xe04d18]
+   0x140488990  movss                    dword ptr [rbx + 0x10], xmm0
+   0x140488995  add                      rsp, 0x20
+   0x140488999  pop                      rbx
+   0x14048899a  ret                      
+   0x14048899b  int3                     
+   0x14048899c  int3                     
+   0x14048899d  int3                     
+   0x14048899e  int3                     
+   0x14048899f  int3                     
+   0x1404889a0  inc                      dword ptr [rip + 0x5bc766e]
+   0x1404889a6  mov                      rax, rcx
+   0x1404889a9  mov                      byte ptr [rip + 0x5bc7668], 0
+   0x1404889b0  mov                      qword ptr [rcx], rdx
+   0x1404889b3  ret                      
+   0x1404889b4  int3                     
+   0x1404889b5  int3                     
+   0x1404889b6  int3                     
+   0x1404889b7  int3                     
+   0x1404889b8  int3                     
+   0x1404889b9  int3                     
+   0x1404889ba  int3                     
+   0x1404889bb  int3                     
+   0x1404889bc  int3                     
+   0x1404889bd  int3                     
+   0x1404889be  int3                     
+   0x1404889bf  int3                     
+   0x1404889c0  sub                      rsp, 0x38
+   0x1404889c4  mov                      qword ptr [rsp + 0x20], 0xfffffffffffffffe
+   0x1404889cd  dec                      dword ptr [rip + 0x5bc7641]
+   0x1404889d3  cmp                      byte ptr [rip + 0x5bc763e], 0
+   0x1404889da  jne                      0x1404889fc
+   0x1404889dc  mov                      rcx, qword ptr [rcx]
+   0x1404889df  call                     0x14055ad30
+   0x1404889e4  nop                      
+   0x1404889e5  mov                      rcx, rax
+   0x1404889e8  xor                      r9d, r9d
+   0x1404889eb  movss                    xmm2, dword ptr [rip + 0x107c115]
+   0x1404889f3  xorps                    xmm1, xmm1
+   0x1404889f6  call                     0x140488a60
+   0x1404889fb  nop                      
+   0x1404889fc  add                      rsp, 0x38
+   0x140488a00  ret                      
+   0x140488a01  int3                     
+   0x140488a02  int3                     
+   0x140488a03  int3                     
+   0x140488a04  int3                     
+   0x140488a05  int3                     
+   0x140488a06  int3                     
+   0x140488a07  int3                     
+   0x140488a08  int3                     
+   0x140488a09  int3                     
+   0x140488a0a  int3                     
+   0x140488a0b  int3                     
+   0x140488a0c  int3                     
+   0x140488a0d  int3                     
+   0x140488a0e  int3                     
+   0x140488a0f  int3                     
+   0x140488a10  sub                      rsp, 0x38
+   0x140488a14  movss                    xmm0, dword ptr [rip + 0x107c028]
+   0x140488a1c  movaps                   xmmword ptr [rsp + 0x20], xmm6
+   0x140488a21  call                     0x140e936b0
+   0x140488a26  movaps                   xmm6, xmm0
+   0x140488a29  call                     0x14055af50
+   0x140488a2e  cmp                      eax, 0xb
+   0x140488a31  jne                      0x140488a49
+   0x140488a33  movss                    xmm0, dword ptr [rip + 0x107c011]
+   0x140488a3b  movaps                   xmm6, xmmword ptr [rsp + 0x20]
+   0x140488a40  add                      rsp, 0x38
+   0x140488a44  jmp                      0x140e936b0
+   0x140488a49  movaps                   xmm0, xmm6
+   0x140488a4c  movaps                   xmm6, xmmword ptr [rsp + 0x20]
+   0x140488a51  add                      rsp, 0x38
+   0x140488a55  ret                      
+   0x140488a56  int3                     
+   0x140488a57  int3                     
+   0x140488a58  int3                     
+   0x140488a59  int3                     
+   0x140488a5a  int3                     
+   0x140488a5b  int3                     
+   0x140488a5c  int3                     
+   0x140488a5d  int3                     
+   0x140488a5e  int3                     
+   0x140488a5f  int3                     
+   0x140488a60  mov                      rax, rsp   <<< CC启发
+   0x140488a63  push                     rdi
+   0x140488a64  push                     r15
+   0x140488a66  sub                      rsp, 0x298
+   0x140488a6d  movaps                   xmmword ptr [rax - 0x48], xmm7
+   0x140488a71  movaps                   xmmword ptr [rax - 0x58], xmm8
+   0x140488a76  mov                      rax, qword ptr [rip + 0x13aeacb]
+   0x140488a7d  xor                      rax, rsp
+   0x140488a80  mov                      qword ptr [rsp + 0x240], rax
+   0x140488a88  mov                      r15d, r9d
+   0x140488a8b  movaps                   xmm7, xmm2
+
+======== CC CC 启发式给的入口 = 0x140488a60 附近反汇编 ========
+   hex: 20 E8 8A AC A0 00 0F 28 F0 E8 22 25 0D 00 83 F8 0B 75 16 F3 0F 10 05 11 C0 07 01 0F 28 74 24 20 48 83 C4 38 E9 67 AC A0 00 0F 28 C6 0F 28 74 24 20 48 83 C4 38 C3 CC CC CC CC CC CC CC CC CC CC 48 8B C4 57 41 57 48 81 EC 98 02 00 00 0F 29 78 B8 44 0F 29 40 A8 48 8B 05 CB EA 3A 01 48 33 C4 48 89 84 24 40 02 00 00 45 8B F9 0F 28 FA 44 0F 28 C1 48 8B F9 48 85 C9 0F 84 57 02 00 00 C6 05 73 75 BC 05 01 E8 A6 03 00 00 84 C0 0F 84 43 02 00 00 0F 2F 3D 5B BF 07 01 48 89 9C 24 C8 02 00 00 48 89 AC 24 90 02 00 00 48 89 B4 24 88 02 00 00 4C 89 B4 24 80 02 00 00 0F 29 B4 24 70 02 00
+   0x140488a20  and                      al, ch
+   0x140488a22  mov                      ch, byte ptr [rax + riz*4 - 0xfd7f100]
+   0x140488a29  call                     0x14055af50
+   0x140488a2e  cmp                      eax, 0xb
+   0x140488a31  jne                      0x140488a49
+   0x140488a33  movss                    xmm0, dword ptr [rip + 0x107c011]
+   0x140488a3b  movaps                   xmm6, xmmword ptr [rsp + 0x20]
+   0x140488a40  add                      rsp, 0x38
+   0x140488a44  jmp                      0x140e936b0
+   0x140488a49  movaps                   xmm0, xmm6
+   0x140488a4c  movaps                   xmm6, xmmword ptr [rsp + 0x20]
+   0x140488a51  add                      rsp, 0x38
+   0x140488a55  ret                      
+   0x140488a56  int3                     
+   0x140488a57  int3                     
+   0x140488a58  int3                     
+   0x140488a59  int3                     
+   0x140488a5a  int3                     
+   0x140488a5b  int3                     
+   0x140488a5c  int3                     
+   0x140488a5d  int3                     
+   0x140488a5e  int3                     
+   0x140488a5f  int3                     
+   0x140488a60  mov                      rax, rsp   <<< CC启发
+   0x140488a63  push                     rdi
+   0x140488a64  push                     r15
+   0x140488a66  sub                      rsp, 0x298
+   0x140488a6d  movaps                   xmmword ptr [rax - 0x48], xmm7
+   0x140488a71  movaps                   xmmword ptr [rax - 0x58], xmm8
+   0x140488a76  mov                      rax, qword ptr [rip + 0x13aeacb]
+   0x140488a7d  xor                      rax, rsp
+   0x140488a80  mov                      qword ptr [rsp + 0x240], rax
+   0x140488a88  mov                      r15d, r9d
+   0x140488a8b  movaps                   xmm7, xmm2
+   0x140488a8e  movaps                   xmm8, xmm1
+   0x140488a92  mov                      rdi, rcx
+   0x140488a95  test                     rcx, rcx
+   0x140488a98  je                       0x140488cf5
+   0x140488a9e  mov                      byte ptr [rip + 0x5bc7573], 1
+   0x140488aa5  call                     0x140488e50
+   0x140488aaa  test                     al, al
+   0x140488aac  je                       0x140488cf5
+   0x140488ab2  comiss                   xmm7, dword ptr [rip + 0x107bf5b]
+   0x140488ab9  mov                      qword ptr [rsp + 0x2c8], rbx
+   0x140488ac1  mov                      qword ptr [rsp + 0x290], rbp
+   0x140488ac9  mov                      qword ptr [rsp + 0x288], rsi
+   0x140488ad1  mov                      qword ptr [rsp + 0x280], r14
+   0x140488ad9  movaps                   xmmword ptr [rsp + 0x270], xmm6
+   0x140488ae1  ja                       0x140488aee
+   0x140488ae3  mov                      rcx, rdi
+   0x140488ae6  call                     0x140488e70
+   0x140488aeb  movaps                   xmm7, xmm0
+   0x140488aee  test                     r15d, r15d
+   0x140488af1  jne                      0x140488b11
+   0x140488af3  mov                      r15d, dword ptr [rip + 0x13229ba]
+   0x140488afa  mov                      ecx, 0x9b
+   0x140488aff  lea                      eax, [r15 + 1]
+   0x140488b03  cmp                      eax, 0x2711
+   0x140488b08  cmova                    eax, ecx
+   0x140488b0b  mov                      dword ptr [rip + 0x13229a3], eax
+   0x140488b11  call                     0x140e927a0
+   0x140488b16  mov                      ebx, dword ptr [rax]
+   0x140488b18  call                     0x140e92740
+   0x140488b1d  cmp                      eax, 2
+   0x140488b20  jne                      0x140488b32
+   0x140488b22  mov                      eax, 0x55555556
+   0x140488b27  imul                     ebx
+   0x140488b29  mov                      ebx, edx
+   0x140488b2b  shr                      ebx, 0x1f
+   0x140488b2e  add                      ebx, edx
+   0x140488b30  jmp                      0x140488b59
+   0x140488b32  call                     0x140e92740
+   0x140488b37  cmp                      eax, -1
+   0x140488b3a  je                       0x140488b59
+
+======== 初始化标志模式 80 3D .. 00 C6 05 .. 01 全量位置 ========
+   @0x1403fd964   flagA=[rip+0x150da55]  flagB=[rip+0x5be0d6a]
+   @0x14053cbdb   flagA=[rip+0x5d02e8f]  flagB=[rip+0x5d02e87]
+   @0x140634374   flagA=[rip+0x616659b]  flagB=[rip+0x6166595]
+   @0x1406361a0   flagA=[rip+0x6164770]  flagB=[rip+0x6164768]

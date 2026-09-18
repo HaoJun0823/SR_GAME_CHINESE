@@ -1,0 +1,12 @@
+﻿=== resource/le_string 下的子目录 ===
+.qa
+en
+zh
+
+=== resource 顶层 ===
+dict\  
+le_string\  
+
+=== MENU_BACK 在 resource 全目录搜索(前20) ===
+G:\Projects\SR4R_DLL\resource\dict\en\le_string_keys.txt
+G:\Projects\SR4R_DLL\resource\dict\zh\le_string_keys.txt

@@ -1,0 +1,63 @@
+﻿########## A) v1.4 Steam 成功日志 stats 相关 ##########
+[22:32:54.846 T65952] hook DRAW_WIDE @00007FF64E2E36A0 installed (via aob)
+[22:32:54.904 T65952] hook FORMAT @00007FF64E219A00 installed (via aob)
+[22:32:54.959 T65952] hook FONT_LOOKUP @00007FF64E118550 installed (via aob)
+[22:32:55.015 T65952] hook TEXOBJ @00007FF64E09AF30 installed (via aob)
+[22:32:55.074 T65952] hook SRV_RESOLVE @00007FF64E34C9E0 installed (via aob)
+[22:32:55.129 T65952] hook LANG_CUR @00007FF64E211980 installed (via aob)
+[22:32:55.186 T65952] hook LANG_TXT @00007FF64E211960 installed (via aob)
+[22:32:55.251 T65952] hook SUBTITLE @00007FF64D8F18F0 installed (via aob)
+[22:32:55.251 T65952] SR4R v1.4 active: dict=38908 keys (20 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[22:32:55.251 T53604] font: charset 3371 chars (dict) + extras
+[22:32:58.894 T12272] font0: upgrade requested (first CJK text)
+[22:32:58.925 T17224] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[22:32:58.927 T17224] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[22:32:58.927 T17224] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[22:32:58.938 T17224] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[22:33:03.509 T29400] font1: upgrade requested (first CJK text)
+[22:33:03.576 T33260] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[22:33:03.576 T33260] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[22:33:03.591 T33260] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[22:33:03.593 T33260] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[22:33:03.646 T33260] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+
+########## B) v1.6 崩溃日志 stats 相关 ##########
+[22:46:00.480 T56912] hook DRAW_WIDE @00007FF64E2E36A0 installed (via aob)
+[22:46:00.536 T56912] hook FORMAT @00007FF64E219A00 installed (via aob)
+[22:46:00.596 T56912] hook FONT_LOOKUP @00007FF64E118550 installed (via aob)
+[22:46:00.652 T56912] hook TEXOBJ @00007FF64E09AF30 installed (via aob)
+[22:46:00.709 T56912] hook SRV_RESOLVE @00007FF64E34C9E0 installed (via aob)
+[22:46:00.765 T56912] hook LANG_CUR @00007FF64E211980 installed (via aob)
+[22:46:00.822 T56912] hook LANG_TXT @00007FF64E211960 installed (via aob)
+[22:46:00.890 T56912] hook SUBTITLE @00007FF64D8F18F0 installed (via aob)
+[22:46:00.890 T56912] SR4R v1.6 active: dict=38908 keys (20 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[22:46:00.890 T29436] font: charset 3371 chars (dict) + extras
+[22:46:08.199 T31436] font0: upgrade requested (first CJK text)
+
+########## C) 日志中出现的 KEY 是否在词典里 ##########
+  button text gjq                      **MISS (词典无此键)**
+  New Sticker                          **MISS (词典无此键)**
+  OPTION_YES                           **MISS (词典无此键)**
+  CONTROLS_INVERT_AIRCRAFT_PITCH       **MISS (词典无此键)**
+  MENU_DISPLAY_TITLE                   **MISS (词典无此键)**
+  MENU_AUDIO_OVERALL                   **MISS (词典无此键)**
+  DLT_DESC_CASUAL                      **MISS (词典无此键)**
+  HUD_SUPER_LEVEL                      **MISS (词典无此键)**
+  CUTSCENE_REMOTE_SKIPPING             **MISS (词典无此键)**
+  HORDE_MODE_MENU_EXIT                 **MISS (词典无此键)**
+  SYSTEM_PAUSED                        **MISS (词典无此键)**
+  COOP_MENU_FRIENDLY_FIRE              **MISS (词典无此键)**
+  TEXT_LOCALIZED                       **MISS (词典无此键)**
+  PAUSE PAUSE MENU                     **MISS (词典无此键)**
+
+########## D) IDA 数据库 ##########
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv.exe.i64  414.1 MB
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv_epic.exe.i64  412.9 MB
+I:\SteamLibrary\steamapps\common\Saints Row IV\sr_hv_gog.exe.i64  409.6 MB
+
+########## E) Steam exe ##########
+SaintsRowIV.exe                   1093584
+sriv_microsoft.exe               26999296
+sr_hv.exe                        28780032
+sr_hv_epic.exe                   28756992
+sr_hv_gog.exe                    28535808

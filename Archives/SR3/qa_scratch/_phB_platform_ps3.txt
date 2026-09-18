@@ -1,0 +1,49 @@
+BTN_START_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_start][/format]
+DPAD_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_n][/format]
+ANALOG_RS_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_r][/format]
+BTN_RTHUMB_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_r3][/format]
+MULTI_MENU_SYSLINK_SIGN_IN_FULL||You must be signed in to a profile\nto use LAN play.
+SAVELOAD_SAVING_MESSAGE_EXPOSITION||Saving content.\nPlease don't turn off your system.
+BTN_BLACK_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_r1][/format]
+BTN_LTRIGGER_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_l2][/format]
+BTN_WHITE_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_l1][/format]
+SAVELOAD_IMPORT_LOADING||Importing content.\nPlease don't turn off your system.
+BTN_RTRIGGER_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_r2][/format]
+BTN_LTHUMB_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_l3][/format]
+PS3_INVITE_TEXT_CONFIRM||%s has invited you to a game.\nPress {PAUSE_MENU_IMG} to accept.
+BTN_A_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_cross][/format]
+BTN_Y_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_triangle][/format]
+COOP_JOIN_CHEAT||Your co-op partner is using cheats. Any new save games created will have cheats enabled.\nAutosaving has been disabled and you will not be able to earn any more trophies.
+PS3_CACHE_WARNING||Don't turn off the system while caching.\nIf you do, your PS3 may explode.\nThink Vinegar Volcano in an eight grade science fair...
+HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE||SWAP %ls WITH %ls
+PS3_DISC_ERROR||Game disc error.  Check game disc and restart.\nError: 0x%08x
+PS3_BAD_PROFILE||Your User Profile has been corrupted.\nPlease wait while the corrupt files are rewritten.
+MAINMENU_LOGIN_CHANGE_EXPOSITION||A sign-in change has occurred. You have been returned to the title screen.
+MULTI_MENU_SYSLINK||LAN PLAY
+PS3_NO_SPACE_TO_SAVE_NEW_GAME||INSUFFICIENT SPACE ON HDD TO SAVE A NEW GAME
+DPAD_UP_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_u][/format]
+MULTI_LOST_CONNECTION||A network error has occurred.\nReturning to the Main Menu.
+PS3_NO_SPACE_TO_AUTOSAVE||Your HDD is out of space for save games. If you continue without managing your system memory you will be unable to save a new game.
+PS3_INVITE_TEXT||You have been invited to a game.
+PS3_AUTOSAVE_WARNING||Saints Row automatically saves your user profile\nthroughout game play and after saving.\nPlease do not switch off the power\nwhen the HDD access indicator is flashing.
+MAINMENU_NEW_GAME_NO_SPACE_EXPOSITION||The HDD does not have the %dKB of space available needed for a new save.\nIf you continue you will not be allowed to save a new game.\nContinue?
+MAINMENU_SYSLINK||LAN PLAY
+PS3_NO_SPACE_START_ANYWAY||CONTINUE WITHOUT SAVING
+PS3_SAVE_SELECTION_MANAGE_MEMORY||MANAGE SAVE DATA
+PS3_DISK_EJECT||Please reinsert the Saints Row Disc.
+OPT_CONTROL_OVERRIDE_FEEDBACK_TEXT||You must enable the vibration option in the Personal Settings of your profile.
+DPAD_RIGHT_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_r][/format]
+BTN_B_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_circle][/format]
+ANALOG_LS_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_l][/format]
+BTN_X_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_square][/format]
+BTN_BACK_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_btn_select][/format]
+DPAD_LR_TXT||THE D-PAD LEFT & RIGHT
+HUD_PICKUP_UNNAMED_OBJECT||PICK UP
+PS3_FREE_HDD_SPACE||There is not enough available space in the HDD.\nTo create data, at least %d MB more space is required.\nExit the game and obtain the necessary space.
+PS3_NO_SPACE_MANAGE_MEMORY||MANAGE SAVE DATA
+HUD_PICK_UP_MESSAGE||PICK UP  %ls
+TUT_TITLE_PS3_SIXAXIS||[color:yellow]MOTION SENSOR CONTROL
+DPAD_TXT||THE D-PAD
+DPAD_DOWN_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_d][/format]
+DPAD_LEFT_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_l][/format]
+DPAD_LR_IMG||[format][scale:0.9][color:full_bright][image:ui_ctrl_ps3_dpad_lr][/format]

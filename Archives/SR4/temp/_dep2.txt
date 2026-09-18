@@ -1,0 +1,21 @@
+﻿=== artifact ===
+size=737792 md5=91B7BC8F09DC6875BB2C4F724EF0645C mtime=09/17/2026 22:00:17
+=== deployed (steam) ===
+I:\SteamLibrary\steamapps\common\Saints Row IV\scripts\SR4R_I18N.asi
+   size=735232 md5=043D8833D54426CE2B25C0A99F967E35 mtime=09/17/2026 21:30:49
+F:\SaintsRowIV\scripts\SR4R_I18N.asi
+   <not found>
+=== steam scripts dir ===
+1	dict
+9922	charlist.txt
+8714	DumpText.dtxt
+35415760	SourceHanSansHWSC-VF.ttf
+735232	SR4R_I18N.asi
+723968	SR4R_I18N.asi.bak
+726528	SR4R_I18N.asi.bak_20260912
+725504	SR4R_I18N.asi.bak_v1
+729088	SR4R_I18N.asi.bak_v12_20260917_2057
+733696	SR4R_I18N.asi.bak_v13pre_20260917_2110
+733696	SR4R_I18N.asi.bak_v13_20260917_2130
+2078	SR4R_I18N.ini
+4316	SR4R_I18N.log

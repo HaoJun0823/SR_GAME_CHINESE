@@ -1,0 +1,42 @@
+BTN_START_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-options][/format]
+BTN_LTRIGGER_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox-ctrl-lt][/format]
+BTN_RTRIGGER_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox-ctrl-rt][/format]
+ANALOG_LS_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-stick_l][/format]
+ANALOG_RS_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-stick_r][/format]
+BTN_RTHUMB_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-stick_r][/format]
+MULTI_MENU_SYSLINK_SIGN_IN_FULL||You must be signed in to a gamer profile\nto use System Link.
+SAVELOAD_SAVING_MESSAGE_EXPOSITION||Saving content. Please don't turn off your console. 
+BTN_BLACK_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-rb][/format]
+BTN_WHITE_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-lb][/format]
+SAVELOAD_IMPORT_LOADING||Importing content.\nPlease don't turn off your console.
+BTN_LTHUMB_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-stick_l][/format]
+BTN_A_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-a][/format]
+BTN_Y_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-y][/format]
+COOP_JOIN_CHEAT||Your co-op partner is using cheats. Any new save games created will have cheats enabled.\nAutosaving has been disabled and you will not be able to earn any more achievements.
+SAVELOAD_LOADING_MESSAGE_EXPOSITION||Loading content. Please don't turn off your console.
+HUD_REPLACE_BLANK_WITH_BLANK_MESSAGE||SWAP %ls WITH %ls
+MAINMENU_LOGIN_CHANGE_EXPOSITION||A sign-in change has occurred. You have been returned to the title screen.
+MULTI_MENU_SYSLINK||SYSTEM LINK
+MULTI_GAMETYPE_1||SYSTEM LINK
+BTN_LTHUMB_TXT||LEFT STICK
+DPAD_UP_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad-u][/format]
+MULTI_LOST_CONNECTION||Connection to Xbox Live lost.\nReturning to Title Screen.
+PLT_PRESS_START||PRESS [format][scale:2][color:full_bright][image:uhd_ui_xbox_ctrl-a][/format]
+SAVELOAD_SAVE_GAME_DEVICE_FULL_EXPOSITION||There is not enough free space on the default Storage Device\nto complete the Save process.
+MAINMENU_SYSLINK||SYSTEM LINK
+DPAD_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad][/format]
+OPT_CONTROL_OVERRIDE_FEEDBACK_TEXT||You must enable the vibration option in the Personal Settings of your gamer profile.
+DPAD_RIGHT_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad-r][/format]
+BTN_B_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-b][/format]
+BTN_RTHUMB_TXT||RIGHT STICK
+BTN_X_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-x][/format]
+BTN_BACK_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-menu][/format]
+DPAD_LR_TXT||THE D-PAD LEFT & RIGHT
+SAVELOAD_SAVE_DEVICE_UNAVAILABLE_FULL||The Save Process has failed because the default\nStorage Device is no longer available.
+HUD_PICKUP_UNNAMED_OBJECT||PICK UP
+STATS_CORRUPT_BODY||Your stats were damaged and must be reset.\nThis will not affect any Achievements you may have earned.
+CONTROL_R_STICK||RIGHT STICK
+HUD_PICK_UP_MESSAGE||PICK UP %ls
+DPAD_DOWN_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad-d][/format]
+DPAD_LEFT_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad-l][/format]
+DPAD_LR_IMG||[format][scale:1][color:full_bright][image:uhd_ui_xbox_ctrl-dpad-lr][/format]

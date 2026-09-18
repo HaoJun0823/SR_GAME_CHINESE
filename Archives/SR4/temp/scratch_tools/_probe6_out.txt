@@ -1,0 +1,348 @@
+======== A) MS Format(0x140E92DA0) 的调用者 → 校验传播法 ========
+MS 内 call Format 点: ['0x1403c9550', '0x140e9cf59', '0x140ebf19c', '0x140ebf201']
+  调用点 0x1403c9550 -> 函数入口 0x1403c9480
+     入口 hex: 40 55 41 54 41 55 41 56 41 57 48 83 EC 40 48 8D 6C 24 30 48
+     +00 push                   rbp
+     +02 push                   r12
+     +04 push                   r13
+     +06 push                   r14
+     +08 push                   r15
+     +0A sub                    rsp, 0x40
+     +0E lea                    rbp, [rsp + 0x30]
+     +13 mov                    qword ptr [rbp + 0x40], rbx
+     +17 mov                    qword ptr [rbp + 0x48], rsi
+     +1B mov                    qword ptr [rbp + 0x50], rdi
+     +1F mov                    rax, qword ptr [rip + 0x146e0a2]
+     +26 xor                    rax, rbp
+     +29 mov                    qword ptr [rbp + 8], rax
+     +2D mov                    r13, r9
+  调用点 0x140e9cf59 -> 函数入口 0x140e9cbf0
+     入口 hex: 48 8B C4 55 53 56 57 48 8D A8 28 FD FF FF 48 81 EC B8 03 00
+     +00 mov                    rax, rsp
+     +03 push                   rbp
+     +04 push                   rbx
+     +05 push                   rsi
+     +06 push                   rdi
+     +07 lea                    rbp, [rax - 0x2d8]
+     +0E sub                    rsp, 0x3b8
+     +15 mov                    qword ptr [rax + 8], r12
+     +19 mov                    rsi, rcx
+     +1C mov                    qword ptr [rax + 0x18], r14
+     +20 mov                    qword ptr [rax - 0x28], r15
+     +24 call                   0x140f784b0
+     +29 mov                    dword ptr [rbp + 0x2e8], eax
+  调用点 0x140ebf19c -> 函数入口 0x140ebf100
+     入口 hex: 48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 18 55 B8 70 72 00
+     +00 mov                    qword ptr [rsp + 8], rbx
+     +05 mov                    qword ptr [rsp + 0x10], rsi
+     +0A mov                    qword ptr [rsp + 0x18], rdi
+     +0F push                   rbp
+     +10 mov                    eax, 0x7270
+     +15 call                   0x140fc4180
+     +1A sub                    rsp, rax
+     +1D lea                    rbp, [rsp + 0x70]
+     +22 and                    rbp, 0xffffffffffffffc0
+     +26 mov                    rax, qword ptr [rcx]
+     +29 mov                    rbx, rcx
+     +2C call                   qword ptr [rax + 0x40]
+  调用点 0x140ebf201 -> 函数入口 0x140ebf100
+     入口 hex: 48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 18 55 B8 70 72 00
+     +00 mov                    qword ptr [rsp + 8], rbx
+     +05 mov                    qword ptr [rsp + 0x10], rsi
+     +0A mov                    qword ptr [rsp + 0x18], rdi
+     +0F push                   rbp
+     +10 mov                    eax, 0x7270
+     +15 call                   0x140fc4180
+     +1A sub                    rsp, rax
+     +1D lea                    rbp, [rsp + 0x70]
+     +22 and                    rbp, 0xffffffffffffffc0
+     +26 mov                    rax, qword ptr [rcx]
+     +29 mov                    rbx, rcx
+     +2C call                   qword ptr [rax + 0x40]
+
+  -- 这些入口字节在 Steam 里落点 --
+    MS 0x1403c9480 前10字节 40 55 41 54 41 55 41 56 41 57 -> Steam 命中 ['0x140193b00']
+    MS 0x140e9cbf0 前10字节 48 8B C4 55 53 56 57 48 8D A8 -> Steam 命中 ['0x14006b5d0']
+    MS 0x140ebf100 前10字节 48 89 5C 24 08 48 89 74 24 10 -> Steam 命中 ['0x140001900']
+    MS 0x140ebf100 前10字节 48 89 5C 24 08 48 89 74 24 10 -> Steam 命中 ['0x140001900']
+  Steam Format 调用点参考: 0x1402a6290, 0x140cdfa5a, 0x140cdfb45, 0x140cf371a
+
+======== B) Steam SUBTITLE 全量反汇编（0x458 字节） ========
+   +000  mov                      r11, rsp
+   +003  push                     rbp
+   +004  push                     rsi
+   +005  push                     r12
+   +007  lea                      rbp, [r11 - 0x458]
+   +00E  sub                      rsp, 0x540
+   +015  movaps                   xmmword ptr [r11 - 0x48], xmm6
+   +01A  movaps                   xmmword ptr [r11 - 0x68], xmm8
+   +01F  mov                      rax, qword ptr [rip + 0x160d992]
+   +026  xor                      rax, rsp
+   +029  mov                      qword ptr [rbp + 0x3e0], rax
+   +030  mov                      r12d, r9d
+   +033  movaps                   xmm6, xmm2
+   +036  movaps                   xmm8, xmm1
+   +03A  mov                      rsi, rcx
+   +03D  test                     rcx, rcx
+   +040  je                       0x1403d1d19
+   +046  cmp                      byte ptr [rip + 0x1401e07], 0
+   +04D  mov                      byte ptr [rip + 0x5969746], 1
+   +054  je                       0x1403d1d19
+   +05A  comiss                   xmm2, dword ptr [rip + 0x103e033]
+   +061  mov                      qword ptr [r11 + 0x10], rbx
+   +065  mov                      qword ptr [r11 - 0x20], rdi
+   +069  mov                      qword ptr [r11 - 0x28], r13
+   +06D  mov                      qword ptr [r11 - 0x30], r14
+   +071  mov                      qword ptr [r11 - 0x38], r15
+   +075  movaps                   xmmword ptr [r11 - 0x58], xmm7
+   +07A  ja                       0x1403d1a2f
+   +080  mov                      rbx, 0xffffffffffffffff
+   +087  nop                      word ptr [rax + rax]
+   +090  inc                      rbx
+   +093  cmp                      word ptr [rcx + rbx*2], 0
+   +098  jne                      0x1403d1980
+   +09A  dec                      ebx
+   +09C  movsxd                   rdi, ebx
+   +09F  test                     ebx, ebx
+   +0A1  jle                      0x1403d19ab
+   +0A3  movzx                    ecx, byte ptr [rsi + rdi*2]
+   +0A7  call                     qword ptr [rip + 0x102f9f3]
+   +0AD  test                     eax, eax
+   +0AF  je                       0x1403d19ab
+   +0B1  dec                      ebx
+   +0B3  dec                      rdi
+   +0B6  test                     rdi, rdi
+   +0B9  jg                       0x1403d1993
+   +0BB  movsxd                   rdi, ebx
+   +0BE  test                     ebx, ebx
+   +0C0  jle                      0x1403d19ca
+   +0C2  movzx                    ecx, byte ptr [rsi + rdi*2]
+   +0C6  call                     qword ptr [rip + 0x102f9cc]
+   +0CC  test                     eax, eax
+   +0CE  je                       0x1403d19ca
+   +0D0  dec                      ebx
+   +0D2  dec                      rdi
+   +0D5  test                     rdi, rdi
+   +0D8  jg                       0x1403d19b2
+   +0DA  movsxd                   rax, ebx
+   +0DD  movzx                    ecx, word ptr [rsi + rax*2]
+   +0E1  cmp                      cx, 0xa
+   +0E5  jne                      0x1403d19f8
+   +0E7  lea                      eax, [rbx + 1]
+   +0EA  movsxd                   rcx, eax
+   +0ED  lea                      rcx, [rsi + rcx*2]
+   +0F1  call                     qword ptr [rip + 0x102f549]
+   +0F7  movd                     xmm6, eax
+   +0FB  cvtdq2ps                 xmm6, xmm6
+   +0FE  divss                    xmm6, dword ptr [rip + 0x103e0ee]
+   +106  jmp                      0x1403d1a2f
+   +108  cmp                      cx, 0x6e
+   +10C  jne                      0x1403d1a27
+   +10E  cmp                      word ptr [rsi + rax*2 - 2], 0x5c
+   +114  jne                      0x1403d1a27
+   +116  lea                      eax, [rbx + 1]
+   +119  movsxd                   rcx, eax
+   +11C  lea                      rcx, [rsi + rcx*2]
+   +120  call                     qword ptr [rip + 0x102f51a]
+   +126  movd                     xmm6, eax
+   +12A  cvtdq2ps                 xmm6, xmm6
+   +12D  divss                    xmm6, dword ptr [rip + 0x103e0bf]
+   +135  jmp                      0x1403d1a2f
+   +137  movss                    xmm6, dword ptr [rip + 0x103e005]
+   +13F  test                     r12d, r12d
+   +142  jne                      0x1403d1a53
+   +144  mov                      r12d, dword ptr [rip + 0x1401d1d]
+   +14B  mov                      ecx, 0x9b
+   +150  lea                      eax, [r12 + 1]
+   +155  cmp                      eax, 0x2711
+   +15A  cmova                    eax, ecx
+   +15D  mov                      dword ptr [rip + 0x1401d05], eax
+   +163  call                     0x140cf1c50
+   +168  mov                      ebx, dword ptr [rax]
+   +16A  call                     0x140cf17b0
+   +16F  cmp                      eax, 2
+   +172  jne                      0x1403d1a74
+   +174  mov                      eax, 0x55555556
+   +179  imul                     ebx
+   +17B  mov                      ebx, edx
+   +17D  shr                      ebx, 0x1f
+   +180  add                      ebx, edx
+   +182  jmp                      0x1403d1a9b
+   +184  call                     0x140cf17b0
+   +189  cmp                      eax, -1
+   +18C  je                       0x1403d1a9b
+   +18E  call                     0x140cf1c50
+   +193  mov                      ecx, dword ptr [rax + 4]
+   +196  mov                      eax, 0x38e38e39
+   +19B  shl                      ecx, 4
+   +19E  imul                     ecx
+   +1A0  mov                      ebx, edx
+   +1A2  sar                      ebx, 1
+   +1A4  mov                      eax, ebx
+   +1A6  shr                      eax, 0x1f
+   +1A9  add                      ebx, eax
+   +1AB  call                     0x140ad33d0
+   +1B0  test                     al, al
+   +1B2  je                       0x1403d1ab5
+   +1B4  movd                     xmm0, ebx
+   +1B8  cvtdq2ps                 xmm0, xmm0
+   +1BB  mulss                    xmm0, dword ptr [rip + 0x103df11]
+   +1C3  jmp                      0x1403d1adb
+   +1C5  call                     0x140a11e60
+   +1CA  test                     al, al
+   +1CC  je                       0x1403d1ac8
+   +1CE  movss                    xmm1, dword ptr [rip + 0x107090e]
+   +1D6  jmp                      0x1403d1ad0
+   +1D8  movss                    xmm1, dword ptr [rip + 0x103ded8]
+   +1E0  movd                     xmm0, ebx
+   +1E4  cvtdq2ps                 xmm0, xmm0
+   +1E7  mulss                    xmm0, xmm1
+   +1EB  cvttss2si                ebx, xmm0
+   +1EF  movss                    xmm0, dword ptr [rip + 0x103ded5]
+   +1F7  call                     0x140cfbd50
+   +1FC  movaps                   xmm7, xmm0
+   +1FF  call                     0x1404b5960
+   +204  cmp                      eax, 0xb
+   +207  jne                      0x1403d1b09
+   +209  movss                    xmm0, dword ptr [rip + 0x103ded3]
+   +211  call                     0x140cfbd50
+   +216  movaps                   xmm7, xmm0
+   +219  mov                      eax, dword ptr [rip + 0x13e51dd]
+   +21F  lea                      rdx, [rbp - 0x20]
+   +223  movss                    dword ptr [rsp + 0x38], xmm7
+   +229  lea                      rcx, [rbp + 0xe0]
+   +230  mov                      dword ptr [rsp + 0x30], eax
+   +234  mov                      r9d, ebx
+   +237  mov                      byte ptr [rsp + 0x28], 0
+   +23C  mov                      r8, rsi
+   +23F  mov                      dword ptr [rsp + 0x20], 0x40
+   +247  call                     0x140bf8d90
+   +24C  movsxd                   rdi, eax
+   +24F  cmp                      edi, 1
+   +252  jle                      0x1403d1bbe
+   +254  lea                      ebx, [rdi - 1]
+   +257  movsxd                   r15, ebx
+   +25A  movsxd                   rcx, dword ptr [rbp + r15*4 - 0x20]
+   +25F  movzx                    ecx, word ptr [rsi + rcx*2]
+   +263  call                     qword ptr [rip + 0x102f81f]
+   +269  test                     eax, eax
+   +26B  je                       0x1403d1bbe
+   +26D  movsxd                   rax, dword ptr [rbp + r15*4 - 0x20]
+   +272  cmp                      word ptr [rsi + rax*2 - 2], 0xa
+   +278  jne                      0x1403d1b6e
+   +27A  mov                      edi, ebx
+   +27C  jmp                      0x1403d1bbe
+   +27E  mov                      ebx, dword ptr [rbp + r15*4 + 0xe0]
+   +286  test                     ebx, ebx
+   +288  jle                      0x1403d1b9c
+   +28A  nop                      word ptr [rax + rax]
+   +290  mov                      eax, dword ptr [rbp + rdi*4 - 0x24]
+   +294  add                      eax, ebx
+   +296  cdqe                     
+   +298  movzx                    ecx, byte ptr [rsi + rax*2]
+   +29C  call                     qword ptr [rip + 0x102f7f6]
+   +2A2  test                     eax, eax
+   +2A4  je                       0x1403d1b9c
+   +2A6  dec                      ebx
+   +2A8  test                     ebx, ebx
+   +2AA  jg                       0x1403d1b80
+   +2AC  cmp                      ebx, 2
+   +2AF  jle                      0x1403d1bbe
+   +2B1  movsxd                   rax, ebx
+   +2B4  cmp                      word ptr [rsi + rax*2 - 2], 0x5c
+   +2BA  jne                      0x1403d1bbe
+   +2BC  cmp                      word ptr [rsi + rax*2], 0x6e
+   +2C1  jne                      0x1403d1bbe
+   +2C3  lea                      eax, [rbx - 2]
+   +2C6  mov                      dword ptr [rbp + r15*4 + 0xe0], eax
+   +2CE  lea                      r14d, [rdi - 2]
+   +2D2  movsxd                   r15, edi
+   +2D5  mov                      eax, 1
+   +2DA  movaps                   xmm7, xmm6
+   +2DD  cmp                      r14d, eax
+   +2E0  cmovg                    eax, r14d
+   +2E4  xor                      r8d, r8d
+   +2E7  mov                      r13d, r8d
+   +2EA  movd                     xmm0, eax
+   +2EE  cvtdq2ps                 xmm0, xmm0
+   +2F1  divss                    xmm7, xmm0
+   +2F5  test                     edi, edi
+   +2F7  jle                      0x1403d1ce4
+   +2FD  mov                      edi, r8d
+   +300  cmp                      r15, 3
+   +304  jle                      0x1403d1c0e
+   +306  lea                      eax, [r13 + 1]
+   +30A  cmp                      eax, r14d
+   +30D  cmovge                   eax, r14d
+   +311  movd                     xmm0, eax
+   +315  cvtdq2ps                 xmm0, xmm0
+   +318  mulss                    xmm0, xmm7
+   +31C  jmp                      0x1403d1c11
+   +31E  movaps                   xmm0, xmm6
+   +321  movsxd                   rax, dword ptr [rbp + rdi*4 - 0x20]
+   +326  mov                      ecx, dword ptr [rbp + rdi*4 + 0xe0]
+   +32D  movss                    dword ptr [rsp + 0x40], xmm0
+   +333  movss                    dword ptr [rsp + 0x44], xmm8
+   +33A  mov                      qword ptr [rsp + 0x48], 0
+   +343  lea                      r9, [rsi + rax*2]
+   +347  mov                      dword ptr [rsp + 0x60], r8d
+   +34C  lea                      eax, [rcx + 1]
+   +34F  movsxd                   rdx, eax
+   +352  mov                      qword ptr [rsp + 0x64], 1
+   +35B  mov                      qword ptr [rsp + 0x6c], 0
+   +364  mov                      byte ptr [rsp + 0x74], 0
+   +369  mov                      dword ptr [rbp - 0x28], 0xffffffff
+   +370  mov                      dword ptr [rsp + 0x58], r12d
+   +375  mov                      dword ptr [rsp + 0x50], 1
+   +37D  mov                      byte ptr [rsp + 0x5c], 0
+   +382  mov                      dword ptr [rsp + 0x54], 3
+   +38A  test                     ecx, ecx
+   +38C  jns                      0x1403d1c93
+   +38E  mov                      rdx, 0xffffffffffffffff
+   +395  inc                      rdx
+   +398  cmp                      word ptr [r9 + rdx*2], 0
+   +39E  jne                      0x1403d1c85
+   +3A0  inc                      rdx
+   +3A3  mov                      ebx, 0xfe
+   +3A8  lea                      rcx, [rbp + 0x1e0]
+   +3AF  cmp                      rdx, rbx
+   +3B2  cmovb                    rbx, rdx
+   +3B6  mov                      rdx, r9
+   +3B9  mov                      r8, rbx
+   +3BC  call                     qword ptr [rip + 0x102f796]
+   +3C2  xor                      eax, eax
+   +3C4  lea                      r8, [rsp + 0x40]
+   +3C9  xor                      edx, edx
+   +3CB  mov                      word ptr [rbp + rbx*2 + 0x1de], ax
+   +3D3  lea                      rcx, [rbp + 0x1e0]
+   +3DA  call                     0x14046db10
+   +3DF  inc                      r13d
+   +3E2  inc                      rdi
+   +3E5  mov                      r8d, 0
+   +3EB  cmp                      rdi, r15
+   +3EE  jl                       0x1403d1bf0
+   +3F4  movaps                   xmm7, xmmword ptr [rsp + 0x500]
+   +3FC  movaps                   xmm0, xmm6
+   +3FF  mov                      r15, qword ptr [rsp + 0x520]
+   +407  mov                      r14, qword ptr [rsp + 0x528]
+   +40F  mov                      r13, qword ptr [rsp + 0x530]
+   +417  mov                      rdi, qword ptr [rsp + 0x538]
+   +41F  mov                      rbx, qword ptr [rsp + 0x568]
+   +427  jmp                      0x1403d1d1c
+   +429  xorps                    xmm0, xmm0
+   +42C  mov                      rcx, qword ptr [rbp + 0x3e0]
+   +433  xor                      rcx, rsp
+   +436  call                     0x141362ed0
+   +43B  movaps                   xmm6, xmmword ptr [rsp + 0x510]
+   +443  movaps                   xmm8, xmmword ptr [rsp + 0x4f0]
+   +44C  add                      rsp, 0x540
+   +453  pop                      r12
+   +455  pop                      rsi
+   +456  pop                      rbp
+   +457  ret                      
+
+======== C) div3(0x55555556) / div9(0x38e38e39) 共现搜索（MS dump） ========
+div3 位置数=118  div9 位置数=30
+相距 <=0x100 的共现（2 组）:
+   div3@0x140488b24  div9@0x140488b46  Δ=+0x22   所在函数入口≈0x140488a60
+   div3@0x140557f45  div9@0x140557ee9  Δ=-0x5c   所在函数入口≈0x140557dc0

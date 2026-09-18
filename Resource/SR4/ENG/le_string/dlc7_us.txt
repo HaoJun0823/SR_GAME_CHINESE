@@ -1,0 +1,4 @@
+"HASH_EAEE44C8": "New vehicles and outfits are now available at your Gateway Garage and Weapons Cache."
+"cm_suit_digidino": "DIGITAL DINO"
+"HASH_BF78969A": "CHILD'S PLAY PACK"
+"cm_suit_robomonkey": "ROBOCHIMP"

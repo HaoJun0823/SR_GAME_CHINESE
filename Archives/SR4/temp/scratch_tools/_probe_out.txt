@@ -1,0 +1,71 @@
+=========== A) 6 条已知命中 hook：dump 内唯一性 + VA 校验 ===========
+DRAW_WIDE    L1 hits=0   !! exp=0x140ef6d40  []
+FORMAT       L1 hits=0     []
+FORMAT       L2 hits=19389216      wc=0/0  ['0x140001000', '0x140001001', '0x140001002', '0x140001003', '0x140001004', '0x140001005']
+FONT_LOOKUP  L1 hits=0   !! exp=0x140e0a530  []
+TEXOBJ       L1 hits=0   !! exp=0x140deaf00  []
+SRV_RESOLVE  L1 hits=0   !! exp=0x1411dfe30  []
+LANG_CUR     L1 hits=0   !! exp=0x140e92770  []
+LANG_TXT     L1 hits=0   !! exp=0x140e92750  []
+SUBTITLE     L1 hits=0     []
+SUBTITLE     L2 hits=19389216      wc=0/0  ['0x140001000', '0x140001001', '0x140001002', '0x140001003', '0x140001004', '0x140001005']
+
+=========== B) 结构探针（找 prologue 各片段的真实分布） ===========
+Fmt-head 40 55 56 57 41 57 48 8D AC 24     hits=1      ['0x14016fe50']
+Fmt-subrsp-rax 48 2B E0 48 8B 05           hits=61     ['0x140112ca4', '0x1401152c9', '0x14011fd27', '0x1401d3085', '0x1401d4376', '0x1401e3b8c', '0x14028af85', '0x1402fb75a']
+Fmt-xorraxrsp 48 33 C4                     hits=6690   ['0x1400010a0', '0x140001101', '0x140001331', '0x14000168e', '0x1400106f0', '0x140015f39', '0x1400164b9', '0x1400165e9']
+Fmt-call 47 41 57 48 8D AC 24              hits=508    ['0x1400a6657', '0x1400ada25', '0x1400f3906', '0x1400f44fd', '0x140103e36', '0x140112c90', '0x1401152b5', '0x14016fe54']
+lea rbp,[rsp+d32]  48 8D AC 24             hits=928    ['0x140077895', '0x14007d204', '0x140099414', '0x1400a6659', '0x1400ac0ab', '0x1400ada27', '0x1400ca984', '0x1400d2984']
+Sub-head 4C 8B DC 55 56 41 54              hits=5      ['0x14014b8b0', '0x140821cc0', '0x140e294c0', '0x1410a6320', '0x141215da0']
+Sub-lea rbp,[r11] 49 8D AB                 hits=103    ['0x1400677a5', '0x1400a8f88', '0x140109b76', '0x1401118d0', '0x14011e4ae', '0x14013a246', '0x140175e3b', '0x1401a0fcb']
+mov r11,rsp 4C 8B DC                       hits=1159   ['0x1400010f0', '0x140001320', '0x14002d890', '0x14002d9e0', '0x14002da90', '0x14002dbe0', '0x14002dce0', '0x14002ddf0']
+B8+E8 chkstk call B8 ?? ?? ?? ?? E8        hits=1486   ['0x1400014de', '0x14000b131', '0x14000df31', '0x14000dfa1', '0x14000e011', '0x14000e4b1', '0x14000ef61', '0x14000efd1']
+
+=========== C) Steam 参照：Format / Subtitle 入口 ===========
+-- Steam FORMAT @0x140cf9a00
+   hex: 40 55 56 57 41 57 48 8D AC 24 78 D0 FF FF B8 88 30 00 00 E8 48 94 66 00 48 2B E0 48 8B 05 86 58 CE 00 48 33 C4 48 89 85 50 2F 00 00 4C 89 4C 24 20 49 8B F0 4C 89 44 24 48 4C 8B FA 48 89 4C 24 40 48 8B F9 48 85 C9 0F 84 21 07 00 00 48 85 D2 0F 84 18 07 00 00 4D 85 C0 0F 84 0F 07 00 00 44
+    +000  push                           rbp
+    +002  push                           rsi
+    +003  push                           rdi
+    +004  push                           r15
+    +006  lea                            rbp, [rsp - 0x2f88]
+    +00E  mov                            eax, 0x3088
+    +013  call                           0x141362e60
+    +018  sub                            rsp, rax
+    +01B  mov                            rax, qword ptr [rip + 0xce5886]
+    +022  xor                            rax, rsp
+    +025  mov                            qword ptr [rbp + 0x2f50], rax
+    +02C  mov                            qword ptr [rsp + 0x20], r9
+    +031  mov                            rsi, r8
+    +034  mov                            qword ptr [rsp + 0x48], r8
+    +039  mov                            r15, rdx
+    +03C  mov                            qword ptr [rsp + 0x40], rcx
+    +041  mov                            rdi, rcx
+    +044  test                           rcx, rcx
+    +047  je                             0x140cfa16e
+    +04D  test                           rdx, rdx
+    +050  je                             0x140cfa16e
+    +056  test                           r8, r8
+    +059  je                             0x140cfa16e
+-- Steam SUBTITLE @0x1403d18f0
+   hex: 4C 8B DC 55 56 41 54 49 8D AB A8 FB FF FF 48 81 EC 40 05 00 00 41 0F 29 73 B8 45 0F 29 43 98 48 8B 05 92 D9 60 01 48 33 C4 48 89 85 E0 03 00 00 45 8B E1 0F 28 F2 44 0F 28 C1 48 8B F1 48 85 C9 0F 84 E3 03 00 00 80 3D 07 1E 40 01 00 C6 05 46 97 96 05 01 0F 84 CF 03 00 00 0F 2F 15 33 E0 03
+    +000  mov                            r11, rsp
+    +003  push                           rbp
+    +004  push                           rsi
+    +005  push                           r12
+    +007  lea                            rbp, [r11 - 0x458]
+    +00E  sub                            rsp, 0x540
+    +015  movaps                         xmmword ptr [r11 - 0x48], xmm6
+    +01A  movaps                         xmmword ptr [r11 - 0x68], xmm8
+    +01F  mov                            rax, qword ptr [rip + 0x160d992]
+    +026  xor                            rax, rsp
+    +029  mov                            qword ptr [rbp + 0x3e0], rax
+    +030  mov                            r12d, r9d
+    +033  movaps                         xmm6, xmm2
+    +036  movaps                         xmm8, xmm1
+    +03A  mov                            rsi, rcx
+    +03D  test                           rcx, rcx
+    +040  je                             0x1403d1d19
+    +046  cmp                            byte ptr [rip + 0x1401e07], 0
+    +04D  mov                            byte ptr [rip + 0x5969746], 1
+    +054  je                             0x1403d1d19

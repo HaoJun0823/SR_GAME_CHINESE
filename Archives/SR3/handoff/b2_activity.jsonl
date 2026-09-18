@@ -1,0 +1,426 @@
+{"id": 0, "en": "It's a big problem.", "tags": "plain"}
+{"id": 1, "en": "Don't feel bad, they paid for this.", "tags": "plain"}
+{"id": 2, "en": "Your fists are your best weapon.", "tags": "plain"}
+{"id": 3, "en": "Gotta keep on your toes!", "tags": "plain"}
+{"id": 4, "en": "SNATCH", "tags": "plain"}
+{"id": 5, "en": "The quickest way to earn respect is by performing ACTIVITIES. ", "tags": "plain"}
+{"id": 6, "en": "No herbs around here.", "tags": "plain"}
+{"id": 7, "en": "These zombies like to go boom.", "tags": "plain"}
+{"id": 8, "en": "It's an allegory.", "tags": "plain"}
+{"id": 9, "en": "Return to the area!", "tags": "plain"}
+{"id": 10, "en": "This session fee is through the roof.", "tags": "plain"}
+{"id": 11, "en": "You cook the meat before you put it in your mouth.", "tags": "plain"}
+{"id": 12, "en": "A punch to the groin.", "tags": "plain"}
+{"id": 13, "en": "ZOMBIE ISLAND", "tags": "plain"}
+{"id": 14, "en": "The spirit of lucha libre!", "tags": "plain"}
+{"id": 15, "en": "CHOP SHOP LEVEL SELECTION", "tags": "plain"}
+{"id": 16, "en": "Stop the meat-pocalyspe", "tags": "plain"}
+{"id": 17, "en": "What HAPPENED last night.", "tags": "plain"}
+{"id": 18, "en": "Overrun with adorable death.", "tags": "plain"}
+{"id": 19, "en": "This gun has a certain boom to it.", "tags": "plain"}
+{"id": 20, "en": "Learning to aim is a lot harder than learning to drink here.", "tags": "plain"}
+{"id": 21, "en": "Maybe too hot to handle?", "tags": "plain"}
+{"id": 22, "en": "PROTIP: Charging the gun up fully will insta-gib an enemy!", "tags": "plain"}
+{"id": 23, "en": "HITMAN LEVEL SELECTION", "tags": "plain"}
+{"id": 24, "en": "Start carving it up.", "tags": "plain"}
+{"id": 25, "en": "YOU DIED", "tags": "plain"}
+{"id": 26, "en": "SCORE: ", "tags": "plain"}
+{"id": 27, "en": "No one needs this much caffeine.", "tags": "plain"}
+{"id": 28, "en": "DO %ls IN [format][color:red]PROPERTY DAMAGE[/format] BEFORE THE TIME RUNS OUT", "tags": "rich+fmt"}
+{"id": 29, "en": "Activity available.", "tags": "plain"}
+{"id": 30, "en": "The lady's are cutting loose.", "tags": "plain"}
+{"id": 31, "en": "UN-ETHICAL!", "tags": "plain"}
+{"id": 32, "en": "WAVE: ", "tags": "plain"}
+{"id": 33, "en": "ACTIVITY LEVEL SELECTION", "tags": "plain"}
+{"id": 34, "en": "This is it.  We need you to cause as much mayhem as you possibly can.", "tags": "plain"}
+{"id": 35, "en": "GANG MEMBER", "tags": "plain"}
+{"id": 36, "en": "DOMESTIC CAR BONUS", "tags": "plain"}
+{"id": 37, "en": "THE DRIVER WON'T DELIVER IN THAT!", "tags": "plain"}
+{"id": 38, "en": "Beware the roller hos.", "tags": "plain"}
+{"id": 39, "en": "Big things come in small packages.", "tags": "plain"}
+{"id": 40, "en": "The more you kill, the less drunk you get!", "tags": "plain"}
+{"id": 41, "en": "TRAP KILL", "tags": "plain"}
+{"id": 42, "en": "PROTECTEE DIED! WATCH THE ICON OVER THEIR HEAD TO TRACK THEIR HEALTH", "tags": "plain"}
+{"id": 43, "en": "Who doesn't love those little hotdogs?", "tags": "plain"}
+{"id": 44, "en": "COMBO BREAKER", "tags": "plain"}
+{"id": 45, "en": "COMBO: ", "tags": "plain"}
+{"id": 46, "en": "Collect those cans.", "tags": "plain"}
+{"id": 47, "en": "Energy drinks can kill you.", "tags": "plain"}
+{"id": 48, "en": "Fight the men of mystery.", "tags": "plain"}
+{"id": 49, "en": "You're supposed to punish them.", "tags": "plain"}
+{"id": 50, "en": "Rockets.  Booze.  It's a national pastime.", "tags": "plain"}
+{"id": 51, "en": "You've been recycled.", "tags": "plain"}
+{"id": 52, "en": "STYLISH 1 RIMS", "tags": "plain"}
+{"id": 53, "en": "You should have given them more change...", "tags": "plain"}
+{"id": 54, "en": "COMBO:", "tags": "plain"}
+{"id": 55, "en": "There are no vehicles in your garage for your homie to bring. Bring vehicles back to your crib and park them in the garage to retreive.", "tags": "plain"}
+{"id": 56, "en": "Send 'em to dream land.", "tags": "plain"}
+{"id": 57, "en": "GET BACK TO THE TARGETS!", "tags": "plain"}
+{"id": 58, "en": "Zombies on the run.", "tags": "plain"}
+{"id": 59, "en": "YOUR PARTNER WAS KILLED", "tags": "plain"}
+{"id": 60, "en": "You have earned %d respect and %d cash!", "tags": "fmt"}
+{"id": 61, "en": "You earn no money for killing %ls.", "tags": "fmt"}
+{"id": 62, "en": "Wrong angel of death...", "tags": "plain"}
+{"id": 63, "en": "Push them over the edge.", "tags": "plain"}
+{"id": 64, "en": "YOU RAN OUT OF TIME BEFORE REACHING THE EXIT. YOUR WAGER OF %ls HAS BEEN LOST.", "tags": "fmt"}
+{"id": 65, "en": "COMBO TOTAL: %ls", "tags": "fmt"}
+{"id": 66, "en": "/", "tags": "plain"}
+{"id": 67, "en": "COMPLETED", "tags": "plain"}
+{"id": 68, "en": "Just brutal.", "tags": "plain"}
+{"id": 69, "en": "VEHICLE HIT BONUS", "tags": "plain"}
+{"id": 70, "en": "They aim for your heart.", "tags": "plain"}
+{"id": 71, "en": "PROTECT YOUR [format][color:green]HOMIES[/format]", "tags": "rich"}
+{"id": 72, "en": "COMBO TOTAL", "tags": "plain"}
+{"id": 73, "en": "Fraud Distance Record: %.2f feet", "tags": "plain"}
+{"id": 74, "en": "SUV BONUS", "tags": "plain"}
+{"id": 75, "en": "TEAM BONUS", "tags": "plain"}
+{"id": 76, "en": "Maybe not strong enough.", "tags": "plain"}
+{"id": 77, "en": "Exit unlocked!\\n Continue playing for more cash or head for the exit!", "tags": "nl"}
+{"id": 78, "en": "THE TIGER IS HITTING THE WHEEL", "tags": "plain"}
+{"id": 79, "en": "TANK MAYHEM", "tags": "plain"}
+{"id": 80, "en": "CALM THE TIGER DOWN", "tags": "plain"}
+{"id": 81, "en": "USE COMBOS TO SCORE HIGHER AND REPAIR STATIONS TO STAY ALIVE", "tags": "plain"}
+{"id": 82, "en": "STRONGHOLD COMPLETED", "tags": "plain"}
+{"id": 83, "en": "A SURVIVOR HAS DIED", "tags": "plain"}
+{"id": 84, "en": "When you get bit, there's no turning back.", "tags": "plain"}
+{"id": 85, "en": "Don't try catching them.", "tags": "plain"}
+{"id": 86, "en": "Furry conventions have interesting swag.", "tags": "plain"}
+{"id": 87, "en": "THE MISSION WAS CANCELLED", "tags": "plain"}
+{"id": 88, "en": "HITMAN", "tags": "plain"}
+{"id": 89, "en": "TIGER ESCORT", "tags": "plain"}
+{"id": 90, "en": "Survive the zomb-pocalypse.", "tags": "plain"}
+{"id": 91, "en": "So big, so angry, so undead.", "tags": "plain"}
+{"id": 92, "en": "TRAFFICKING LEVEL SELECTION", "tags": "plain"}
+{"id": 93, "en": "STOP THE [format][color:red]VEHICLE[/format] AND GET THE [format][color:green]CONTACT[/format]", "tags": "rich"}
+{"id": 94, "en": "There's always one queen bee.", "tags": "plain"}
+{"id": 95, "en": "GET THE FUCK OUTTA HERE!", "tags": "plain"}
+{"id": 96, "en": "START INSURANCE FRAUD", "tags": "plain"}
+{"id": 97, "en": "THE [format][color:red]BUYER[/format] LEFT WITHOUT PAYING.  KILL THEM.", "tags": "rich"}
+{"id": 98, "en": "3. 2. 1. Let's jam...", "tags": "plain"}
+{"id": 99, "en": "CYRIL", "tags": "plain"}
+{"id": 100, "en": "YOUR PARTNER WAS BUSTED", "tags": "plain"}
+{"id": 101, "en": "Lights out, dude.", "tags": "plain"}
+{"id": 102, "en": "Go back to the %ls district!", "tags": "fmt"}
+{"id": 103, "en": "Games are art.", "tags": "plain"}
+{"id": 104, "en": "Don't need to be a ho to be a pro.", "tags": "plain"}
+{"id": 105, "en": "ANGEL'S CASINO", "tags": "plain"}
+{"id": 106, "en": "MAYHEM", "tags": "plain"}
+{"id": 107, "en": "GO TO THE FRONT DOOR", "tags": "plain"}
+{"id": 108, "en": "MAKE MY MONSTER GROW!", "tags": "plain"}
+{"id": 109, "en": "Little problems need big solutions.", "tags": "plain"}
+{"id": 110, "en": "START PROFESSOR GENKI'S S.E.R.C.", "tags": "plain"}
+{"id": 111, "en": "FRAUD", "tags": "plain"}
+{"id": 112, "en": "Where's Charlie when you need him.", "tags": "plain"}
+{"id": 113, "en": "Send in the brutes!", "tags": "plain"}
+{"id": 114, "en": "Two men, two grenade launchers, and an army of mini luchadores.", "tags": "plain"}
+{"id": 115, "en": "Too much power to handle.", "tags": "plain"}
+{"id": 116, "en": "The gangs all here.", "tags": "plain"}
+{"id": 117, "en": "Ackbar loves the bitches.", "tags": "plain"}
+{"id": 118, "en": "You let the drink win out.", "tags": "plain"}
+{"id": 119, "en": "The bigger you are, the harder you fall.", "tags": "plain"}
+{"id": 120, "en": "They're tiny and dead: that's half the work right there...", "tags": "plain"}
+{"id": 121, "en": "Start the campfire.", "tags": "plain"}
+{"id": 122, "en": "Strippers incoming!", "tags": "plain"}
+{"id": 123, "en": "What!? On the first wave?", "tags": "plain"}
+{"id": 124, "en": "SELECT LEVEL", "tags": "plain"}
+{"id": 125, "en": "The safeword is \\\"ow\\\".", "tags": "plain"}
+{"id": 126, "en": "Need you're regenerating health? In my day we only had health packs!", "tags": "plain"}
+{"id": 127, "en": "VEHICLE DELIVERED", "tags": "plain"}
+{"id": 128, "en": "Super Ethical Reality Explosions Funtime Go!", "tags": "plain"}
+{"id": 129, "en": "You're bigger, you're tougher, and you're stronger!", "tags": "plain"}
+{"id": 130, "en": "SUPER", "tags": "plain"}
+{"id": 131, "en": "MUSCLE HOOD", "tags": "plain"}
+{"id": 132, "en": "YOUR GARAGE IS FULL", "tags": "plain"}
+{"id": 133, "en": "Rockets are a girl's best friend.", "tags": "plain"}
+{"id": 134, "en": "Don't ask about her weight.", "tags": "plain"}
+{"id": 135, "en": "YOU'VE BEEN CRITICALLY HIT!", "tags": "plain"}
+{"id": 136, "en": "Punching is an art to be mastered.", "tags": "plain"}
+{"id": 137, "en": "ZOMBIES LEFT: ", "tags": "plain"}
+{"id": 138, "en": "YOU'VE PICKED UP A [format][color:red]NEWS HELICOPTER[/format]!", "tags": "rich"}
+{"id": 139, "en": "This really isn't fair.", "tags": "plain"}
+{"id": 140, "en": "Grind them up.", "tags": "plain"}
+{"id": 141, "en": "Now those are some big zombies!", "tags": "plain"}
+{"id": 142, "en": "Did you hear that sound?", "tags": "plain"}
+{"id": 143, "en": "And she got it. Oh did she get it...", "tags": "plain"}
+{"id": 144, "en": "", "tags": "plain"}
+{"id": 145, "en": "LOW-RIDER RIMS", "tags": "plain"}
+{"id": 146, "en": "CARS", "tags": "plain"}
+{"id": 147, "en": "Show Nyte Blayde how it's done.", "tags": "plain"}
+{"id": 148, "en": "OPPONENT CRITICALLY HIT!", "tags": "plain"}
+{"id": 149, "en": "RANSOM: [format][color:orange]%s[/format]", "tags": "rich+fmt"}
+{"id": 150, "en": "YOU FAILED TO PROTECT THE VAN", "tags": "plain"}
+{"id": 151, "en": "Flay 'em.", "tags": "plain"}
+{"id": 152, "en": "YOU RAN OUT OF TIME BEFORE REACHING THE EXIT.", "tags": "plain"}
+{"id": 153, "en": "Do $%ls in property damage before time runs out. If you destroy things in quick succession, you will earn a combo bonus.", "tags": "fmt"}
+{"id": 154, "en": "DRUG DELIVERIES LEFT TO MAKE", "tags": "plain"}
+{"id": 155, "en": "Every time you shoot a beer bottle, take a drink.", "tags": "plain"}
+{"id": 156, "en": "Make Lars proud.", "tags": "plain"}
+{"id": 157, "en": "VIEW CHOP SHOP LIST", "tags": "plain"}
+{"id": 158, "en": "The best way to enjoy meat.", "tags": "plain"}
+{"id": 159, "en": "Need more stamina maybe?", "tags": "plain"}
+{"id": 160, "en": "HEALTHY CLIMAX!", "tags": "plain"}
+{"id": 161, "en": "REPAIR", "tags": "plain"}
+{"id": 162, "en": "YOU HAVE %d SECONDS TO RETURN TO THE [format][color:green]VEHICLE[/format]", "tags": "rich+fmt"}
+{"id": 163, "en": "Kick ass for the Lord.", "tags": "plain"}
+{"id": 164, "en": "Protect the target from enemies as they finish their objectives.", "tags": "plain"}
+{"id": 165, "en": "CIVILIANS", "tags": "plain"}
+{"id": 166, "en": "They can be hard to deal with.", "tags": "plain"}
+{"id": 167, "en": "Bullet in the brain.  It's the only way to be sure.", "tags": "plain"}
+{"id": 168, "en": "Not quick enough on the draw.", "tags": "plain"}
+{"id": 169, "en": "START SNATCH", "tags": "plain"}
+{"id": 170, "en": "THE [format][color:red]BUYER[/format] IS GETTING AWAY", "tags": "rich"}
+{"id": 171, "en": "IT'S A TRAP! RECRUIT THE [format][color:green]CONTACTS[/format] AND GET AWAY.", "tags": "rich"}
+{"id": 172, "en": "We went there.", "tags": "plain"}
+{"id": 173, "en": "No tank for you!", "tags": "plain"}
+{"id": 174, "en": "You have rockets, don't you?", "tags": "plain"}
+{"id": 175, "en": "SEMI TRAILERS", "tags": "plain"}
+{"id": 176, "en": "GO TO THE [format][color:teal]%ls DISTRICT[/format]", "tags": "rich+fmt"}
+{"id": 177, "en": "Start with toes, work up to brains.", "tags": "plain"}
+{"id": 178, "en": "The blowup doll will work wonders at the right angle. ", "tags": "plain"}
+{"id": 179, "en": "You let the cuddly animals win.  Shame on you.", "tags": "plain"}
+{"id": 180, "en": "YOU GOT BUSTED", "tags": "plain"}
+{"id": 181, "en": "Think fast.", "tags": "plain"}
+{"id": 182, "en": "Don't let the cuteness fool you, these guys have rockets!", "tags": "plain"}
+{"id": 183, "en": "START MAYHEM", "tags": "plain"}
+{"id": 184, "en": "REQUIRED MODIFICATIONS:", "tags": "plain"}
+{"id": 185, "en": "Things that don't mix: drinking and rockets.  So let's mix them!", "tags": "plain"}
+{"id": 186, "en": "GET BACK TO YOUR ASSIGNED AREA!", "tags": "plain"}
+{"id": 187, "en": "Certain High Value Targets award more cash when destroyed.", "tags": "plain"}
+{"id": 188, "en": "HOSTAGE FAILED", "tags": "plain"}
+{"id": 189, "en": "Make them go boom, not yourself.", "tags": "plain"}
+{"id": 190, "en": "Fun with power tools.", "tags": "plain"}
+{"id": 191, "en": "He is coming!", "tags": "plain"}
+{"id": 192, "en": "CYRUS", "tags": "plain"}
+{"id": 193, "en": "RESPECT", "tags": "plain"}
+{"id": 194, "en": "Better than a rubber ducky.", "tags": "plain"}
+{"id": 195, "en": "PROFESSOR GENKI'S S.E.R.C.", "tags": "plain"}
+{"id": 196, "en": "Enemies explode at your touch!", "tags": "plain"}
+{"id": 197, "en": "An army of undead... just smaller.", "tags": "plain"}
+{"id": 198, "en": "BOBERT", "tags": "plain"}
+{"id": 199, "en": "Show those drinks you don't need them!", "tags": "plain"}
+{"id": 200, "en": "RACING EXHAUST", "tags": "plain"}
+{"id": 201, "en": "Earn some respect now by trying the Snatch Activity.", "tags": "plain"}
+{"id": 202, "en": "YOU ABANDONED THE VEHICLE", "tags": "plain"}
+{"id": 203, "en": "FAVORITE WEAPON", "tags": "plain"}
+{"id": 204, "en": "Cause as much mayhem as you possibly can.", "tags": "plain"}
+{"id": 205, "en": "He's larger than life.", "tags": "plain"}
+{"id": 206, "en": "Shoot for the groin!", "tags": "plain"}
+{"id": 207, "en": "\\\"Aim for the head\\\" wasn't just a suggestion.", "tags": "plain"}
+{"id": 208, "en": "Mmmmm... brains.", "tags": "plain"}
+{"id": 209, "en": "Rise up champion! Grasp your blade tighter and continue to purge this evil!", "tags": "plain"}
+{"id": 210, "en": "Don't be shy, start hitting those family jewels.", "tags": "plain"}
+{"id": 211, "en": "Good job. Go back and get your payment.", "tags": "plain"}
+{"id": 212, "en": "BONUS CASH:", "tags": "plain"}
+{"id": 213, "en": "YOU RAN OUT OF TIME", "tags": "plain"}
+{"id": 214, "en": "SHOTGUN", "tags": "plain"}
+{"id": 215, "en": "Too much blood in your alcohol-stream.", "tags": "plain"}
+{"id": 216, "en": "YOU FAILED TO REACH THE GOAL SCORE.", "tags": "plain"}
+{"id": 217, "en": "DEALS DONE", "tags": "plain"}
+{"id": 218, "en": "The ultimate embarrassment.", "tags": "plain"}
+{"id": 219, "en": "Was that sword too big to handle?", "tags": "plain"}
+{"id": 220, "en": "GUARDIAN ANGEL", "tags": "plain"}
+{"id": 221, "en": "RACING CONVERTIBLE ROOF", "tags": "plain"}
+{"id": 222, "en": "JETSKIS", "tags": "plain"}
+{"id": 223, "en": "Somewhere a mall cop is weeping...", "tags": "plain"}
+{"id": 224, "en": "HOS: %i", "tags": "plain"}
+{"id": 225, "en": "START ZOMBIE", "tags": "plain"}
+{"id": 226, "en": "Zombies 2.0: Bigger, stronger, and more combustible. ", "tags": "plain"}
+{"id": 227, "en": "LEVEL 2", "tags": "plain"}
+{"id": 228, "en": "Well we did warn you.", "tags": "plain"}
+{"id": 229, "en": "Repair Nodes marked on the map repair the tank.", "tags": "plain"}
+{"id": 230, "en": "Gain points by burning pedestrians and vehicles.", "tags": "plain"}
+{"id": 231, "en": "CLOCKWISE", "tags": "plain"}
+{"id": 232, "en": "ACTIVITY NOT AVAILABLE", "tags": "plain"}
+{"id": 233, "en": "Push them before they push you.", "tags": "plain"}
+{"id": 234, "en": "Head back to the marked location.", "tags": "plain"}
+{"id": 235, "en": "You need to delete a vehicle from the garage to use customization.", "tags": "plain"}
+{"id": 236, "en": "Steelport has a problem with illegal aliens.", "tags": "plain"}
+{"id": 237, "en": "No, I DON'T want a picture.", "tags": "plain"}
+{"id": 238, "en": "Swing and a miss!", "tags": "plain"}
+{"id": 239, "en": "HOSTAGE COMPLETED", "tags": "plain"}
+{"id": 240, "en": "THE HOSTAGES ESCAPED", "tags": "plain"}
+{"id": 241, "en": "GET CLOSER TO THE [format][color:green]CONTACTS[/format]", "tags": "rich"}
+{"id": 242, "en": "CAUSE $%d DAMAGE BEFORE TIME RUNS OUT", "tags": "fmt"}
+{"id": 243, "en": "{ACTION_IMG} UNCUFF THE DEALER", "tags": "plain"}
+{"id": 244, "en": "NEWS VANS TO DESTROY", "tags": "plain"}
+{"id": 245, "en": "No question.", "tags": "plain"}
+{"id": 246, "en": "GET INTO THE HELICOPTER TO FOLLOW YOUR HOMIES", "tags": "plain"}
+{"id": 247, "en": "TO OPEN CHOP SHOP", "tags": "plain"}
+{"id": 248, "en": "Get $1,000 by destroying targets, killing enemies, and exiting the arena before time runs out. If you destroy things in quick succession, you will earn a combo bonus.", "tags": "plain"}
+{"id": 249, "en": "You have %d seconds to revive a survivor!", "tags": "fmt"}
+{"id": 250, "en": "It's a skill.", "tags": "plain"}
+{"id": 251, "en": "Flame broiled deliciousness.", "tags": "plain"}
+{"id": 252, "en": "MOTORCYCLES", "tags": "plain"}
+{"id": 253, "en": "GET BACK IN THE CAR", "tags": "plain"}
+{"id": 254, "en": "YOU KILLED THE HELPER", "tags": "plain"}
+{"id": 255, "en": "See?  Our game has a positive message.", "tags": "plain"}
+{"id": 256, "en": "Question Marks Incoming!", "tags": "plain"}
+{"id": 257, "en": "This tank's for you.", "tags": "plain"}
+{"id": 258, "en": "One. More. Wave. Let's do this!", "tags": "plain"}
+{"id": 259, "en": "You have been disconnected from the other player and must exit Whored Mode. You will be returned to the main menu.", "tags": "plain"}
+{"id": 260, "en": "TRAIL BLAZING", "tags": "plain"}
+{"id": 261, "en": "TRAILERS", "tags": "plain"}
+{"id": 262, "en": "Roller derby will never be the same.", "tags": "plain"}
+{"id": 263, "en": "PROTIP: Keep away from exploding zombies. Use them as bombs. ", "tags": "plain"}
+{"id": 264, "en": "ZIMOS", "tags": "plain"}
+{"id": 265, "en": "YOU PASSED OUT", "tags": "plain"}
+{"id": 266, "en": "Starting a new game will reset progress on this map. Continue?", "tags": "plain"}
+{"id": 267, "en": "The fury of a furry.", "tags": "plain"}
+{"id": 268, "en": "PENALTY", "tags": "plain"}
+{"id": 269, "en": "I guess the saying IS true...", "tags": "plain"}
+{"id": 270, "en": "Redhots, get your redhots!", "tags": "plain"}
+{"id": 271, "en": "It can happen to anybody.", "tags": "plain"}
+{"id": 272, "en": "It's good to be a top.", "tags": "plain"}
+{"id": 273, "en": "OBJECTS DESTROYED", "tags": "plain"}
+{"id": 274, "en": "BIG TRUCK BONUS", "tags": "plain"}
+{"id": 275, "en": "Fist of Furries", "tags": "plain"}
+{"id": 276, "en": "Flame brute coming in hot!", "tags": "plain"}
+{"id": 277, "en": "With your holy weapons, you cleanse this world of the undead plague!", "tags": "plain"}
+{"id": 278, "en": "We're toying with you.", "tags": "plain"}
+{"id": 279, "en": "Some driving skills required.", "tags": "plain"}
+{"id": 280, "en": "YOU FAILED TO STOP THE ZOMBIE ASSAULT", "tags": "plain"}
+{"id": 281, "en": "Nothing \\\"mini\\\" about it.", "tags": "plain"}
+{"id": 282, "en": "Cleaning up the streets... by making people explode.", "tags": "plain"}
+{"id": 283, "en": "Welcome to Whored Mode!", "tags": "plain"}
+{"id": 284, "en": "BASE VALUE", "tags": "plain"}
+{"id": 285, "en": "The biggest, the cutest, and the deadliest!", "tags": "plain"}
+{"id": 286, "en": "¿Por qué?", "tags": "plain"}
+{"id": 287, "en": "GET CHOP SHOP VEHICLE LIST", "tags": "plain"}
+{"id": 288, "en": "OPEN THE SAFE", "tags": "plain"}
+{"id": 289, "en": "People say size doesn't matter...", "tags": "plain"}
+{"id": 290, "en": "Now the can recycles you.", "tags": "plain"}
+{"id": 291, "en": "We all knew the hobo uprising was coming. ", "tags": "plain"}
+{"id": 292, "en": "Murder Time, Fun Time!", "tags": "plain"}
+{"id": 293, "en": "Mini-gun, mini-cans, big fun!", "tags": "plain"}
+{"id": 294, "en": "MONEY LOCKER", "tags": "plain"}
+{"id": 295, "en": "STOP THE ZOMBIE ASSAULT BY WIPING OUT THE REMAINING ZOMBIES", "tags": "plain"}
+{"id": 296, "en": "Brutella wants some.", "tags": "plain"}
+{"id": 297, "en": "Stay dead.", "tags": "plain"}
+{"id": 298, "en": "You're fighting zombies using a gun with infinite ammo.  You have no sprint or regenerating health.", "tags": "plain"}
+{"id": 299, "en": "Take control of a giant Gat mascot and crush your enemies!", "tags": "plain"}
+{"id": 300, "en": "LEVEL 6", "tags": "plain"}
+{"id": 301, "en": "We're gonna need a bigger boat.", "tags": "plain"}
+{"id": 302, "en": "The rural shooting gallery with a modern twist.", "tags": "plain"}
+{"id": 303, "en": "Your size and damage dealt is lowered!", "tags": "plain"}
+{"id": 304, "en": "ALL DEALS DONE", "tags": "plain"}
+{"id": 305, "en": "(YOU HAVEN'T COMPLETED)", "tags": "plain"}
+{"id": 306, "en": "PUSHBACK", "tags": "plain"}
+{"id": 307, "en": "Sexy and deadly.", "tags": "plain"}
+{"id": 308, "en": "SPORT SPOILER", "tags": "plain"}
+{"id": 309, "en": "COMPACT CAR BONUS", "tags": "plain"}
+{"id": 310, "en": "Knock 'em all down!", "tags": "plain"}
+{"id": 311, "en": "PICKUP TRUCK BONUS", "tags": "plain"}
+{"id": 312, "en": "GET BACK TO THE VAN!", "tags": "plain"}
+{"id": 313, "en": "KEEP {ANALOG_RS_IMG} IN THE HOT SPOT AND USE {ANALOG_LS_IMG} TO TIME YOUR MOTIONS RIGHT", "tags": "plain"}
+{"id": 314, "en": "Deadly things come in small packages.", "tags": "plain"}
+{"id": 315, "en": "CHOP SHOP", "tags": "plain"}
+{"id": 316, "en": "NO VEHICLES", "tags": "plain"}
+{"id": 317, "en": "Tip the mini-strippers with a grenade.", "tags": "plain"}
+{"id": 318, "en": "WEAKSAUCE!!!!", "tags": "plain"}
+{"id": 319, "en": "Earn money by destroying targets, killing enemies, and exiting the arena before time runs out. If you destroy things in quick succession, you will earn a combo bonus.", "tags": "plain"}
+{"id": 320, "en": "LEVEL 8", "tags": "plain"}
+{"id": 321, "en": "RIFLE", "tags": "plain"}
+{"id": 322, "en": "BONUS: KILL %s  (X%d)", "tags": "fmt"}
+{"id": 323, "en": "HELI ASSAULT LEVEL SELECTION", "tags": "plain"}
+{"id": 324, "en": "STRONGHOLD FAILED", "tags": "plain"}
+{"id": 325, "en": "MISSION FAILED", "tags": "plain"}
+{"id": 326, "en": "Fraud Cliff Diver Record: %.2f feet", "tags": "plain"}
+{"id": 327, "en": "HELI ASSAULT", "tags": "plain"}
+{"id": 328, "en": "START HITMAN", "tags": "plain"}
+{"id": 329, "en": "It's about to...", "tags": "plain"}
+{"id": 330, "en": "Strap it on.", "tags": "plain"}
+{"id": 331, "en": "Bring out the gimps!", "tags": "plain"}
+{"id": 332, "en": "You wanna take someone down?  Aim for the junk.", "tags": "plain"}
+{"id": 333, "en": "It's obvious, but it's wave 1...", "tags": "plain"}
+{"id": 334, "en": "Shall we pretend that didn't happen?", "tags": "plain"}
+{"id": 335, "en": "KNIFE", "tags": "plain"}
+{"id": 336, "en": "Good luck!", "tags": "plain"}
+{"id": 337, "en": "COWGIRL", "tags": "plain"}
+{"id": 338, "en": "PLACE BOMB", "tags": "plain"}
+{"id": 339, "en": "COUNTER-CLOCKWISE", "tags": "plain"}
+{"id": 340, "en": "There's a little Saint in all of us.", "tags": "plain"}
+{"id": 341, "en": "Hos know how to defend themselves... with grenades!", "tags": "plain"}
+{"id": 342, "en": "Bigger doesn't always mean better.", "tags": "plain"}
+{"id": 343, "en": "Hit them before they hit you.", "tags": "plain"}
+{"id": 344, "en": "DRIVE THE [format][color:green]DEALER[/format] TO THE [format][color:teal]CLIENTS[/format]", "tags": "rich"}
+{"id": 345, "en": "Time to sober up quick.", "tags": "plain"}
+{"id": 346, "en": "Things just got surreal.", "tags": "plain"}
+{"id": 347, "en": "He's covered wars ya know.", "tags": "plain"}
+{"id": 348, "en": "Clean up this place.", "tags": "plain"}
+{"id": 349, "en": "One shot, one kill.", "tags": "plain"}
+{"id": 350, "en": "TARGET SHOT", "tags": "plain"}
+{"id": 351, "en": "ZOMBIE LEVEL SELECTION", "tags": "plain"}
+{"id": 352, "en": "Always save the last round for yourself.", "tags": "plain"}
+{"id": 353, "en": "Small packages still hurt.", "tags": "plain"}
+{"id": 354, "en": "CASH", "tags": "plain"}
+{"id": 355, "en": "STREET SPOILER", "tags": "plain"}
+{"id": 356, "en": "They are quick and deadly.", "tags": "plain"}
+{"id": 357, "en": "COURAGE", "tags": "plain"}
+{"id": 358, "en": "NONE", "tags": "plain"}
+{"id": 359, "en": "BONUS: USE %s  (X%d)", "tags": "fmt"}
+{"id": 360, "en": "Or you thought you had super strength.", "tags": "plain"}
+{"id": 361, "en": "DAMAGE ", "tags": "plain"}
+{"id": 362, "en": "YOU HAVE TO HIT THE %ls BUTTON %d MORE TIMES IN %d SECONDS", "tags": "fmt"}
+{"id": 363, "en": "If you leave, you'll unleash the zombie assault into the world!", "tags": "plain"}
+{"id": 364, "en": "That's why it's important to tip your stripper; even mini ones.", "tags": "plain"}
+{"id": 365, "en": "Wholesale sized.", "tags": "plain"}
+{"id": 366, "en": "ACTIVITY CANCELED", "tags": "plain"}
+{"id": 367, "en": "YOU RAN OUT OF TIME! USE MORE DAMAGE COMBOS TO SCORE HIGHER", "tags": "plain"}
+{"id": 368, "en": "TEAM HIT BONUS", "tags": "plain"}
+{"id": 369, "en": "Fire it up! Fire it up!", "tags": "plain"}
+{"id": 370, "en": "YOU FAILED TO REACH THE GOAL SCORE. YOUR WAGER OF %ls HAS BEEN LOST.", "tags": "fmt"}
+{"id": 371, "en": "START STRONGHOLD", "tags": "plain"}
+{"id": 372, "en": "CANCELED", "tags": "plain"}
+{"id": 373, "en": "Make Marcellus proud.", "tags": "plain"}
+{"id": 374, "en": "You have to rotate the %ls stick %ls direction %f times in %d seconds.", "tags": "fmt"}
+{"id": 375, "en": "THE [format][color:green]CONTACTS[/format] HAVE BEEN DISCOVERED, GO RESCUE THEM", "tags": "rich"}
+{"id": 376, "en": "Show 'em who's on top of the food chain.", "tags": "plain"}
+{"id": 377, "en": "They're everywhere!", "tags": "plain"}
+{"id": 378, "en": "The hunter becomes the prey.", "tags": "plain"}
+{"id": 379, "en": "Zombies and exploding zombies.  Yes, this could hurt.", "tags": "plain"}
+{"id": 380, "en": "OPEN CHOP SHOP", "tags": "plain"}
+{"id": 381, "en": "OFF ROAD RIMS", "tags": "plain"}
+{"id": 382, "en": "ZOMBIE UPRISING", "tags": "plain"}
+{"id": 383, "en": "%i   ", "tags": "plain"}
+{"id": 384, "en": "Batters up.", "tags": "plain"}
+{"id": 385, "en": "Get $2,000 by destroying targets, killing enemies, and exiting the arena before time runs out. If you destroy things in quick succession, you will earn a combo bonus.", "tags": "plain"}
+{"id": 386, "en": "PROFESSOR GENKI'S SUPER ETHICAL REALITY CLIMAX", "tags": "plain"}
+{"id": 387, "en": "DAEDALUS", "tags": "plain"}
+{"id": 388, "en": "LEVEL 4", "tags": "plain"}
+{"id": 389, "en": "YOU GET A PENALTY FOR USING A %ls", "tags": "fmt"}
+{"id": 390, "en": "YOU GET A BONUS FOR USING A %ls", "tags": "fmt"}
+{"id": 391, "en": "Service continues even after death.", "tags": "plain"}
+{"id": 392, "en": "Professor Genki's Super Ethical Explosion Funtime Go!", "tags": "plain"}
+{"id": 393, "en": "We really mean it.", "tags": "plain"}
+{"id": 394, "en": "COMBO: [format][color:grey]%i[/format]   ", "tags": "rich"}
+{"id": 395, "en": "No perfect score here.", "tags": "plain"}
+{"id": 396, "en": "Aim for the head.", "tags": "plain"}
+{"id": 397, "en": "ZOMBIES KILLED: ", "tags": "plain"}
+{"id": 398, "en": "UNKNOWN", "tags": "plain"}
+{"id": 399, "en": "Small man, huge sword, and lots of blood.", "tags": "plain"}
+{"id": 400, "en": "Would you like to replay this stronghold?", "tags": "plain"}
+{"id": 401, "en": "Race through the checkpoints to convert bonus points into extra time.", "tags": "plain"}
+{"id": 402, "en": "Survive the zombie apocalypse... with no sprint!", "tags": "plain"}
+{"id": 403, "en": "TRAP EVADE", "tags": "plain"}
+{"id": 404, "en": "ANIMAL RAGE", "tags": "plain"}
+{"id": 405, "en": "MISSION COMPLETED", "tags": "plain"}
+{"id": 406, "en": "LOTS", "tags": "plain"}
+{"id": 407, "en": "FRAUD LEVEL SELECTION", "tags": "plain"}
+{"id": 408, "en": "He pulls a dildo, you pull a knife.", "tags": "plain"}
+{"id": 409, "en": "Look out, Kit.", "tags": "plain"}
+{"id": 410, "en": "WAGER %ls FOR THE CHANCE AT %ls!", "tags": "fmt"}
+{"id": 411, "en": "NON CUSTOMIZABLE VEHICLE", "tags": "plain"}
+{"id": 412, "en": "GO TO THE PENTHOUSE", "tags": "plain"}
+{"id": 413, "en": "LEVEL 1", "tags": "plain"}
+{"id": 414, "en": "Start mowing them down.", "tags": "plain"}
+{"id": 415, "en": "STREET HOOD", "tags": "plain"}
+{"id": 416, "en": "TRAFFICKING", "tags": "plain"}
+{"id": 417, "en": "Play Zombie Uprising videogame?", "tags": "plain"}
+{"id": 418, "en": "Chain destruction combos for extra money!", "tags": "plain"}
+{"id": 419, "en": "Silent, but deadly.", "tags": "plain"}
+{"id": 420, "en": "STREET GRILL", "tags": "plain"}
+{"id": 421, "en": "THROWN WEAPON", "tags": "plain"}
+{"id": 422, "en": "When all you have is a hammer, everyone starts looking like hoes.", "tags": "plain"}
+{"id": 423, "en": "All of your weapons are upgraded and enemies explode at your touch!", "tags": "plain"}
+{"id": 424, "en": "GIMPY", "tags": "plain"}
+{"id": 425, "en": "I DON'T GAMBLE. JUST GIVE ME MY %ls.", "tags": "fmt"}

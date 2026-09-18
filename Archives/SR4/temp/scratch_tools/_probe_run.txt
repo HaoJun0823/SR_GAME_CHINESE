@@ -1,0 +1,3 @@
+﻿report -> G:\Projects\SR4R_DLL\Tools\_probe_out.txt
+
+exit=0

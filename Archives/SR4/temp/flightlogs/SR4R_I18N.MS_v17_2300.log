@@ -1,0 +1,62 @@
+[23:00:49.904 T21016] [Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N
+[23:00:49.904 T21016] [DllMain] ATTACH SR4R v1.7
+[23:00:49.905 T13780] ==== SR4R_I18N v1.7: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====
+[23:00:49.906 T13780] cfg: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SR4R_I18N.ini loaded (dict_dir=dict origin_dir=origin font_file=SourceHanSansHWSC-VF.ttf charlist=charlist.txt dump=1 early=1 diag=1 sub=1 textdump=2 exe=auto)
+[23:00:49.906 T13780] exe: MSStore (via PE fingerprint, score=3/3) | file=sriv.exe TimeDateStamp=5E58CEF8 EntryPoint=00FC44FC SizeOfImage=07E6D000
+[23:00:49.906 T13780] origin: folder C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\origin not found (GLE=3), ID/HASH_ dict keys will be skipped
+[23:00:49.908 T13780] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\exe_hardcoded.txt bad line: // 
+[23:00:49.915 T13780] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\le_data_supplement.txt bad line: // Format: "English": "Chinese translation";
+[23:00:49.929 T13780] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_001.txt bad line: // Format: "English": "Chinese translation";
+[23:00:49.933 T13780] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_002.txt bad line: // Format: "English": "Chinese translation";
+[23:00:49.937 T13780] dict: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\dict\voice_003.txt bad line: // Format: "English": "Chinese translation";
+[23:00:49.992 T13780] dict: 20 files, 35963 lines, 38908 keys, 0 HASH_ skipped, 31077 cjk, 19 bad, arena 9375/131072 KB
+[23:00:49.992 T13780] dict-selftest: 8/8 hit -> hash table OK
+[23:00:49.993 T13780] charlist: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\charlist.txt merged 282 new chars (total 3296, rankPos 3278, lines 82)
+[23:00:49.995 T13780] dump: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\DumpText.dtxt opened (append)
+[23:00:50.609 T13780] globals: dynamic resolve OK | FontLookup=0x140E0A530 fontTab=0x146CFCDB0 fontCount=0x146CFCDA8
+[23:00:50.641 T13780] locate FORMAT: L1/L2 落空(0/0 hits) -> L3 换代构建特征码命中 @0x140E92DA0
+[23:00:50.807 T13780] locate SUBTITLE: L1/L2 落空(0/0 hits) -> L3 换代构建特征码命中 @0x140488A60
+[23:00:51.011 T13780] hook DRAW_WIDE @0000000140EF6D40 installed (via aob)
+[23:00:51.162 T13780] hook FORMAT @0000000140E92DA0 installed (via aob-l3)
+[23:00:51.318 T13780] hook FONT_LOOKUP @0000000140E0A530 installed (via aob)
+[23:00:51.478 T13780] hook TEXOBJ @0000000140DEAF00 installed (via aob)
+[23:00:51.619 T13780] hook SRV_RESOLVE @00000001411DFE30 installed (via aob)
+[23:00:51.785 T13780] hook LANG_CUR @0000000140E92770 installed (via aob)
+[23:00:51.949 T13780] hook LANG_TXT @0000000140E92750 installed (via aob)
+[23:00:52.096 T13780] hook SUBTITLE @0000000140488A60 installed (via aob-l3)
+[23:00:52.096 T13780] SR4R v1.7 active: dict=38908 keys (20 files), hooks A=1 B=1 C=1 D=1 E=1 F=1 G=1 J=1, idling
+[23:00:52.097 T32320] font: charset 3371 chars (dict) + extras
+[23:00:52.116 T32320] font: C:\Program Files\WindowsApps\DeepSilver.SaintsRowIVRe-Elected_1.0.11.0_x64__hmv7qcest37me\scripts\SourceHanSansHWSC-VF.ttf (35415760 bytes)
+[23:00:52.116 T32320] font: stbtt ok (numGlyphs=65535)
+[23:00:57.115 T21016] font0: upgrade requested (first CJK text)
+[23:00:57.176 T29776] font0: rasterized 3371 cells (cellW=33 cellH=33 glyphScale=1.00 baseline=26, missGlyph=0, official count=337)
+[23:00:57.176 T29776] d3d: device/context captured from SRV (version-agnostic path)
+[23:00:57.185 T29776] font0: src atlas 512x512 fmt=BC2(73) mips=1 arr=1 RowPitch=2048
+[23:00:57.186 T29776] font0: sample W@(446,37): 00FFFFFF 00FFFFFF 00FFFFFF 00FFFFFF
+[23:00:57.206 T29776] font0: LIVE atlas=512x7970 cells=3371 kept=3371 blob=1535KB
+[23:01:01.761 T22340] wrap: LEARN  pend="button text gjq"
+[23:01:01.761 T22340] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[23:01:01.761 T22340] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="button text gjq" new="TEXT_LOCALIZED"
+[23:01:01.761 T22340] font1: upgrade requested (first CJK text)
+[23:01:01.894 T4892] font1: rasterized 3371 cells (cellW=93 cellH=93 glyphScale=1.00 baseline=75, missGlyph=0, official count=337)
+[23:01:01.894 T4892] font1: atlas widened 1024 -> 8192 (perRow 11 -> 88)
+[23:01:01.961 T4892] font1: src atlas 1024x1024 fmt=BC3(76) mips=9 arr=1 RowPitch=4096
+[23:01:01.967 T4892] font1: sample W@(331,193): 00FFFFFF 00FFFFFF 00000000 00000000
+[23:01:02.236 T4892] font1: LIVE atlas=8192x4744 cells=3371 kept=3371 blob=1535KB
+[23:01:06.781 T21016] wrap: TTL-EXPIRED  pend="New Sticker"
+[23:01:06.784 T21016] wrap: LEARN  pend="button text gjq"
+[23:01:06.784 T21016] wrap: CONCAT-MISS  pre="button text gjq" | suf="!!LEVEL!"
+[23:01:06.784 T21016] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="button text gjq" new="TEXT_LOCALIZED"
+[23:01:10.814 T21016] wrap: CONCAT-MISS  pre="button text" | suf="
+[23:01:12.707 T21016] wrap: TTL-EXPIRED  pend="button text"
+[23:01:15.545 T21016] wrap: LEARN  pend="OPTION_YES"
+[23:01:15.545 T21016] wrap: CONCAT-MISS  pre="OPTION_YES" | suf="
+[23:01:15.545 T21016] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="OPTION_YES" new="CONTROLS_INVERT_AIRCRAFT_PITCH"
+[23:01:18.755 T21016] wrap: CONCAT-MISS  pre="OPTION_YES" | suf="Esc"
+[23:01:19.706 T21016] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="OPTION_YES" new="MENU_DISPLAY_TITLE"
+[23:01:21.915 T21016] wrap: CONCAT-MISS  pre="OPTION_YES" | suf="
+[23:01:22.111 T29628] stats: draw hit=0 miss=0 | format hit=44 miss=641 | wrap=0 | sub hit=0 miss=0 | dumped=84 | fonts=0
+[23:01:27.213 T21016] wrap: CONCAT-MISS  pre="OPTION_YES" | suf="Esc"
+[23:01:28.176 T21016] wrap: REPLACE-pend (新 prefix 顶掉旧段1)  old="OPTION_YES" new="MENU_AUDIO_OVERALL"
+[23:01:30.943 T21016] wrap: CONCAT-MISS  pre="MENU_AUDIO_OVERALL" | suf="Esc"
+[23:01:33.670 T21016] wrap: TTL-EXPIRED  pend="MENU_AUDIO_OVERALL"

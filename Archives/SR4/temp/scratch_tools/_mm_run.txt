@@ -1,0 +1,3 @@
+﻿ok -> G:\Projects\SR4R_DLL\Tools\ms_match_report.txt
+
+exit=0

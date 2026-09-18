@@ -1,0 +1,9 @@
+﻿===== dump_ms 目录 =====
+SR4R_dump_text.bin                           19389215  2026/9/17 21:16:42
+SR4R_dump_text.map                                603  2026/9/17 21:16:42
+SR4R_I18N.log                                    5548  2026/9/17 21:17:12
+
+===== 找 dump 生成工具 =====
+_probe_dumpkeys.py  1918
+
+===== text_dump 配置处理 =====

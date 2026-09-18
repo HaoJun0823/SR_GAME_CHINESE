@@ -1,0 +1,45 @@
+﻿=== git status ===
+ M README.md
+ M SR4R_I18N/dllmain.cpp
+?? Tools/_probe_dumpkeys.py
+?? Tools/_probe_exe_str.py
+?? Tools/_probe_hashname.py
+?? Tools/_probe_keyreport.py
+?? Tools/gen_keydict.py
+?? resource/dict/en/le_string_keys.txt
+?? resource/dict/zh/le_string_keys.txt
+
+=== git log --oneline -15 ===
+b7c1ee0 feat(aob): L3 鎹唬鏋勫缓绮剧‘鐗瑰緛鐮?+ 涓ら樁娈靛畨瑁? 淇 MS Store 鐗?Format/Subtitle 钀界┖
+f647e5c fix(aob): L2 閫氶厤浣嶆敼鐢卞弽姹囩紪鏈烘鎺ㄥ, 琛ラ綈 Format 绗簩涓爤甯?disp32
+ce023af feat(aob): L1/L2 鍙屽眰鐗瑰緛鐮?+ 鍙墽琛屾钀界洏, 淇 MS Store 鐗?Format/Subtitle 钀界┖
+77c5fdf refactor(cleanup): 閲嶇粍鏈湴鍖栬祫婧愪负 resource/{dict,le_string} 骞跺尯鍒?en/zh
+6885c9b refactor(cleanup): 娓呯悊 SR4R 鏈窡韪瀯寤烘福涓庝竴娆℃€ц皟璇曡剼鏈?de3cd33 feat: GOG鐗堝弻鐗堟湰鏀寔 - 杩愯鏃舵娴媠r_hv_gog.exe, 8hook+4鍏ㄥ眬鍙橀噺鍏ㄩ儴瀹氫綅
+738f7f1 fix header.
+e603e3d clean watermark.
+f614562 docs: README 鍏宠仈 SR3R 濮婂椤圭洰 + ASI Loader 娉ㄥ叆鏈哄埗璇存槑 + MinHook 璁稿彲璇?8ba6e0a Merge branch 'master' of https://github.com/HaoJun0823/SR4R_I18N
+881092c docs: 鏂板README+鏇存柊TECH_SPEC杩涘害; chore: 绉婚櫎le_data/.qa缈昏瘧涓棿浜х墿骞秈gnore
+22427f6 Create LICENSE
+d124b30 绉婚櫎Q1璇婃柇鏃ュ織+琛ヨ瘧le_data_supplement 14鏉?淇L4074杞箟寮曞彿
+163211f fix: 鎵归噺淇璇嶅吀杞箟寮曞彿+琛ヨ瘧Q3/Q4娴嬭瘯鏂囨湰+鍒犻櫎origin
+9438c0c fix: HookSubtitle 鏀逛负姝ｇ‘鐨勫瓧骞曞嚱鏁?sub_1403D18F0
+
+=== git diff --stat HEAD ===
+git : warning: in the working copy of 'README.md', LF will be replaced by CRLF 
+the next time Git touches it
+所在位置 行:454 字符: 10
++ $out += (git diff --stat HEAD 2>&1)
++          ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'SR4R_I18N/dllmain.cpp', LF will be replaced by
+ CRLF the next time Git touches it
+ README.md             |  18 +++++
+ SR4R_I18N/dllmain.cpp | 180 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 192 insertions(+), 6 deletions(-)
+
+=== 构建产物时间戳 ===
+G:\Projects\SR4R_DLL\x64\Release\SR4R_I18N.asi  735232  2026/9/17 21:40:19
+G:\Projects\SR4R_DLL\x64\Release\SR4R_I18N.dll  738816  2026/9/17 22:17:44

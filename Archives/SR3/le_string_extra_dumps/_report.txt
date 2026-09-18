@@ -1,0 +1,91 @@
+extra_dumps extraction report (v2, 8B-stride)
+============================================================
+activity: us_full=818 sc_keys=436 extra=383
+customize: us_full=3061 sc_keys=1656 extra=1406
+diversion: us_full=672 sc_keys=370 extra=302
+dlc1: us_full=149 sc_keys=84 extra=65
+dlc2: us_full=216 sc_keys=116 extra=100
+dlc3: us_full=117 sc_keys=66 extra=51
+hud: us_full=1624 sc_keys=872 extra=759
+menu: us_full=967 sc_keys=508 extra=500
+mission: us_full=738 sc_keys=401 extra=337
+multiplayer: us_full=78 sc_keys=48 extra=32
+patch0: us_full=28 sc_keys=19 extra=9
+platform_pc: us_full=543 sc_keys=289 extra=270
+platform_ps3: us_full=132 sc_keys=73 extra=59
+platform_ps4: us_full=146 sc_keys=80 extra=72
+platform_ps5: us_full=146 sc_keys=80 extra=72
+platform_xb1: us_full=110 sc_keys=61 extra=50
+platform_xbox360: us_full=101 sc_keys=57 extra=44
+platform_xbs: us_full=113 sc_keys=62 extra=55
+static: us_full=1089 sc_keys=576 extra=515
+subtitle: us_full=675 sc_keys=369 extra=306
+voice_script: us_full=1 sc_keys=1 extra=0
+
+TOTAL extra rows: 5387, ref rows: 5387
+
+DumpText coverage: 16/78
+  still missing: 'XXXX'
+  still missing: 'TAB'
+  still missing: '{0} {1}%%%'
+  still missing: '°Ê<[d\x02'
+  still missing: '!!LEVEL!'
+  still missing: 'TEXT_LOCALIZED'
+  still missing: 'THIS IS TEXT'
+  still missing: 'This is a block of text that we are using to represent word wrap'
+  still missing: 'TITLE'
+  still missing: '\xa0pH\x8c\x0c\x02'
+  still missing: 'HEADER TEXT'
+  still missing: 'ÀMî\x97\xad\x01'
+  still missing: 'PAUSE PAUSE MENU'
+  still missing: 'button text'
+  still missing: 'LABEL'
+  still missing: 'VALUE 1'
+  still missing: 'VALUE 2'
+  still missing: '100'
+  still missing: 'EMPTY'
+  still missing: 'LOADING 90%%'
+  still missing: 'BUTTON TEXT'
+  still missing: 'New Sticker'
+  still missing: 'LOADING 100%%'
+  still missing: 'ESC'
+  still missing: '!!KILL LUCHADOREAAAAAAASPECIALISTS'
+  still missing: '123456/123456'
+  still missing: '10X'
+  still missing: '!!RESPECT'
+  still missing: '!!DIVERSION_TITLE'
+  still missing: '!!DIVERSION_VALUE'
+  still missing: 'XXXm'
+  still missing: 'This is body text it may go over a certain number of lines'
+  still missing: 'THIS IS THE TITLE. IT MAY GO OVER A CERTAIN NUYMBER OF LINES'
+  still missing: 'YOU ARE RUNNING OUT OF TIME'
+  still missing: '1:03'
+  still missing: 'LONG WEAPON NAME'
+  still missing: '!!NEW MISSION AVAILABLE'
+  still missing: 'SHOP'
+  still missing: 'STICK'
+  still missing: 'A / D'
+  still missing: 'ENTER'
+  still missing: '!!REALLY LONG AMMO TEXT'
+  still missing: '360'
+  still missing: 'SIGNAL'
+  still missing: '+100'
+  still missing: '43%%'
+  still missing: '40%%'
+  still missing: '999'
+  still missing: 'INFO'
+  still missing: 'METER_LABEL'
+  still missing: '1:09'
+  still missing: 'SLOT DESCRIPTION'
+  still missing: 'SLOT DESCRIPTION\\nLEVEL'
+  still missing: '$4,039'
+  still missing: '+2945'
+  still missing: '$12,000'
+  still missing: '0%%'
+  still missing: 'GANG OPERATIONAL 10/20'
+  still missing: 'SCANNING'
+  still missing: 'S.T.A.G TARGETING SYSTEM   v2.67'
+  still missing: 'COMBO ITEM TITLE'
+  still missing: '$3,000'
+
+JP-only keys (in JP, absent in US): 278

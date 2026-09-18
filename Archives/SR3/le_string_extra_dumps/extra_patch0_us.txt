@@ -1,0 +1,11 @@
+// extra_dumps: patch0 - us entries not covered by schinese table
+// format: "KEY": "EN"  (all bucket entries via 8B-stride, hash=crc_volition(KEY))
+"DLC_STORE_PURCHASE_INSTALLED_CONFIRM": "This downloadable content is already installed and accessible. Proceed with purchase?"
+"DLC_STORE_ITEM_SEASON_PASS": "[image:ui_text_star] Season Pass Content"
+"DLC_STORE_SEASON_PASS_PREREQ_CONFIRM": "This downloadable content will not be accessible until the Season Pass is installed. Proceed with download?"
+"UNL_DESC_COMMUNITY_ASSET02": "Volition shirt is now available to wear"
+"UNL_COMMUNITY_ASSET02": "ITEM - VOLITION SHIRT"
+"UNL_COMMUNITY_ASSET01": "ITEM - MEMBER OF THE ROW SHIRT"
+"UNL_DESC_COMMUNITY_ASSET01": "Member of the Row shirt is now available to wear"
+"UNL_COMMUNITY_ASSET03": "ITEM - FLEUR DE SAINTS HOODIE"
+"UNL_DESC_COMMUNITY_ASSET03": "Fleur de Saints hoodie is now available to wear"

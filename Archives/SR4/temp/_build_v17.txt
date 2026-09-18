@@ -1,0 +1,17 @@
+﻿
+
+  pch.cpp
+
+  dllmain.cpp
+
+  libMinHook.lib(hook.obj) : 鎵惧埌 MSIL .netmodule 鎴栦娇鐢?/GL 缂栬瘧鐨勬ā鍧楋紱姝ｅ湪浣跨敤 /LTCG 閲嶆柊鍚姩閾炬帴锛涘皢 /LTCG 娣诲姞鍒伴摼鎺ュ懡浠よ浠ユ敼杩涢摼鎺ュ櫒鎬ц兘
+
+  姝ｅ湪鐢熸垚浠ｇ爜
+
+  宸插畬鎴愪唬鐮佺殑鐢熸垚
+
+  SR4R_I18N.vcxproj -> G:\Projects\SR4R_DLL\SR4R_I18N\x64\Release\SR4R_I18N.dll
+
+
+OK  G:\Projects\SR4R_DLL\SR4R_I18N\x64\Release\SR4R_I18N.dll  (736256 bytes)
+閮ㄧ讲: 澶嶅埗涓?<娓告垙鐩綍>/scripts/SR4R_I18N.asi

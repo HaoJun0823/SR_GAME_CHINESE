@@ -1,0 +1,56 @@
+{"id": 4733, "en": "Your current gamer profile was successfully linked to your THQ ID.", "tags": "plain"}
+{"id": 4734, "en": "The Gamertag you're using is linked to a different THQ ID.", "tags": "plain"}
+{"id": 4735, "en": "The current device is full.\\nPlease select a different device to save.", "tags": "nl"}
+{"id": 4736, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_start][/format]", "tags": "rich"}
+{"id": 4737, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_lt][/format]", "tags": "rich"}
+{"id": 4738, "en": "XBOX LIVE", "tags": "plain"}
+{"id": 4739, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_rt][/format]", "tags": "rich"}
+{"id": 4740, "en": "DAMAGED GAMER PROFILE STATS", "tags": "plain"}
+{"id": 4741, "en": "Upload your first character to earn an achievement.\\n\\nBrowse characters online and play with them in game.\\n\\nParticipate in challenges to earn in-game content.\\n\\nTrack community activity on the real-time community map and view your own personalized map.\\n\\nReceive community-only deals on Saints Row merchandise and game content.", "tags": "nl"}
+{"id": 4742, "en": "You have been disconnected from Xbox LIVE.", "tags": "plain"}
+{"id": 4743, "en": "DISMISS PARTY", "tags": "plain"}
+{"id": 4744, "en": "When the following appears\\ndo not turn off your console or remove your storage device.", "tags": "nl"}
+{"id": 4745, "en": "NOT SIGNED IN", "tags": "plain"}
+{"id": 4746, "en": "The Gamertag you're using is already linked to a THQ ID.", "tags": "plain"}
+{"id": 4747, "en": "Saving Gamer profile. Please do not turn off your console or remove your storage device.", "tags": "plain"}
+{"id": 4748, "en": "SYSTEM LINK LOBBY", "tags": "plain"}
+{"id": 4749, "en": "Loading content. Please don't turn off your console.", "tags": "plain"}
+{"id": 4750, "en": "Quick Match was unable to find any connectable games.", "tags": "plain"}
+{"id": 4751, "en": "LEFT STICK", "tags": "plain"}
+{"id": 4752, "en": "THE A BUTTON", "tags": "plain"}
+{"id": 4753, "en": "Here you can create a new THQ ID or link your gamer profile to an existing one.", "tags": "plain"}
+{"id": 4754, "en": "[format][color:#edc300FF]{0}[/format]\\n{1}Using cheats prevents you from earning achievements and autosaves are disabled. \\n\\nWould you still like to activate this cheat?", "tags": "rich+fmt+nl"}
+{"id": 4755, "en": "VIEW GAMER CARD", "tags": "plain"}
+{"id": 4756, "en": "Saving content.", "tags": "plain"}
+{"id": 4757, "en": "LEFT STICK ACCEL/BRAKE", "tags": "plain"}
+{"id": 4758, "en": "Join the Saints Row Community at SaintsRow.com", "tags": "plain"}
+{"id": 4759, "en": "This gamer profile is unable to play on Xbox LIVE. Please check your Family Settings or obtain an Xbox LIVE Gold Membership.", "tags": "plain"}
+{"id": 4760, "en": "Please do not turn off your console or remove your storage device.", "tags": "plain"}
+{"id": 4761, "en": "SEND XBOX LIVE PARTY INVITE", "tags": "plain"}
+{"id": 4762, "en": "PRESS START", "tags": "plain"}
+{"id": 4763, "en": "This game uses an auto save feature. In order to save, you must be signed into a gamer profile.", "tags": "plain"}
+{"id": 4764, "en": "JOIN XBOX LIVE PARTY GAME", "tags": "plain"}
+{"id": 4765, "en": "You are not currently signed in with a gamer profile.\\nSign in?", "tags": "nl"}
+{"id": 4766, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_dpad_n][/format]", "tags": "rich"}
+{"id": 4767, "en": "CONTROLLER DISCONNECTED", "tags": "plain"}
+{"id": 4768, "en": "VIEW PLAYER GAMER CARD", "tags": "plain"}
+{"id": 4769, "en": "Searching for System Link games...", "tags": "plain"}
+{"id": 4770, "en": "The gamer profile does not have permission to access Member Content. Please check your Family Settings", "tags": "plain"}
+{"id": 4771, "en": "QUICK MATCH", "tags": "plain"}
+{"id": 4772, "en": "We found a THQ ID associated with your Gamertag. Please login to your existing account.", "tags": "plain"}
+{"id": 4773, "en": "DROP %ls", "tags": "fmt"}
+{"id": 4774, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_ls][/format]", "tags": "rich"}
+{"id": 4775, "en": "SYSTEM LINK", "tags": "plain"}
+{"id": 4776, "en": "PICK UP %ls", "tags": "fmt"}
+{"id": 4777, "en": "You must be signed in to Xbox LIVE to use this feature.", "tags": "plain"}
+{"id": 4778, "en": "The Save Process has failed because the default\\nStorage Device is no longer available.", "tags": "nl"}
+{"id": 4779, "en": "Multiple players per console is not supported.", "tags": "plain"}
+{"id": 4780, "en": "RIGHT STICK", "tags": "plain"}
+{"id": 4781, "en": "You will lose all progress if you sign in with a gamer profile.", "tags": "plain"}
+{"id": 4782, "en": "THE D-PAD", "tags": "plain"}
+{"id": 4783, "en": "You must be signed in to Xbox LIVE to use this feature.\\nSign in?", "tags": "nl"}
+{"id": 4784, "en": "DUAL WIELD %ls", "tags": "fmt"}
+{"id": 4785, "en": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_rs][/format]", "tags": "rich"}
+{"id": 4786, "en": "Your co-op partner is using cheats. Any new save games created will have cheats enabled.\\nAutosaving has been disabled and you will not be able to earn any more achievements.", "tags": "nl"}
+{"id": 4787, "en": "Your gamertag is not linked with a THQ ID.", "tags": "plain"}
+{"id": 4788, "en": "You must be signed in with a gamer profile to save your game and earn achievements.\\nWould you like to sign in?", "tags": "nl"}

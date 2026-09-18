@@ -1,0 +1,78 @@
+{"id": 4518, "en": "Your current Online ID was successfully linked to your THQ ID.", "tags": "plain"}
+{"id": 4519, "en": "The PlayStation™Network account you're using is linked to a different THQ ID. ", "tags": "plain"}
+{"id": 4520, "en": "In Main Menu", "tags": "plain"}
+{"id": 4521, "en": "The current device is full.\\nPlease delete content to make space available.", "tags": "nl"}
+{"id": 4522, "en": "You are out of save slots.  In order to save you will need to save over a previous save slot .", "tags": "plain"}
+{"id": 4523, "en": "[format][scale:1][color:full_bright][image:uhd_ui_ps4_ctrl-options][/format]", "tags": "rich"}
+{"id": 4524, "en": "ONLINE", "tags": "plain"}
+{"id": 4525, "en": "You are no longer connected to PlayStation™Network. You will be unable to play co-op online. ", "tags": "plain"}
+{"id": 4526, "en": "This game saves data automatically at certain points.\\nDo not switch power off when the HDD access indicator is flashing.", "tags": "nl"}
+{"id": 4527, "en": "DAMAGED PROFILE STATS", "tags": "plain"}
+{"id": 4528, "en": "Upload your first character to earn a trophy.\\n\\nBrowse characters online and play with them in game.\\n\\nParticipate in challenges to earn in-game content.\\n\\nTrack community activity on the real-time community map and view your own personalized map.\\n\\nReceive community-only deals on Saints Row merchandise and game content.", "tags": "nl"}
+{"id": 4529, "en": "SIGN IN", "tags": "plain"}
+{"id": 4530, "en": "You have been disconnected from Online.", "tags": "plain"}
+{"id": 4531, "en": "Playing %ls,\\nStronghold: %ls", "tags": "fmt+nl"}
+{"id": 4532, "en": "DISMISS PARTY", "tags": "plain"}
+{"id": 4533, "en": "When the following appears\\ndo not turn off your PlayStation®4 system.", "tags": "nl"}
+{"id": 4534, "en": "PLEASE RECONNECT THE DUALSHOCK®4 WIRELESS CONTROLLER AND PRESS {PAUSE_MENU_IMG} TO CONTINUE", "tags": "plain"}
+{"id": 4535, "en": "The PlayStation™Network account you're using is already linked to a THQ ID.", "tags": "plain"}
+{"id": 4536, "en": "Saving Profile. Please do not turn off your system. ", "tags": "plain"}
+{"id": 4537, "en": "Signing In, Please Wait... ", "tags": "plain"}
+{"id": 4538, "en": "LAN PARTY LOBBY", "tags": "plain"}
+{"id": 4539, "en": "Unable to load data by another user.  You must start a new game or load a different saved game.", "tags": "plain"}
+{"id": 4540, "en": "Matchmaking was unable to find any created sessions ", "tags": "plain"}
+{"id": 4541, "en": "LEFT STICK", "tags": "plain"}
+{"id": 4542, "en": "THE A BUTTON", "tags": "plain"}
+{"id": 4543, "en": "Here you can create a new THQ ID or link your Online ID to an existing one.", "tags": "plain"}
+{"id": 4544, "en": "[format][color:#edc300FF]{0}[/format]\\n{1}Using cheats prevents you from earning trophies and autosaves are disabled. \\n\\nWould you still like to activate this cheat?", "tags": "rich+fmt+nl"}
+{"id": 4545, "en": "VIEW PLAYER PROFILE", "tags": "plain"}
+{"id": 4546, "en": "Saving content.", "tags": "plain"}
+{"id": 4547, "en": "LEFT STICK ACCEL/BRAKE", "tags": "plain"}
+{"id": 4548, "en": "Join the Saints Row Community at SaintsRow.com", "tags": "plain"}
+{"id": 4549, "en": "LAN PLAY", "tags": "plain"}
+{"id": 4550, "en": "Playing %ls,\\nActivity: %ls", "tags": "fmt+nl"}
+{"id": 4551, "en": "Online services are disabled on your account for PlayStation™Network due to parental control restrictions.", "tags": "plain"}
+{"id": 4552, "en": "Now The Real Game Begins >:) \\n\\nPress Any Button to Continue", "tags": "nl"}
+{"id": 4553, "en": "Please do not turn off your system.", "tags": "plain"}
+{"id": 4554, "en": "PRESS [format][scale:2][image:uhd_ui_ps4_ctrl-cross][/format]", "tags": "rich"}
+{"id": 4555, "en": "There is not enough free space on the HDD to complete the Save process.", "tags": "plain"}
+{"id": 4556, "en": "This game uses an auto save feature. In order to save, you must be signed into a profile.", "tags": "plain"}
+{"id": 4557, "en": "The system could not sign you in.", "tags": "plain"}
+{"id": 4558, "en": "Playing %ls,\\nWhored Mode", "tags": "fmt+nl"}
+{"id": 4559, "en": "Single Player", "tags": "plain"}
+{"id": 4560, "en": "You need to create co-op game session before your party will be invited ", "tags": "plain"}
+{"id": 4561, "en": "Whored Mode", "tags": "plain"}
+{"id": 4562, "en": "AWESOME BUTTON", "tags": "plain"}
+{"id": 4563, "en": "[format][scale:1][color:full_bright][image:uhd_ui_ps4_ctrl-dpad][/format]", "tags": "rich"}
+{"id": 4564, "en": "Mash any button to escape!", "tags": "plain"}
+{"id": 4565, "en": "CONTROLLER DISCONNECTED", "tags": "plain"}
+{"id": 4566, "en": "SEARCHING FOR LAN PARTY GAMES...", "tags": "plain"}
+{"id": 4567, "en": "You are no longer connected to PlayStation™Network. You will be unable to play co-op online.", "tags": "plain"}
+{"id": 4568, "en": "Unable to access this content due to parental control restrictions on your account", "tags": "plain"}
+{"id": 4569, "en": "This saved game is damaged and may no longer be used.", "tags": "plain"}
+{"id": 4570, "en": "We found a THQ ID associated with your Online ID. Please login to your existing account.", "tags": "plain"}
+{"id": 4571, "en": "Playing %ls,\\nWhored Mode: %ls", "tags": "fmt+nl"}
+{"id": 4572, "en": "DROP %ls", "tags": "fmt"}
+{"id": 4573, "en": "Game is not the latest version, please update the game to play online.", "tags": "plain"}
+{"id": 4574, "en": "LAN", "tags": "plain"}
+{"id": 4575, "en": "PICK UP %ls", "tags": "fmt"}
+{"id": 4576, "en": "{SPRINT_IMG} SPRINT\\nSprinting modifies actions in Awesome ways; try different combinations of buttons with Sprint to find them all!", "tags": "nl"}
+{"id": 4577, "en": "You must be signed in to PlayStation™Network to access this feature. ", "tags": "plain"}
+{"id": 4578, "en": "The Save Process has failed because the default\\nHDD is no longer available.", "tags": "nl"}
+{"id": 4579, "en": "VIBRATION", "tags": "plain"}
+{"id": 4580, "en": "Multiple players per system is not supported.", "tags": "plain"}
+{"id": 4581, "en": "During a HEAVY ATTACK press the displayed button to cause increased damage and earn more respect.", "tags": "plain"}
+{"id": 4582, "en": "CRUISE CONTROL", "tags": "plain"}
+{"id": 4583, "en": "RIGHT STICK", "tags": "plain"}
+{"id": 4584, "en": "Playing %ls", "tags": "fmt"}
+{"id": 4585, "en": "You will lose all progress if you sign in with a profile.", "tags": "plain"}
+{"id": 4586, "en": "Playing %ls,\\nMission: %ls", "tags": "fmt+nl"}
+{"id": 4587, "en": "Co-op", "tags": "plain"}
+{"id": 4588, "en": "You must be signed in to PlayStation™Network to access this feature. Sign in now?", "tags": "plain"}
+{"id": 4589, "en": "DUAL WIELD %ls", "tags": "fmt"}
+{"id": 4590, "en": "Game data is corrupt. Please exit the game and delete this game data.\\nError : 0x%08x", "tags": "nl"}
+{"id": 4591, "en": "[format][scale:1][color:full_bright][image:uhd_ui_ps4_ctrl-stick_r][/format]", "tags": "rich"}
+{"id": 4592, "en": "Your co-op partner is using cheats. Any new save games created will have cheats enabled.\\nAutosaving has been disabled and you will not be able to earn any more trophies.", "tags": "nl"}
+{"id": 4593, "en": "Your PlayStation™Network account is not linked with a THQ ID.", "tags": "plain"}
+{"id": 4594, "en": "You are not currently signed in with a profile.\\nWould you like to sign in?", "tags": "nl"}
+{"id": 4595, "en": "[format][scale:1][color:full_bright][image:uhd_ui_ps4_ctrl-stick_r-d][/format]", "tags": "rich"}

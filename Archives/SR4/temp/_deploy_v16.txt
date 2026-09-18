@@ -1,0 +1,21 @@
+﻿===== 部署后 scripts 关键文件 =====
+SR4R_I18N.asi                                     738816  md5=CD91E8D05288
+SR4R_I18N.asi.bak                                 723968  md5=5D85175D9542
+SR4R_I18N.asi.bak_20260912                        726528  md5=9D41AE48B367
+SR4R_I18N.asi.bak_before_v16_20260917             735232  md5=043D8833D544
+SR4R_I18N.asi.bak_v1                              725504  md5=FDC9E3D6F5EF
+SR4R_I18N.asi.bak_v12_20260917_2057               729088  md5=9A0827046104
+SR4R_I18N.asi.bak_v13_20260917_2130               733696  md5=A1FFADC4CE15
+SR4R_I18N.asi.bak_v13pre_20260917_2110            733696  md5=CCD140BFBB0B
+SR4R_I18N.asi.bak_v14_20260917_2202               735232  md5=043D8833D544
+
+===== 当前生效 asi =====
+size=738816  md5=CD91E8D052886E6054C54C83EDC8C040
+期望  = 738816  CD91E8D052886E6054C54C83EDC8C040
+一致? True
+
+===== 未被触碰的文件(应保持原样) =====
+SR4R_I18N.ini                      2078  mtime=2026/9/17 20:57:46
+charlist.txt                       9922  mtime=2026/9/7 7:33:12
+SourceHanSansHWSC-VF.ttf       35415760  mtime=2025/6/19 3:58:35
+dict 文件数 = 20  (含 le_string_keys.txt? True)

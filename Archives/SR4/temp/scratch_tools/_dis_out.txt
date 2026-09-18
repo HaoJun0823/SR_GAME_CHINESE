@@ -1,0 +1,171 @@
+---- Steam FORMAT @0x140cf9a00 ----
+   hex: 40 55 56 57 41 57 48 8D AC 24 78 D0 FF FF B8 88 30 00 00 E8 48 94 66 00 48 2B E0 48 8B 05 86 58 CE 00 48 33 C4 48 89 85 50 2F 00 00 4C 89 4C 24 20 49 8B F0 4C 89 44 24 48 4C 8B FA 48 89 4C 24 40 48 8B F9 48 85 C9 0F 84 21 07 00 00 48 85 D2 0F 84 18 07 00 00 4D 85 C0 0F 84 0F 07 00 00 44 8B 95 D0 2F 00 00 41 B8 DF FF 00 00 48 89 9C 24 80 30 00 00 49 BB 00 02 00 00 01 00 FF 03 4C 89 A4 24 78 30 00 00 4C 8B E1 4C 89 AC
+   +000  push                       rbp
+   +002  push                       rsi
+   +003  push                       rdi
+   +004  push                       r15
+   +006  lea                        rbp, [rsp - 0x2f88]
+   +00E  mov                        eax, 0x3088
+   +013  call                       0x141362e60
+   +018  sub                        rsp, rax
+   +01B  mov                        rax, qword ptr [rip + 0xce5886]
+   +022  xor                        rax, rsp
+   +025  mov                        qword ptr [rbp + 0x2f50], rax
+   +02C  mov                        qword ptr [rsp + 0x20], r9
+   +031  mov                        rsi, r8
+   +034  mov                        qword ptr [rsp + 0x48], r8
+   +039  mov                        r15, rdx
+   +03C  mov                        qword ptr [rsp + 0x40], rcx
+   +041  mov                        rdi, rcx
+   +044  test                       rcx, rcx
+   +047  je                         0x140cfa16e
+   +04D  test                       rdx, rdx
+   +050  je                         0x140cfa16e
+   +056  test                       r8, r8
+   +059  je                         0x140cfa16e
+   +05F  mov                        r10d, dword ptr [rbp + 0x2fd0]
+   +066  mov                        r8d, 0xffdf
+   +06C  mov                        qword ptr [rsp + 0x3080], rbx
+   +074  movabs                     r11, 0x3ff000100000200
+   +07E  mov                        qword ptr [rsp + 0x3078], r12
+   +086  mov                        r12, rcx
+---- MS  fmt-cand @0x14016fe50 ----
+   hex: 40 55 56 57 41 57 48 8D AC 24 98 FE FF FF 48 81 EC 68 02 00 00 48 8B 05 DC 76 6C 01 48 33 C4 48 89 85 10 01 00 00 48 8B F1 4C 8D B9 A0 0A 00 00 48 8B D1 48 8D 0D E6 C0 60 01 E8 D1 56 F7 FF 48 8B F8 48 85 C0 0F 84 5C 14 00 00 80 B8 47 03 00 00 00 0F 8C 4F 14 00 00 48 8B 88 90 15 00 00 B2 01 48 89 9C 24 98 02 00 00 4C 89 A4 24 A0 02 00 00 4C 89 B4 24 60 02 00 00 E8 02 A4 F8 FF 4C 8B F0 48 85 C0 75 74 38 86 2C 20 00 00
+   +000  push                       rbp
+   +002  push                       rsi
+   +003  push                       rdi
+   +004  push                       r15
+   +006  lea                        rbp, [rsp - 0x168]
+   +00E  sub                        rsp, 0x268
+   +015  mov                        rax, qword ptr [rip + 0x16c76dc]
+   +01C  xor                        rax, rsp
+   +01F  mov                        qword ptr [rbp + 0x110], rax
+   +026  mov                        rsi, rcx
+   +029  lea                        r15, [rcx + 0xaa0]
+   +030  mov                        rdx, rcx
+   +033  lea                        rcx, [rip + 0x160c0e6]
+   +03A  call                       0x1400e5560
+   +03F  mov                        rdi, rax
+   +042  test                       rax, rax
+   +045  je                         0x1401712f7
+   +04B  cmp                        byte ptr [rax + 0x347], 0
+   +052  jl                         0x1401712f7
+   +058  mov                        rcx, qword ptr [rax + 0x1590]
+   +05F  mov                        dl, 1
+   +061  mov                        qword ptr [rsp + 0x298], rbx
+   +069  mov                        qword ptr [rsp + 0x2a0], r12
+   +071  mov                        qword ptr [rsp + 0x260], r14
+   +079  call                       0x1400fa2d0
+   +07E  mov                        r14, rax
+   +081  test                       rax, rax
+   +084  jne                        0x14016ff4a
+   +086  cmp                        byte ptr [rsi + 0x202c], al
+
+== Format 形状序列比对（归一化后逐条） ==
+   0  push rbp                                       | push rbp                                       
+   1  push rsi                                       | push rsi                                       
+   2  push rdi                                       | push rdi                                       
+   3  push r15                                       | push r15                                       
+   4  lea rbp, [rsp-#]                               | lea rbp, [rsp-#]                               
+   5  mov eax, #                                     | sub rsp, #                                       <<< 差异
+   6  call #                                         | mov rax, qword ptr [rip+#]                       <<< 差异
+   7  sub rsp, rax                                   | xor rax, rsp                                     <<< 差异
+   8  mov rax, qword ptr [rip+#]                     | mov qword ptr [rbp+#], rax                       <<< 差异
+   9  xor rax, rsp                                   | mov rsi, rcx                                     <<< 差异
+  10  mov qword ptr [rbp+#], rax                     | lea r15, [rcx+#]                                 <<< 差异
+  11  mov qword ptr [rsp+#], r9                      | mov rdx, rcx                                     <<< 差异
+  12  mov rsi, r8                                    | lea rcx, [rip+#]                                 <<< 差异
+  13  mov qword ptr [rsp+#], r8                      | call #                                           <<< 差异
+  14  mov r15, rdx                                   | mov rdi, rax                                     <<< 差异
+  15  mov qword ptr [rsp+#], rcx                     | test rax, rax                                    <<< 差异
+  16  mov rdi, rcx                                   | je #                                             <<< 差异
+  17  test rcx, rcx                                  | cmp byte ptr [rax+#], 0                          <<< 差异
+  18  je #                                           | jl #                                             <<< 差异
+  19  test rdx, rdx                                  | mov rcx, qword ptr [rax+#]                       <<< 差异
+  20  je #                                           | mov dl, 1                                        <<< 差异
+  21  test r8, r8                                    | mov qword ptr [rsp+#], rbx                       <<< 差异
+  22  je #                                           | mov qword ptr [rsp+#], r12                       <<< 差异
+  23  mov r10d, dword ptr [rbp+#]                    | mov qword ptr [rsp+#], r14                       <<< 差异
+  24  mov r8d, #                                     | call #                                           <<< 差异
+  25  mov qword ptr [rsp+#], rbx                     | mov r14, rax                                     <<< 差异
+  26  movabs r11, #                                  | test rax, rax                                    <<< 差异
+  27  mov qword ptr [rsp+#], r12                     | jne #                                            <<< 差异
+  28  mov r12, rcx                                   | cmp byte ptr [rsi+#], al                         <<< 差异
+
+== Subtitle 候选（4C 8B DC 55 56 41 54 的 5 处命中） ==
+Steam SUBTITLE 形状: mov r11, rsp ; push rbp ; push rsi ; push r12 ; lea rbp, [r11-#] ; sub rsp, # ; movaps xmmword ptr [r11-#], xmm6 ; movaps xmmword ptr [r11-#], xmm8 ; mov rax, qword ptr [rip+#] ; xor rax, rsp ; mov qword ptr [rbp+#], rax ; mov r12d, r9d
+
+  @0x14014b8b0  形状前12条相同数=4
+   hex: 4C 8B DC 55 56 41 54 48 81 EC 90 00 00 00 45 0F B6 E0 48 8B EA 48 8B F1 48 85 C9 0F 84 86 01 00 00 48 85 D2 0F 84 7D 01
+      0  mov r11, rsp
+      1  push rbp
+      2  push rsi
+      3  push r12
+      4  sub rsp, #
+      5  movzx r12d, r8b
+      6  mov rbp, rdx
+      7  mov rsi, rcx
+      8  test rcx, rcx
+      9  je #
+     10  test rdx, rdx
+     11  je #
+
+  @0x140821cc0  形状前12条相同数=6
+   hex: 4C 8B DC 55 56 41 54 41 56 48 81 EC 98 00 00 00 48 8B 05 71 58 01 01 48 33 C4 48 89 44 24 50 83 A1 38 1D 00 00 DF 45 8B
+      0  mov r11, rsp
+      1  push rbp
+      2  push rsi
+      3  push r12
+      4  push r14
+      5  sub rsp, #
+      6  mov rax, qword ptr [rip+#]
+      7  xor rax, rsp
+      8  mov qword ptr [rsp+#], rax
+      9  and dword ptr [rcx+#], #
+     10  mov r14d, r9d
+     11  movzx r12d, r8b
+
+  @0x140e294c0  形状前12条相同数=4
+   hex: 4C 8B DC 55 56 41 54 41 56 48 8D 6C 24 88 48 81 EC 78 01 00 00 48 8B 05 6C E0 A0 00 48 33 C4 48 89 45 50 33 F6 48 89 54
+      0  mov r11, rsp
+      1  push rbp
+      2  push rsi
+      3  push r12
+      4  push r14
+      5  lea rbp, [rsp-#]
+      6  sub rsp, #
+      7  mov rax, qword ptr [rip+#]
+      8  xor rax, rsp
+      9  mov qword ptr [rbp+#], rax
+     10  xor esi, esi
+     11  mov qword ptr [rsp+#], rdx
+
+  @0x1410a6320  形状前12条相同数=6
+   hex: 4C 8B DC 55 56 41 54 41 57 48 83 EC 48 48 8B E9 4D 8B E1 48 8B 49 10 49 8B F0 44 0F B7 FA 48 85 C9 0F 84 03 01 00 00 8B
+      0  mov r11, rsp
+      1  push rbp
+      2  push rsi
+      3  push r12
+      4  push r15
+      5  sub rsp, #
+      6  mov rbp, rcx
+      7  mov r12, r9
+      8  mov rcx, qword ptr [rcx+#]
+      9  mov rsi, r8
+     10  movzx r15d, dx
+     11  test rcx, rcx
+
+  @0x141215da0  形状前12条相同数=4
+   hex: 4C 8B DC 55 56 41 54 41 55 41 56 49 8D AB 38 FF FF FF 48 81 EC A0 01 00 00 48 8B 82 C8 00 00 00 45 33 E4 44 8B 72 3C 48
+      0  mov r11, rsp
+      1  push rbp
+      2  push rsi
+      3  push r12
+      4  push r13
+      5  push r14
+      6  lea rbp, [r11-#]
+      7  sub rsp, #
+      8  mov rax, qword ptr [rdx+#]
+      9  xor r12d, r12d
+     10  mov r14d, dword ptr [rdx+#]
+     11  mov rsi, rdx
