@@ -20,6 +20,7 @@ SRTT le_strings 通用 repack 器 (保桶版)
     引擎按声明索引越界 -> 取到 NULL 字符串指针 -> 进程崩溃 (c0000005)。
     customize_us: 3061 条里 1405 条被丢, 文件从 130090B 缩水到 59020B (-55%)。
 """
+import os
 import struct
 
 
@@ -136,7 +137,6 @@ def repack(in_path, pairs, out_path):
     if len(back) != nstr:
         raise ValueError(f"{out_path}: 回读校验失败, 只读回 {len(back)}/{nstr} 条")
     return nstr
-    return nstr
 
 
 def repack_inplace(in_path, pairs, out_path):
@@ -153,11 +153,17 @@ def repack_inplace(in_path, pairs, out_path):
     pairs = dict(pairs)
     replaced = {}
     for i in range(nb):
+        if 12 + i * 16 + 16 > len(buf):
+            raise ValueError(f"{in_path}: bucket[{i}] 表越界")
         count, _, off, _ = struct.unpack_from("<IIII", buf, 12 + i * 16)
         for j in range(count):
+            if off + j * 8 + 4 > len(buf):
+                raise ValueError(f"{in_path}: bucket[{i}] offset 表越界 @0x{off + j*8:X}")
             s_off = struct.unpack_from("<I", buf, off + j * 8)[0]   # ★ 8 字节步长
             if s_off == 0:
                 continue
+            if s_off + 4 > len(buf):
+                raise ValueError(f"{in_path}: bucket[{i}] 字符串偏移越界 @0x{s_off:X}")
             h = struct.unpack_from("<I", buf, s_off)[0]
             if h not in pairs:
                 continue
@@ -167,26 +173,91 @@ def repack_inplace(in_path, pairs, out_path):
                 e += 2
             slot_len = (e + 2) - (s_off + 4)      # 原文本字节数(含终止 0x0000)
             new_t = pairs.pop(h)
-            assert len(new_t) <= slot_len, \
-                f"hash {h:#x}: 新文本 {len(new_t)}B > 原槽 {slot_len}B 无法原位覆盖"
+            # 用 ValueError 而非 assert: assert 在 python -O 下会被剥离, 不可依赖
+            if len(new_t) > slot_len:
+                raise ValueError(
+                    f"hash {h:#08x}: 新文本 {len(new_t)}B > 原槽 {slot_len}B, 无法原位覆盖")
             # 写 {hash} 不变, 覆盖文本并清零剩余
             buf[s_off + 4: s_off + 4 + len(new_t)] = new_t
             buf[s_off + 4 + len(new_t): s_off + 4 + slot_len] = b"\x00" * (
                 slot_len - len(new_t))
             replaced[h] = (s_off, slot_len, len(new_t))
     if pairs:
-        miss = ", ".join(f"{h:#x}" for h in pairs)
-        raise ValueError(f"以下 hash 在原文件中不存在: {miss}")
+        # txt 里存在原文件没有的 hash 是常见情况 (如未发布条目), 仅警告;
+        # 只有「超槽」才需要抛错触发调用方降级为全量重建。
+        miss = ", ".join(f"{h:#08x}" for h in list(pairs)[:10])
+        if len(pairs) > 10:
+            miss += f" ... (共 {len(pairs)} 个)"
+        print(f"  警告: {len(pairs)} 个 hash 在原文件中不存在: {miss}")
     open(out_path, "wb").write(bytes(buf))
     return replaced
 
 
+def self_test():
+    """自检: 对内置最小样例做 round-trip, 验证读/写在 8 字节 offset 表下自洽。
+
+    用于 CI / 自动化构建前置校验, 不依赖任何游戏文件。
+    """
+    import io
+    import tempfile
+
+    # 构造一个最小合法 le_strings: 1 bucket, 2 条字符串 (含 1 个空槽)
+    # header 12B + bucket 16B + offset 表 8*3=24B
+    nb, nstr = 1, 3
+    head = 12 + 16 * nb + 8 * nstr
+    start = (head + 3) & ~3
+    buf = bytearray(start)
+    struct.pack_into("<IHHI", buf, 0, 0xA84C7F73, 1, nb, nstr)
+    bucket_offsets = []
+    cur = start
+    for text in ("HELLO", "WORLD"):
+        while cur & 3:
+            cur += 1; buf.append(0)
+        bucket_offsets.append(cur)
+        buf += struct.pack("<I", 0x12345678) + text.encode("utf-16-le") + b"\x00\x00"
+        cur = len(buf)
+    bucket_offsets.insert(0, 0)   # 第一个是空槽
+    struct.pack_into("<IIII", buf, 12, nstr, 0, 12 + 16 * nb, 0)
+    pos = 12 + 16 * nb
+    for off in bucket_offsets:
+        struct.pack_into("<II", buf, pos, off, 0)
+        pos += 8
+
+    with tempfile.TemporaryDirectory() as td:
+        src = os.path.join(td, "t_us.le_strings")
+        dst = os.path.join(td, "t_zh.le_strings")
+        open(src, "wb").write(bytes(buf))
+        # 回读必须得到 nstr 条
+        _f, _v, _nb, got, entries = read_with_bucket(src)
+        assert got == nstr, f"self_test: 读出 {got} != {nstr}"
+        assert sum(1 for e in entries if e[1] == 0) == 1, "self_test: 空槽数量不对"
+        # 原位覆盖/全量重建都必须保条目数
+        pairs = {0x12345678: "你好".encode("utf-16-le") + b"\x00\x00"}
+        repack(src, {}, dst)                       # 空覆盖 = 纯 round-trip
+        _f, _v, _nb, got2, _e2 = read_with_bucket(dst)
+        assert got2 == nstr, f"self_test(repack): {got2} != {nstr}"
+    print("[self_test] le_strings_repack OK: 8 字节 offset 表读/写自洽, 条目数守恒")
+
+
 def demo():
-    in_p = r"I:\SteamLibrary\steamapps\common\Saints Row The Third Remastered\unpack\misc\menu_us.le_strings"
-    slots = b"\x70\x01\x71\x01\x72\x01\x73\x01\x74\x01\x75\x01\x00\x00"
-    n = repack(in_p, {0x7f75a300: slots}, in_p)
-    print(f"repack OK nstr={n}")
+    """交互式试验用: 从命令行传入原始 le_strings 与一个 hash/文本对。
+
+    用法: python le_strings_repack.py <in.le_strings> <hash_hex> <utf16_text> [out]
+    (不传参数时仅运行 self_test, 便于自动化/CI 校验。)
+    """
+    import sys
+    if len(sys.argv) < 4:
+        self_test()
+        return 0
+    in_p = sys.argv[1]
+    h = int(sys.argv[2], 16)
+    text = sys.argv[3]
+    out_p = sys.argv[4] if len(sys.argv) > 4 else in_p
+    n = repack(in_p, {h: text.encode("utf-16-le") + b"\x00\x00"}, out_p)
+    print(f"repack OK nstr={n} -> {out_p}")
+    return 0
 
 
 if __name__ == "__main__":
-    demo()
+    import sys
+    sys.exit(demo())

@@ -1,37 +1,58 @@
 # Tools 索引（SR4）
 
-`Projects/SR4/Tools/` 下的脚本分工。全部为 Python 3 脚本，多数接受 `--game <游戏目录>` 参数；
-未传参时使用脚本内 `DEFAULT_GAME` 默认路径（原开发者本机 `I:\SteamLibrary\...`，**换机需自行覆盖**）。
+`Projects/SR4/Tools/` 下的脚本分工。全部为 Python 3 脚本，无第三方依赖（仅标准库）。
 
-## 构建
+## le_string 工具链（核心）
+
+`.le_strings` 是引擎的本地化字符串表，SR4 与 SR3 Remastered **格式完全一致**：
+
+```
+header  12B  : ID u32(0xA84C7F73) | version u16 | bucketCount u16 | stringCount u32
+bucket  16B  : count u32 | pad u32 | offsetTableOffset u32 | pad u32   (× bucketCount)
+offset 表    : 从 bucket.offsetTableOffset 起, count 个 **8 字节** 条目
+               = { 字符串绝对偏移 u32, 填充零 u32 }
+字符串条目   : { hash u32, utf16le 文本, u16 0x0000 }
+```
+
+> ★★ **8 字节步长**是这套格式最容易踩的坑：offset 表每项是「u32 偏移 + u32 填充」共
+> 8 字节，不是 4 字节。误用 4 字节步长会把填充零当成条目，导致一半条目被丢弃而
+> `header.stringCount` 不变 —— 引擎按声明数索引越界 → NULL 指针 → 启动崩溃。
+> 详见 `Documents/le_strings_repack_bugfix.md`。
 
 | 脚本 | 作用 |
 | --- | --- |
-| `build.py` | 用 MSBuild 构建 `SR4R_I18N`，无需打开 VS IDE。自动探测多个 VS 安装位置，并对环境变量做大小写去重（规避本机实测到的两个坑）。`--syntax-only` 走 `cl /Zs` 仅做语法检查。 |
+| `sr4le_extract.py` | 解包 `.le_strings` → `"KEY": "text"` 形式的 UTF-8 txt。 |
+| `sr4le_repack.py` | 把翻译后的 txt 回写为 `.le_strings`。含 `repack`（全量重建）与 `repack_inplace`（原位覆盖）两种模式，带**写后自检 + 回读校验**。 |
 
-## AOB 特征码
+**用法**
+
+```bash
+# 无参数 → 仅运行自检（CI 前置校验，不依赖任何游戏文件）
+python sr4le_repack.py
+
+# 全量重建（默认）：保留 bucket 分配，桶内按 hash 重排，允许更长文本
+python sr4le_repack.py <原始le_strings目录> <翻译txt目录> <输出目录>
+
+# 原位覆盖：布局完全不变，但要求每条文本 ≤ 原槽长，超槽即报错
+python sr4le_repack.py <原始le_strings目录> <翻译txt目录> <输出目录> --inplace
+```
+
+## vpp 归档
 
 | 脚本 | 作用 |
 | --- | --- |
-| `gen_aob_relaxed.py` | 从游戏可执行段生成「放宽通配」的 L2 层 AOB 特征数组，输出到 `aob_relaxed_report.txt` / `gen_aob_relaxed.out` / 工程的 `aob_l2_arrays.inc`。 |
-| `verify_hooks.py` | 跨构建 hook 落点验证器。对 Steam / GOG / Epic 等多份 `sr_hv*.exe` 逐个重放 8 条 AOB 特征码，确认落点是否名副其实。 |
-| `verify_runtime_globals.py` | 验证「运行时自解引擎全局变量」机制是否在各构建上成立（不依赖硬编码绝对地址）。 |
-
-## 文本资源
-
-| 脚本 | 作用 |
-| --- | --- |
-| `sr4le_extract.py` | 解包 `.le_strings`（SR4 与 SR3 Remastered 格式一致）。 |
-| `sr4le_repack.py` | 把翻译后的 txt 回写为 `.le_strings` 二进制。 |
 | `sr4_vpp.py` | vpp_pc v10 归档解包。 |
 | `sr4_vpp_pack.py` | vpp_pc 归档重打包。 |
-| `gen_keydict.py` | 生成「本地化 KEY -> 文本」词典（`Resource/SR4/CHS/dict/le_string_keys.txt` 的来源）。 |
 
-## 调试与分析
+## 已归档（不在本目录）
 
-| 脚本 | 作用 |
-| --- | --- |
-| `dump_xrefs.py` | 对段 dump 做交叉引用分析。 |
+原先在此的 `build.py` / `gen_aob_relaxed.py` / `verify_hooks.py` /
+`verify_runtime_globals.py` / `dump_xrefs.py` / `gen_keydict.py` 等，以及一次性
+诊断探针 `_*.py`，已移至 `Archives/SR4/Tools_redundant/`。
+它们硬编码了旧仓库路径或已合入主构建脚本，不参与 le_string 构建链。
 
-> 一次性诊断探针（`_*.py`，共 14 个）已归档至 `Archives/SR4/Tools_probes/`。
-> 它们硬编码了旧仓库路径与具体 dump 文件，属研究过程产物，不参与构建。
+## 相关
+
+- 顶层构建入口：`build_release_le_strings.py`（仓库根目录，SR3+SR4 一把梭）
+- SR3 侧对应工具：`Projects/SR3/Tools/`（见该目录 README）
+- 事故分析报告：`Documents/le_strings_repack_bugfix.md`

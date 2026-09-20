@@ -16,8 +16,12 @@ le_strings 格式 (与 SR3R Remastered 完全一致):
   2) repack_inplace (原位覆盖): 保持原文件布局不变, 只替换文本内容
 
 用法:
-  python sr4le_repack.py <原始le_strings目录> <翻译txt目录> <输出目录>
+  python sr4le_repack.py <原始le_strings目录> <翻译txt目录> <输出目录> [--inplace]
   对每个 txt 文件, 找到同名 .le_strings, 将翻译回写为 .le_strings
+
+模式:
+  默认 全量重建(repack): 保留 bucket 分配, 桶内按 hash 排序重排, 允许更长文本。
+  --inplace: 原位覆盖, 保持原文件布局完全不变, 但要求每条新文本 <= 原槽长(否则报错)。
 
 txt 格式 (与 sr4le_extract.py 输出一致):
   "KEY": "text"
@@ -150,15 +154,23 @@ def parse_le_strings_raw(path):
         raise ValueError(f'{path}: 非 le_strings (ID=0x{fid:08X})')
 
     entries = []
+    total_count = 0
     for i in range(nb):
         base = 12 + i * 16
+        if base + 16 > len(buf):
+            raise ValueError(f'{path}: bucket[{i}] 表越界')
         count, _, offset, _ = struct.unpack_from('<IIII', buf, base)
+        total_count += count
         for j in range(count):
             so_off = offset + j * 8      # 8 字节步长
+            if so_off + 4 > len(buf):
+                raise ValueError(f'{path}: bucket[{i}] offset 表越界 @0x{so_off:X}')
             s_off = struct.unpack_from('<I', buf, so_off)[0]
             if s_off == 0:
                 entries.append((i, 0, b'', 0, 0))  # 空槽
                 continue
+            if s_off + 4 > len(buf):
+                raise ValueError(f'{path}: bucket[{i}] 字符串偏移越界 @0x{s_off:X}')
             h = struct.unpack_from('<I', buf, s_off)[0]
             # 找文本终点 (u16 0)
             e = s_off + 4
@@ -167,6 +179,13 @@ def parse_le_strings_raw(path):
             text_bytes = buf[s_off + 4: e + 2]   # 含末尾 0x0000
             slot_len = (e + 2) - (s_off + 4)
             entries.append((i, h, text_bytes, s_off, slot_len))
+    # ★★ 一致性校验 (2026-09-20 事故防护): 桶条目总数必须等于 header.stringCount,
+    #    否则说明解析步长/结构判断出错, 直接拒绝继续, 避免静默产出坏文件。
+    if total_count != nstr:
+        raise ValueError(
+            f'{path}: bucket 条目总数 {total_count} != header.stringCount {nstr} (文件不一致)')
+    if len(entries) != nstr:
+        raise ValueError(f'{path}: 解析出 {len(entries)} 条 != nstr {nstr}')
     return fid, ver, nb, nstr, entries, buf
 
 
@@ -240,7 +259,22 @@ def repack(in_path, pairs, out_path, charmap=None):
             struct.pack_into('<II', out, pos, off, 0)
             pos += 8
 
+    # ★★ 写后自检 (强制): 条目数与 offset 表长度必须与 header 声明一致,
+    #    否则引擎按声明索引会越界取到 NULL 指针并崩溃。
+    written_total = sum(len(x) for x in buckets)
+    if written_total != nstr:
+        raise ValueError(
+            f'{in_path}: 写回条目数 {written_total} != header.stringCount {nstr} —— 拒绝写出')
+    if pos != 12 + 16 * nb + 8 * nstr:
+        raise ValueError(
+            f'{in_path}: offset 表写入长度 {pos - (12 + 16 * nb)} != 8*{nstr} —— 拒绝写出')
+
     open(out_path, 'wb').write(bytes(out))
+
+    # ★★ 回读校验 (强制): 用本模块的读路径重新解析产物, 必须读回 nstr 条。
+    _f, _v, _nb, _n, back, _buf = parse_le_strings_raw(out_path)
+    if len(back) != nstr:
+        raise ValueError(f'{out_path}: 回读校验失败, 只读回 {len(back)}/{nstr} 条')
     return nstr, len(pairs)  # 返回总数和未匹配数
 
 
@@ -265,8 +299,7 @@ def repack_inplace(in_path, pairs, out_path, charmap=None):
         new_bytes = encode_text_with_charmap(new_text, rev_charmap)
         if len(new_bytes) > slot_len:
             raise ValueError(
-                f'hash 0x{h:08X}: 新文本 {len(new_bytes)}B > 原槽 {slot_len}B, '
-                f'无法原位覆盖 (文件={in_path})'
+                f'hash 0x{h:08X}: 新文本 {len(new_bytes)}B > 原槽 {slot_len}B, 无法原位覆盖'
             )
         # 写 {hash} 不变, 覆盖文本并清零剩余
         buf[s_off + 4: s_off + 4 + len(new_bytes)] = new_bytes
@@ -284,14 +317,62 @@ def repack_inplace(in_path, pairs, out_path, charmap=None):
     return replaced
 
 
+# ── 自检 ────────────────────────────────────────────────────────
+
+def self_test():
+    """自检: 对内置最小样例做 round-trip, 验证读/写在 8 字节 offset 表下自洽。
+
+    用于 CI / 自动化构建前置校验, 不依赖任何游戏文件。
+    """
+    import tempfile
+
+    nb, nstr = 1, 3
+    head = 12 + 16 * nb + 8 * nstr
+    start = (head + 3) & ~3
+    buf = bytearray(start)
+    struct.pack_into('<IHHI', buf, 0, 0xA84C7F73, 1, nb, nstr)
+    bucket_offsets = [0]          # 第一个是空槽
+    cur = start
+    for text in ('HELLO', 'WORLD'):
+        while cur & 3:
+            cur += 1
+            buf.append(0)
+        bucket_offsets.append(cur)
+        buf += struct.pack('<I', 0x12345678) + text.encode('utf-16-le') + b'\x00\x00'
+        cur = len(buf)
+    struct.pack_into('<IIII', buf, 12, nstr, 0, 12 + 16 * nb, 0)
+    pos = 12 + 16 * nb
+    for off in bucket_offsets:
+        struct.pack_into('<II', buf, pos, off, 0)
+        pos += 8
+
+    with tempfile.TemporaryDirectory() as td:
+        src = os.path.join(td, 't_us.le_strings')
+        dst = os.path.join(td, 't_zh.le_strings')
+        open(src, 'wb').write(bytes(buf))
+        _f, _v, _nb, got, entries, _b = parse_le_strings_raw(src)
+        assert got == nstr, f'self_test: 读出 {got} != {nstr}'
+        assert sum(1 for e in entries if e[1] == 0) == 1, 'self_test: 空槽数量不对'
+        # 全量重建 (空覆盖 = 纯 round-trip) 与 原位覆盖 都必须保条目数
+        repack(src, {}, dst)
+        _f, _v, _nb, got2, _e2, _b2 = parse_le_strings_raw(dst)
+        assert got2 == nstr, f'self_test(repack): {got2} != {nstr}'
+        repack_inplace(src, {0x12345678: '你好'}, dst)
+        _f, _v, _nb, got3, _e3, _b3 = parse_le_strings_raw(dst)
+        assert got3 == nstr, f'self_test(repack_inplace): {got3} != {nstr}'
+    print('[self_test] sr4le_repack OK: 8 字节 offset 表读/写自洽, 条目数守恒')
+
+
 # ── 批量处理 ────────────────────────────────────────────────────
 
 def main():
-    if len(sys.argv) != 4:
+    args = sys.argv[1:]
+    if len(args) < 3:
         print(__doc__)
         return 1
 
-    le_dir, txt_dir, out_dir = sys.argv[1:4]
+    le_dir, txt_dir, out_dir = args[0], args[1], args[2]
+    inplace = '--inplace' in args
     os.makedirs(out_dir, exist_ok=True)
 
     import glob
@@ -318,7 +399,7 @@ def main():
         charfile = os.path.join(le_dir, f'charlist_{lang}.dat')
         if not os.path.exists(charfile):
             charfile = os.path.join(le_dir, 'charlist_us.dat')
-        charmap = parse_charlist(charfile) if os.path.exists(charfile) else {}
+        charmap = parse_charlist(charfile) if os.path.exists(charfile) else None
 
         try:
             pairs = parse_txt(txt_path)
@@ -329,20 +410,25 @@ def main():
         out_path = os.path.join(out_dir, base)
 
         try:
-            nstr, unmatched = repack(le, pairs, out_path, charmap=charmap)
+            if inplace:
+                replaced = repack_inplace(le, pairs, out_path, charmap=charmap)
+                total_replaced += len(replaced)
+                total_files += 1
+                print(f'{base:34s}  原位覆盖 {len(replaced):5d} 条')
+            else:
+                nstr, unmatched = repack(le, pairs, out_path, charmap=charmap)
+                total_replaced += nstr - unmatched
+                total_missing += unmatched
+                total_files += 1
+                print(f'{base:34s}  条目={nstr:5d}  翻译={len(pairs):5d}  未匹配={unmatched:5d}')
         except Exception as e:
             fail_list.append((base, f'repack: {e}'))
             continue
 
-        replaced = nstr - unmatched
-        total_replaced += replaced
-        total_missing += unmatched
-        total_files += 1
-        print(f'{base:34s}  条目={nstr:5d}  翻译={len(pairs):5d}  未匹配={unmatched:5d}')
-
     print('-' * 60)
     print(f'完成: {total_files}/{len(le_files)} 个文件, '
-          f'翻译 {total_replaced} 条, 未匹配 {total_missing} 条')
+          f'翻译 {total_replaced} 条, 未匹配 {total_missing} 条'
+          f'{" [原位覆盖]" if inplace else " [全量重建]"}')
     if fail_list:
         print('失败:')
         for b, e in fail_list:
@@ -351,4 +437,8 @@ def main():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 4:
+        # 无参数: 仅运行自检, 便于自动化/CI 校验
+        self_test()
+        sys.exit(0)
     sys.exit(main())
