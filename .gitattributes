@@ -22,6 +22,12 @@
 *.bat           text eol=crlf
 *.cmd           text eol=crlf
 
+# ---- 文档统一纯 LF ----
+# 本项目所有 .md 均为手写、从未有过 CRLF 版本，强制 LF 不会产生内容差异；
+# 而 dist/ 下的 le_strings 与 ini 也依赖 LF 语义，故此处显式声明。
+*.md            text eol=lf
+*.le_strings    binary
+
 # ---- 明确的二进制格式 ----
 *.ttf           binary
 *.otf           binary

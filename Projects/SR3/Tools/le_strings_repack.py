@@ -5,6 +5,20 @@ SRTT le_strings 通用 repack 器 (保桶版)
 保留原文件的 bucket 分配 (引擎按 bucket 查找, 不按 hash%nb 重新分桶);
 桶内 entries 按 hash 排序重排 (稳定) + 4 字节对齐, 改写 pair 中给出的 hash 文本。
 其余原 hash 沿用其原文本。
+
+★ 布局 (SR3 Remastered / SR4 一致, 务必按此读写):
+    header  12B : ID u32(0xA84C7F73) | version u16 | bucketCount u16 | stringCount u32
+    bucket  16B : count u32 | pad u32 | offTableOffset u32 | pad u32   (x bucketCount)
+    offset表    : 从 bucket.offTableOffset 起, count 个 **8 字节** 条目
+                  = { 字符串绝对偏移 u32, 填充零 u32 }
+    字符串条目  : { hash u32, utf16le 文本, u16 0x0000 }
+
+★★ 血的教训 (2026-09-20): offset 表条目是 **8 字节步长**, 不是 4 字节!
+    旧版误用 4 字节步长 -> 把每条后面的「填充零 u32」也当成一个条目 ->
+    真实条目的偏移被错位读取, 一半条目被读成 s_off==0 的「空槽」而被丢弃 ->
+    写回文件桶内条目数减半、但 header.stringCount 不变 ->
+    引擎按声明索引越界 -> 取到 NULL 字符串指针 -> 进程崩溃 (c0000005)。
+    customize_us: 3061 条里 1405 条被丢, 文件从 130090B 缩水到 59020B (-55%)。
 """
 import struct
 
@@ -18,24 +32,34 @@ def read_with_bucket(path):
     if fid != 0xA84C7F73:
         raise ValueError(f"{path}: 非 le_strings (ID={fid:#x})")
     out = []
+    total_count = 0
     for i in range(nb):
         base = 12 + i * 16
+        if base + 16 > len(buf):
+            raise ValueError(f"{path}: bucket[{i}] 表越界")
         count, _, off, _ = struct.unpack_from("<IIII", buf, base)
+        total_count += count
         for j in range(count):
-            so = off + j * 4
+            so = off + j * 8          # ★ 8 字节步长 (不是 4!)
+            if so + 4 > len(buf):
+                raise ValueError(f"{path}: bucket[{i}] offset表越界 @0x{so:X}")
             s_off = struct.unpack_from("<I", buf, so)[0]
             if s_off == 0:
                 out.append((i, 0, b""))     # 占位空槽 (s_off=0)
                 continue
             if s_off + 4 > len(buf):
-                out.append((i, 0, b""))
-                continue
+                raise ValueError(f"{path}: bucket[{i}] 字符串偏移越界 @0x{s_off:X}")
             e = s_off + 4
             while e + 1 < len(buf) and struct.unpack_from("<H", buf, e)[0] != 0:
                 e += 2
             text_bytes = buf[s_off + 4: e + 2]
             h = struct.unpack_from("<I", buf, s_off)[0]
             out.append((i, h, text_bytes))
+    if total_count != nstr:
+        raise ValueError(
+            f"{path}: bucket 条目总数 {total_count} != header.stringCount {nstr} (文件不一致)")
+    if len(out) != nstr:
+        raise ValueError(f"{path}: 解析出 {len(out)} 条 != nstr {nstr}")
     return fid, ver, nb, nstr, out
 
 
@@ -63,7 +87,9 @@ def repack(in_path, pairs, out_path):
     for b in range(nb):
         buckets[b].sort(key=lambda x: x[0])
     # 写文件
-    head_size = 12 + 16 * nb + 4 * nstr
+    # 注意: SR3 Remastered 的 offset 表每条为 8 字节 (u32 绝对偏移 + u32 填充0),
+    #       与 sr3le_extract / 游戏引擎读取格式一致; 此前误写成 4 字节会导致解析越界。
+    head_size = 12 + 16 * nb + 8 * nstr
     string_start = (head_size + 3) & ~3
     out = bytearray(string_start)
     struct.pack_into("<IHHI", out, 0, fid, ver, nb, nstr)
@@ -84,15 +110,32 @@ def repack(in_path, pairs, out_path):
     # 桶 header (count + offset 表起点)
     for b in range(nb):
         bucket_header = 12 + b * 16
-        off_table_start = 12 + nb * 16 + 4 * sum(len(x) for x in buckets[:b])
+        off_table_start = 12 + nb * 16 + 8 * sum(len(x) for x in buckets[:b])
         struct.pack_into("<IIII", out, bucket_header, len(buckets[b]), 0, off_table_start, 0)
-    # offset 表
+    # offset 表 (每条 8 字节: u32 绝对偏移 + u32 填充0)
     pos = 12 + 16 * nb
     for b in range(nb):
         for off in bucket_offsets[b]:
-            struct.pack_into("<I", out, pos, off)
-            pos += 4
+            struct.pack_into("<II", out, pos, off, 0)
+            pos += 8
+
+    # ★★ 写后自检 (强制): 条目数必须与 header 一致, 否则引擎按声明索引会越界崩溃。
+    written_total = sum(len(x) for x in buckets)
+    if written_total != nstr:
+        raise ValueError(
+            f"{in_path}: 写回条目数 {written_total} != header.stringCount {nstr} —— 拒绝写出")
+    if pos != 12 + 16 * nb + 8 * nstr:
+        raise ValueError(
+            f"{in_path}: offset 表写入长度 {pos - (12 + 16 * nb)} != 8*{nstr} —— 拒绝写出")
+
     open(out_path, "wb").write(bytes(out))
+
+    # ★★ 回读校验 (强制): 用本模块的读路径重新解析产物, 必须能读回 nstr 条。
+    chk = open(out_path, "rb").read()
+    _f, _v, _nb, _n, back = read_with_bucket(out_path)
+    if len(back) != nstr:
+        raise ValueError(f"{out_path}: 回读校验失败, 只读回 {len(back)}/{nstr} 条")
+    return nstr
     return nstr
 
 
@@ -112,7 +155,7 @@ def repack_inplace(in_path, pairs, out_path):
     for i in range(nb):
         count, _, off, _ = struct.unpack_from("<IIII", buf, 12 + i * 16)
         for j in range(count):
-            s_off = struct.unpack_from("<I", buf, off + j * 4)[0]
+            s_off = struct.unpack_from("<I", buf, off + j * 8)[0]   # ★ 8 字节步长
             if s_off == 0:
                 continue
             h = struct.unpack_from("<I", buf, s_off)[0]

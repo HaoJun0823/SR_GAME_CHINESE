@@ -42,6 +42,18 @@ venv/
 # ---- 工作区记忆（个人笔记，不分发）----
 .workbuddy/
 
+# ---- 根目录临时/调试产物（构建脚本、探针、崩溃分析中间文件）----
+/_build*.py
+/_peek.py
+/_vq.py
+/_probe/
+/_tmp_archive_*/
+/_loose_bak/
+/_*.txt
+/_*.log
+/Release/
+/data/
+
 # ---- 例外：Archives 留档区一律保留 ----
 !Archives/**
 !**/.gitkeep
