@@ -75,22 +75,80 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 展示编译器工具集（诊断用）
+      # ── 工具集：确保 v141 (MSVC 14.16) 存在 ──────────────────────────────
+      #
+      # ★★ 为什么必须是 v141（2026-09-21 CI 实测定位）：
+      #   MinHook 1.3.3 的 `build\native\minhook.targets` 里工具集**只列到 v141**
+      #   （v90/v100/v110/v120/v140/v141），且 `.nupkg` 内**不含** libMinHook.lib
+      #   —— 它靠 targets 按 $(PlatformToolset) 前缀匹配后 <Copy> 生成。
+      #   v142/v143/v145 全部匹配不上 -> MH_LibSuffix="x64--md" -> 58 条 Copy
+      #   条件无一命中 -> `lib\MinHook.lib` 不存在 -> **LNK1104**。
+      #   所以这是依赖包的硬约束，不是版本偏好；两个工程已统一改 v141。
+      #
+      #   而 windows-2022 镜像**默认不带 v141**（官方 Windows2022-Readme 的
+      #   组件清单里只有 VC.Tools.x86.x64 与 VC.Tools.142.x86.x64，没有 v141），
+      #   因此必须在这里用 VS Installer 现场加装。
+      - name: 确保 v141 (MSVC 14.16) 工具集可用
         shell: pwsh
         run: |
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           if (!(Test-Path $vswhere)) { throw "找不到 vswhere.exe，镜像里没有 Visual Studio？" }
+
+          function Test-V141 {
+            $p = & $vswhere -latest -products * -find "VC\Tools\MSVC\14.16*" |
+                   Select-Object -First 1
+            return [bool]$p
+          }
+
+          if (Test-V141) {
+            Write-Host "v141 已存在，跳过安装。"
+          } else {
+            Write-Host "镜像内无 v141，开始安装 Microsoft.VisualStudio.Component.VC.v141.x86.x64 ..."
+            $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
+            if (!(Test-Path $installer)) { throw "找不到 vs_installer.exe：$installer" }
+
+            $vsPath = & $vswhere -latest -products * -property installationPath |
+                        Select-Object -First 1
+            if (!$vsPath) { throw "vswhere 取不到 Visual Studio 安装路径" }
+            Write-Host "目标 VS 安装路径: $vsPath"
+
+            # ★ vs_installer.exe 是 GUI 程序：直接调用会立刻返回，CI 不等它。
+            #   必须用 Start-Process -Wait 显式等待。
+            #   另外它在 CI 上**不产生控制台输出**（无 console host），属正常现象，
+            #   所以失败与否只能靠后面的 vswhere 断言判断。
+            Start-Process -FilePath $installer -Wait -ArgumentList @(
+              'modify',
+              '--installPath', "`"$vsPath`"",
+              '--add', 'Microsoft.VisualStudio.Component.VC.v141.x86.x64',
+              '--quiet', '--norestart', '--nocache', '--noUpdateInstaller'
+            )
+
+            if (!(Test-V141)) {
+              # 注意：这里不用 here-string（@"..."@）。它的结束符 "@ 必须顶格，
+              # 与 YAML 的 run: | 缩进块冲突，会让 YAML 解析失败。
+              Write-Host "!! v141 (MSVC 14.16) 安装后仍不可用。"
+              Write-Host "   可能原因："
+              Write-Host "     1) 镜像无法在线拉取 VS 组件（需要外网）；"
+              Write-Host "     2) 组件 ID 已变更（原 Microsoft.VisualStudio.Component.VC.v141.x86.x64）；"
+              Write-Host "     3) 需改用带 VS2026 工具集的 runner。"
+              Write-Host "   v141 是 MinHook 1.3.3 的硬约束，缺它必定 LNK1104，无法绕过。"
+              throw "v141 (MSVC 14.16) 不可用"
+            }
+            Write-Host "v141 安装成功。"
+          }
+
+      - name: 展示编译器工具集 / Windows SDK（诊断用）
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           Write-Host "── 已安装的 MSVC 工具集 ──"
           & $vswhere -latest -products * -find "VC\Tools\MSVC\*" |
             ForEach-Object { Write-Host "  $_" }
           Write-Host "── 已安装的 Windows SDK ──"
           Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -ErrorAction SilentlyContinue |
             ForEach-Object { Write-Host "  $($_.Name)" }
-          # 注意：**不再断言 v141 存在**。SR3 的 x64 配置写 v141，SR4 写 v145；
-          # 而 windows-2022 镜像默认**不含 v141**（需额外装
-          # Microsoft.VisualStudio.Component.VC.v141.x86.x64）。
-          # build_release.py 已改为「默认不传 /p:PlatformToolset，用 vcxproj 声明」，
-          # 所以这里只做展示，缺失会在编译期由 MSBuild 明确报 MSB8020。
+          # Windows SDK 19041 是 build_release.py 的 find_winsdk() 首选；
+          # windows-2022 镜像装的是 17763/19041/22621/26100，故必然命中 19041。
 
       - name: 还原 NuGet 包 (MinHook)
         shell: pwsh
@@ -156,11 +214,19 @@ jobs:
         run: python Tools/verify_release.py release
 
       # ── 上传 ─────────────────────────────────────────────────────────────
+      # ★ 显式列出三个包，不用 `release/**`：
+      #   le_strings 构建过程会在 release/ 下产生中间目录（如 release/SR3/、
+      #   release/SR4/，内含 misc/*.le_strings）。它们是构建副产物、已被
+      #   .gitignore 覆盖，但会被 `release/**` 一并塞进 artifact（白占体积，
+      #   且 package job 的 zip 循环虽按目录名白名单跳过，artifact 里仍是垃圾）。
       - name: 上传 release 目录（合并包）
         uses: actions/upload-artifact@v4
         with:
           name: sr-release-all
-          path: release/**
+          path: |
+            release/sr3r_common/**
+            release/sr4r_common/**
+            release/sr4r_microsoft/**
           if-no-files-found: error
           retention-days: 30
 
@@ -192,26 +258,46 @@ jobs:
 
       - name: 压缩为 zip
         run: |
+          set -euo pipefail
+
           # 构建日期：显式用 UTC+8，避免 runner 默认 UTC 导致日期偏移一天
           BUILD_DATE="$(TZ='Asia/Shanghai' date +%Y%m%d)"
           echo "BUILD_DATE=$BUILD_DATE" >> "$GITHUB_ENV"
           echo "构建日期（UTC+8）: $BUILD_DATE"
 
           cd release
-          for d in */; do
-            name="${d%/}"
-            [ -d "$name" ] || continue
+
+          # ★ 显式白名单，**不给兜底分支**：
+          #   原先的 `*)` 分支会在 artifact 混入意外目录时静默多打一个 zip
+          #   （例如 le_strings 中间产物 release/SR3/）。发布包应该是封闭集合，
+          #   多出来的目录宁可让这里直接失败，也不要打出一个没人认识的压缩包。
+          packed=0
+          for name in sr3r_common sr4r_common sr4r_microsoft; do
+            if [ ! -d "$name" ]; then
+              echo "!! 缺少期望的包目录：$name" >&2
+              exit 1
+            fi
             case "$name" in
               sr3r_common)    out="《黑道圣徒III》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
               sr4r_common)    out="《黑道圣徒IV》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
               sr4r_microsoft) out="《黑道圣徒IV》_简体中文_微软商店_补丁_${BUILD_DATE}.zip" ;;
-              *)              out="${name}_${BUILD_DATE}.zip" ;;
             esac
             echo "打包 $name -> $out"
             # -UN=UTF8: 显式写入 UTF-8 文件名标志位（第 11 位），
             #   否则 Windows 自带解压器可能把中文名按本地代码页解读 -> 乱码。
             ( cd "$name" && zip -r -9 -UN=UTF8 "../${out}" . )
+            packed=$((packed + 1))
           done
+
+          # 报告未打包的目录（不失败，只提示 —— 便于发现构建污染）
+          for d in */; do
+            n="${d%/}"
+            case "$n" in sr3r_common|sr4r_common|sr4r_microsoft) ;; *)
+              echo "提示：目录 $n 不在发布白名单内，未打包" ;;
+            esac
+          done
+
+          echo "共打包 $packed 个"
           ls -la ./*.zip
 
       - name: 创建 Release

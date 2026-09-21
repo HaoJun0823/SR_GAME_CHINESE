@@ -74,23 +74,33 @@ TARGETS = {
         asi='SR4R_I18N.asi', ini='SR4R_I18N.ini', prefix='SR4'),
 }
 
-# 工具集：**默认交给 vcxproj 自己的声明**，不强制指定。
+# 工具集：**显式指定 v141**（不靠 vcxproj 声明兜底）。
 #
-# ★★ 2026-09-21 修正（CI 适配）：
-#   本机开发环境装的是 v141(14.16) + v142 + v145，SR3 的 x64 配置写死 v141，
-#   于是旧版把 TOOLSET 硬编码成 'v141'。但 GitHub Actions 的 windows-2022 镜像
-#   **默认不含 v141**（需要额外装 Microsoft.VisualStudio.Component.VC.v141.x86.x64），
-#   硬传 /p:PlatformToolset=v141 会直接报 MSB8020 找不到该工具集。
+# ★★ 2026-09-21 最终结论（CI 实测驱动）：
+#   v141 不是偏好，是 **MinHook 1.3.3 的硬约束**：
+#     · 依赖包 `packages/minhook.1.3.3/build/native/minhook.targets` 里，工具集
+#       只列到 v141（v90/v100/v110/v120/v140/v141）；
+#     · 而 `.nupkg` 内**不含** libMinHook.lib —— 该文件靠 targets 按
+#       $(PlatformToolset) 前缀匹配后 <Copy> 生成。
+#     · v142/v143/v145 全部匹配不上 → MH_ToolSet 为空 → MH_LibSuffix 变
+#       成 "x64--md" → 58 条 Copy 条件无一命中 → `lib\MinHook.lib` 不存在
+#       → **LNK1104 无法打开文件 "libMinHook.lib"**。
+#   所以两个工程（SR3/SR4，含 Win32/x64 四个配置）已统一改成 v141。
 #
-#   而两个工程实际写的工具集是：
-#       SR3  x64 → v141      SR4 x64 → v145
-#   即 SR4 本来就不需要 v141。因此正确做法是**不传这个参数**，
-#   让 MSBuild 用 vcxproj 里各自的配置；需要强制时用环境变量覆盖：
+#   ⚠️ 与 MSB8020 的区别：MSB8020 = runner 缺该工具集（装组件可解）；
+#      LNK1104 = 依赖包不支持该工具集（装什么都没用，只能回退 v141）。
 #
-#       SR_I18N_TOOLSET=v141   python build_release.py
+#   历史上 SR4 工程写 v145 能编过，是因为本机 packages 目录里**残留**了上一次
+#   v141 构建 Copy 出来的 libMinHook.lib（SHA256 与 libMinHook-x64-v141-mt.lib
+#   完全一致）—— 属于「蹭到」而非「支持」。CI 全新 clone + NuGet 还原后
+#   该文件不存在，故 v145 在 CI 必挂。
 #
-#   留空 = 用 vcxproj 声明（推荐，本机/CI 都对）。
-TOOLSET = os.environ.get('SR_I18N_TOOLSET', '').strip()
+#   这里显式传 /p:PlatformToolset 是为了「即使有人误改 vcxproj 也编不出错东西」，
+#   需要临时试验其它工具集时用环境变量覆盖（但注意 MinHook 会链接失败）：
+#
+#       SR_I18N_TOOLSET=v143   python build_release.py
+#
+TOOLSET = os.environ.get('SR_I18N_TOOLSET', 'v141').strip()
 
 # 命令行构建必须显式指定 Windows SDK 版本。
 #   原因：vcxproj 里写 `<WindowsTargetPlatformVersion>10.0</...>`（=「最新」）时，
@@ -100,6 +110,8 @@ TOOLSET = os.environ.get('SR_I18N_TOOLSET', '').strip()
 #   ── 2026-09-21 放宽：不再写死 10.0.19041.0，而是**探测本机已安装的 SDK**，
 #      取 19041 优先，否则退到可用的最高版本。CI runner 上不一定装了 19041，
 #      写死会让 SR4 报 MSB8036。可用 SR_I18N_WINSDK 覆盖。
+#      （实测 windows-2022 镜像装了 19041，见官方 Windows2022-Readme「Installed
+#        Windows SDKs」：10.0.17763.0 / 10.0.19041.0 / 10.0.22621.0 / 10.0.26100.0）
 WINSDK_VERSION = os.environ.get('SR_I18N_WINSDK', '').strip() or None
 
 
@@ -241,8 +253,8 @@ def ensure_nuget(proj):
 def compile_dll(cfg, msbuild):
     """编译 x64 Release DLL，返回产物 .dll 绝对路径。
 
-    工具集：默认**不传** /p:PlatformToolset，用 vcxproj 自己的声明
-    （SR3 x64=v141 / SR4 x64=v145）。设了 SR_I18N_TOOLSET 才强制覆盖。
+    工具集：显式传 /p:PlatformToolset（默认 v141，见 TOOLSET 的注释 —— 这是
+    MinHook 1.3.3 的硬约束，不是偏好）。vcxproj 里四个配置也都已改成 v141。
     SDK：显式传入探测到的版本（见 find_winsdk），避免 MSB8036。
     """
     proj = os.path.join(ROOT, cfg['proj'])

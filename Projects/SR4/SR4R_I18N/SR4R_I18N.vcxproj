@@ -21,13 +21,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <!-- ★★ 2026-09-21: v145(VS2026) 改为 v141(VS2017)。
+         不能改 v142/v143: MinHook 1.3.3 的 build\native\minhook.targets 只列到 v141
+         (v90/v100/v110/v120/v140/v141)，且 .nupkg 内不含 libMinHook.lib，
+         该文件靠 targets 按 $(PlatformToolset) 前缀匹配后 Copy 生成。
+         v142/v143/v145 全部落空，MH_LibSuffix 退化为 x64 空 空 md，
+         不生成 lib，最终 LNK1104。故 v141 是 MinHook 1.3.3 支持的最高工具集。
+         NOTE: XML 注释内不得出现连续两个连字符，故此段用文字描述而非箭头。 -->
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <!-- ★★ 同上: 必须 v141（MinHook 1.3.3 的 targets 上限）。 -->
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
