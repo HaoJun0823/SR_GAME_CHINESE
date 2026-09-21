@@ -234,11 +234,13 @@ s_off = struct.unpack_from("<I", buf, off + j * 4)[0]   # ✗ 同上
 
 | 位置 | 内容 |
 |---|---|
-| `Release/SR3/common/misc/` | 42 文件（21 个表 × `_us`/`_zh`） |
-| `Release/SR4/common/misc/` | 42 文件 |
 | 游戏 `update\`（SR3R） | 42 文件已部署；旧坏文件备份在 `update\_bak_broken_20260920\` |
-| `dist/common/update/SR3/` | 42 文件（git 维护） |
-| `dist/common/update/SR4/` | 42 文件（git 维护） |
+| `release/sr3r_common/update/` | 42 文件（构建产出，不入库） |
+| `release/sr4r_common/update/` | 42 文件（构建产出，不入库） |
+
+> 注：早期的 `dist/common/update/{SR3,SR4}/` 副本已于仓库清理时删除。
+> le_strings 现在**只由 `build_release.py` 的 step3 现场构建**到 `release/{gv}/update/`，
+> 不再在 `dist/` 下维护一份静态副本（那是历史遗留的死数据，app 从不读取）。
 
 ---
 
