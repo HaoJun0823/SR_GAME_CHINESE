@@ -216,6 +216,18 @@ def _key_cover(tpl_path, pairs):
     return len(hs & set(pairs.keys())) / len(hs)
 
 
+def _stub_ratio(pairs):
+    """未翻译占位桩比例: value 长度 <=1 的条目占比。
+
+    ★★ 2026-09-21 新增。原先这段逻辑内联在 build_game 里, 只有一处使用;
+    现在「候选源资格判定」与「换源后回退判定」也要用同一判据, 故提出来共用,
+    避免两处阈值各写各的、日后改一处漏一处。
+    """
+    if not pairs:
+        return 1.0
+    return sum(1 for v in pairs.values() if len(v) <= 1) / len(pairs)
+
+
 def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False):
     """构建单个 {game}_{version} 的 le_string 产物。
 
@@ -318,13 +330,28 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False):
                 # 族名 = 去掉尾部 locale 后缀(_us/_zh/_cz...) 后的第一段
                 #   例: platform_pc_us -> platform   (这样可以捞到 platform_ggp_us)
                 #       dlc5_us       -> dlc        (同族 dlc1..dlc7)
+                #
+                # ★★ 2026-09-21 修复: 候选源必须先过「已翻译」门槛。
+                #   事故: SR4 microsoft 的 platform_pc_us 模板 488 键, 同名源
+                #   platform_pc_us.txt 覆盖 92.42% (单字符值占比仅 1%, 是正常译文);
+                #   同族候选 platform_ggp_us.txt 覆盖 100% —— 但它是一份**未翻译提取桩**
+                #   (值 = 英文原文首字母, 单字符占比 100%)。旧逻辑只看覆盖率, 于是
+                #   把桩源选了上来; 紧接着桩检测 (stub>0.5) 又把这个「已换源」的结果
+                #   整个判死 -> 该表被 [跳过] + _purge_out -> 发布包永久缺 platform_pc。
+                #   修法: a) 候选源若自身是桩, 直接取消资格;
+                #         b) 换源后若桩检测不过, **回退到同名源** 再判一次, 而不是放弃。
+                #   (换源只是"找更好的", 同名源的 92.42% 也远胜于整表不产出。)
                 base = stem.rsplit('_', 1)[0]        # platform_pc  /  dlc5
                 fam = base.rsplit('_', 1)[0] + '_'   # platform_     /  dlc_
                 cands = [n for n in txts
                          if (n == stem or n.startswith(fam)) and n != stem]
                 best, best_cov = None, cover_own
                 for n in sorted(cands):
-                    c = _key_cover(tpl_path, _src_pairs(n))
+                    cp = _src_pairs(n)
+                    if _stub_ratio(cp) > 0.5:
+                        log(f'         (候选 {n}.txt 是未翻译桩, 取消换源资格)')
+                        continue
+                    c = _key_cover(tpl_path, cp)
                     if c > best_cov:
                         best, best_cov = n, c
                 if best and best_cov >= 0.99:
@@ -339,11 +366,24 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False):
             _purge_out(stem, '空 txt')
             continue
         # 桩文件检测: 若大量 value 为 <=1 字符(占位符), 视为未翻译, 跳过以免发布垃圾
-        stub = sum(1 for v in pairs.values() if len(v) <= 1) / len(pairs)
+        stub = _stub_ratio(pairs)
         if stub > 0.5:
-            log(f'  [跳过] {stem}: 检测到未翻译占位桩 (单字符值占比 {stub:.0%}), 不发布')
-            _purge_out(stem, '占位桩')
-            continue
+            # ★★ 2026-09-21: 若当前源是「换源得来的」, 先回退到同名源再判一次。
+            #   只有连同名源也是桩, 才认定这张表确实无可用的译文。
+            if src_used != stem and stem in txts:
+                own = _src_pairs(stem)
+                own_stub = _stub_ratio(own)
+                if own and own_stub <= 0.5:
+                    _resrc.append((stem, src_used, stem, stub, own_stub))
+                    log(f'  [回退] {stem}: 换源 {src_used}.txt 是占位桩 '
+                        f'(单字符 {stub:.0%}) -> 回退到 {stem}.txt (单字符 {own_stub:.0%})')
+                    src_used = stem
+                    pairs = own
+                    stub = own_stub
+            if stub > 0.5:
+                log(f'  [跳过] {stem}: 检测到未翻译占位桩 (单字符值占比 {stub:.0%}), 不发布')
+                _purge_out(stem, '占位桩')
+                continue
         # SR3 charlist_zh 可选; SR4 本仓库无 charlist_zh -> None
         charmap = None
         if game == 'SR3':
