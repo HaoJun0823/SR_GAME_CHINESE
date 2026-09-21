@@ -1,6 +1,0 @@
-﻿dllmain.cpp
-
-G:\Projects\SR4R_DLL\SR4R_I18N\framework.h(5): fatal error C1083: 锟睫凤拷锟津开帮拷锟斤拷锟侥硷拷: 锟斤拷windows.h锟斤拷: No such file or directory
-
-
-璇硶妫€鏌?澶辫触

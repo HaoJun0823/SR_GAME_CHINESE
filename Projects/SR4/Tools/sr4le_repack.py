@@ -89,10 +89,14 @@ def build_reverse_charmap(charmap):
     return rev
 
 
-def encode_text_with_charmap(text, rev_charmap):
+def encode_text_with_charmap(text, rev_charmap, step=2):
     """
-    将解码后的文本反向映射回原始字符, 再编码为 UTF-16LE + 0x0000。
-    未在 rev_charmap 中的字符保持原样。
+    将解码后的文本反向映射回原始字符, 再按指定步长编码 + NUL。
+
+    ★★ 2026-09-20 加入 step 参数 (2=UTF-16LE / 4=UTF-32LE):
+       microsoft 商店版的 le_strings 字符串载荷是 **UTF-32LE (每码位 4 字节)**,
+       其余构建是 UTF-16LE (每码位 2 字节)。若写回时不按原编码, 新旧混编
+       -> 引擎按错的步长读到 0 字节即截断 -> 界面显示单字母/空白。
     """
     chars = []
     for ch in text:
@@ -101,8 +105,142 @@ def encode_text_with_charmap(text, rev_charmap):
             chars.append(rev_charmap[cp])
         else:
             chars.append(cp)
-    # 编码为 UTF-16LE
+    if step == 4:
+        return struct.pack(f'<{len(chars)}I', *chars) + b'\x00\x00\x00\x00'
     return struct.pack(f'<{len(chars)}H', *chars) + b'\x00\x00'
+
+
+# ── 字符串编码步长探测 ──────────────────────────────────────────
+
+def detect_text_step(buf, nb, buckets):
+    """探测字符串载荷步长: 2 (UTF-16LE) 或 4 (UTF-32LE)。
+
+    ★★ 判据 (由强到弱, 取第一个能给出结论的):
+
+    A) **结构判据 (首选, 对单条目/短表也有效)**
+       UTF-32LE 下, 每个码位占 4 字节且高 2 字节恒为 0;
+       于是从载荷起点 +4 开始, 每 4 字节组的第 2、3 字节应为 0。
+       UTF-16LE 下, 相邻码位的字节是 码元低/高 交替, 不会系统性为 0。
+       做法: 逐条目累积「偏移 (4k+2, 4k+3) 位置上的非零字节数」与
+             「偏移 (4k, 4k+1) 位置上的非零字节数」;
+       若非零字节**全部**落在 (4k, 4k+1) 组内 (奇数半字位置全零) => UTF-32。
+
+    B) **长度判据 (兜底)**
+       按 2B 读几乎全是单字符、按 4B 读几乎全是多字符 => UTF-32。
+    """
+    starts = []
+    for (off, cnt) in buckets:
+        for j in range(cnt):
+            so = off + j * 8
+            if so + 4 > len(buf):
+                continue
+            a = struct.unpack_from('<I', buf, so)[0]
+            if a and a + 4 <= len(buf):
+                starts.append(a)
+    starts = sorted(set(starts))
+    if not starts:
+        return 2
+    nxt = {}
+    for i, a in enumerate(starts):
+        nxt[a] = starts[i + 1] if i + 1 < len(starts) else len(buf)
+
+    # ── A) 结构判据 ────────────────────────────────────────────
+    #   ★ 注意方向性: 「某一半字组全零」两种解释都可能成立 ——
+    #       U32: 高 2B 恒 0 -> hi_nz==0 (lo 组内有内容)
+    #       但纯 CJK 文本按 U16 存放时, 汉字低字节常为 0, 也可能出现 **lo_nz==0**
+    #       的假象 (如 "黑" = 0x9ED1 -> 字节 D1 9E, 落在 hi 组)。
+    #     => 只有「hi_nz==0 且 lo_nz 有明显量」才判 U32;
+    #        「lo_nz==0 而 hi_nz 有量」不足以单独下结论 (交由 A2/B 复核)。
+    lo_nz = 0      # 偶数半字位置 (4k, 4k+1) 上的非零字节
+    hi_nz = 0      # 奇数半字位置 (4k+2, 4k+3) 上的非零字节
+    for a in starts[:120]:
+        pay = buf[a + 4:min(nxt[a], a + 4 + 256)]
+        for k, c in enumerate(pay):
+            if c:
+                if (k % 4) < 2:
+                    lo_nz += 1
+                else:
+                    hi_nz += 1
+    if lo_nz and hi_nz == 0:
+        return 4
+
+    # ── A2) 载荷内部结构判据 (比 A 更准, 用于 A 无法定论时) ──────
+    #   思路: 在**本条文本自身**范围内 (即到首个 u16 NUL 为止), 检查每个
+    #   2 字节单元的「高半字是否恒为 0」。
+    #     UTF-32: 每个 4 字节码位 = {lo16, 00 00}, 故文本区内**所有**奇数
+    #             半字 (pay[2], pay[6], ...) 均为 0;
+    #             且 NUL 之前最后一个码位的 lo16 非零。
+    #     UTF-16: 文本区内奇数半字是码位的**高字节**, CJK 下非零 (如 ：=FF1A),
+    #             不会全零。
+    #   ★ 为什么不用「NUL 后还剩几字节」: 原位覆盖会把短译文的剩余槽位清零,
+    #     使 NUL 之后**既可能**跟 2B 残留 **也可能**跟真正的 4B 终止符, 不可分。
+    u32_votes = u16_votes = 0
+    for a in starts[:120]:
+        pay = buf[a + 4:nxt.get(a, len(buf))]
+        # 只取到首个 u16 NUL 为止的文本本体 (不含任何残留/终止填充)
+        k = 0
+        while k + 1 < len(pay) and struct.unpack_from('<H', pay, k)[0] != 0:
+            k += 2
+        body = pay[:k]
+        if len(body) < 4:
+            continue
+        # 结构化检查: 每个 4B 组的后 2B 是否为 0 (即奇数半字全零)
+        odd_all_zero = all(struct.unpack_from('<H', body, m + 2)[0] == 0
+                           for m in range(0, len(body) - 3, 4))
+        if odd_all_zero and len(body) % 4 == 0:
+            u32_votes += 1
+        else:
+            u16_votes += 1
+    if u32_votes and u16_votes == 0:
+        return 4
+    if u16_votes and u32_votes == 0:
+        return 2
+
+    # ── B) 长度判据 ────────────────────────────────────────────
+    n = len16one = len32gt1 = 0
+    for a in starts[:60]:
+        pay = buf[a + 4:nxt[a]]
+        e = 0
+        while e + 1 < len(pay) and struct.unpack_from('<H', pay, e)[0] != 0:
+            e += 2
+        l16 = e // 2
+        m = 0
+        while m + 3 < len(pay) and struct.unpack_from('<I', pay, m)[0] != 0:
+            m += 4
+        l32 = m // 4
+        n += 1
+        if l16 <= 1:
+            len16one += 1
+        if l32 > 1:
+            len32gt1 += 1
+    if n and len16one / n > 0.8 and len32gt1 / n > 0.8:
+        return 4
+    return 2
+
+
+def detect_file_step(path):
+    """★ 对外便捷入口: 探测某个 le_strings 文件的载荷步长 (2/4)。
+
+    txt -> le_strings 之前**必须先调用本函数知道目标模板的编码**,
+    再据此把译文按相同步长写入 —— 否则会出现「按 UTF-16 往 UTF-32 模板写」
+    这类静默损坏 (每条只剩 1 字符 / 产物大幅缩水)。
+
+    返回 2 (UTF-16LE) 或 4 (UTF-32LE)。
+    """
+    buf = open(path, 'rb').read()
+    if len(buf) < 12:
+        raise ValueError(f'{path}: 文件过小, 不是合法 le_strings')
+    fid, _ver, nb, _nstr = struct.unpack_from('<IHHI', buf, 0)
+    if fid != 0xA84C7F73:
+        raise ValueError(f'{path}: 非 le_strings (ID=0x{fid:08X})')
+    buckets = []
+    for i in range(nb):
+        base = 12 + i * 16
+        if base + 16 > len(buf):
+            raise ValueError(f'{path}: bucket[{i}] 表越界')
+        count, _, offset, _ = struct.unpack_from('<IIII', buf, base)
+        buckets.append((offset, count))
+    return detect_text_step(buf, nb, buckets)
 
 
 # ── txt 解析 ────────────────────────────────────────────────────
@@ -144,21 +282,36 @@ def parse_txt(path):
 def parse_le_strings_raw(path):
     """
     解析 le_strings 原始文件, 返回:
-      fid, ver, nb, nstr, [(bucket_idx, hash, text_bytes, s_off, slot_len)]
-    text_bytes 含末尾 0x0000; s_off 为该条目在文件中的绝对偏移;
-    slot_len 为原文本区长度 (含终止 0x0000)。
+      fid, ver, nb, nstr, [(bucket_idx, hash, text_bytes, s_off, slot_len)], buf, step
+
+    text_bytes 含末尾 NUL 终止符 (UTF-16 为 0x0000 / UTF-32 为 0x00000000);
+    s_off 为该条目在文件中的绝对偏移;
+    slot_len 为原文本区长度 (含终止符);
+    step 为载荷步长 (2=UTF-16LE / 4=UTF-32LE) —— 由内容自动探测。
     """
     buf = open(path, 'rb').read()
+    if len(buf) < 12:
+        raise ValueError(f'{path}: 文件过小')
     fid, ver, nb, nstr = struct.unpack_from('<IHHI', buf, 0)
     if fid != 0xA84C7F73:
         raise ValueError(f'{path}: 非 le_strings (ID=0x{fid:08X})')
+
+    # 先收集 bucket, 以便探测步长
+    buckets = []
+    for i in range(nb):
+        base = 12 + i * 16
+        if base + 16 > len(buf):
+            raise ValueError(f'{path}: bucket[{i}] 表越界')
+        count, _, offset, _ = struct.unpack_from('<IIII', buf, base)
+        buckets.append((offset, count))
+
+    step = detect_text_step(buf, nb, buckets)
+    term = 2 if step == 2 else 4
 
     entries = []
     total_count = 0
     for i in range(nb):
         base = 12 + i * 16
-        if base + 16 > len(buf):
-            raise ValueError(f'{path}: bucket[{i}] 表越界')
         count, _, offset, _ = struct.unpack_from('<IIII', buf, base)
         total_count += count
         for j in range(count):
@@ -172,12 +325,14 @@ def parse_le_strings_raw(path):
             if s_off + 4 > len(buf):
                 raise ValueError(f'{path}: bucket[{i}] 字符串偏移越界 @0x{s_off:X}')
             h = struct.unpack_from('<I', buf, s_off)[0]
-            # 找文本终点 (u16 0)
+            # 找文本终点 (按 step 步长读到全零单元)
             e = s_off + 4
-            while e + 1 < len(buf) and struct.unpack_from('<H', buf, e)[0] != 0:
-                e += 2
-            text_bytes = buf[s_off + 4: e + 2]   # 含末尾 0x0000
-            slot_len = (e + 2) - (s_off + 4)
+            fmt = '<H' if term == 2 else '<I'
+            while e + term - 1 < len(buf) and \
+                    struct.unpack_from(fmt, buf, e)[0] != 0:
+                e += term
+            text_bytes = buf[s_off + 4: e + term]   # 含末尾 NUL
+            slot_len = (e + term) - (s_off + 4)
             entries.append((i, h, text_bytes, s_off, slot_len))
     # ★★ 一致性校验 (2026-09-20 事故防护): 桶条目总数必须等于 header.stringCount,
     #    否则说明解析步长/结构判断出错, 直接拒绝继续, 避免静默产出坏文件。
@@ -186,7 +341,7 @@ def parse_le_strings_raw(path):
             f'{path}: bucket 条目总数 {total_count} != header.stringCount {nstr} (文件不一致)')
     if len(entries) != nstr:
         raise ValueError(f'{path}: 解析出 {len(entries)} 条 != nstr {nstr}')
-    return fid, ver, nb, nstr, entries, buf
+    return fid, ver, nb, nstr, entries, buf, step
 
 
 # ── 模式 1: 全量重建 repack ─────────────────────────────────────
@@ -195,13 +350,16 @@ def repack(in_path, pairs, out_path, charmap=None):
     """
     全量重建 le_strings: 保留原文件 bucket 分配, 桶内按 hash 排序,
     offset 表使用 8 字节步长 (u32 offset + u32 pad0)。
-    pairs: {hash: text_str}  (text_str 为 Python str, 将编码为 UTF-16LE + 0x0000)
+    pairs: {hash: text_str}
     charmap: 原始 charlist 映射 (用于反向映射文本字符)
-    缺失的 hash 沿用原文本。
+    缺失的 hash 沿用原文本 (**按原文件编码原样拷贝**, 不重编码)。
+
+    ★★ 载荷步长按原文件自动探测 (2=UTF-16LE / 4=UTF-32LE), 新译文按同一步长写入,
+       以保证新旧条目编码一致 —— 否则引擎按单一步长读会立刻截断。
     """
     rev_charmap = build_reverse_charmap(charmap) if charmap else {}
     pairs = dict(pairs)
-    fid, ver, nb, nstr, entries, _ = parse_le_strings_raw(in_path)
+    fid, ver, nb, nstr, entries, _, step = parse_le_strings_raw(in_path)
 
     # 应用覆盖
     out_entries = []
@@ -210,7 +368,7 @@ def repack(in_path, pairs, out_path, charmap=None):
             out_entries.append((b, 0, b''))
         elif h in pairs:
             new_text = pairs.pop(h)
-            new_bytes = encode_text_with_charmap(new_text, rev_charmap)
+            new_bytes = encode_text_with_charmap(new_text, rev_charmap, step)
             out_entries.append((b, h, new_bytes))
         else:
             out_entries.append((b, h, t_bytes))
@@ -272,7 +430,8 @@ def repack(in_path, pairs, out_path, charmap=None):
     open(out_path, 'wb').write(bytes(out))
 
     # ★★ 回读校验 (强制): 用本模块的读路径重新解析产物, 必须读回 nstr 条。
-    _f, _v, _nb, _n, back, _buf = parse_le_strings_raw(out_path)
+    _r = parse_le_strings_raw(out_path)
+    back = _r[4]
     if len(back) != nstr:
         raise ValueError(f'{out_path}: 回读校验失败, 只读回 {len(back)}/{nstr} 条')
     return nstr, len(pairs)  # 返回总数和未匹配数
@@ -287,7 +446,7 @@ def repack_inplace(in_path, pairs, out_path, charmap=None):
     charmap: 原始 charlist 映射 (用于反向映射文本字符)
     """
     rev_charmap = build_reverse_charmap(charmap) if charmap else {}
-    fid, ver, nb, nstr, entries, buf = parse_le_strings_raw(in_path)
+    fid, ver, nb, nstr, entries, buf, step = parse_le_strings_raw(in_path)
     buf = bytearray(buf)
     pairs = dict(pairs)
     replaced = {}
@@ -296,7 +455,7 @@ def repack_inplace(in_path, pairs, out_path, charmap=None):
         if h == 0 or h not in pairs:
             continue
         new_text = pairs.pop(h)
-        new_bytes = encode_text_with_charmap(new_text, rev_charmap)
+        new_bytes = encode_text_with_charmap(new_text, rev_charmap, step)
         if len(new_bytes) > slot_len:
             raise ValueError(
                 f'hash 0x{h:08X}: 新文本 {len(new_bytes)}B > 原槽 {slot_len}B, 无法原位覆盖'
@@ -319,48 +478,82 @@ def repack_inplace(in_path, pairs, out_path, charmap=None):
 
 # ── 自检 ────────────────────────────────────────────────────────
 
-def self_test():
-    """自检: 对内置最小样例做 round-trip, 验证读/写在 8 字节 offset 表下自洽。
-
-    用于 CI / 自动化构建前置校验, 不依赖任何游戏文件。
-    """
-    import tempfile
-
-    nb, nstr = 1, 3
+def _make_sample(step, texts, hashes):
+    """构造一个最小合法 le_strings; step ∈ {2,4} 决定载荷编码。"""
+    nb, nstr = 1, len(texts) + 1     # +1 为第一个空槽
     head = 12 + 16 * nb + 8 * nstr
     start = (head + 3) & ~3
     buf = bytearray(start)
     struct.pack_into('<IHHI', buf, 0, 0xA84C7F73, 1, nb, nstr)
-    bucket_offsets = [0]          # 第一个是空槽
+    bucket_offsets = [0]             # 第一个是空槽
     cur = start
-    for text in ('HELLO', 'WORLD'):
+    term = b'\x00\x00' if step == 2 else b'\x00\x00\x00\x00'
+    for text, h in zip(texts, hashes):
         while cur & 3:
             cur += 1
             buf.append(0)
         bucket_offsets.append(cur)
-        buf += struct.pack('<I', 0x12345678) + text.encode('utf-16-le') + b'\x00\x00'
+        if step == 2:
+            pay = text.encode('utf-16-le')
+        else:
+            pay = struct.pack(f'<{len(text)}I', *[ord(c) for c in text])
+        buf += struct.pack('<I', h) + pay + term
         cur = len(buf)
     struct.pack_into('<IIII', buf, 12, nstr, 0, 12 + 16 * nb, 0)
     pos = 12 + 16 * nb
     for off in bucket_offsets:
         struct.pack_into('<II', buf, pos, off, 0)
         pos += 8
+    return bytes(buf), nstr
+
+
+def self_test():
+    """自检: 对内置最小样例做 round-trip, 验证读/写在 8 字节 offset 表下自洽。
+
+    用于 CI / 自动化构建前置校验, 不依赖任何游戏文件。
+    ★★ 2026-09-20: 增加 UTF-32LE 样例 (microsoft 商店版格式) —— 旧版只测 UTF-16,
+       导致商店版的 4B/字符 载荷被静默截断成单字符而无人察觉。
+    """
+    import tempfile
 
     with tempfile.TemporaryDirectory() as td:
-        src = os.path.join(td, 't_us.le_strings')
-        dst = os.path.join(td, 't_zh.le_strings')
-        open(src, 'wb').write(bytes(buf))
-        _f, _v, _nb, got, entries, _b = parse_le_strings_raw(src)
-        assert got == nstr, f'self_test: 读出 {got} != {nstr}'
-        assert sum(1 for e in entries if e[1] == 0) == 1, 'self_test: 空槽数量不对'
-        # 全量重建 (空覆盖 = 纯 round-trip) 与 原位覆盖 都必须保条目数
-        repack(src, {}, dst)
-        _f, _v, _nb, got2, _e2, _b2 = parse_le_strings_raw(dst)
-        assert got2 == nstr, f'self_test(repack): {got2} != {nstr}'
-        repack_inplace(src, {0x12345678: '你好'}, dst)
-        _f, _v, _nb, got3, _e3, _b3 = parse_le_strings_raw(dst)
-        assert got3 == nstr, f'self_test(repack_inplace): {got3} != {nstr}'
-    print('[self_test] sr4le_repack OK: 8 字节 offset 表读/写自洽, 条目数守恒')
+        for step in (2, 4):
+            src = os.path.join(td, f't{step}_us.le_strings')
+            dst = os.path.join(td, f't{step}_zh.le_strings')
+            blob, nstr = _make_sample(step, ('HELLO', 'WORLD'),
+                                      (0x11111111, 0x22222222))
+            open(src, 'wb').write(blob)
+
+            r = parse_le_strings_raw(src)
+            got, entries, det_step = r[3], r[4], r[6]
+            assert got == nstr, f'self_test(step={step}): 读出 {got} != {nstr}'
+            assert det_step == step, \
+                f'self_test: 步长探测 {det_step} != 期望 {step} (UTF-{step * 8})'
+            assert sum(1 for e in entries if e[1] == 0) == 1, \
+                'self_test: 空槽数量不对'
+            # 未命中译文的条目必须原样保留 (round-trip 保指纹)
+            kept = [e for e in entries if e[1] == 0x11111111][0]
+            if step == 4:
+                expect = struct.pack('<5I', *[ord(c) for c in 'HELLO'])
+                assert kept[2][:20] == expect, 'self_test: UTF-32 条目未被原样保留'
+                assert kept[4] == 20 + 4, f'self_test: UTF-32 槽长 {kept[4]} != 24'
+
+            # 全量重建 (空覆盖 = 纯 round-trip) 与 原位覆盖 都必须保条目数
+            repack(src, {}, dst)
+            assert parse_le_strings_raw(dst)[3] == nstr, \
+                f'self_test(repack, step={step}): 条目数不守恒'
+            repack_inplace(src, {0x11111111: '你好'}, dst)
+            rr = parse_le_strings_raw(dst)
+            assert rr[3] == nstr, \
+                f'self_test(repack_inplace, step={step}): 条目数不守恒'
+            assert rr[6] == step, 'self_test: 产物步长被改变'
+            back = [e for e in rr[4] if e[1] == 0x11111111][0][2]
+            if step == 2:
+                assert back == '你好'.encode('utf-16-le') + b'\x00\x00'
+            else:
+                assert back == struct.pack('<2I', ord('你'), ord('好')) + b'\x00' * 4
+    print('[self_test] sr4le_repack OK: 8 字节 offset 表读/写自洽, '
+          '条目数守恒, UTF-16/UTF-32 双步长均正确')
 
 
 # ── 批量处理 ────────────────────────────────────────────────────

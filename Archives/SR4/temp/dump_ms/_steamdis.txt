@@ -1,0 +1,61 @@
+ImageBase = 0x140000000
+  .text      vaddr=0x1000 vsize=0x13FEE9C raw=0x400 rawsize=0x13FF000
+  .rdata     vaddr=0x1400000 vsize=0x3906DA raw=0x13FF400 rawsize=0x390800
+  .data      vaddr=0x1791000 vsize=0x63DD7F0 raw=0x178FC00 rawsize=0x25B600
+  .pdata     vaddr=0x7B6F000 vsize=0x127B3C raw=0x19EB200 rawsize=0x127C00
+  _RDATA     vaddr=0x7C97000 vsize=0x1920 raw=0x1B12E00 rawsize=0x1A00
+  .rsrc      vaddr=0x7C99000 vsize=0x31198 raw=0x1B14800 rawsize=0x31200
+  .reloc     vaddr=0x7CCB000 vsize=0x2CA50 raw=0x1B45A00 rawsize=0x2CC00
+
+Steam MOUNT_REG fn VA=0x140B7E7A0 -> file_off=0xB7DBA0
+==================================================================================
+  0x140B7E7A0  +0    48 89 5c 24 08             mov qword ptr [rsp + 8], rbx
+  0x140B7E7A5  +5    48 89 74 24 10             mov qword ptr [rsp + 0x10], rsi
+  0x140B7E7AA  +A    57                         push rdi
+  0x140B7E7AB  +B    48 83 ec 20                sub rsp, 0x20
+  0x140B7E7AF  +F    8b d9                      mov ebx, ecx
+  0x140B7E7B1  +11   41 0f b6 f0                movzx esi, r8b
+  0x140B7E7B5  +15   48 8d 0d 8c 6b e1 05       lea rcx, [rip + 0x5e16b8c]   ; rip->0x146995348
+  0x140B7E7BC  +1C   8b fa                      mov edi, edx
+  0x140B7E7BE  +1E   e8 ed ac 0a 00             call 0x140c294b0   ; ->0x140C294B0
+  0x140B7E7C3  +23   44 8b 15 b6 a5 e1 05       mov r10d, dword ptr [rip + 0x5e1a5b6]   ; rip->0x146998D80
+  0x140B7E7CA  +2A   45 33 c9                   xor r9d, r9d
+  0x140B7E7CD  +2D   45 85 d2                   test r10d, r10d
+  0x140B7E7D0  +30   74 26                      je 0x140b7e7f8
+  0x140B7E7D2  +32   45 8b d9                   mov r11d, r9d
+  0x140B7E7D5  +35   48 8d 05 b8 a5 e1 05       lea rax, [rip + 0x5e1a5b8]   ; rip->0x146998D94
+  0x140B7E7DC  +3C   0f 1f 40 00                nop dword ptr [rax]
+  0x140B7E7E0  +40   39 58 fc                   cmp dword ptr [rax - 4], ebx
+  0x140B7E7E3  +43   75 04                      jne 0x140b7e7e9
+  0x140B7E7E5  +45   39 38                      cmp dword ptr [rax], edi
+  0x140B7E7E7  +47   74 1c                      je 0x140b7e805
+  0x140B7E7E9  +49   41 ff c1                   inc r9d
+  0x140B7E7EC  +4C   49 ff c3                   inc r11
+  0x140B7E7EF  +4F   48 83 c0 0c                add rax, 0xc
+  0x140B7E7F3  +53   45 3b ca                   cmp r9d, r10d
+  0x140B7E7F6  +56   72 e8                      jb 0x140b7e7e0
+  0x140B7E7F8  +58   41 83 fa 10                cmp r10d, 0x10
+  0x140B7E7FC  +5C   72 59                      jb 0x140b7e857
+  0x140B7E7FE  +5E   32 db                      xor bl, bl
+  0x140B7E800  +60   e9 cf 00 00 00             jmp 0x140b7e8d4   ; ->0x140B7E8D4
+  0x140B7E805  +65   40 84 f6                   test sil, sil
+  0x140B7E808  +68   74 49                      je 0x140b7e853
+  0x140B7E80A  +6A   45 85 c9                   test r9d, r9d
+  0x140B7E80D  +6D   74 44                      je 0x140b7e853
+  0x140B7E80F  +6F   4b 8d 04 5b                lea rax, [r11 + r11*2]
+  0x140B7E813  +73   4c 8d 05 76 a5 e1 05       lea r8, [rip + 0x5e1a576]   ; rip->0x146998D90
+  0x140B7E81A  +7A   4d 8d 14 80                lea r10, [r8 + rax*4]
+  0x140B7E81E  +7E   66 90                      nop 
+  0x140B7E820  +80   41 8d 51 ff                lea edx, [r9 - 1]
+  0x140B7E824  +84   48 8d 0c 52                lea rcx, [rdx + rdx*2]
+  0x140B7E828  +88   44 8b ca                   mov r9d, edx
+  0x140B7E82B  +8B   f2 41 0f 10 04 88          movsd xmm0, qword ptr [r8 + rcx*4]
+  0x140B7E831  +91   41 8b 44 88 08             mov eax, dword ptr [r8 + rcx*4 + 8]
+  0x140B7E836  +96   f2 41 0f 11 02             movsd qword ptr [r10], xmm0
+  0x140B7E83B  +9B   41 89 42 08                mov dword ptr [r10 + 8], eax
+  0x140B7E83F  +9F   4d 8d 52 f4                lea r10, [r10 - 0xc]
+  0x140B7E843  +A3   85 d2                      test edx, edx
+  0x140B7E845  +A5   75 d9                      jne 0x140b7e820
+  0x140B7E847  +A7   89 1d 43 a5 e1 05          mov dword ptr [rip + 0x5e1a543], ebx   ; rip->0x146998D90
+  0x140B7E84D  +AD   89 3d 41 a5 e1 05          mov dword ptr [rip + 0x5e1a541], edi   ; rip->0x146998D94
+  0x140B7E853  +B3   b3 01                      mov bl, 1

@@ -1,0 +1,45 @@
+  +0x0    40 57                    push rdi
+  +0x2    48 83 ec 30              sub rsp, 0x30
+  +0x6    48 c7 44 24 20 fe ff ff ff mov qword ptr [rsp + 0x20], 0xfffffffffffffffe
+  +0xF    48 89 5c 24 40           mov qword ptr [rsp + 0x40], rbx
+  +0x14   48 89 74 24 48           mov qword ptr [rsp + 0x48], rsi
+  +0x19   41 0f b6 f0              movzx esi, r8b
+  +0x1D   8b fa                    mov edi, edx
+  +0x1F   8b d9                    mov ebx, ecx
+  +0x21   48 8d 0d d0 b2 ee 05     lea rcx, [rip + 0x5eeb2d0]
+  +0x28   e8 c3 e0 ff ff           call 0x140deeba0
+  +0x2D   45 33 c9                 xor r9d, r9d
+  +0x30   44 8b 15 45 b2 ee 05     mov r10d, dword ptr [rip + 0x5eeb245]
+  +0x37   45 85 d2                 test r10d, r10d
+  +0x3A   74 22                    je 0x140df0b0e
+  +0x3C   45 8b d9                 mov r11d, r9d
+  +0x3F   48 8d 05 6e c3 ee 05     lea rax, [rip + 0x5eec36e]
+  +0x46   39 58 fc                 cmp dword ptr [rax - 4], ebx
+  +0x49   75 04                    jne 0x140df0aff
+  +0x4B   39 38                    cmp dword ptr [rax], edi
+  +0x4D   74 1c                    je 0x140df0b1b
+  +0x4F   41 ff c1                 inc r9d
+  +0x52   49 ff c3                 inc r11
+  +0x55   48 83 c0 0c              add rax, 0xc
+  +0x59   45 3b ca                 cmp r9d, r10d
+  +0x5C   72 e8                    jb 0x140df0af6
+
+== 关键偏移与解址 ==
+  movzx esi,r8b  +0x19   bytes=41 0f b6 f0    
+  lea rcx        +0x21   bytes=48 8d 0d d0 b2 ee 05 -> 0x146CDBDA8
+  call           +0x28   bytes=e8 c3 e0 ff ff 
+  mov r10d       +0x30   bytes=44 8b 15 45 b2 ee 05 -> 0x146CDBD2C
+  lea rax        +0x3F   bytes=48 8d 05 6e c3 ee 05 -> 0x146CDCE64
+
+  计数全局   = 0x146CDBD2C   (从 +0x30 的 mov r10d 解出)
+  数组+4     = 0x146CDCE64   (从 +0x3F 的 lea rax 解出)
+  数组基址   = 0x146CDCE60
+
+== 用原始字节复算（模拟 DLL 的 runtime 解址公式）==
+  count-insn @ +0x30 = 44 8b 15
+  array-insn @ +0x3F = 48 8d 05
+  count = 0x146CDBD2C  (期望 0x146CDBD2C)
+  array+4 = 0x146CDCE64 (期望 0x146CDCE64)
+  ✓ 解址公式与反汇编一致
+
+== 引用计数全局 0x146CDBD2C 的指令 ==

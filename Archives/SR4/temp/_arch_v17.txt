@@ -1,8 +1,0 @@
-﻿copy3 OK
-copy4 OK
-DumpText.v14_dict_2232.dtxt                 11486
-DumpText.v16_CRASH_2246.dtxt                11486
-SR4R_I18N.MS_v17_2256.log                    8959
-SR4R_I18N.MS_v17_2300.log                    6474
-SR4R_I18N.v14_dict_2232.log                  4566
-SR4R_I18N.v16_CRASH_2246.log                 3867

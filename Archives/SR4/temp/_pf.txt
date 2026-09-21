@@ -1,9 +1,0 @@
-﻿########## packfiles\pc ##########
-cache  dir
-
-########## update\packfiles ##########
-pc  dir
-
-########## update\packfiles\pc ##########
-cache  dir
-
