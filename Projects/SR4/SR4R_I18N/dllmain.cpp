@@ -163,6 +163,130 @@ static const uint8_t SIG_SUBTITLE_DRAW[16] = {
     0x4C,0x8B,0xDC,0x55,0x56,0x41,0x54,0x49,0x8D,0xAB,0xA8,0xFB,0xFF,0xFF,0x48,0x81 };
 
 // ---------------------------------------------------------------------
+//  K 资源挂载表注册器 (v1.9 起改为「直接调用」) —— loose le_string 加载核心
+// ---------------------------------------------------------------------
+//  目标函数: sub_140B7E7A0(int type, int param, char insertFront)
+//    Steam VA = 0x140B7E7A0（其它构建由 AOB 定位）
+//
+//  【引擎资源解析架构 —— 为什么 loose 文件会被 vpp 盖掉】
+//    所有资源(xtbl / le_strings / …)都经由统一打开器 sub_140B82670 解析:
+//      ① 表为空(dword_146998D80==0) -> 直接失败, 没有兜底
+//      ② 遍历挂载表 sub_140B81070, 按「表序」逐项尝试, **首个成功即 return**
+//      ③ 每项 = {u32 type, u32 param, u8 enabled} (12B/项, 最多 16 项)
+//           type==0 -> 磁盘 loose 探测 (sub_140C09400 / GetFileAttributesExA)
+//           type==1 -> vpp_pc 查询 (param==6 走流式 sub_140B82AD0)
+//           type==2 -> 容器2   (sub_140BB3860)
+//           type==4 -> 容器4   (sub_140C092E0, SR4 独有)
+//      ④ param 匹配规则: 请求 param == -1(0xFFFFFFFF) 表示「通配任意 param」;
+//         否则必须 == 表项 param 才参与 (sub_140B81070 @ loc_140B81128)。
+//         ★ le_string 请求正好走 param == -1 通配路径
+//           (sub_140B82670 开头 movzx r15d,r9b, 调用方 sub_1404B5E20 传 -1)
+//
+//    挂载表由 WinMain -> sub_140235550 一次性建立, 注册顺序 (= 表序):
+//       [0] {0,0} 磁盘   <- **insertFront 硬编码 0** (xor r8d,r8d @ 0x14023597d)
+//       [1] {2,0}       <- insertFront = dil
+//       [2] {edi,0}     <- insertFront = dil
+//       [3] {edi,6}     <- insertFront = dil   (vpp 流式)
+//       [4] {4,0}       <- insertFront = dil
+//    其它项都插队(dil=1)而磁盘项排在原位(0) -> 磁盘项被挤到**表尾**,
+//    于是 vpp 永远先命中, loose 文件形同虚设 —— 这正是实测 "loose 无效" 的根因。
+//
+//  【v1.9 的做法: 直接调用注册器, 不再 hook】
+//    v1.8 曾用 MinHook 拦截注册器改写 insertFront, 但实测 mrCalls=0 ——
+//    ASI Loader 注入 DllMain 时 WinMain 早已跑完注册, hook 永不触发。**已废弃。**
+//
+//    v1.9 改为: 直接调 sub_140B7E7A0(0, 0, 1) —— 表里已有 {0,0} 磁盘项,
+//    insertFront=1 会把它从表尾前移到表头 [0]。
+//    sub_140B7E7A0 的既有语义（IDA 实测）:
+//        在表中按 (type,param) 线性查到下标 v6;
+//        if (insertFront && v6 != 0) { 把 [0..v6-1] 整体后移一格; 本项写到 [0]; }
+//        v6==0 或 insertFront==0 时原位置不动（幂等, 可重复调用）。
+//    → 这是引擎自带代码, 零改写风险, 也不需要 MinHook。
+//
+//    为什么 DllMain 里调就来得及: 挂载表是**运行时活表**, 我们只需赶在
+//    第一次资源访问之前把表头换掉, 不必抢在注册之前。
+//
+//  特征码: 32B —— 逐字节对齐 IDA 实测的 sub_140B7E7A0 序言:
+//    +0  48 89 5C 24 08   mov [rsp+arg_0], rbx
+//    +5  48 89 74 24 10   mov [rsp+arg_8], rsi
+//    +10 57               push rdi
+//    +11 48 83 EC 20      sub rsp, 20h
+//    +15 8B D9            mov ebx, ecx        ; type  <- 第1参数
+//    +17 41 0F B6 F0      movzx esi, r8b      ; ★ insertFront <- 第3参数
+//    +21 48 8D 0D xx*4    lea rcx, [临界区]   ; rip disp32 @[24..27] 通配
+//    +28 8B FA            mov edi, edx        ; param <- 第2参数
+//    +30 E8 xx*4          call EnterCriticalSection ; rel32 @[31..34] 通配
+//  L1 只取前 31 字节（到 call 操作码 E8 为止）—— 再多一个字节就要碰 call 的
+//  相对偏移，偏移值会随构建变化, 通配不掉。唯一性锚点 = 序言 + movzx(第3参数)
+//  + lea rcx 临界区 + mov edi(第2参数) + call。
+//
+//  挂载表两个全局地址（用于日志核对 / 直接读表）由函数体内部 rip disp32 解出:
+//    +0x23 : 44 8B 15 disp32  mov r10d, cs:XXX  长 7 -> 目标 = fn+0x2A+d = 【计数】
+//    +0x35 : 48 8D 05 disp32  lea rax,  [XXX]   长 7 -> 目标 = fn+0x3C+d = 【数组+4】
+//    ★ 注意这两个偏移与 SR3R 不同（SR3R 是 +0x30 / +0x3F）—— SR3R 序言多一条
+//      mov [rsp+20h],-2 且 xor r9d 的位置也不同, 导致整体偏移错位。切勿跨版本套用。
+//  ★ 通配区间必须是 lea 的 disp32 = 下标 0x18..0x1B（共 4 项）。
+//     曾经的错版把区间整体前移一格(0x17..0x1A) —— 下标 0x17 是 lea 的操作码 0x0D
+//     被误标成通配(该精确却不查), 下标 0x1B 是 disp32 末字节被要求 == 0x00。
+//     disp32 > 0xFFFFFF 时末字节非 0 -> L1 永不命中, 而旧地址恰好末字节为 0 时
+//     侥幸命中, 导致 bug 长期潜伏。
+//  ★ 铁律: 数组长度必须 == AOB_ENTRY 声明的 len(=31)。原先写死 [32] 而只填 31 项,
+//     第 32 项被 C 隐式补 0 —— 编译器不报错, 是最阴的一类缺陷。现改为 [ ] 自动定长
+//     + 下方 static_assert 强校验, 让「长度不符」在编译期就报错。
+static const uint8_t SIG_MOUNT_REG[] = {
+    0x48,0x89,0x5C,0x24,0x08,0x48,0x89,0x74,0x24,0x10,0x57,0x48,0x83,0xEC,0x20,0x8B,
+    0xD9,0x41,0x0F,0xB6,0xF0,0x48,0x8D,0x0D,0x00,0x00,0x00,0x00,0x8B,0xFA,0xE8 };
+static const uint8_t MASK_MOUNT_REG[] = {
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1, 0,0,0,0, 1,1,1 };
+static_assert(sizeof(SIG_MOUNT_REG) == 31,  "SIG_MOUNT_REG 必须 31 字节 (见 AOB_ENTRY MOUNT_REG)");
+static_assert(sizeof(MASK_MOUNT_REG) == 31, "MASK_MOUNT_REG 必须 31 字节 (见 AOB_ENTRY MOUNT_REG)");
+
+// ---------------------------------------------------------------------
+//  K3 资源挂载表注册器 —— MS Store 换代构建精确特征码（L3）
+// ---------------------------------------------------------------------
+//  ★ 为什么必须有这一层（2026-09-20 实测, MS Store loose 失效的真根因）:
+//    MS Store (sriv.exe, TDS=5E58CEF8, 2020-02) 比 Steam/GOG/EPIC 早三年,
+//    **换了一代 MSVC**。同一份源码编出的注册器:
+//      新构建(Steam/GOG/EPIC): mov [rsp+8],rbx; mov [rsp+0x10],rsi; push rdi
+//                              sub rsp,0x20; mov ebx,ecx; movzx esi,r8b; ...
+//      MS 构建               : push rdi; sub rsp,0x30
+//                              mov [rsp+0x20],-2   <- SEH 展开槽(老 MSVC 才有)
+//                              mov [rsp+0x40],rbx; mov [rsp+0x48],rsi
+//                              movzx esi,r8b; mov edi,edx; mov ebx,ecx; ...
+//    **指令序列本身不同 ⇒ 字节级 mask 无论怎么放宽都不可能同时覆盖两代。**
+//    实测: 新构建的 17B 全精确序言在 MS dump 命中 **0 次**。
+//    → 只能为 MS 构建另备一套「纯精确」特征码（同代内 rel32/disp32 不随 ASLR 变化）。
+//
+//  语义已逐条与 Steam 版对照, 确认是同一函数（仅编译布局不同）:
+//    表项步长 add rax,0xc (12B) / 上限 cmp r10d,0x10 (16 项) / movsd 后移循环 /
+//    mov bl,1 返回 true / test sil,sil 的 insertFront 分支 —— 全部一致。
+//  离线断言: MS dump 恰好 1 命中 @0x140DF0AB0; Steam/GOG/EPIC 各 0 命中（不干扰）。
+//
+//  ★ 2026-09-20: R3_MOUNTREG 已**改由 Tools/gen_aob_relaxed.py 生成**并随
+//    aob_l2_arrays.inc 一并提供（与 R3_FORMAT / R3_SUBTITLE 同处）。原因:
+//    本条曾是全项目唯一的「手写 AOB 项」, 正因如此漏了 L3 —— 手写项不经过
+//    生成器的四构建强制校验, 极易漏层。并入脚本后, 每次重生成都会自动重申
+//    四构建断言（MS 恰好 1 / 新族各 0）, 事故无法复发。
+//    生成器同时机械推导出 R2_MOUNTREG/RM_MOUNTREG, 与旧手写 mask **逐位一致**,
+//    故旧手写版本已退役 —— 现全部来自 inc, 本文件不再定义。
+
+// 注册器内部相对偏移（**按构建族不同, 运行时从 g_exe 判定**）
+//   新构建族 (Steam/GOG/EPIC): 0x11 / 0x23 / 0x35
+//   MS Store (老 MSVC)       : 0x19 / 0x30 / 0x3F
+//   ★ SR3R 又是另一套(0x19/0x30/0x3F 之外), 切勿跨版本套用。
+static constexpr ptrdiff_t MOUNTREG_OFF_MOVZX_ESI_NEW = 0x11;   // movzx esi, r8b
+static constexpr ptrdiff_t MOUNTREG_OFF_COUNT_INSN_NEW = 0x23;  // mov r10d, cs:计数
+static constexpr ptrdiff_t MOUNTREG_OFF_ARRAY_INSN_NEW = 0x35;  // lea rax, cs:数组+4
+static constexpr ptrdiff_t MOUNTREG_OFF_MOVZX_ESI_MS = 0x19;    // MS: movzx esi, r8b
+static constexpr ptrdiff_t MOUNTREG_OFF_COUNT_INSN_MS = 0x30;   // MS: mov r10d, cs:计数
+static constexpr ptrdiff_t MOUNTREG_OFF_ARRAY_INSN_MS = 0x3F;   // MS: lea rax, cs:数组+4
+
+// 定位时按「命中该地址的那一层」选偏移 —— 由 LocateMountReg 填充
+static ptrdiff_t g_mrOffMovzx = MOUNTREG_OFF_MOVZX_ESI_NEW;
+static ptrdiff_t g_mrOffCount = MOUNTREG_OFF_COUNT_INSN_NEW;
+static ptrdiff_t g_mrOffArray = MOUNTREG_OFF_ARRAY_INSN_NEW;
+
+// ---------------------------------------------------------------------
 //  L2/L3 多层特征码 —— 由 Tools/gen_aob_relaxed.py 生成并校验（请勿手改）
 //  L2 通配原则: 只通配「地址/尺寸字段」(栈帧 imm、rip disp32、call rel32、
 //   参数溢出槽 disp8), 绝不碰操作码/ModRM。窗口里的 0 是通配占位, 不参与比较。
@@ -182,6 +306,13 @@ AOB_ENTRY(SRV_RESOLVE, SIG_SRV_RESOLVE,  nullptr,          16, R2_SRVRESOLVE, RM
 AOB_ENTRY(LANG_CUR,    SIG_LANG_CUR,     MASK_LANG_CUR,    27, R2_LANGCUR,    RM_LANGCUR,    27, nullptr, nullptr, 0);
 AOB_ENTRY(LANG_TXT,    SIG_LANG_TXT,     MASK_LANG_TXT,    16, R2_LANGTXT,    RM_LANGTXT,    27, nullptr, nullptr, 0);
 AOB_ENTRY(SUBTITLE,    SIG_SUBTITLE_DRAW,nullptr,          16, R2_SUBTITLE,   RM_SUBTITLE,   48, R3_SUBTITLE, nullptr, 48);
+// K 资源挂载表注册器 (v1.9 loose le_string) —— 见下方 ApplyLooseFirst 说明
+//   ★ 注意本条的 L1/L2 长度与其它 hook 不同:
+//     L1 = 31（收在 call 操作码处, 不含 call 的 rel32 —— 那个偏移会随构建变）
+//     L2 = 48（放宽窗口）
+//   L1/L2/L3 全部来自 aob_l2_arrays.inc + 上方 SIG_/MASK_MOUNT_REG（脚本托管）。
+//   L3 = MS Store 换代构建精确码（老 MSVC, 序言形态不同）—— 见行 240 附近的说明。
+AOB_ENTRY(MOUNT_REG,   SIG_MOUNT_REG,    MASK_MOUNT_REG,   31, R2_MOUNTREG,   RM_MOUNTREG,   48, R3_MOUNTREG, nullptr, 48);
 
 
 // 字符集扩充配置
@@ -558,6 +689,7 @@ struct Config
     bool     earlyDiag;           // v7.4: 早期替换命中/Format miss 调用点诊断日志
     bool     subtitleEarly;       // v7.5: 字幕绘制入口整串替换（Hook J）
     int      textDump;            // v1.3: 可执行段落盘 0=关 1=总是 2=auto(仅定位失败时)
+    bool     looseFirst;          // v1.9: 挂载表磁盘项插队(loose 文件优先于 vpp_pc)
     wchar_t  exeOverride[16];     // 强制指定构建 (auto/steam/gog/epic/msstore); 默认 auto=按 PE 指纹识别
 };
 
@@ -571,6 +703,7 @@ static Config g_cfg = {
     false,                         // early_diag 默认关
     true,                          // subtitle_early
     2,                             // text_dump = auto
+    true,                          // loose_first = 开（loose 资源优先于 vpp_pc）
     L"auto",                       // exe: 按 PE 指纹自动识别
 };
 
@@ -636,14 +769,16 @@ static void LoadConfig(const wchar_t* iniPath)
                      !_wcsicmp(val, L"always"))                                       g_cfg.textDump = 1;
             else                                                                      g_cfg.textDump = 2;
         }
+        else if (_wcsicmp(key, L"loose_first") == 0)  g_cfg.looseFirst = (*val != L'0');
         else if (_wcsicmp(key, L"exe") == 0)  wcsncpy_s(g_cfg.exeOverride, val, _TRUNCATE);
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d loose=%d exe=%ls)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
-        (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, g_cfg.textDump, g_cfg.exeOverride);
+        (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, g_cfg.textDump,
+        (int)g_cfg.looseFirst, g_cfg.exeOverride);
 }
 
 // ---------- CRC-32 (IEEE 反射, 与 zlib.crc32 一致) ----------
@@ -2917,6 +3052,344 @@ static double __fastcall HookSubtitle(const wchar_t* text, float a2, double a3, 
     return g_origSubtitle(text, a2, a3, a4);
 }
 
+// ======================================================================
+//  Hook K’(v1.9): 挂载表磁盘项插队 —— 直接调用注册器, 不再 hook
+// ----------------------------------------------------------------------
+//  目标: sub_140B7E7A0(int type, int param, char insertFront)
+//  完整原理见上方 SIG_MOUNT_REG 处的大段注释; 这里只写行为契约:
+//
+//    引擎在 WinMain 早期注册 5 类资源槽位, 其中「磁盘 loose 探测」
+//    项(type==0)的 insertFront 被硬编码为 0 —— 结果它排到了表尾,
+//    而遍历是「首个成功即返回」, 所以 vpp 永远先命中, 根目录的 loose
+//    资源文件(xtbl / le_strings / …)全都读不到。这就是"loose 无效"的根因。
+//
+//    v1.9 做法: 直接调 sub_140B7E7A0(0, 0, 1) 把磁盘项前移到表头 [0]。
+//    不用 MinHook —— 因为注册期(DllMain 之前)早已结束, hook 上去也永不触发
+//    (v1.8 实测 mrCalls=0)。而挂载表是运行时活表, 只要赶在第一次资源访问
+//    之前把表头换掉即可, 这正是 DllMain 能胜任的。
+//
+//  安全性:
+//    - 只调注册器移动 type==0 项, 其它 type 一律不碰, 不改变原有优先级结构;
+//    - 磁盘上不存在该文件时探测返回 0, 遍历会自然走到下一项(vpp),
+//      行为与未改表时完全一致 —— 纯增量;
+//    - 幂等: 若磁盘项已在 [0], sub_140B7E7A0 内部 (v6==0) 不搬动;
+//    - ini `loose_first = 0` 可完全关闭本功能。
+// ======================================================================
+
+// 前向声明: 本功能需要在 DllMain(ATTACH) 里执行, 而 AobScan/SigMatch
+// 定义在本文件靠后位置（它们依赖 AobSig / 段扫描基础设施）
+static uint64_t AobScan(const AobSig& s, int* hitsOut);
+static bool     SigMatch(const uint8_t* target, const uint8_t* sig, const uint8_t* mask, size_t len);
+
+// 本 DLL 自身模块句柄（DllMain 里记录; 早期读 ini 用）
+static HMODULE  g_hSelfModule = nullptr;
+
+using MountReg_t = char(__fastcall*)(int type, int param, char insertFront);
+static MountReg_t g_fnMountRegCall  = nullptr;   // ★ 引擎注册器本体（用于直接调用）
+static uint32_t*  g_pMountCount     = nullptr;   // dword_146998D80 表项数
+static uint32_t*  g_pMountArray     = nullptr;   // dword_146998D90 表项数组（12B/项）
+static bool       g_mountRegApplied = false;
+
+// ----------------------------------------------------------------------
+//  LocateMountReg / LooseFirstWatcherThread —— 定位(只读) + 独立守候线程改表
+// ----------------------------------------------------------------------
+//  时机: 挂载表注册在进程启动极早期完成, 而 CRT 静态构造(临界区初始化)更早。
+//    ★ DllMain 里**不能**调用注册器: 那时临界区尚未初始化 -> 崩溃（实测）。
+//    故拆两步: ① DllMain 只做只读定位  ② MainThread 里等表就绪后改表。
+//
+//  MainThread 需要: 读 ini → 建 arena/桶 → 载词典(几万条) → AOB 扫 8 条特征
+//    (每条都遍历整个 .text, 实测数百 ms), 跑到改表那一步时引擎早已初始化完。
+//
+//  安全性:
+//    - 不做 LoadLibrary / CreateThread 之外的危险操作, 无 loader lock 死锁面;
+//    - 不使用 MinHook（v1.9 起完全不需要）;
+//    - 任一步失败 -> 只写日志并返回, 主流程不受影响;
+//    - 成功后置 g_mountRegApplied, 不再重复处理。
+// ----------------------------------------------------------------------
+
+// 只读 ini 里的 loose_first 一项（默认 true）。用 Win32 文件 API + 朴素 ASCII
+// 扫描, 避免在 DllMain 里依赖 CRT 的 locale/文件全局状态。
+static bool ReadLooseFirstFlag(HMODULE hSelf)
+{
+    wchar_t path[MAX_PATH];
+    DWORD n = GetModuleFileNameW(hSelf, path, MAX_PATH);
+    if (!n || n >= MAX_PATH) return true;
+    wchar_t* slash = wcsrchr(path, L'\\');
+    if (!slash) return true;
+    const wchar_t* leaf = slash + 1;
+    // 同目录 <dllname>.ini（dllmain 里的 asi 名是 SR4R_I18N.asi -> SR4R_I18N.ini）
+    wcscpy_s(slash + 1, MAX_PATH - (slash + 1 - path), L"SR4R_I18N.ini");
+
+    HANDLE f = CreateFileW(path, GENERIC_READ, FILE_SHARE_READ, nullptr,
+                           OPEN_EXISTING, 0, nullptr);
+    if (f == INVALID_HANDLE_VALUE) return true;   // 无 ini -> 默认开
+
+    char buf[4096];
+    DWORD rd = 0;
+    BOOL ok = ReadFile(f, buf, sizeof(buf) - 1, &rd, nullptr);
+    CloseHandle(f);
+    if (!ok) return true;
+    buf[rd] = '\0';
+
+    // 朴素查找 "loose_first"（大小写不敏感）, 取其后的 '=' 与数字
+    for (DWORD i = 0; i + 11 < rd; ++i)
+    {
+        char k[12];
+        for (int j = 0; j < 11; ++j) k[j] = (char)tolower((unsigned char)buf[i + j]);
+        k[11] = '\0';
+        if (strcmp(k, "loose_first") != 0) continue;
+        DWORD p = i + 11;
+        while (p < rd && (buf[p] == ' ' || buf[p] == '\t')) ++p;
+        if (p >= rd || buf[p] != '=') continue;
+        ++p;
+        while (p < rd && (buf[p] == ' ' || buf[p] == '\t')) ++p;
+        if (p >= rd) return true;
+        return buf[p] != '0';       // 0/off 之外的任何值都当"开"
+    }
+    (void)leaf;
+    return true;
+}
+
+// 把挂载表里的磁盘项 {type=0,param=0} 前移到表头。返回 true = 已完成。
+//
+//   ★ 调用前提（血的教训, 同 SR3R）: 注册器内部会 EnterCriticalSection,
+//     该临界区由引擎 CRT 静态构造初始化 —— **DllMain 时期尚未初始化**。
+//     在 DllMain 里调用 = 进未初始化临界区 = 进程崩溃。
+//     故必须等「表非空」（说明引擎已完成静态构造与注册）才动手。
+static bool ApplyLooseFirst()
+{
+    if (g_mountRegApplied) return true;
+    if (!g_fnMountRegCall)
+    {
+        Log("mountreg: 注册器未定位 -> 无法插队");
+        return false;
+    }
+
+    // ★ 安全门: 表为空说明引擎还没注册（CRT 静态构造也没跑），此时调用会崩。
+    if (!g_pMountCount || *g_pMountCount == 0 || *g_pMountCount > 16)
+    {
+        Log("mountreg: mount table not ready (count=%u) -> 暂不改表",
+            g_pMountCount ? *g_pMountCount : 0);
+        return false;
+    }
+
+    // ★★ v1.9.2 新增「注册序列已结束」判定（与 SR3R v7.8.2 同构, 实测崩溃教训）:
+    //   引擎连续调 3 次注册器（count 1→2→3）。若在 count 刚到 1/2 时抢先插队,
+    //   会与引擎后续那次 MountReg(...,insertFront=1) 打架 → 后续线程空指针崩溃
+    //   （c0000005, 崩在游戏自身链表遍历, 栈上无本 DLL 帧）。
+    //   故要求「count 稳定在预期值」再动手。
+    static const uint32_t MOUNTREG_EXPECT = 3;          // 原版固定注册 3 项
+    static const int      MOUNTREG_STABLE_SAMPLES = 4;  // 连续 4 次(×50ms=200ms)不变
+    {
+        uint32_t c = *g_pMountCount;
+        static uint32_t s_lastCount = 0;
+        static int      s_sameCnt   = 0;
+        if (c < MOUNTREG_EXPECT)
+        {
+            if (c == s_lastCount) ++s_sameCnt; else { s_lastCount = c; s_sameCnt = 1; }
+            Log("mountreg: 注册序列进行中 (count=%u/%u) -> 继续等待", c, MOUNTREG_EXPECT);
+            return false;
+        }
+        if (c == s_lastCount)
+        {
+            if (++s_sameCnt < MOUNTREG_STABLE_SAMPLES) return false;
+        }
+        else
+        {
+            s_lastCount = c; s_sameCnt = 1; return false;
+        }
+    }
+
+    // 调用前后各扫一次表, 便于日志核对「是否真的搬动了」
+    auto findDisk = [](uint32_t* arr, uint32_t cnt) -> int
+    {
+        if (!arr || cnt > 16) return -1;
+        for (uint32_t i = 0; i < cnt; ++i)
+            if (arr[3 * i] == 0 && arr[3 * i + 1] == 0) return (int)i;
+        return -1;
+    };
+    uint32_t cnt0 = *g_pMountCount;
+    int idx0 = findDisk(g_pMountArray, cnt0);
+
+    char ok = g_fnMountRegCall(0, 0, 1);            // ★ insertFront=1 -> 顶到 [0]
+
+    uint32_t cnt1 = *g_pMountCount;
+    int idx1 = findDisk(g_pMountArray, cnt1);
+
+    Log("mountreg: ApplyLooseFirst -> ret=%d, count %u->%u, disk idx %d -> %d",
+        (int)ok, cnt0, cnt1, idx0, idx1);
+
+    if (idx1 == 0)
+    {
+        g_mountRegApplied = true;
+        Log("mountreg: ★ 磁盘项已置于表头 [0] —— loose 资源(含 le_strings)优先于 vpp_pc");
+        return true;
+    }
+    Log("mountreg: WARN 磁盘项未在表头 (idx=%d) —— loose 可能不生效", idx1);
+    return false;
+}
+
+// 定位注册器 + 解出挂载表全局地址（**纯只读**, 可在 DllMain 里安全执行）。
+//   注意: 本函数**不调用**注册器 —— 调用必须等引擎 CRT 静态构造跑完
+//   （见 ApplyLooseFirst 的「安全门」注释）。改表动作在 MainThread 里做。
+static bool LocateMountReg()
+{
+    if (g_fnMountRegCall) return true;              // 已定位
+
+    // ① 定位: L1 精确 -> L2 放宽 -> L3 换代构建精确
+    //    L2 解决「同代编译器, 帧尺寸/rip disp/call rel32 漂移」;
+    //    L3 解决「换了一代编译器, 前导指令形态不同」—— MS Store(2020-02) 属后者,
+    //    其 17B 序言在 MS dump 命中 0 次, mask 再怎么放宽也救不了（详见 R3_MOUNTREG）。
+    //    ★ 命中哪一层, 就必须用那一层的 sig/mask 做落点校验, 且用那一层的内部偏移。
+    int hits = 0, h2 = 0, h3 = 0;
+    uint64_t va  = AobScan(AOB_MOUNT_REG, &hits);
+    bool     isMs = false;                            // L3(MS 构建) 命中?
+    if (va)
+    {
+        g_mrOffMovzx = MOUNTREG_OFF_MOVZX_ESI_NEW;
+        g_mrOffCount = MOUNTREG_OFF_COUNT_INSN_NEW;
+        g_mrOffArray = MOUNTREG_OFF_ARRAY_INSN_NEW;
+    }
+    else
+    {
+        AobSig l2 = { "MOUNT_REG", R2_MOUNTREG, RM_MOUNTREG, 48, nullptr, nullptr, 0, nullptr, nullptr, 0 };
+        va = AobScan(l2, &h2);
+        if (va)
+        {
+            Log("mountreg: L1 落空(%d hits) -> L2 放宽命中 @0x%llX", hits, (unsigned long long)va);
+            g_mrOffMovzx = MOUNTREG_OFF_MOVZX_ESI_NEW;
+            g_mrOffCount = MOUNTREG_OFF_COUNT_INSN_NEW;
+            g_mrOffArray = MOUNTREG_OFF_ARRAY_INSN_NEW;
+        }
+    }
+    if (!va)
+    {
+        AobSig l3 = { "MOUNT_REG", R3_MOUNTREG, nullptr, 48, nullptr, nullptr, 0, nullptr, nullptr, 0 };
+        va = AobScan(l3, &h3);
+        if (va)
+        {
+            isMs = true;
+            Log("mountreg: L1/L2 落空(%d/%d hits) -> L3 换代构建(MS Store)特征码命中 @0x%llX",
+                hits, h2, (unsigned long long)va);
+            g_mrOffMovzx = MOUNTREG_OFF_MOVZX_ESI_MS;
+            g_mrOffCount = MOUNTREG_OFF_COUNT_INSN_MS;
+            g_mrOffArray = MOUNTREG_OFF_ARRAY_INSN_MS;
+        }
+        else
+        {
+            Log("mountreg: AOB 未命中 (L1 %d / L2 %d / L3 %d hits) -> loose 不生效（引擎更新? 请上报日志）",
+                hits, h2, h3);
+            return false;
+        }
+    }
+    if (!va) return false;
+
+    uint8_t* fn = VA<uint8_t*>(va);
+    // 落点校验: 必须用「命中该地址的那一套」sig/mask（L1 → L2 → L3 依次试）
+    if (!SigMatch(fn, AOB_MOUNT_REG.sig, AOB_MOUNT_REG.mask, AOB_MOUNT_REG.len) &&
+        !SigMatch(fn, R2_MOUNTREG, RM_MOUNTREG, 48) &&
+        !(AOB_MOUNT_REG.sig3 && SigMatch(fn, AOB_MOUNT_REG.sig3, AOB_MOUNT_REG.mask3,
+                                        AOB_MOUNT_REG.len3)))
+    {
+        Log("mountreg: @%p 落点特征校验失败, 放弃", (void*)fn);
+        return false;
+    }
+
+    // ② 落点语义复核: 按本层偏移取 movzx esi, r8b（insertFront 参数通道）。
+    //    这是「调用参数语义正确」的依据 —— 若此处不是 insertFront, 调用就传错了参数。
+    {
+        static const uint8_t OPC[4] = { 0x41, 0x0F, 0xB6, 0xF0 };
+        bool ok = true;
+        for (int i = 0; i < 4; ++i)
+            if (fn[g_mrOffMovzx + i] != OPC[i])
+            {
+                ok = false;
+                Log("mountreg: +0x%llX opcode mismatch (got %02X want %02X), 放弃",
+                    (unsigned long long)g_mrOffMovzx, fn[g_mrOffMovzx + i], OPC[i]);
+                break;
+            }
+        if (!ok) return false;
+    }
+
+    // ③ 从函数体解出挂载表两个全局地址（rip disp32）
+    {
+        uint8_t* insnCnt = fn + g_mrOffCount;   // mov r10d, cs:计数
+        uint8_t* insnArr = fn + g_mrOffArray;   // lea rax,  cs:数组+4
+        if (insnCnt[0] != 0x44 || insnCnt[1] != 0x8B || insnCnt[2] != 0x15)
+        {
+            Log("mountreg: count-insn mismatch at +0x%llX (%02X %02X %02X), 放弃",
+                (unsigned long long)g_mrOffCount, insnCnt[0], insnCnt[1], insnCnt[2]);
+            return false;
+        }
+        if (insnArr[0] != 0x48 || insnArr[1] != 0x8D || insnArr[2] != 0x05)
+        {
+            Log("mountreg: array-insn mismatch at +0x%llX (%02X %02X %02X), 放弃",
+                (unsigned long long)g_mrOffArray, insnArr[0], insnArr[1], insnArr[2]);
+            return false;
+        }
+        int32_t dCnt = *reinterpret_cast<int32_t*>(insnCnt + 3);
+        int32_t dArr = *reinterpret_cast<int32_t*>(insnArr + 3);
+        g_pMountCount   = reinterpret_cast<uint32_t*>(insnCnt + 7 + dCnt);
+        g_pMountArray   = reinterpret_cast<uint32_t*>(insnArr + 7 + dArr - 4);  // lea 出「数组+4」
+        g_fnMountRegCall = reinterpret_cast<MountReg_t>(fn);
+
+        Log("mountreg: fn=0x%llX (off %llX/%llX/%llX%s), count=0x%llX (val=%u), array=0x%llX",
+            (unsigned long long)va,
+            (unsigned long long)g_mrOffMovzx, (unsigned long long)g_mrOffCount,
+            (unsigned long long)g_mrOffArray, isMs ? ", MS代" : "",
+            (unsigned long long)(uint64_t)g_pMountCount, *g_pMountCount,
+            (unsigned long long)(uint64_t)g_pMountArray);
+    }
+    return true;                                        // 仅定位, 不改表
+}
+
+// 在 MainThread 里「等到挂载表就绪后」把磁盘项插队。
+// 「守候线程」: 独立线程轮询挂载表, 一旦引擎注册完(count>0)就把磁盘项插队。
+//
+//   ★ v1.9.1 架构（与 SR3R v7.8.1 同构, 两次实测教训的最终形态）:
+//     ① 不能在 DllMain 里调注册器 —— 那时临界区(CRT 静态构造)还没初始化, 进程崩。
+//     ② 不能在 MainThread 里同步等待 —— 引擎注册发生在主初始化里, 由静态构造
+//        分派器在 ASI 注入**之后**才跑, 实测可晚于注入 30s+;
+//        同步等就会把后面的 hook 安装一起卡死。
+//     → 最终: DllMain 只做只读定位; 本线程独立轮询, 与 hook 安装完全解耦。
+//
+//   ★ v1.9.2 追加「注册序列已结束」判定（实测崩溃教训, 同 SR3R v7.8.2）:
+//     必须等 count 稳定在预期值再插队, 否则会与引擎自身的后续注册打架,
+//     导致游戏后续线程空指针崩溃。本线程不再「表非空就退出」。
+static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
+{
+    if (!LocateMountReg())
+    {
+        Log("mountreg[watch]: 注册器未定位 -> loose 优先不可用");
+        return 0;
+    }
+
+    const DWORD LOOSE_WAIT_MS = 180000;     // 上限 180s（表就绪即返回, 不会等满）
+    const DWORD STEP_MS       = 50;
+    DWORD waited   = 0;
+    DWORD lastBeat = 0;
+
+    while (waited < LOOSE_WAIT_MS)
+    {
+        if (ApplyLooseFirst())
+        {
+            Log("mountreg[watch]: 等待 %u ms 后表就绪并完成插队", waited);
+            return 0;
+        }
+        // v1.9.2: 不再「表非空就退出」—— 注册序列未结束时 ApplyLooseFirst 会
+        //   主动返回 false 继续等；只有它返回 true（已插队成功）才收工。
+        Sleep(STEP_MS);
+        waited += STEP_MS;
+        if (waited - lastBeat >= 5000)      // 心跳 5s
+        {
+            lastBeat = waited;
+            Log("mountreg[watch]: 仍在等待引擎注册挂载表... (%u ms)", waited);
+        }
+    }
+    Log("mountreg[watch]: WARN 等待 %u ms 后表仍未就绪, 放弃", (unsigned)LOOSE_WAIT_MS);
+    return 0;
+}
+
 // ---------- txt 词典加载（le_strings 格式: "KEY": "VALUE", KEY=英文原文/槽位名） ----------
 // 格式规则（与 schinese/*.txt 游戏原生格式一致）:
 //   - 每行 "KEY": "VALUE";  引号内的 \\ \" \n 为转义
@@ -3871,6 +4344,18 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     }
 
     // 5c. 安装（第二阶段）
+    //   挂载表磁盘项插队: 起一个「守候线程」异步完成。
+    //   ★ 不能在 DllMain 调注册器（临界区未初始化 -> 崩溃, v1.9 实测）;
+    //   ★ 也不能在此处同步等待（引擎注册由静态构造分派器在 ASI 注入后才跑,
+    //     实测可晚 30s+, 同步等会把下面的 hook 安装一起卡死, v1.9.1 实测）。
+    //   → 独立线程轮询, 与 hook 安装完全解耦; 结果以 [watch] 行日志为准。
+    if (g_cfg.looseFirst)
+    {
+        HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
+        if (hWatcher) CloseHandle(hWatcher);
+        else          Log("mountreg: WARN 守候线程创建失败 -> loose 优先不可用");
+    }
+
     bool a = InstallHook(AOB_DRAW_WIDE,   g_exe.vaDrawWide,   (void*)HookDrawWide,   (void**)&g_origDrawWide);
     bool b = InstallHook(AOB_FORMAT,      g_exe.vaFormat,     (void*)HookFormat,     (void**)&g_origFormat);
     bool c = InstallHook(AOB_FONT_LOOKUP, g_exe.vaFontLookup, (void*)HookFontLookup, (void**)&g_origFontLookup);
@@ -3896,8 +4381,11 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("SR4R v1.7 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, idling",
-        g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j);
+    Log("SR4R v1.9.4 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, applied=%d, idling",
+        g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j,
+        (int)g_cfg.looseFirst, (int)g_mountRegApplied);
+    // 注: 挂载表插队由独立「守候线程」异步完成（引擎注册晚于本线程）,
+    //     此处 applied 可能仍为 0 —— 属正常, 不等同失败; 结果以 [watch] 行日志为准。
     return 0;
 }
 
@@ -3963,6 +4451,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     {
     case DLL_PROCESS_ATTACH:
         DisableThreadLibraryCalls(hModule);
+        g_hSelfModule = hModule;    // 早期读 ini 用（Hook K 抢装路径）
 #ifdef SR4R_DBG_VEH
         AddVectoredExceptionHandler(1, SR4R_DbgVeh);
 #endif
@@ -3971,7 +4460,20 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N");
-	        Log("[DllMain] ATTACH SR4R v1.7");
+	        Log("[DllMain] ATTACH SR4R v1.9.4");
+            // v1.9: 这里**只做只读定位**, 绝不调用引擎注册器。
+            //   原因（v1.8 实测崩溃）: 注册器内部 EnterCriticalSection(&挂载表锁),
+            //   该临界区由引擎 CRT 静态构造初始化, 而 ASI 的 DllMain 跑在
+            //   主 exe CRT 初始化之前 —— 此时临界区还是全 0, 进去就崩。
+            //   所以: ① 只读 ini 里 loose_first（轻量解析, 不跑整套 LoadConfig）
+            //         ② 只读定位注册器 + 解出挂载表全局地址（纯 AOB/内存读取）
+            //   真正的改表动作在 MainThread 里起的「守候线程」（见 LooseFirstWatcherThread）。
+            {
+                bool iniLoose = ReadLooseFirstFlag(hModule);
+                if (!iniLoose) g_cfg.looseFirst = false;
+            }
+            if (g_cfg.looseFirst)
+                LocateMountReg();          // ★ 只读, 不改表
             CloseHandle(CreateThread(nullptr, 0, MainThread, hModule, 0, nullptr));
         }
         break;

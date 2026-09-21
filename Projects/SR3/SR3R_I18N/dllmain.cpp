@@ -145,6 +145,90 @@ static constexpr uint32_t CHARLIST_FREQ_BASE = 60000;      // 权重基值(>词�
 static AobSig SIG_SUBTITLE_DRAW = { "Subtitle",
     "4C 8B DC 55 57 41 54 49 8D AB A8 FB FF FF 48 81 EC 40 05 00 00 41 0F 29 73 B8 45 0F 29 4B 98" };
 
+// ============================================================================
+// v7.8 资源挂载表「磁盘项插队」—— 让 loose 资源文件优先于 vpp_pc
+// ============================================================================
+// 【机制（IDA 2026-09-19 完整还原）】
+//   引擎所有资源（xtbl / le_strings / 任意类型）最终都走同一个统一打开器
+//   sub_14084EA80（thunk sub_14084E8C0），它内部遍历一张「挂载表」按优先级找资源：
+//      disk 项(type=0) -> GetFileAttributesExA + CreateFileA      ← 磁盘 loose 文件
+//      vpp  项(type=1) -> 去 vpp_pc 包里查
+//      容器2 项(type=2) / 容器4 项(type=4)
+//   表结构：
+//      计数  dword_142967C18        （上限 16）
+//      数组  dword_142967C20        （每项 12 字节: +0 u32 type, +4 u32 param, +8 u8 enabled）
+//   主导遍历的是 sub_14084DEE0（也有流式变体 sub_14084DD60 / sub_14084E140）：
+//      从下标 0 起顺序扫描, 第一个「enabled 且 param 匹配且打开成功」的项胜出。
+//      —— 即「谁排在表头谁优先」, 表尾项永远轮不到。
+//
+// 【问题根因】WinMain → sub_1401673B0 一次性注册 **3 项**（不是 5 项）:
+//     140167678  sub_14084D5A0(0, 0, 0)   ← 磁盘项 {0,0}, insertFront=0 不插队 → 落在 [0]
+//     140167686  sub_14084D5A0(1, 6, 0)   ← {1,6}                  → 落在 [1]
+//     140167693  sub_14084D5A0(1, 0, 1)   ← {1,0}, insertFront=1 插队 → 挪到 [0]
+//   第 3 条把 vpp 项 {1,0} 插到表头, 把磁盘项 {0,0} 顶到 [1]。
+//   最终运行时表布局:
+//     [0] = {1, 0}  vpp_pc 主容器     ← 永远第一个被试, 先命中
+//     [1] = {0, 0}  磁盘 loose        ← 永远轮不到
+//     [2] = {1, 6}  vpp 流式
+//   → loose 实测无效的真正原因。
+//
+// 【本版做法（v7.8 起, 不再 hook）】
+//   v7.7 曾用 MinHook 拦截注册器把 insertFront 由 0 改 1, 但运行时实测
+//   `mrCalls=0` —— ASI Loader 注入 DllMain 时 WinMain 早已跑完注册,
+//   hook 装上也不会再被调用。**该路线已废弃。**
+//
+//   v7.8 改为**直接调用**注册器本身: 只读定位 sub_14084D5A0（DllMain 里做, 纯读）,
+//   然后在 MainThread 里调 MountReg(0, 0, 1) —— 表里已有 {0,0}, insertFront=1 会把它
+//   从 [1] 前移到 [0]（sub_14084D5A0 的既有语义: 找到匹配项后把 [0..v6-1] 整体后移
+//   一格, 再把本项写到 [0]; v6==0 时是空操作）。这是引擎自带的合法 API, 零改写风险。
+//
+//   ★ 为什么改表不能放在 DllMain:
+//     注册器内部 EnterCriticalSection(&stru_142967DA8), 该临界区由 CRT 静态构造
+//     sub_14002FDC0 初始化; 而 ASI 注入的 DllMain 早于主 exe 的 CRT 初始化
+//     -> 进未初始化临界区 = 进程崩溃（v7.8 首版实测）。
+//     同时那一刻挂载表 count 仍为 0（注册还没发生）。
+//     故: DllMain 只读定位; 改表延后到 MainThread, 并在表非空前自旋等待。
+//
+// 【ini 开关】loose_first = 0 可完全禁用（恢复原版行为）
+//
+// 【定位依据】IDA 2026-09-19 实测 sub_14084D5A0（Steam 构建）前 0x46 字节:
+//     14084d5a0  push rdi
+//     14084d5a2  sub  rsp, 30h
+//     14084d5a6  mov  [rsp+38h+var_18], 0FFFFFFFFFFFFFFFEh   ; GS 栈 cookie 存放位
+//     14084d5af  mov  [rsp+38h+arg_0], rbx
+//     14084d5b4  mov  [rsp+38h+arg_8], rsi
+//     14084d5b9  movzx esi, r8b        ; ★ insertFront（第 3 个参数, char）
+//     14084d5bd  mov  ebx, edx         ;   param      （第 2 个参数, int）
+//     14084d5bf  mov  edi, ecx         ;   type       （第 1 个参数, int）
+//     14084d5c1  lea  rcx, cs:stru_142967DA8  ; 临界区（rip disp32, 长 7）
+//     14084d5c8  call EnterCriticalSection
+//     14084d5cd  xor  r9d, r9d
+//     14084d5d0  mov  r10d, cs:dword_142967C18 ; ★ 挂载表【计数】(rip disp32, 长 7)
+//     14084d5d7  test r10d, r10d
+//     14084d5da  jz   short loc_14084D5FE
+//     14084d5dc  mov  r11d, r9d
+//     14084d5df  lea  rax, cs:dword_142967C24  ; ★ 挂载表【数组+4】(rip disp32, 长 7)
+//   特征取前 28 字节（覆盖到 movzx esi,r8b）, 两个 mov [rsp+XX] 的位移用通配
+//   （帧大小/寄存器保存槽位在同代编译器下可能微调）。
+//
+//   挂载表两个全局地址 = 从「定位到的函数入口」按固定偏移解 rip disp32:
+//     fn + 0x30 : mov r10d, cs:XXX   长 7 -> 目标 = fn + 0x37 + disp32   = 【计数】
+//     fn + 0x3F : lea rax, cs:XXX    长 7 -> 目标 = fn + 0x46 + disp32   = 【数组+4】
+//   用 lea 解更稳: lea 的 disp32 是精确目标地址, 无「解引用取内容」语义歧义。
+//   这两个偏移在 SR4 上不同（SR4 是 +0x23 / +0x35, 因其序言少了 mov [rsp+20h],-2）,
+//   **切勿跨版本套用**。
+static AobSig SIG_MOUNT_REG = { "MountReg",
+    "40 57 48 83 EC 30 48 C7 44 24 20 FE FF FF FF 48 89 5C 24 ?? 48 89 74 24 ?? 41 0F B6 F0" };
+
+// 注册器内部相对偏移（SR3R 专属, 勿与 SR4 混用）
+static constexpr ptrdiff_t MOUNTREG_OFF_MOVZX_ESI = 0x19;   // movzx esi, r8b
+static constexpr ptrdiff_t MOUNTREG_OFF_COUNT_INSN = 0x30;  // mov r10d, cs:计数
+static constexpr ptrdiff_t MOUNTREG_OFF_ARRAY_INSN = 0x3F;  // lea rax, cs:数组+4
+
+// 挂载表全局（运行时解析, 0 = 未定位）
+static uint32_t* g_pMountCount = nullptr;   // dword_142967C18  表项数
+static uint32_t* g_pMountArray = nullptr;   // dword_142967C20  表项数组基址（12B/项）
+
 // ---- 引擎全局的「锚点 + 偏移」（全局变量在数据区, 借引用它的代码反推地址）----
 //   FontLookup 内部 +0x43: cmp ecx, cs:dword_XXX  (3B 0D disp32, 指令长 6) -> 字体数
 //   FontLookup 内部 +0x57: mov rax,  cs:qword_XXX (48 8B 05 disp32, 指令长 7) -> 字体指针表
@@ -177,6 +261,7 @@ static uint8_t*  g_fnRefresh       = nullptr;
 static uint8_t*  g_fnSubtitle      = nullptr;
 static uint8_t*  g_fnD3dCtxGetter  = nullptr;
 static uint8_t*  g_fnD3dDevGetter  = nullptr;
+static uint8_t*  g_fnMountReg      = nullptr;   // v7.8: 资源挂载表注册器 (sub_14084D5A0)
 static uint64_t  g_vaFontTab       = 0;   // 字体对象指针表（VA）
 static uint64_t  g_vaFontCount     = 0;   // 字体数（VA）
 static uint64_t  g_vaD3dDevice     = 0;   // ID3D11Device*（VA）
@@ -203,6 +288,7 @@ static constexpr size_t   WRAP_MIN_PREFIX = 8;     // 前缀残段最短长度�
 static constexpr size_t   WRAP_MIN_SUFFIX = 2;     // 后缀残段最短长度
 // ---------- VA -> 本进程地址 ----------
 static uint64_t s_exeBase = 0;   // 游戏模块实际基址（MainThread 内 GetModuleHandleW(nullptr); 诊断分类用）
+static HMODULE  s_hSelfForProbe = nullptr;   // v7.8.3: 诊断探针定位自模块目录用
 template <typename T = uint8_t*>
 static inline T VA(uint64_t va)
 {
@@ -251,8 +337,49 @@ struct Config
     bool     langEarly;           // v7.4: 语言服务返回层整句替换（引擎自切行）
     bool     earlyDiag;           // v7.4: 早期替换命中/Format miss 调用点诊断日志
     bool     subtitleEarly;       // v7.5: 字幕绘制入口整串替换（Hook J）
+    bool     looseFirst;          // v7.8: 挂载表磁盘项插队（loose 资源文件优先于 vpp_pc）
     wchar_t exeOverride[MAX_PATH]; // v7.6.1: 版本强制覆盖 (auto/steam/gog/epic); auto=PE 指纹判别
 };
+
+// v7.8: DllMain 里要用 loose_first, 但那时 LoadConfig 还没跑（它在 MainThread 里）。
+//   这里做一个最小化只读解析: 只找 "loose_first" 这个键, 不碰 CRT locale / 文件全局状态。
+//   找不到 ini / 找不到键 -> 返回默认值（true）。
+static bool ReadLooseFirstFlag(HMODULE hSelf)
+{
+    wchar_t path[MAX_PATH];
+    DWORD n = GetModuleFileNameW(hSelf, path, MAX_PATH);
+    if (!n || n >= MAX_PATH) return true;
+    wchar_t* slash = wcsrchr(path, L'\\');
+    if (!slash) return true;
+    wcscpy_s(slash + 1, MAX_PATH - (slash + 1 - path), L"SR3R_I18N.ini");
+
+    HANDLE f = CreateFileW(path, GENERIC_READ, FILE_SHARE_READ, nullptr,
+                           OPEN_EXISTING, 0, nullptr);
+    if (f == INVALID_HANDLE_VALUE) return true;      // 无 ini -> 默认开
+
+    char buf[4096];
+    DWORD rd = 0;
+    BOOL ok = ReadFile(f, buf, sizeof(buf) - 1, &rd, nullptr);
+    CloseHandle(f);
+    if (!ok) return true;
+    buf[rd] = '\0';
+
+    for (DWORD i = 0; i + 11 < rd; ++i)
+    {
+        char k[12];
+        for (int j = 0; j < 11; ++j) k[j] = (char)tolower((unsigned char)buf[i + j]);
+        k[11] = '\0';
+        if (strcmp(k, "loose_first") != 0) continue;
+        DWORD p = i + 11;
+        while (p < rd && (buf[p] == ' ' || buf[p] == '\t')) ++p;
+        if (p >= rd || buf[p] != '=') continue;
+        ++p;
+        while (p < rd && (buf[p] == ' ' || buf[p] == '\t')) ++p;
+        if (p >= rd) return true;
+        return buf[p] != '0';                        // 非 '0' 一律当开
+    }
+    return true;
+}
 
 static Config g_cfg = {
     L"dict",                       // 默认: scripts/dict/
@@ -263,6 +390,7 @@ static Config g_cfg = {
     true,                          // lang_early
     false,                         // v7.5.2: early_diag 默认关（探针已退役; 开发期 ini 置 1）
     true,                          // subtitle_early
+    true,                          // v7.8: loose_first 默认开（loose 资源优先于 vpp_pc）
     L"auto",                       // exeOverride: 默认自动 (PE 指纹判别)
 };
 
@@ -320,14 +448,15 @@ static void LoadConfig(const wchar_t* iniPath)
         else if (_wcsicmp(key, L"lang_early") == 0)  g_cfg.langEarly  = (*val != L'0');
         else if (_wcsicmp(key, L"early_diag") == 0)  g_cfg.earlyDiag  = (*val != L'0');
         else if (_wcsicmp(key, L"subtitle_early") == 0) g_cfg.subtitleEarly = (*val != L'0');
+        else if (_wcsicmp(key, L"loose_first") == 0)    g_cfg.looseFirst  = (*val != L'0');
         else if (_wcsicmp(key, L"exe") == 0)            wcscpy_s(g_cfg.exeOverride, val);
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d loose=%d exe=%ls)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
-        (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, g_cfg.exeOverride);
+        (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, (int)g_cfg.looseFirst, g_cfg.exeOverride);
 }
 
 // ---------- 版本判别（PE 指纹; 与 SR4R 同思路。SR3R 目标定位全 AOB, 故仅用于日志标注与 ini 覆盖） ----------
@@ -2890,6 +3019,242 @@ static bool ExpectOpc(uint8_t* insn, const uint8_t* opc, int n, const char* what
     return true;
 }
 
+// ============================================================================
+// v7.8: 挂载表注册器 —— 直接调用, 把磁盘项 {0,0} 前移到表头
+// ============================================================================
+// 签名: char __fastcall sub_14084D5A0(int type, int param, char insertFront)
+//   返回值 dl = 是否真的写入/lookup 成功（表满 或 无此签名时返回 0）
+//
+// 【为什么是「直接调用」而不是 hook】
+//   注册发生在 WinMain 早期（sub_1401673B0 内, 早于 ASI 注入窗口）,
+//   v7.7 的 MinHook 方案实测 mrCalls=0 —— hook 装上时注册早已结束, 永不触发。
+//   但挂载表本身是**运行时活表**: 只要在「第一次资源访问」之前把表改好即可,
+//   不必抢在注册之前。所以直接调用注册器最省事, 且用的是引擎自己的搬移代码。
+//
+// 【调用语义（IDA 实测 sub_14084D5A0 反编译）】
+//   在表中按 (type, param) 线性查找已存在项, 记下标 v6;
+//   若 insertFront==1 且 v6!=0: 把 [0..v6-1] 整体后移一格, 本项写到 [0]。
+//   若 v6==0 或 insertFront==0: 原位置不变（幂等, 可安全重复调用）。
+//   → MountReg(0, 0, 1) 恰好把磁盘项从 [1] 顶到 [0]。
+//
+// 【只动 type==0】
+//   其它 type（1=vpp / 2 / 4 容器）不是磁盘探测, 挪动会破坏容器优先级。
+//   磁盘项 param 恒为 0（见 sub_1401673B0 : 140167671 三条注册调用）。
+using MountRegFn = char(__fastcall*)(int type, int param, char insertFront);
+static MountRegFn    g_fnMountRegCall   = nullptr;   // ★ 真正的函数指针（用于调用）
+static volatile LONG g_mountRegApplied  = 0;         // 已成功插队
+
+// 把挂载表里的磁盘项 {type=0, param=0} 前移到表头。
+//   返回 true = 表已处于「磁盘优先」状态（含「本来就在表头」的情况）。
+//
+//   ★ 调用前提（血的教训）: 注册器内部会 EnterCriticalSection(&stru_142967DA8),
+//     该临界区由 CRT 静态构造（sub_14002FDC0）初始化 —— **在 DllMain 时期尚未初始化**。
+//     若在 DllMain 里直接调注册器 -> 访问未初始化临界区 -> 进程崩溃（实测 v7.8 首版）。
+//     故必须满足「表非空」才动手: 表里有项 => 引擎的静态构造早已跑完。
+static bool ApplyLooseFirst()
+{
+    if (InterlockedCompareExchange(&g_mountRegApplied, 0, 0) != 0)
+        return true;                                    // 已处理过
+    if (!g_cfg.looseFirst)
+        return false;                                   // ini 关闭
+    if (!g_fnMountRegCall)
+        return false;                                   // 未定位
+
+    // ★ 安全门: 表为空说明引擎还没注册（CRT 静态构造也没跑），此时调用会崩。
+    uint32_t beforeCount = g_pMountCount ? *g_pMountCount : 0;
+    if (beforeCount == 0 || beforeCount > 16)
+    {
+        Log("mountreg: mount table not ready (count=%u) -> 暂不改表（等引擎注册完）", beforeCount);
+        return false;
+    }
+
+    // ★★ v7.8.3 新增「注册序列已结束」判定（实测崩溃教训）：
+    //   引擎在 sub_1401673B0 里**连续**调 3 次注册器（1→2→3 项）。
+    //   若在 count 刚到 1 或 2 时抢先插队，会把表搞乱，之后引擎自己那次
+    //   MountReg(1,0,1) 又插队，最终布局虽"看起来对"，但引擎在其后的初始化
+    //   里已按"磁盘项在 [1]"做了缓存/推导 → 后续线程空指针崩溃（c0000005）。
+    //   故必须等「表项数稳定」再动手：连续 MOUNTREG_STABLE_SAMPLES 次采样不变，
+    //   且达到原版最终值 3（下限），才认为注册序列结束。
+    static const uint32_t MOUNTREG_EXPECT = 3;          // 原版固定注册 3 项
+    static const int      MOUNTREG_STABLE_SAMPLES = 4;  // 连续 4 次(×50ms=200ms)不变
+    static uint32_t s_lastCount = 0;
+    static int      s_sameCnt   = 0;
+
+    if (beforeCount < MOUNTREG_EXPECT)
+    {
+        // 还没注册完（或正在注册中）——继续等，不插队。
+        if (beforeCount == s_lastCount) ++s_sameCnt; else { s_lastCount = beforeCount; s_sameCnt = 1; }
+        Log("mountreg: 注册序列进行中 (count=%u/%u) -> 继续等待", beforeCount, MOUNTREG_EXPECT);
+        return false;
+    }
+    if (beforeCount == s_lastCount)
+    {
+        if (++s_sameCnt < MOUNTREG_STABLE_SAMPLES)
+            return false;                               // 尚未确认稳定
+    }
+    else
+    {
+        s_lastCount = beforeCount;
+        s_sameCnt   = 1;
+        return false;                                   // 刚变化 -> 再等等
+    }
+
+    // 调用前先快照, 便于日志核对「是否真的搬动了」
+    int beforeIdx = -1;
+    if (g_pMountArray)
+    {
+        for (uint32_t i = 0; i < beforeCount; ++i)
+            if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) { beforeIdx = (int)i; break; }
+    }
+
+    char ok = g_fnMountRegCall(0, 0, 1);                // ★ insertFront=1 -> 顶到 [0]
+
+    uint32_t afterCount = g_pMountCount ? *g_pMountCount : 0;
+    int afterIdx = -1;
+    if (g_pMountArray && afterCount <= 16)
+    {
+        for (uint32_t i = 0; i < afterCount; ++i)
+            if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) { afterIdx = (int)i; break; }
+    }
+
+    Log("mountreg: ApplyLooseFirst -> ret=%d, count %u->%u, disk item idx %d -> %d",
+        (int)ok, beforeCount, afterCount, beforeIdx, afterIdx);
+
+    if (afterIdx == 0)
+    {
+        InterlockedExchange(&g_mountRegApplied, 1);
+        Log("mountreg: ★ 磁盘项已置于表头 [0] —— loose 资源（含 le_strings）优先于 vpp_pc");
+        return true;
+    }
+    Log("mountreg: WARN 磁盘项未在表头 (idx=%d) —— loose 可能仍不生效", afterIdx);
+    return false;
+}
+
+// 定位注册器 + 解出挂载表全局地址（**纯只读**, 可在 DllMain 里安全执行）。
+//   注意: 本函数**不调用**注册器 —— 调用必须等引擎 CRT 静态构造跑完
+//   （见 ApplyLooseFirst 的「安全门」注释）。改表动作在 MainThread 里做。
+static bool LocateMountReg()
+{
+    if (g_fnMountRegCall)
+        return true;                                    // 已定位
+
+    // ① 定位注册器
+    uint8_t* tb = nullptr;
+    uint8_t* te = nullptr;
+    if (!GetTextRange(&tb, &te))
+    {
+        Log("mountreg: cannot locate .text, skipped");
+        return false;
+    }
+    uint8_t* fn = ResolveFn(SIG_MOUNT_REG, tb, te);
+    if (!fn)
+    {
+        Log("mountreg: AOB miss, skipped (loose 优先不可用)");
+        return false;
+    }
+    g_fnMountReg = fn;
+
+    // ② 落点复核: +0x19 必须正好是 movzx esi,r8b（insertFront 参数通道）。
+    //    本特征 29 字节（含 [19]/[24] 两个通配位）, 前 25 字节是
+    //    push/sub/cookie/mov_rbx/mov_rsi, 第 26 字节（=+0x19）起才是 movzx。
+    //    这是「调用参数语义正确」的依据 —— 若此处不是 insertFront, 调用就传错了参数。
+    static const uint8_t OPC_MOVZX_ESI_R8B[4] = { 0x41, 0x0F, 0xB6, 0xF0 };
+    if (!ExpectOpc(fn + MOUNTREG_OFF_MOVZX_ESI, OPC_MOVZX_ESI_R8B, 4, "MountReg.insertFront"))
+    {
+        Log("mountreg: landing check failed @%p (+0x%llX), skipped",
+            (void*)fn, (unsigned long long)MOUNTREG_OFF_MOVZX_ESI);
+        g_fnMountReg = nullptr;
+        return false;
+    }
+
+    // ③ 从函数体内解出挂载表两个全局地址（rip disp32）
+    //    +0x30: 44 8B 15 disp32  mov r10d, cs:[rip+d]  长 7 -> 目标 = fn+0x37+d = 计数
+    //    +0x3F: 48 8D 05 disp32  lea rax,  [rip+d]     长 7 -> 目标 = fn+0x46+d = 数组+4
+    {
+        uint8_t* insnCnt = fn + MOUNTREG_OFF_COUNT_INSN;
+        uint8_t* insnArr = fn + MOUNTREG_OFF_ARRAY_INSN;
+        if (insnCnt[0] != 0x44 || insnCnt[1] != 0x8B || insnCnt[2] != 0x15)
+        {
+            Log("mountreg: count-insn mismatch at +0x%llX (%02X %02X %02X), skipped",
+                (unsigned long long)MOUNTREG_OFF_COUNT_INSN, insnCnt[0], insnCnt[1], insnCnt[2]);
+            return false;
+        }
+        if (insnArr[0] != 0x48 || insnArr[1] != 0x8D || insnArr[2] != 0x05)
+        {
+            Log("mountreg: array-insn mismatch at +0x%llX (%02X %02X %02X), skipped",
+                (unsigned long long)MOUNTREG_OFF_ARRAY_INSN, insnArr[0], insnArr[1], insnArr[2]);
+            return false;
+        }
+        int32_t dCount = *reinterpret_cast<int32_t*>(insnCnt + 3);
+        int32_t dArray = *reinterpret_cast<int32_t*>(insnArr + 3);
+        uint8_t* pCount = insnCnt + 7 + dCount;                 // = &dword_XXX(计数)
+        uint8_t* pArray = insnArr + 7 + dArray - 4;             // lea 出的是「数组+4」
+
+        g_pMountCount = reinterpret_cast<uint32_t*>(pCount);
+        g_pMountArray = reinterpret_cast<uint32_t*>(pArray);
+        g_fnMountRegCall = reinterpret_cast<MountRegFn>(fn);
+
+        Log("mountreg: fn=+0x%llX, count=+0x%llX (val=%u), array=+0x%llX",
+            (unsigned long long)(fn   - reinterpret_cast<uint8_t*>(GetModuleHandleW(nullptr))),
+            (unsigned long long)(pCount - reinterpret_cast<uint8_t*>(GetModuleHandleW(nullptr))),
+            *g_pMountCount,
+            (unsigned long long)(pArray - reinterpret_cast<uint8_t*>(GetModuleHandleW(nullptr))));
+    }
+    return true;                                        // 仅定位, 不改表
+}
+
+// 「守候线程」: 独立线程轮询挂载表, 一旦引擎注册完(count>0)就把磁盘项插队。
+//
+//   ★ v7.8.1 架构（两次实测教训的最终形态）:
+//     ① 不能在 DllMain 里调注册器 —— 那时临界区(CRT 静态构造)还没初始化, 进程崩。
+//     ② 不能在 MainThread 里同步等待 —— 引擎注册挂在主初始化
+//        (sub_140169160 → sub_1401673B0)里, 由静态构造分派器在 ASI 注入**之后**
+//        才跑, 实测可晚于注入 30s+; 同步等就会把 hook 安装一起卡死。
+//     → 最终: DllMain 只做只读定位; 本线程独立轮询, 与 hook 安装完全解耦。
+//
+//   ★ v7.8.3 追加「注册序列已结束」判定（实测崩溃教训）:
+//     引擎在 sub_1401673B0 里连续注册 3 项（count 1→2→3）。若在 count 刚到 1/2 时
+//     抢先插队, 会与引擎后续的 MountReg(1,0,1) 打架 → 后续线程空指针崩溃。
+//     故 ApplyLooseFirst 内部要求「count 稳定(=3 且连续多次不变)」才动手; 本线程
+//     不再「表非空就退出」, 一律以 ApplyLooseFirst 的返回值（true=已插队成功）为准。
+//
+//   轮询开销极小（读一个 u32 + 比较）, 50ms 一次; 就绪后立即退出。
+static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
+{
+    // 先在栈上确认定位信息（DllMain 已填好, 但保险起见再兜一次）
+    if (!LocateMountReg())
+    {
+        Log("mountreg[watch]: 注册器未定位 -> loose 优先不可用");
+        return 0;
+    }
+
+    const DWORD LOOSE_WAIT_MS = 180000;     // 上限 180s（表就绪即返回, 不会等满）
+    const DWORD STEP_MS       = 50;
+    DWORD waited   = 0;
+    DWORD lastBeat = 0;
+
+    while (waited < LOOSE_WAIT_MS)
+    {
+        if (ApplyLooseFirst())
+        {
+            Log("mountreg[watch]: 等待 %u ms 后表就绪并完成插队", waited);
+            return 0;
+        }
+        // v7.8.3: 不再「表非空就退出」—— 注册序列未结束时 ApplyLooseFirst 会
+        //   主动返回 false 继续等；只有它返回 true（已插队成功）才收工。
+        Sleep(STEP_MS);
+        waited += STEP_MS;
+        if (waited - lastBeat >= 5000)      // 心跳 5s
+        {
+            lastBeat = waited;
+            Log("mountreg[watch]: 仍在等待引擎注册挂载表... (%u ms)", waited);
+        }
+    }
+    Log("mountreg[watch]: WARN 等待 %u ms 后表仍未就绪, 放弃", (unsigned)LOOSE_WAIT_MS);
+    return 0;
+}
+
+
 // 一次性解析全部目标（函数入口 + 引擎全局）
 static void ResolveTargets()
 {
@@ -2963,6 +3328,63 @@ static void ResolveTargets()
     }
 }
 
+// ============================================================================
+// v7.8.3 诊断探针: 记录磁盘探测命中的文件（仅 loose_first=1 时启用）
+// ============================================================================
+//   背景: loose_first=1 时游戏在字体图集重建后崩在 SRTTR+0x105500（空指针），
+//         而 loose_first=0 正常。崩溃点在装扮项加载器 sub_1403D4FE0 内 ——
+//         它在遍历一条链表并逐字符比较 UTF-16 字符串时解引用了 NULL key。
+//         该链表的 key 来自资源加载结果, 故怀疑某资源被「磁盘项」以坏数据抢走。
+//
+//   本探针 hook GetFileAttributesExA（kernel32 export, 无版本依赖）:
+//     统一打开器的磁盘分支 sub_14087BCB0 就是用它判存在性的; 一旦某个资源名
+//     在磁盘上「存在」, 磁盘项 [0] 就会命中并 return, 后面的 vpp 项永不再看。
+//   把「命中(返回非0)」的调用连文件名一起写进 SR3R_fsprobe.log。
+// ============================================================================
+typedef BOOL (WINAPI *GetFileAttributesExAFn)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
+static GetFileAttributesExAFn g_origGFEA = nullptr;
+static FILE*                  g_fsProbe   = nullptr;
+static CRITICAL_SECTION       g_fsProbeCS;
+
+static BOOL WINAPI HookGetFileAttributesExA(LPCSTR name, GET_FILEEX_INFO_LEVELS lvl, LPVOID info)
+{
+    BOOL r = g_origGFEA ? g_origGFEA(name, lvl, info) : FALSE;
+    if (r && name && g_fsProbe)
+    {
+        EnterCriticalSection(&g_fsProbeCS);
+        fprintf(g_fsProbe, "[hit ] %s\n", name);
+        fflush(g_fsProbe);
+        LeaveCriticalSection(&g_fsProbeCS);
+    }
+    return r;
+}
+
+static void InstallFsProbe()
+{
+    InitializeCriticalSection(&g_fsProbeCS);
+    {
+        wchar_t path[MAX_PATH];
+        GetModuleFileNameW((HMODULE)s_hSelfForProbe, path, MAX_PATH);
+        wchar_t* slash = wcsrchr(path, L'\\');
+        if (slash) *(slash + 1) = L'\0'; else path[0] = L'\0';
+        wcscat_s(path, L"SR3R_fsprobe.log");
+        _wfopen_s(&g_fsProbe, path, L"wb");
+    }
+    if (!g_fsProbe) { Log("fsprobe: 日志打开失败, 探针跳过"); return; }
+
+    HMODULE k32 = GetModuleHandleW(L"kernel32.dll");
+    void* target = k32 ? (void*)GetProcAddress(k32, "GetFileAttributesExA") : nullptr;
+    if (!target) { Log("fsprobe: GetFileAttributesExA 未找到, 探针跳过"); return; }
+
+    if (MH_CreateHook(target, (void*)HookGetFileAttributesExA, (void**)&g_origGFEA) != MH_OK ||
+        MH_EnableHook(target) != MH_OK)
+    {
+        Log("fsprobe: hook 安装失败, 探针跳过");
+        return;
+    }
+    Log("fsprobe: GetFileAttributesExA @%p hook 已装 -> SR3R_fsprobe.log (只记命中)", target);
+}
+
 // ---------- 安装 ----------
 static bool InstallHook(void* target, const char* name, void* detour, void** orig)
 {
@@ -2995,6 +3417,7 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     wchar_t* slash = wcsrchr(dir, L'\\');
     if (slash) *slash = L'\0'; else *dir = L'\0';
     s_exeBase = reinterpret_cast<uint64_t>(GetModuleHandleW(nullptr));   // v7.4 诊断 RA 换算用
+    s_hSelfForProbe = (HMODULE)hSelf;                                    // v7.8.3 诊断探针用
 
     wcscpy_s(iniPath, dir); wcscat_s(iniPath, L"\\SR3R_I18N.ini");
     LoadConfig(iniPath);
@@ -3093,6 +3516,20 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     //    必须在 hook 安装与引擎指针绑定之前完成。
     ResolveTargets();
 
+    // 4a. v7.8.1: 挂载表磁盘项插队 —— 【不能在主线程阻塞等待】
+    //     ★ 教训: 引擎注册挂在主初始化(sub_140169160 → sub_1401673B0)里,
+    //       该函数由静态构造分派器在 ASI 注入**之后**才跑, 实测可晚于注入 30s+。
+    //       若在此处同步等待, 会把后面的 hook 安装(4b/5)一起卡住 -> 汉化失效。
+    //     故: 另起一个「守候线程」, 只负责轮询挂载表并在就绪后插队;
+    //       本线程立即继续往下走, 装 hook 不受影响。
+    //     (DllMain 已做完只读定位 LocateMountReg; 注册表地址此刻有效)
+    if (g_cfg.looseFirst)
+    {
+        HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
+        if (hWatcher) CloseHandle(hWatcher);
+        else          Log("mountreg: WARN 守候线程创建失败 -> loose 优先不可用");
+    }
+
     // 4b. 引擎指针（任一解析失败 -> 该指针留空, 对应功能自动降级而非崩溃）
     if (g_vaFontTab)    g_fontTabPtr   = VA<void***>(g_vaFontTab);
     if (g_vaFontCount)  g_fontCountPtr = VA<volatile int*>(g_vaFontCount);
@@ -3100,11 +3537,7 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     if (g_vaD3dContext) g_ctxSlot      = VA<ID3D11DeviceContext**>(g_vaD3dContext);
 
     // 5. MinHook
-    if (MH_Initialize() != MH_OK)
-    {
-        Log("MH_Initialize failed");
-        return 0;
-    }
+    MH_Initialize();
     bool a = InstallHook(g_fnDrawWide,   "DrawWide",   (void*)HookDrawWide,   (void**)&g_origDrawWide);
     bool b = InstallHook(g_fnFormat,     "Format",     (void*)HookFormat,     (void**)&g_origFormat);
     bool c = InstallHook(g_fnFontLookup, "FontLookup", (void*)HookFontLookup, (void**)&g_origFontLookup);
@@ -3124,6 +3557,15 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     // v7.5 字幕/HUD 绘制入口整串替换（游侠方案同点位; ini subtitle_early 可关）
     bool j = g_cfg.subtitleEarly && InstallHook(g_fnSubtitle, "Subtitle",
                                                 (void*)HookSubtitle, (void**)&g_origSubtitle);
+
+    // ★ v7.8.3 诊断探针（loose_first 崩溃排查用; 只在 loose_first=1 时装）
+    //   目的: 记录引擎「磁盘探测」实际命中了哪些文件。
+    //   hook GetFileAttributesExA —— 统一打开器 sub_14084EA80 的磁盘分支
+    //   (sub_14087BCB0) 正是用它做存在性检查; 命中即代表「该资源被磁盘项抢走」。
+    //   写独立日志 SR3R_fsprobe.log, 不污染主日志。
+    if (g_cfg.looseFirst)
+        InstallFsProbe();
+
     if (!a && !b && !c && !d && !e && !f && !g && !h && !i && !j)
     {
         Log("no hooks installed, idle");
@@ -3136,8 +3578,11 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("v7.6.1 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, idling",
-        g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j);
+    Log("v7.8.3 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, applied=%d, idling",
+        g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j,
+        (int)g_cfg.looseFirst, (int)(InterlockedCompareExchange(&g_mountRegApplied, 0, 0) != 0));
+    // 注: 挂载表插队由独立「守候线程」异步完成（引擎注册晚于本线程, 见 4a 注释）,
+    //     此处 applied 可能仍为 0 —— 属正常, 不等同失败; 结果以 [watch] 行日志为准。
     return 0;
 }
 
@@ -3152,7 +3597,28 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR3R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N");
-			Log("[DllMain] ATTACH v7");
+			Log("[DllMain] ATTACH v7.8.3");
+
+            // v7.8: 挂载表磁盘项插队的手续分两步 ——
+            //   ① 这里(DllMain) 只做**只读定位**: AOB 找注册器 + 解出挂载表地址。
+            //   ② 改表动作放在 MainThread（见 ApplyLooseFirstWithWait）。
+            //
+            //   ★ 为什么不在 DllMain 里直接改表（v7.8 首版踩过的坑）:
+            //     注册器内部 EnterCriticalSection(&stru_142967DA8), 该临界区由
+            //     CRT 静态构造（sub_14002FDC0）初始化, 而 ASI 注入的 DllMain 早于
+            //     主 exe 的 CRT 初始化 -> 进未初始化临界区 -> **进程直接崩溃**（实测）。
+            //     另外此刻挂载表 count 还是 0（注册尚未发生）。
+            //   → 所以 DllMain 只读不写; 改表延后到 MainThread（那时引擎早已初始化完）。
+            //   风险控制: 定位全程只读 .text, 不 LoadLibrary / 不 CreateThread。
+            //   注: g_cfg 的静态默认值此刻已生效, 但 ini 可能有 loose_first=0。
+            //       故这里先用轻量解析覆盖 g_cfg.looseFirst, 避免 MainThread 读 ini 前误开。
+            {
+                bool iniLoose = ReadLooseFirstFlag(hModule);
+                if (!iniLoose) g_cfg.looseFirst = false;
+            }
+            if (g_cfg.looseFirst)
+                LocateMountReg();
+
             CloseHandle(CreateThread(nullptr, 0, MainThread, hModule, 0, nullptr));
         }
         break;
