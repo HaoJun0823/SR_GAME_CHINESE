@@ -3,16 +3,24 @@ name: build-release
 # 构建 {game}_{version}_{lang} 发布包。
 # 流程见仓库根 `github_action流程.txt`，实现见 `build_release.py`（8 步）。
 #
-# 产物：release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
-#       每个包均可直接解压到游戏根目录。
+# 产物（两个层次）：
+#   release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
+#       中间目录树，build_release.py 产出，**不上传**（只是打包的输入）。
+#   release/《黑道圣徒III》_简体中文_通用_补丁_<date>.zip 等三个中文名 zip
+#       Tools/pack_release.py 产出，**这就是 Artifact 与 Release 的内容**。
+#       每个 zip 可直接解压到游戏根目录。
 #
 # 触发：
-#   push(main/master)   —— 构建 + 校验（不做 release）
+#   push(main/master)   —— 构建 + 校验 + 上传 zip 到 Artifacts（不做 release）
 #   pull_request        —— 构建 + 校验（门禁）
 #   workflow_dispatch   —— 手动；可勾选跳过 DLL 编译
-#   push tag v*         —— 构建 + 校验 + 打 zip + 发布 Release（见 package job）
+#   push tag v*         —— 构建 + 校验 + 上传 zip + 发 Release（见 package job）
 #
 # 忽略纯文档改动（不参与构建），避免无意义的 runner 消耗。
+#
+# ★ 所有 action 都 pin 到 **node24** 版本（GitHub 已弃用 Node 20）：
+#   checkout v7 / setup-python v7 / upload-artifact v7 / download-artifact v8 /
+#   action-gh-release v3。升级前务必核对各 action 的 `runs.using`。
 
 on:
   # ★ paths-ignore 对 **tag push 不生效**（GitHub 官方文档：
@@ -63,15 +71,18 @@ jobs:
 
     steps:
       - name: 检出仓库
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         # ★ 不使用 lfs: 本仓库**没有任何 LFS 追踪文件**（.gitattributes 只做
         #   二进制声明与 eol 约定，未启用 filter=lfs）。开 lfs: true 会让
         #   checkout 多跑一次 `git lfs pull`，一旦 runner 上 LFS 缺配就报错，
         #   属于无谓的风险面。将来真启用 LFS 时再打开。
+        #
+        # ★ 版本：v4 跑在 Node 20（GitHub 已弃用并强制升到 24，会刷 warning）。
+        #   v5 起为 node24。下面所有 action 都对齐到 node24 版本。
 
       # ── 环境准备 ─────────────────────────────────────────────────────────
       - name: 配置 Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.12'
 
@@ -213,108 +224,83 @@ jobs:
         shell: pwsh
         run: python Tools/verify_release.py release
 
-      # ── 上传 ─────────────────────────────────────────────────────────────
-      # ★ 显式列出三个包，不用 `release/**`：
-      #   le_strings 构建过程会在 release/ 下产生中间目录（如 release/SR3/、
-      #   release/SR4/，内含 misc/*.le_strings）。它们是构建副产物、已被
-      #   .gitignore 覆盖，但会被 `release/**` 一并塞进 artifact（白占体积，
-      #   且 package job 的 zip 循环虽按目录名白名单跳过，artifact 里仍是垃圾）。
-      - name: 上传 release 目录（合并包）
-        uses: actions/upload-artifact@v4
+      # ── 打包为可分发的中文名 zip ─────────────────────────────────────────
+      # ★★ 为什么在 build 阶段就打包（而不是留到 package job 再压）：
+      #   1. **Artifacts 表层直接就是 {game}_{version}.zip** —— 下载即得，
+      #      不需要先把目录树下载下来再自己压，也不会让人看不懂里面是什么。
+      #   2. **只有一处打包逻辑**。原先 package job 用 bash `zip -r -9 -UN=UTF8`，
+      #      而 build job 只传目录树，等于同一个包存在两种形态、两处代码，
+      #      容易漂移。现在统一由 `Tools/pack_release.py` 产出，package job
+      #      只负责把它挂到 Release。
+      #   3. 中文文件名 + UTF-8 标志位由 Python zipfile 保证（见脚本内注释），
+      #      比依赖 runner 上有没有 7-Zip / zip 更稳。
+      - name: 打包为中文名 zip
+        shell: pwsh
+        run: |
+          # 构建日期显式按 UTC+8 算（runner 默认 UTC，直接用会偏一天）
+          python Tools/pack_release.py release
+          if ($LASTEXITCODE -ne 0) { throw "pack_release.py 失败 (rc=$LASTEXITCODE)" }
+
+      # ── 上传：artifact 里就是三个中文名 zip ──────────────────────────────
+      # ★ 只传 `release/*.zip`，**不再传目录树**：
+      #   · 目录树形态的 artifact（原先的 sr-release-all）有 62 MB，且与
+      #     另一个 artifact 内容完全相同 —— 同一批文件传两遍，纯浪费配额；
+      #   · 真正要分发的是 zip，目录树只是中间态。
+      #   zip 已是压缩后的形态（约 20 MB/个），三个合计约 62 MB，反而更小。
+      - name: 上传发布包（三个中文名 zip）
+        uses: actions/upload-artifact@v7.0.1
         with:
-          name: sr-release-all
-          path: |
-            release/sr3r_common/**
-            release/sr4r_common/**
-            release/sr4r_microsoft/**
+          name: sr-release-zips
+          path: release/*.zip
           if-no-files-found: error
           retention-days: 30
 
-      - name: 上传分目标包
-        uses: actions/upload-artifact@v4
-        with:
-          name: sr-${{ github.run_number }}-${{ github.sha }}
-          path: |
-            release/sr3r_common/**
-            release/sr4r_common/**
-            release/sr4r_microsoft/**
-          if-no-files-found: error
-          retention-days: 30
-
-  # 打 tag 时把所有包压缩成单文件，便于直接分发给玩家
+  # 打 tag 时把 build 阶段已打好的 zip 挂到 Release。
+  # ★ 这里**不再自己压 zip** —— 打包逻辑只有 `Tools/pack_release.py` 一处，
+  #   本 job 只负责「取产物 + 发 Release」，避免两份代码漂移。
   package:
-    name: 打包分发（仅 tag）
+    name: 发布 Release（仅 tag）
     needs: build
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: 下载产物
-        uses: actions/download-artifact@v4
+      - name: 下载发布包
+        uses: actions/download-artifact@v8.0.1
         with:
-          name: sr-release-all
-          path: release
+          name: sr-release-zips
+          path: dist
 
-      - name: 压缩为 zip
+      - name: 列出待发布文件（便于核对）
         run: |
           set -euo pipefail
-
-          # 构建日期：显式用 UTC+8，避免 runner 默认 UTC 导致日期偏移一天
-          BUILD_DATE="$(TZ='Asia/Shanghai' date +%Y%m%d)"
-          echo "BUILD_DATE=$BUILD_DATE" >> "$GITHUB_ENV"
-          echo "构建日期（UTC+8）: $BUILD_DATE"
-
-          cd release
-
-          # ★ 显式白名单，**不给兜底分支**：
-          #   原先的 `*)` 分支会在 artifact 混入意外目录时静默多打一个 zip
-          #   （例如 le_strings 中间产物 release/SR3/）。发布包应该是封闭集合，
-          #   多出来的目录宁可让这里直接失败，也不要打出一个没人认识的压缩包。
-          packed=0
-          for name in sr3r_common sr4r_common sr4r_microsoft; do
-            if [ ! -d "$name" ]; then
-              echo "!! 缺少期望的包目录：$name" >&2
-              exit 1
-            fi
-            case "$name" in
-              sr3r_common)    out="《黑道圣徒III》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
-              sr4r_common)    out="《黑道圣徒IV》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
-              sr4r_microsoft) out="《黑道圣徒IV》_简体中文_微软商店_补丁_${BUILD_DATE}.zip" ;;
-            esac
-            echo "打包 $name -> $out"
-            # -UN=UTF8: 显式写入 UTF-8 文件名标志位（第 11 位），
-            #   否则 Windows 自带解压器可能把中文名按本地代码页解读 -> 乱码。
-            ( cd "$name" && zip -r -9 -UN=UTF8 "../${out}" . )
-            packed=$((packed + 1))
-          done
-
-          # 报告未打包的目录（不失败，只提示 —— 便于发现构建污染）
-          for d in */; do
-            n="${d%/}"
-            case "$n" in sr3r_common|sr4r_common|sr4r_microsoft) ;; *)
-              echo "提示：目录 $n 不在发布白名单内，未打包" ;;
-            esac
-          done
-
-          echo "共打包 $packed 个"
-          ls -la ./*.zip
+          echo "── 下载到的发布包 ──"
+          ls -la dist/
+          # ★ 硬断言：三个包必须齐，少任何一个都不能发 Release。
+          n=$(ls -1 dist/*.zip 2>/dev/null | wc -l)
+          echo "共 $n 个 zip"
+          if [ "$n" -ne 3 ]; then
+            echo "!! 期望 3 个 zip，实际 $n 个" >&2
+            exit 1
+          fi
 
       - name: 创建 Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3.0.3
         with:
-          files: release/*.zip
+          files: dist/*.zip
           generate_release_notes: true
           body: |
             《黑道圣徒》简体中文汉化补丁
 
-            本次构建日期（UTC+8）：${{ env.BUILD_DATE }}
+            构建日期（UTC+8）：`${{ github.event.release.tag_name }}` 对应的提交
+            见下方 release notes；包内 `必读说明.txt` 有安装/卸载说明。
 
             | 压缩包 | 适用版本 |
             |---|---|
-            | `《黑道圣徒III》_简体中文_通用_补丁.zip` | SR3 重制版（Steam / GOG / EPIC） |
-            | `《黑道圣徒IV》_简体中文_通用_补丁.zip` | SR4 重制版（Steam / GOG / EPIC） |
-            | `《黑道圣徒IV》_简体中文_微软商店_补丁.zip` | SR4 微软商店版 |
+            | `《黑道圣徒III》_简体中文_通用_补丁_*.zip` | SR3 重制版（Steam / GOG / EPIC） |
+            | `《黑道圣徒IV》_简体中文_通用_补丁_*.zip` | SR4 重制版（Steam / GOG / EPIC） |
+            | `《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip` | SR4 微软商店版 |
 
             各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
             安装 / 卸载 / 常见问题见包内 `必读说明.txt`。

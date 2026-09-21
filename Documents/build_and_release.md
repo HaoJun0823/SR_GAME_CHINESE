@@ -142,12 +142,31 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 
 | 触发 | 行为 |
 |---|---|
-| push 到 `main`/`master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + 上传 artifact |
+| push 到 `main`/`master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + **打包 zip** + 上传 artifact |
 | pull request | 同上（验证不破坏构建） |
 | 手动 `workflow_dispatch` | 同上，可选 `skip_dll` |
-| 打 tag（`refs/tags/*`） | 额外把所有包压成 zip 并创建 Release |
+| 打 tag（`refs/tags/*`） | 额外把已打好的 zip 挂到 Release |
 
-### Release 压缩包命名（仅 tag 触发）
+### 产物分两个层次（重要）
+
+流水线里有**两种**形态，别混淆：
+
+| 层次 | 位置 | 由谁产出 | 是否上传 |
+|---|---|---|---|
+| 中间目录树 | `release/sr3r_common/` 等三个目录 | `build_release.py` | **不上传**，只是打包的输入 |
+| 发布包 | `release/*.zip` 三个中文名 zip | `Tools/pack_release.py` | **就是 Artifact 与 Release 的内容** |
+
+命令：
+
+```bat
+:: build 阶段（workflow 里在 windows runner 上跑）
+python Tools/pack_release.py release
+python Tools/pack_release.py release --date 20260922   :: 指定日期，便于本地复现
+
+:: package 阶段（workflow 里在 ubuntu runner 上跑，只下载 + 挂 Release）
+```
+
+### 发布包命名（构建阶段即产出，Artifact 与 Release 同名）
 
 包名统一为 **中文**，格式 `《游戏名》_语言_适用版本_补丁_{BUILD_DATE}.zip`：
 
@@ -157,23 +176,57 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 | `sr4r_common` | `《黑道圣徒IV》_简体中文_通用_补丁_{BUILD_DATE}.zip` |
 | `sr4r_microsoft` | `《黑道圣徒IV》_简体中文_微软商店_补丁_{BUILD_DATE}.zip` |
 
-- `{BUILD_DATE}` = **UTC+8** 的 `YYYYMMDD`。工作流里显式用
-  `TZ='Asia/Shanghai' date +%Y%m%d`，**不能直接用 runner 默认的 `date`**
-  —— ubuntu runner 是 UTC，晚间触发会与国内日期差一天。
-- 映射写在 `package` job 的 `case "$name" in ... esac` 里；
-  未列出的目录回退为 `<目录名>_{BUILD_DATE}.zip`（不报错，便于将来加 target）。
-- `zip` 加 `-UN=UTF8` 显式写入 UTF-8 文件名标志位，否则 Windows 自带解压器
-  可能按本地代码页解读中文名导致乱码。
-- `action-gh-release` 的 `files: release/*.zip` 只收 zip；
-  非目录项（如混入的 `README.txt`）在打包循环里由 `[ -d "$name" ] || continue` 跳过。
-- 注：Actions artifact 名 `sr-{run_number}-{sha}` 是**流水线内部标识**，
-  与下载到的 zip 文件名无关。
+- **单一事实来源** = `Tools/pack_release.py` 里的 `ZIP_NAMES` 字典。
+  打包逻辑只此一处；`package` job 不再自己压 zip，只负责「下载 + 挂 Release」。
+  这样避免同一产物两种形态、两处代码各自漂移。
+- `{BUILD_DATE}` = **UTC+8** 的 `YYYYMMDD`。脚本里显式
+  `datetime.now(timezone.utc) + timedelta(hours=8)`；
+  **不能直接用本地/UTC 的 `date`** —— runner 默认 UTC，晚间触发会与国内日期差一天。
+- **UTF-8 文件名标志位**：脚本用 Python 标准库 `zipfile`，
+  对非 ASCII 条目名**自动置位 UTF-8 标志（general purpose bit 11）**，
+  无需任何额外参数。这比 7-Zip（要专门开关）和 PowerShell `Compress-Archive`
+  （**根本不置位** → 解压乱码）都可靠，且跨平台、可本地自测。
+- 条目路径分隔符统一为 `/`（`sanitize_arcname()`），Windows 的 `\`
+  会让部分解压器出错。
+- **白名单制，无兜底**：`ZIP_NAMES` 之外的目录只打印一行提示、不打包。
+  注意 `release/` 下还有 `SR3` / `SR4` 两个中间目录（旧布局残留），
+  它们会被正确排除。
+- **失败即整体失败**：脚本先做全量存在性检查，再开始压缩。
+  缺任一期盼目录时 `rc=1` 且**不产出任何 zip**；否则会出现
+  「先压出前两个再报错」的半套产物，调用方若只看「有没有 zip」就会误发不完整包。
+- **Artifact 只有一个**：`sr-release-zips`，`path: release/*.zip`，
+  `if-no-files-found: error`，保留 30 天。
+  （旧版曾同时传 `sr-release-all` 与 `sr-{run_number}-{sha}` 两个 artifact，
+  各 62.40 MB **内容完全相同** —— 同一批文件传两遍，已删除。）
+- `package` job 下载到 `dist/` 后有一条**硬断言**：`dist/*.zip` 必须恰好 3 个，
+  少任何一个都不创建 Release。`action-gh-release` 的 `files: dist/*.zip`。
+
+### action 版本（必须 pin 到 Node 24）
+
+GitHub 已弃用 Node 20 运行时，工作流里所有 action 都升到 **node24** 版本：
+
+| Action | 版本 | 运行时 |
+|---|---|---|
+| `actions/checkout` | `v7.0.1` | node24 |
+| `actions/setup-python` | `v7.0.0` | node24 |
+| `actions/upload-artifact` | `v7.0.1` | node24 |
+| `actions/download-artifact` | `v8.0.1` | node24 |
+| `softprops/action-gh-release` | `v3.0.3` | node24 |
+
+> ★ **升版前务必核实运行时，不要靠猜。** Release 页面**不写**运行时，
+> 唯一权威来源是该 tag 下的 `action.yml` 里的 `runs.using`：
+> ```bat
+> gh api repos/actions/checkout/contents/action.yml?ref=v7.0.1
+> ```
+> 返回的 `content` 是 base64，解码后找 `using:` 字段。
+> 经验值：`checkout` v4 / `setup-python` v5 / `upload-artifact` v4~v5 /
+> `download-artifact` v4~v6 都是 node20；跨大版本才换运行时。
 
 **runner 前置要求**（`windows-2022` 镜像已满足）：
 
 - Visual Studio 2022 + **v141 工具集**（`Microsoft.VisualStudio.Component.VC.v141.x86.x64`）
   —— 流程第 1 条明确要求 `vc_141`（MSVC 14.16）。工作流有一步会显式校验该组件存在。
-- Python 3.12（`actions/setup-python@v5`）。
+- Python 3.12（`actions/setup-python@v7.0.0`）。
 - NuGet 由工作流的「还原 NuGet 包 (MinHook)」步骤处理：优先用镜像自带 `NuGet.exe`，
   找不到则下载官方命令行版，然后对两个 `packages.config` 各还原一次。
 - 工作流里 `PYTHONUTF8=1` + `PYTHONIOENCODING=utf-8` 必须保留：
@@ -196,6 +249,9 @@ msbuild Projects\SR3\SR3R_I18N\SR3R_I18N.vcxproj ^
 :: 2~8 单独跑各环节
 python build_release_le_strings.py --game SR3 --version common --out-dir <目录>
 python Tools\build_charlist.py --game SR3 --out <目录>\charlist.txt
+
+:: 9. 打成中文名 zip（发布用，可选）
+python Tools\pack_release.py release
 ```
 
 各脚本无参数运行时只做自检，便于 CI / 快速验证：
@@ -216,6 +272,7 @@ python Projects\SR4\Tools\sr4le_repack.py        :: 同上
 | `build_release_le_strings.py` | 步骤 3 的实现（le_string 封装） |
 | `Tools/build_charlist.py` | 步骤 4 的实现（字符清单生成） |
 | `Tools/verify_release.py` | 产物独立复核（CI 第二步） |
+| `Tools/pack_release.py` | **打成中文名 zip**（发布包唯一产出点，Artifact 与 Release 同名） |
 | `.github/workflows/build-release.yml` | CI 工作流 |
 | `Projects/SR3/Tools/`、`Projects/SR4/Tools/` | le_string 底层 repack / 解包工具 |
 | `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析（构建校验的由来） |
