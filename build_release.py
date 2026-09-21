@@ -74,16 +74,58 @@ TARGETS = {
         asi='SR4R_I18N.asi', ini='SR4R_I18N.ini', prefix='SR4'),
 }
 
-# vc_141 = MSVC 14.16.27023（见 github_action流程.txt 第 1 条）
-TOOLSET = 'v141'
+# 工具集：**默认交给 vcxproj 自己的声明**，不强制指定。
+#
+# ★★ 2026-09-21 修正（CI 适配）：
+#   本机开发环境装的是 v141(14.16) + v142 + v145，SR3 的 x64 配置写死 v141，
+#   于是旧版把 TOOLSET 硬编码成 'v141'。但 GitHub Actions 的 windows-2022 镜像
+#   **默认不含 v141**（需要额外装 Microsoft.VisualStudio.Component.VC.v141.x86.x64），
+#   硬传 /p:PlatformToolset=v141 会直接报 MSB8020 找不到该工具集。
+#
+#   而两个工程实际写的工具集是：
+#       SR3  x64 → v141      SR4 x64 → v145
+#   即 SR4 本来就不需要 v141。因此正确做法是**不传这个参数**，
+#   让 MSBuild 用 vcxproj 里各自的配置；需要强制时用环境变量覆盖：
+#
+#       SR_I18N_TOOLSET=v141   python build_release.py
+#
+#   留空 = 用 vcxproj 声明（推荐，本机/CI 都对）。
+TOOLSET = os.environ.get('SR_I18N_TOOLSET', '').strip()
 
 # 命令行构建必须显式指定 Windows SDK 版本。
 #   原因：vcxproj 里写 `<WindowsTargetPlatformVersion>10.0</...>`（=「最新」）时，
-#   VS IDE 能自己解析出具体版本，但 MSBuild 命令行 + v141 工具集组合下会直接报
+#   VS IDE 能自己解析出具体版本，但 MSBuild 命令行 + 旧工具集组合下会直接报
 #   MSB8036「找不到 Windows SDK 版本10.0」。SR3 的工程本来就写死了 10.0.19041.0，
 #   所以只有 SR4 会踩到。这里统一显式传入，**不改 vcxproj**（IDE 里照常可用）。
-#   与 v141(14.16) 同期、兼容性最好的就是 19041（Win10 2004 的 SDK）。
-WINSDK_VERSION = '10.0.19041.0'
+#   ── 2026-09-21 放宽：不再写死 10.0.19041.0，而是**探测本机已安装的 SDK**，
+#      取 19041 优先，否则退到可用的最高版本。CI runner 上不一定装了 19041，
+#      写死会让 SR4 报 MSB8036。可用 SR_I18N_WINSDK 覆盖。
+WINSDK_VERSION = os.environ.get('SR_I18N_WINSDK', '').strip() or None
+
+
+def find_winsdk(prefer='10.0.19041.0'):
+    """探测已安装的 Windows SDK 版本（返回 prefer，否则可用的最高版本）。"""
+    roots = [r for r in (os.environ.get('ProgramFiles(x86)'),
+                         os.environ.get('ProgramFiles')) if r]
+    found = set()
+    for root in roots:
+        base = os.path.join(root, 'Windows Kits', '10', 'Include')
+        if os.path.isdir(base):
+            for d in os.listdir(base):
+                if d[:2].isdigit() and os.path.isfile(
+                        os.path.join(base, d, 'um', 'windows.h')):
+                    found.add(d)
+    if not found:
+        return prefer
+    if prefer in found:
+        return prefer
+
+    def key(v):
+        try:
+            return tuple(int(x) for x in v.split('.'))
+        except ValueError:
+            return (0,)
+    return sorted(found, key=key)[-1]
 
 
 
@@ -197,19 +239,26 @@ def ensure_nuget(proj):
 
 
 def compile_dll(cfg, msbuild):
-    """用 vc_141 编译 x64 Release DLL，返回产物 .dll 绝对路径。"""
+    """编译 x64 Release DLL，返回产物 .dll 绝对路径。
+
+    工具集：默认**不传** /p:PlatformToolset，用 vcxproj 自己的声明
+    （SR3 x64=v141 / SR4 x64=v145）。设了 SR_I18N_TOOLSET 才强制覆盖。
+    SDK：显式传入探测到的版本（见 find_winsdk），避免 MSB8036。
+    """
     proj = os.path.join(ROOT, cfg['proj'])
     if not os.path.isfile(proj):
         raise RuntimeError(f'找不到工程文件 {proj}')
     ensure_nuget(proj)
 
+    sdk = WINSDK_VERSION or find_winsdk()
     cmd = [msbuild, proj,
            '/p:Configuration=Release', '/p:Platform=x64',
-           f'/p:PlatformToolset={TOOLSET}',
-           f'/p:WindowsTargetPlatformVersion={WINSDK_VERSION}',
+           f'/p:WindowsTargetPlatformVersion={sdk}',
            '/t:Rebuild', '/v:minimal', '/nologo']
+    if TOOLSET:
+        cmd.insert(4, f'/p:PlatformToolset={TOOLSET}')
     p(f'  msbuild {os.path.relpath(proj, ROOT)}  '
-      f'(Release|x64, PlatformToolset={TOOLSET}, SDK={WINSDK_VERSION})')
+      f'(Release|x64, PlatformToolset={TOOLSET or "vcxproj 默认"}, SDK={sdk})')
     r = subprocess.run(cmd, capture_output=True, text=True,
                        encoding='utf-8', errors='replace',
                        env=clean_env(), cwd=ROOT, timeout=1800)

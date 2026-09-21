@@ -5,16 +5,35 @@ name: build-release
 #
 # 产物：release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
 #       每个包均可直接解压到游戏根目录。
+#
+# 触发：
+#   push(main/master)   —— 构建 + 校验（不做 release）
+#   pull_request        —— 构建 + 校验（门禁）
+#   workflow_dispatch   —— 手动；可勾选跳过 DLL 编译
+#   push tag v*         —— 构建 + 校验 + 打 zip + 发布 Release（见 package job）
+#
+# 忽略纯文档改动（不参与构建），避免无意义的 runner 消耗。
 
 on:
+  # ★ paths-ignore 对 **tag push 不生效**（GitHub 官方文档：
+  #   "Path filters are not evaluated for pushes of tags"）。
+  #   所以 tags 与 paths-ignore 可以共处一个 push 块：
+  #     · 推分支 → 走 paths-ignore 过滤（纯文档改动不触发）
+  #     · 打 tag → 忽略路径过滤，必定触发（tag 是显式发布动作）
+  #   `package` job 靠 `startsWith(github.ref, 'refs/tags/')` 把关，只在 tag 时打包。
   push:
     branches: [main, master]
+    tags: ['v*']
     paths-ignore:
       - '**.md'
       - 'Documents/**'
       - 'Archives/**'
   pull_request:
     branches: [main, master]
+    paths-ignore:
+      - '**.md'
+      - 'Documents/**'
+      - 'Archives/**'
   workflow_dispatch:
     inputs:
       skip_dll:
@@ -24,6 +43,11 @@ on:
 
 permissions:
   contents: read
+
+# 同一分支/PR 的新推送取消旧的进行中构建，省 runner。
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,10 +62,12 @@ jobs:
       PYTHONIOENCODING: 'utf-8'
 
     steps:
-      - name: 检出仓库（含 LFS）
+      - name: 检出仓库
         uses: actions/checkout@v4
-        with:
-          lfs: true
+        # ★ 不使用 lfs: 本仓库**没有任何 LFS 追踪文件**（.gitattributes 只做
+        #   二进制声明与 eol 约定，未启用 filter=lfs）。开 lfs: true 会让
+        #   checkout 多跑一次 `git lfs pull`，一旦 runner 上 LFS 缺配就报错，
+        #   属于无谓的风险面。将来真启用 LFS 时再打开。
 
       # ── 环境准备 ─────────────────────────────────────────────────────────
       - name: 配置 Python
@@ -49,23 +75,22 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 定位 MSBuild（VS2022 / v141 工具集）
+      - name: 展示编译器工具集（诊断用）
         shell: pwsh
         run: |
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           if (!(Test-Path $vswhere)) { throw "找不到 vswhere.exe，镜像里没有 Visual Studio？" }
-          $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild `
-                                -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
-          if (!$msbuild) { throw "找不到 MSBuild.exe" }
-          Write-Host "MSBuild: $msbuild"
-          # 校验 vc_141 工具集存在（流程第 1 条要求）
-          $vc141 = & $vswhere -latest -products * -find "VC\Tools\MSVC\14.16*" | Select-Object -First 1
-          if (!$vc141) {
-            throw "缺少 v141 工具集 (MSVC 14.16)。请在 runner 上安装 " +
-                  "'Microsoft.VisualStudio.Component.VC.v141.x86.x64' 组件。"
-          }
-          Write-Host "vc_141 (MSVC 14.16): $vc141"
-          "MSBUILD_PATH=$msbuild" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Write-Host "── 已安装的 MSVC 工具集 ──"
+          & $vswhere -latest -products * -find "VC\Tools\MSVC\*" |
+            ForEach-Object { Write-Host "  $_" }
+          Write-Host "── 已安装的 Windows SDK ──"
+          Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Host "  $($_.Name)" }
+          # 注意：**不再断言 v141 存在**。SR3 的 x64 配置写 v141，SR4 写 v145；
+          # 而 windows-2022 镜像默认**不含 v141**（需额外装
+          # Microsoft.VisualStudio.Component.VC.v141.x86.x64）。
+          # build_release.py 已改为「默认不传 /p:PlatformToolset，用 vcxproj 声明」，
+          # 所以这里只做展示，缺失会在编译期由 MSBuild 明确报 MSB8020。
 
       - name: 还原 NuGet 包 (MinHook)
         shell: pwsh
@@ -73,7 +98,10 @@ jobs:
           # vcxproj Import 了 ..\packages\minhook.1.3.3\build\native\minhook.targets，
           # 缺失时 EnsureNuGetPackageBuildImports 会直接令构建失败。
           # Projects/**/packages/ 在 .gitignore 里 → CI 全新 clone 后必须还原。
-          # packages.config 位于 Projects\<game>\<proj>\，还原目标为其上一级 Projects\<game>\packages\。
+          #
+          # ★ build_release.py 的 ensure_nuget() 已能自动找 NuGet.exe 并还原，
+          #   所以这一步只是「提前、显式」地做一遍，失败能更早暴露且日志更清晰。
+          #   找不到 NuGet.exe 时**不报错**，交给 build_release.py 兜底。
           $nuget = $null
           foreach ($cand in @(
             "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe",
