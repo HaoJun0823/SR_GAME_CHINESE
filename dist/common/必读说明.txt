@@ -1,0 +1,48 @@
+《黑道圣徒 III / IV》 简体中文汉化补丁  必读说明
+============================================================
+
+# 安装方法
+    把本压缩包内的全部文件和文件夹**解压到游戏根目录**（与游戏 exe 同级），
+    覆盖同名文件即可。装好后目录应当长这样：
+
+        <游戏根目录>\
+            winmm.dll              ← ASI Loader（必需的加载器，勿删）
+            scripts\
+                SR3R_I18N.asi      ← 汉化本体（或 SR4R_I18N.asi）
+                SR3R_I18N.ini      ← 配置文件（可自行调整）
+                SourceHanSansHWSC-VF.ttf   ← 中文字体
+                charlist.txt       ← 字符清单
+                dict\              ← 词典
+            update\                ← 汉化文本（le_strings，覆盖游戏内文本）
+            License.txt
+
+# 卸载方法
+    删除解压出来的以下几项即可完全还原：
+        winmm.dll
+        scripts\        （整个文件夹）
+        update\         （整个文件夹）
+        License.txt
+    注意：scripts\ 与 update\ 是汉化专用的，原版游戏没有这两个文件夹；
+    若你先前装过其它模组也用了它们，请自行备份后再删。
+
+# 适用版本
+    - steam / GOG / EPIC 版本共用同一套文件。
+    - Microsoft Store（MSIXVC）版请使用名称带 microsoft 的构建。
+
+# 常见问题
+    - 文字不显示 / 显示方块：确认 SourceHanSansHWSC-VF.ttf 在 scripts\ 下，
+      且 ini 中 font_file 与该文件名一致。
+    - 想换字体：把任意 TrueType 字体放进 scripts\，并修改 ini 的 font_file。
+    - 缺字（个别字空白）：向作者反馈具体场景与句子，会补进 charlist。
+    - 崩溃：同一场景发生 2~3 次后再报告；请附上 scripts\ 下的日志文件
+      （SR3R_I18N.log / SR4R_I18N.log）。
+    - 不要用中文输入法玩游戏（已知部分输入法会导致崩溃）。
+    - 不要在加载过程中快速连按回车跳过。
+
+# 免责声明
+    本补丁仅供学习交流使用，请于下载后 24 小时内删除，
+    不得用于任何商业用途。使用者请遵守当地法律。
+
+# 参考
+    项目主页：https://github.com/HaoJun0823/SR3R_I18N
+              https://github.com/HaoJun0823/SR4R_I18N

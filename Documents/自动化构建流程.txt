@@ -1,0 +1,151 @@
+# 自动化构建流程 — SR3 / SR4 le_string 汉化
+============================================================
+
+本文档说明如何从「原始 le_string 模板 + 中文翻译 txt」自动构建出可直接分发的
+`le_strings` 文件，以及每一步的校验与失败处理。
+
+## 一、数据流总览
+
+    data/<game>/common/misc/<name>_us.le_strings     ← 原始英文表（结构模板）
+    Resource/<game>/CHS/le_string/<name>_us.txt      ← 中文翻译（"KEY": "文本"）
+                    │
+                    ▼  build_release_le_strings.py
+    Release/<game>/common/misc/<name>_zh.le_strings  ← 规范中文 locale
+    Release/<game>/common/misc/<name>_us.le_strings  ← 覆盖英文槽的兜底（内容同 _zh）
+                    │
+                    ▼  分发
+    dist/common/update/<game>/                       ← 入库供 git 维护
+    游戏目录/update/                                  ← 实际部署（loose 覆盖）
+
+> 同时产出 `_zh` 与 `_us` 两份：无论游戏 locale 设为哪个，loose 加载都能命中中文。
+
+## 二、一条命令跑完
+
+    cd G:\Projects\SR_GAME_CHINESE
+    python build_release_le_strings.py
+
+退出码：`0` = 全部成功；`1` = 有文件构建或校验失败（供 CI 判定）。
+
+输出为三段式：
+
+    [1/3] 前置自检 (repack 模块 round-trip)
+      [self_test] le_strings_repack OK: 8 字节 offset 表读/写自洽, 条目数守恒
+      [self_test] sr4le_repack    OK: 8 字节 offset 表读/写自洽, 条目数守恒
+
+    [2/3] 构建
+      ===== SR3 =====
+        activity_us   条目= 818 中文串= 802 (翻译 818 条) -> activity_zh.le_strings 等 2 个
+        ...
+      ===== SR4 =====
+        ...
+
+    [3/3] 汇总
+      Release/SR3/common/misc: 42 文件
+      Release/SR4/common/misc: 42 文件
+      全部完成 (产物结构自检全部通过)。
+
+## 三、三个阶段在做什么
+
+### 1) 前置自检
+分别调用两侧 repack 模块的 `self_test()`：用内置最小样例做一次
+读→写→回读的 round-trip，确认 **8 字节 offset 表** 的读写自洽。
+不依赖任何游戏文件，任何环境都能跑。自检不过 → 直接中止，不产出任何文件。
+
+### 2) 构建
+对每张表：
+
+- 先试 **原位覆盖**（`repack_inplace`）：保持原文件布局一字节不改，只把中文
+  写进原字符串槽位。这是最安全的路径，引擎零风险。
+- 若某条中文比英文长、超出原槽（**超槽**），自动**降级为全量重建**（`repack`）：
+  保留 bucket 分配、桶内按 hash 重排、允许更长文本。**条目不丢**，并在末尾列出
+  降级清单。
+- 桩文件检测：若某张表超过 50% 的值是单字符占位符，判定为「未翻译」，跳过不发布。
+
+### 3) 产物校验
+对写出的每个文件**独立重新解析**（不复用 repack 自身的自检），核对：
+
+- 魔数 `0xA84C7F73` 正确；
+- bucket 条目总数 == `header.stringCount`；
+- offset 表长度 == `12 + 16*bucketCount + 8*stringCount`；
+- 实际解析出的条目数 == `stringCount`（无越界）。
+
+任何一项不符 → 记入失败清单 → 退出码 1。
+
+## 四、超槽清单（当前已知）
+
+超槽会自动降级、条目不丢，但为求最小风险，理想情况是压缩中文到原槽内。
+
+**SR3（4 个文件）**
+
+| 文件 | hash | 原英文 | 原槽 | 现中文 | 需要 |
+|---|---|---|---|---|---|
+| customize_us | F60D5188 | `HO` | 6B | 街头客 | 8B |
+| menu_us | EA270BB8 | `EULA` | 10B | 最终用户许可协议 | 18B |
+| static_us | 68078CBB | `80S` | 8B | 80 年代风 | 14B |
+| subtitle_us | 79E8A8A6 | `I had him!` | 22B | 我刚才差一点就得手了！ | 24B |
+
+**SR4（8 个文件）**
+
+| 文件 | hash | 原槽 | 需要 |
+|---|---|---|---|
+| customize_us | B9B5536B | 58B | 62B |
+| dlc2_us | 13749FDF | 8B | 14B |
+| hud_us | 3D7E064B | 22B | 24B |
+| menu_us | AE3004A7 | 6B | 8B |
+| new_sr35_us | E5A577CC | 18B | 20B |
+| static_us | 68078CBB | 8B | 10B |
+| subtitle_us | 0E154711 | 8B | 10B |
+| voice_us | CC433000 | 8B | 10B |
+
+> 每条只差 2~8 字节。把这 12 条压缩到原槽内，即可让**全部**文件走原位覆盖路径。
+
+## 五、单独跑各环节
+
+    # 只做自检（任一模块，无参数即自检）
+    python Projects\SR3\Tools\le_strings_repack.py
+    python Projects\SR4\Tools\sr4le_repack.py
+
+    # SR3 批量回写（手工调试用；正式发布请用顶层脚本）
+    python Projects\SR3\Tools\sr3le_repack.py <原始目录> <txt目录> <输出目录> [--inplace]
+
+    # SR4 批量回写
+    python Projects\SR4\Tools\sr4le_repack.py <原始目录> <txt目录> <输出目录> [--inplace]
+
+## 六、部署
+
+    Release/<game>/common/misc/*.le_strings  →  游戏目录/update/
+
+SR3 游戏目录示例：
+
+    I:\SteamLibrary\steamapps\common\Saints Row The Third Remastered\update\
+
+> `update\` 是引擎官方的补丁目录，游戏自己打补丁也用它。
+> DLL 侧需 `SR3R_I18N.ini` 中 `loose_first = 1`（默认开启），
+> 把「磁盘 loose」项提到挂载表表头，否则 vpp_pc 包内资源会优先命中。
+
+## 七、格式备忘（务必遵守）
+
+    header  12B : ID u32(0xA84C7F73) | version u16 | bucketCount u16 | stringCount u32
+    bucket  16B : count u32 | pad u32 | offsetTableOffset u32 | pad u32   (× bucketCount)
+    offset 表    : 从 bucket.offsetTableOffset 起, count 个 8 字节条目
+                   = { 字符串绝对偏移 u32, 填充零 u32 }
+    字符串条目   : { hash u32, utf16le 文本, u16 0x0000 }
+
+hash = Volition CRC32（初始 0、无 final xor、输入先小写化）。
+
+> ★★ **offset 表步长是 8 字节，不是 4 字节。**
+> 误用 4 字节会把「填充零」当成条目，一半条目被判为空槽丢弃，
+> 而 `header.stringCount` 不变 → 引擎按声明索引越界 → NULL 指针 → 启动崩溃。
+> 详见 `Documents/le_strings_repack_bugfix.md`。
+
+## 八、相关文件
+
+| 路径 | 说明 |
+|---|---|
+| `build_release_le_strings.py` | 顶层构建入口（本文档主角） |
+| `Projects/SR3/Tools/le_strings_repack.py` | SR3 repack 底层库 |
+| `Projects/SR3/Tools/sr3le_repack.py` | SR3 批量 CLI |
+| `Projects/SR3/Tools/sr3le_extract.py` | SR3 解包 |
+| `Projects/SR4/Tools/sr4le_repack.py` | SR4 repack + 批量 CLI |
+| `Projects/SR4/Tools/sr4le_extract.py` | SR4 解包 |
+| `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析报告 |

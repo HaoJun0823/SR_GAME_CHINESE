@@ -1,0 +1,206 @@
+name: build-release
+
+# 构建 {game}_{version}_{lang} 发布包。
+# 流程见仓库根 `github_action流程.txt`，实现见 `build_release.py`（8 步）。
+#
+# 产物：release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
+#       每个包均可直接解压到游戏根目录。
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - '**.md'
+      - 'Documents/**'
+      - 'Archives/**'
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      skip_dll:
+        description: '跳过 DLL 编译（仅重建资源包，需已有 dll 产物 —— CI 上一般不要勾）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: 构建发布包
+    runs-on: windows-2022
+    timeout-minutes: 45
+
+    env:
+      # 本仓库所有 .py 都用 UTF-8；CI 上 Python 默认 stdin/stdout 编码需强制为 UTF-8，
+      # 否则中文输出（构建日志、charlist 统计）会在 Windows 控制台抛 UnicodeEncodeError。
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: 'utf-8'
+
+    steps:
+      - name: 检出仓库（含 LFS）
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # ── 环境准备 ─────────────────────────────────────────────────────────
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 定位 MSBuild（VS2022 / v141 工具集）
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          if (!(Test-Path $vswhere)) { throw "找不到 vswhere.exe，镜像里没有 Visual Studio？" }
+          $msbuild = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild `
+                                -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+          if (!$msbuild) { throw "找不到 MSBuild.exe" }
+          Write-Host "MSBuild: $msbuild"
+          # 校验 vc_141 工具集存在（流程第 1 条要求）
+          $vc141 = & $vswhere -latest -products * -find "VC\Tools\MSVC\14.16*" | Select-Object -First 1
+          if (!$vc141) {
+            throw "缺少 v141 工具集 (MSVC 14.16)。请在 runner 上安装 " +
+                  "'Microsoft.VisualStudio.Component.VC.v141.x86.x64' 组件。"
+          }
+          Write-Host "vc_141 (MSVC 14.16): $vc141"
+          "MSBUILD_PATH=$msbuild" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: 还原 NuGet 包 (MinHook)
+        shell: pwsh
+        run: |
+          # vcxproj Import 了 ..\packages\minhook.1.3.3\build\native\minhook.targets，
+          # 缺失时 EnsureNuGetPackageBuildImports 会直接令构建失败。
+          # Projects/**/packages/ 在 .gitignore 里 → CI 全新 clone 后必须还原。
+          # packages.config 位于 Projects\<game>\<proj>\，还原目标为其上一级 Projects\<game>\packages\。
+          $nuget = $null
+          foreach ($cand in @(
+            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe",
+            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe",
+            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe"
+          )) {
+            if (Test-Path $cand) { $nuget = $cand; break }
+          }
+          if (!$nuget) {
+            $found = Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio" -Recurse `
+                       -Filter NuGet.exe -ErrorAction SilentlyContinue |
+                     Select-Object -First 1
+            if ($found) { $nuget = $found.FullName }
+          }
+          if (!$nuget) {
+            Write-Host "镜像内无 NuGet.exe，下载官方命令行版"
+            $nuget = "$env:RUNNER_TEMP\nuget.exe"
+            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" `
+                              -OutFile $nuget
+          }
+          Write-Host "NuGet: $nuget"
+
+          # 每个工程各自还原到同级 packages\（与 vcxproj 里 ..\packages\ 的相对路径一致）
+          foreach ($rel in @("Projects\SR3\SR3R_I18N", "Projects\SR4\SR4R_I18N")) {
+            $cfg = Join-Path $rel "packages.config"
+            $dest = Join-Path (Split-Path $rel -Parent) "packages"
+            if (!(Test-Path $cfg)) { throw "缺少 $cfg" }
+            Write-Host "restore $cfg -> $dest"
+            & $nuget restore $cfg -PackagesDirectory $dest -NonInteractive
+            if ($LASTEXITCODE -ne 0) { throw "NuGet restore 失败: $cfg" }
+          }
+
+          # 硬校验产物落地（还原『成功』不等于文件存在）
+          $targets = Get-ChildItem -Recurse -Path Projects -Filter minhook.targets
+          if ($targets.Count -lt 2) {
+            throw "minhook.targets 只找到 $($targets.Count) 个（期望 2 个）"
+          }
+          $targets | ForEach-Object { Write-Host "OK: $($_.FullName)" }
+
+      # ── 构建（8 步流程）──────────────────────────────────────────────────
+      - name: 构建 release/{game}_{version}
+        shell: pwsh
+        run: |
+          $extra = @()
+          if ('${{ github.event.inputs.skip_dll }}' -eq 'true') { $extra += '--skip-dll' }
+          python build_release.py @extra
+          if ($LASTEXITCODE -ne 0) { throw "build_release.py 失败 (rc=$LASTEXITCODE)" }
+
+      # ── 产物校验（独立于构建脚本再核一遍）────────────────────────────────
+      - name: 校验产物完整性
+        shell: pwsh
+        run: python Tools/verify_release.py release
+
+      # ── 上传 ─────────────────────────────────────────────────────────────
+      - name: 上传 release 目录（合并包）
+        uses: actions/upload-artifact@v4
+        with:
+          name: sr-release-all
+          path: release/**
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: 上传分目标包
+        uses: actions/upload-artifact@v4
+        with:
+          name: sr-${{ github.run_number }}-${{ github.sha }}
+          path: |
+            release/sr3r_common/**
+            release/sr4r_common/**
+            release/sr4r_microsoft/**
+          if-no-files-found: error
+          retention-days: 30
+
+  # 打 tag 时把所有包压缩成单文件，便于直接分发给玩家
+  package:
+    name: 打包分发（仅 tag）
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 下载产物
+        uses: actions/download-artifact@v4
+        with:
+          name: sr-release-all
+          path: release
+
+      - name: 压缩为 zip
+        run: |
+          # 构建日期：显式用 UTC+8，避免 runner 默认 UTC 导致日期偏移一天
+          BUILD_DATE="$(TZ='Asia/Shanghai' date +%Y%m%d)"
+          echo "BUILD_DATE=$BUILD_DATE" >> "$GITHUB_ENV"
+          echo "构建日期（UTC+8）: $BUILD_DATE"
+
+          cd release
+          for d in */; do
+            name="${d%/}"
+            [ -d "$name" ] || continue
+            case "$name" in
+              sr3r_common)    out="《黑道圣徒III》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
+              sr4r_common)    out="《黑道圣徒IV》_简体中文_通用_补丁_${BUILD_DATE}.zip" ;;
+              sr4r_microsoft) out="《黑道圣徒IV》_简体中文_微软商店_补丁_${BUILD_DATE}.zip" ;;
+              *)              out="${name}_${BUILD_DATE}.zip" ;;
+            esac
+            echo "打包 $name -> $out"
+            # -UN=UTF8: 显式写入 UTF-8 文件名标志位（第 11 位），
+            #   否则 Windows 自带解压器可能把中文名按本地代码页解读 -> 乱码。
+            ( cd "$name" && zip -r -9 -UN=UTF8 "../${out}" . )
+          done
+          ls -la ./*.zip
+
+      - name: 创建 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.zip
+          generate_release_notes: true
+          body: |
+            《黑道圣徒》简体中文汉化补丁
+
+            本次构建日期（UTC+8）：${{ env.BUILD_DATE }}
+
+            | 压缩包 | 适用版本 |
+            |---|---|
+            | `《黑道圣徒III》_简体中文_通用_补丁.zip` | SR3 重制版（Steam / GOG / EPIC） |
+            | `《黑道圣徒IV》_简体中文_通用_补丁.zip` | SR4 重制版（Steam / GOG / EPIC） |
+            | `《黑道圣徒IV》_简体中文_微软商店_补丁.zip` | SR4 微软商店版 |
+
+            各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
+            安装 / 卸载 / 常见问题见包内 `必读说明.txt`。

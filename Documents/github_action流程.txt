@@ -1,0 +1,17 @@
+# github action 构建流程
+
+以下流程用{game}_{version}_{lang}的方式来描述各个版本的构建。
+game:sr3r,sr4r
+version:common,microsoft（目前只有sr4r有）。
+lang:chs（目前只有CHS）。
+
+## 流程
+
+1. 使用vc_141来编译x64位的{game}的dll，位于project，存放在release\{game}_{version}\scripts\{filename}.asi
+2. 复制resource\{game}\{lang}\dict\*.txt 到 release\{game}_{version}\scripts\dict\*.txt
+3. 用{Game}的le_string py自动化脚本构建resource\{game}\{lang}\le_string\*.txt，（原始le_string位于data\{game}\{version}\misc\*.le_string），构建后拷贝到release\{game}_{version}\update\*.le_string
+4. 用py脚本构建基于resource\{game}\{lang}\*.txt的charlist.txt，放置于release\{game}_{version}\scripts\charlist.txt
+5. 拷贝Fonts文件夹中的字体，放置于release\{game}_{version}\scripts\
+6. 拷贝dist\common\winmm.dll和必读说明.txt 到 release\{game}_{version}\ ，此文件是asi loader和补丁说明
+7. 拷贝dist\{game}\scripts\*.ini 到 release\{game}_{version}\scripts\*ini 此文件是构建后的dll的ini配置。
+8. 合并License文件夹下所有txt，放置于release\{game}_{version}\License.txt

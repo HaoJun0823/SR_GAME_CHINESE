@@ -47,12 +47,18 @@ venv/
 /_peek.py
 /_vq.py
 /_probe/
+/_probe_*.py
 /_tmp_archive_*/
 /_loose_bak/
 /_*.txt
 /_*.log
+/_*.json
 /Release/
 /data/
+
+# ---- 发布构建产物（build_release.py / CI 生成，不入库）----
+# 内容全部可由源材料 + 工具链重建；入库只会带来巨大的二进制噪音。
+/release/
 
 # ---- 例外：Archives 留档区一律保留 ----
 !Archives/**

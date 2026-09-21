@@ -27,6 +27,10 @@
 # 而 dist/ 下的 le_strings 也依赖二进制语义，故此处显式声明。
 *.md            text eol=lf
 *.py            text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.gitignore     text eol=lf
+*.gitattributes text eol=lf
 *.le_strings    binary
 
 # ---- 明确的二进制格式 ----
