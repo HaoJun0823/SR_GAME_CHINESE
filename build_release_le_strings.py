@@ -228,10 +228,48 @@ def _stub_ratio(pairs):
     return sum(1 for v in pairs.values() if len(v) <= 1) / len(pairs)
 
 
-def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False):
+def check_sources(game, version):
+    """★ 预检: 返回该 {game}_{version} 构建所需的源目录是否齐备。
+
+    返回 (ok: bool, problems: [str])。**不抛异常**, 供调用方统一汇总 ——
+    这样「构建前预检」和「构建中报错」能共享同一套判定。
+
+    ★★ 2026-09-21 新增。事故背景：
+      `data/` 当时被 .gitignore 排除（0 个文件入库），CI 全新 clone 后
+      `data/{game}/{version}/misc` 不存在 —— 但 build_game() 只是**返回 (0, [])**，
+      而调用方传了 quiet=True 把 `[SKIP]` 那行日志也吞了。
+      结果：CI 日志在 `[3/8] 构建 le_string` 与失败信息之间**一片空白**，
+      三个 target 全挂，却看不出为什么，白跑 6 分半。
+      → 「缺源目录」是**配置级错误**，必须响亮地失败，不能走 silently-skip 路径。
+    """
+    problems = []
+    data_misc = os.path.join(ROOT, 'data', game, version, 'misc')
+    txt_dir = os.path.join(ROOT, 'Resource', game, 'CHS', 'le_string')
+    if not os.path.isdir(data_misc):
+        problems.append(f'缺少 _us 模板目录: {os.path.relpath(data_misc, ROOT)}')
+    else:
+        n = len([f for f in os.listdir(data_misc) if f.endswith('_us.le_strings')])
+        if n == 0:
+            problems.append(f'模板目录里没有任何 *_us.le_strings: '
+                            f'{os.path.relpath(data_misc, ROOT)}')
+    if not os.path.isdir(txt_dir):
+        problems.append(f'缺少中文 txt 目录: {os.path.relpath(txt_dir, ROOT)}')
+    else:
+        n = len([f for f in os.listdir(txt_dir) if f.endswith('.txt')])
+        if n == 0:
+            problems.append(f'中文 txt 目录里没有任何 *.txt: '
+                            f'{os.path.relpath(txt_dir, ROOT)}')
+    return (not problems), problems
+
+
+def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False,
+               strict_sources=True):
     """构建单个 {game}_{version} 的 le_string 产物。
 
     返回 (成功文件数, 失败清单[(out_name, err)])。失败不抛异常, 由调用方汇总。
+
+    strict_sources=True（默认）下, 若源目录缺失/为空则**直接抛出 RuntimeError**,
+    而不是返回 (0, []) —— 见 check_sources() 的注释说明这一取舍的理由。
     """
     data_misc = os.path.join(ROOT, 'data', game, version, 'misc')
     txt_dir = os.path.join(ROOT, 'Resource', game, 'CHS', 'le_string')
@@ -242,11 +280,14 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False):
         if not quiet:
             print(*a)
 
-    if not os.path.isdir(data_misc):
-        log(f'[SKIP] {game}_{version}: 找不到 data 模板目录 {data_misc}')
-        return 0, []
-    if not os.path.isdir(txt_dir):
-        log(f'[SKIP] {game}_{version}: 找不到中文 txt 目录 {txt_dir}')
+    ok, problems = check_sources(game, version)
+
+    # ★ 缺源目录 = 配置级错误，不走 skip。CLI 单跑时给完整明细；库调用时抛异常。
+    if not ok:
+        msg = f'{game}_{version} 源目录不可用:\n    - ' + '\n    - '.join(problems)
+        if strict_sources:
+            raise RuntimeError(msg)
+        log('[SKIP] ' + msg)
         return 0, []
 
     # 收集 _us 模板 与 中文 txt
@@ -521,6 +562,23 @@ def main():
 
     # ── 2) 构建 ──────────────────────────────────────────────────────────
     print('\n[2/3] 构建')
+
+    # ★★ 先做全量预检：缺源目录就一次性全列出来，不要构建到一半才炸。
+    src_ok = True
+    for g in games:
+        versions = [args.version] if args.version else GAME_VERSIONS.get(g, ['common'])
+        for v in versions:
+            ok, probs = check_sources(g, v)
+            if not ok:
+                src_ok = False
+                print(f'  !! {g}_{v}:')
+                for x in probs:
+                    print(f'       - {x}')
+    if not src_ok:
+        print('\n构建中止: 上述源目录缺失（CI 上通常是没把 data/ 一起 clone 下来）。')
+        print('  data/ 模板是构建 le_string 的必需输入，不入库则 CI 无从获取。')
+        return 1
+
     results = []
     for g in games:
         versions = [args.version] if args.version else GAME_VERSIONS.get(g, ['common'])

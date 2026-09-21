@@ -548,12 +548,49 @@ def main():
     p(f'  输出:   {out_root}')
     p(f'  目标:   {", ".join(names)}   lang={args.lang}')
 
-    # 语言目录预检（早失败，避免跑到一半才发现）
+    # ── 源目录预检（早失败，避免跑到一半才发现；也避免「静默产出 0 个文件」）──
+    # ★★ 2026-09-21 新增。事故：data/ 被 .gitignore 排除，CI 全新 clone 后
+    #   data/{game}/{version}/misc 不存在，le_strings 步骤静默返回 0 个产物，
+    #   而 quiet=True 又吞掉了 [SKIP] 日志 —— CI 上只能看到 `[3/8]` 之后直接失败，
+    #   完全看不出原因。这里把所有缺失一次性列出来，并把 data/ 的典型成因写清楚。
+    preflight = []
     for n in names:
-        d = os.path.join(ROOT, 'Resource', TARGETS[n]['game'], args.lang)
-        if not os.path.isdir(d):
-            p(f'!! {n}: 语言目录不存在 {d}')
-            return 1
+        cfg = TARGETS[n]
+        game, version = cfg['game'], cfg['version']
+
+        lang_dir = os.path.join(ROOT, 'Resource', game, args.lang)
+        if not os.path.isdir(lang_dir):
+            preflight.append(f'{n}: 语言目录不存在 {os.path.relpath(lang_dir, ROOT)}')
+
+        ltxt = os.path.join(lang_dir, 'le_string')
+        if not os.path.isdir(ltxt):
+            preflight.append(f'{n}: 中文 txt 目录不存在 '
+                             f'{os.path.relpath(ltxt, ROOT)}')
+        elif not args.dll_only:
+            if not [f for f in os.listdir(ltxt) if f.endswith('.txt')]:
+                preflight.append(f'{n}: 中文 txt 目录为空（无 *.txt）'
+                                 f'{os.path.relpath(ltxt, ROOT)}')
+
+        if not args.dll_only:
+            data_misc = os.path.join(ROOT, 'data', game, version, 'misc')
+            if not os.path.isdir(data_misc):
+                preflight.append(f'{n}: _us 模板目录不存在 '
+                                 f'{os.path.relpath(data_misc, ROOT)}')
+            elif not [f for f in os.listdir(data_misc)
+                      if f.endswith('_us.le_strings')]:
+                preflight.append(f'{n}: 模板目录里没有 *_us.le_strings '
+                                 f'{os.path.relpath(data_misc, ROOT)}')
+
+    if preflight:
+        p('')
+        p('!! 源目录预检未通过：')
+        for x in preflight:
+            p(f'   - {x}')
+        p('')
+        p('   提示：data/ 是从游戏本体提取的 _us 模板，是 le_string 构建的必需输入。')
+        p('   若在 CI 上出现，通常是 data/ 未被纳入版本控制 —— 检查 .gitignore '
+          '里的 /data/ 规则是否把整个目录排除了。')
+        return 1
 
     msbuild = None
     if not args.skip_dll:

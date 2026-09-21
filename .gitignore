@@ -54,7 +54,23 @@ venv/
 /_*.log
 /_*.json
 /Release/
-/data/
+
+# ---- data/：必须入库！----
+# ★★ 2026-09-21 更正：原先这里是 `/data/`（整个目录排除），错。
+#
+#   data/{game}/{version}/misc/*_us.le_strings 是从游戏本体提取的 **_us 模板**，
+#   是 build_release_le_strings.py 构建汉化 le_string 的**必需输入**。
+#   它被 gitignore 之后，CI 全新 clone 拿不到 —— le_strings 步骤静默产出 0 个文件，
+#   三个 target 全挂，白跑 6 分半才报一句"未产出任何 .le_strings"。
+#
+#   注意：不能靠 `!data/**` 之类的负向规则补救 —— git 的规则是
+#   **「被排除的目录"内部"的路径无法通过 `!` 重新纳入」**。
+#   所以正确做法就是**不要排除 data/ 本身**（下面只排除它的构建输出子目录）。
+#
+#   该目录实测约 76 MB / 660 文件，是发布构建的硬依赖，入库是唯一稳妥的供给方式。
+/data/SR3/common/misc/_build/
+/data/SR4/common/misc/_build/
+/data/SR4/microsoft/misc/_build/
 
 # ---- 发布构建产物（build_release.py / CI 生成，不入库）----
 # 内容全部可由源材料 + 工具链重建；入库只会带来巨大的二进制噪音。
