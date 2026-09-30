@@ -369,33 +369,119 @@ jobs:
           git push origin "$tag"
           echo "✓ 已建 tag: $tag"
 
-      - name: 生成 Release 说明
+      # ★ Release 说明三要素（2026-09-30 按 haojun0823 要求定稿）：
+      #   1) **本次构建相关的提交记录**：自上一次 Release 起的 commit 列表，
+      #      读者不翻 commit 历史就能知道这一版改了什么；
+      #   2) 三个 ASCII 附件 ↔ 中文原名的对照表（附件名不能中文，靠表对照）；
+      #   3) **`dist/common/必读说明.txt` 全文**附在说明里 —— 安装 / 卸载 / 常见问题
+      #      / 免责声明。该文件是 tracked 的（.gitignore 只忽略 /release/），
+      #      checkout 后必在；且 build_release.py 第 6 步把它复制进 release/{gv}/ 再打进
+      #      zip，故**此处附录与包内那份同源同版**，玩家不下载也能看到关键说明。
+      #      用 <details>+<pre> 包住：保留 txt 原格式（含缩进与 # 号），不渲染成标题。
+      - name: 生成 Release 说明（提交记录 + 必读说明）
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           tag="${{ steps.tag.outputs.tag }}"
+          slug="${{ github.repository }}"
+
+          # ── 1) 提交记录范围：上次 Release 的 tag + 对应 commit ───────────
+          #    ★ 坑：actions/checkout 默认只拉分支指针、**不拉 tag**（尽管 fetch-depth: 0
+          #      把分支历史拉全了）。所以本地未必有上次 release 的 **tag 对象**，
+          #      直接用 `git log <tag>..HEAD` 会报
+          #      "fatal: ambiguous argument '<tag>..HEAD': unknown revision"。
+          #      改用 release 的 **commit.sha** 作范围起点 —— 该 commit 必然在
+          #      master 历史里，且再补一道 git cat-file -e 存在性校验。
+          #    本次 release 尚未创建，故 releases/latest 即「上一次」。
+          latest="$(gh api "repos/$slug/releases/latest" 2>/dev/null || true)"
+          prev_tag="$(printf '%s' "$latest" | jq -r '.tag_name // empty' 2>/dev/null || true)"
+          prev_sha="$(printf '%s' "$latest" | jq -r '.commit.sha // empty' 2>/dev/null || true)"
+          if [ -n "$prev_sha" ] && git cat-file -e "${prev_sha}^{commit}" 2>/dev/null; then
+            base="$prev_sha"; base_label="$prev_tag"
+            echo "上一次 Release：$prev_tag（$prev_sha）"
+          else
+            base="$(git rev-list --max-parents=0 HEAD)"; base_label="首个提交"
+            echo "无可用历史 Release，以首个提交为基准：$base"
+          fi
+
+          # ── 2) 本次构建相关的提交记录 ───────────────────────────────────
+          #    字段用 TAB 分隔（%H%x09%s），规避 subject 里的 | 等分隔符字符。
+          : > commits.md
+          git log --no-merges --max-count=60 --pretty=format:'%H%x09%s' "$base..HEAD" \
+            | while IFS=$'\t' read -r h s; do
+                if [ -z "$h" ]; then continue; fi   # 不能用 "&& continue"，set -e 下会误退出
+                printf -- '- [`%s`](%s/commit/%s) %s\n' "${h:0:7}" "$slug" "$h" "$s" >> commits.md
+              done
+          n=$(grep -c '^- ' commits.md || true)
+          echo "本次提交记录：$n 条（基准 $base）"
+
+          # ── 3) 正文骨架 ─────────────────────────────────────────────────
+          #    统一用 @@TAG@@ 占位符，最后一遍 sed 替换（heredoc 单引号不自展开）。
           cat > release_notes.md <<'EOF'
-          《黑道圣徒》简体中文汉化补丁
+          ## 《黑道圣徒》简体中文汉化补丁 · `@@TAG@@`
 
-          构建标签：${TAG}
-          包内 `必读说明.txt` 有安装 / 卸载说明。
+          简体中文汉化补丁，三套构建分别对应 **SR3 重制版 / SR4 重制版 / SR4 微软商店版**。
+          下载对应 zip，**把包内全部文件覆盖到游戏根目录**即可；卸载方法见下方必读说明。
 
-          > 说明：GitHub Release 附件名不支持中文（经 API 上传会被静默破坏成
-          > `_._._` 这类），故附件使用英文文件名；解压后内部文件仍为中文名，
-          > 不影响使用。下表给出「英文附件名 ↔ 中文原名」对照。
+          > ⚠️ GitHub Release 附件名不支持中文（经 API 上传会被静默破坏成 `_._._` 这类），
+          > 故附件使用英文文件名；解压后内部文件与目录名均为中文，**不影响使用**。
+          > 下表「英文附件名 ↔ 中文原名」一一对应，按你的游戏版本选一个下载即可。
+          EOF
+
+          # ── 4) 追加提交记录 ─────────────────────────────────────────────
+          {
+            echo
+            echo "### 🧾 本次更新（自 \`$base_label\` 起，共 ${n} 条提交）"
+            echo
+            if [ -s commits.md ]; then
+              cat commits.md
+            else
+              echo "(本次构建无新增提交)"
+            fi
+          } >> release_notes.md
+
+          # ── 5) 追加附件对照表 ───────────────────────────────────────────
+          cat >> release_notes.md <<'EOF'
+
+          ### 📦 下载（3 个补丁包，均解压到游戏根目录）
 
           | 英文附件名 | 对应中文原名 | 适用版本 |
           |---|---|---|
-          | `Saint-Row-3-Common-CHS-Patch-${TAG}.zip` | 《黑道圣徒III》简体中文通用补丁 | SR3 重制版（Steam / GOG / EPIC） |
-          | `Saint-Row-4-Common-CHS-Patch-${TAG}.zip` | 《黑道圣徒IV》简体中文通用补丁 | SR4 重制版（Steam / GOG / EPIC） |
-          | `Saint-Row-4-Microsoft-CHS-Patch-${TAG}.zip` | 《黑道圣徒IV》简体中文微软商店补丁 | SR4 微软商店版 |
-
-          各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
-          安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
+          | `Saint-Row-3-Common-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒III》简体中文通用补丁 | SR3 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Common-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒IV》简体中文通用补丁 | SR4 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Microsoft-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒IV》简体中文微软商店补丁 | SR4 微软商店版 |
           EOF
-          # 把占位符换成真实 tag（heredoc 用单引号，不会自展开）
-          sed -i "s/\${TAG}/$tag/" release_notes.md
-          echo "── release_notes.md 头部 ──"
-          head -6 release_notes.md
+
+          # ── 6) 追加必读说明全文（与包内 必读说明.txt 同源）──────────────────
+          {
+            echo
+            echo "### 📖 必读说明（安装 / 卸载 / 常见问题）"
+            echo
+            if [ -f "dist/common/必读说明.txt" ]; then
+              echo "<details><summary>展开完整必读说明（与包内 必读说明.txt 一致）</summary>"
+              echo
+              echo "<pre>"
+              tr -d '\r' < "dist/common/必读说明.txt"   # 消除 CRLF，避免 markdown 里出现 ^M
+              echo "</pre>"
+              echo
+              echo "</details>"
+            else
+              echo "> ⚠️ 未找到 <code>dist/common/必读说明.txt</code>，本次未附带。"
+            fi
+            echo
+            echo "---"
+            echo
+            echo "源码仓库：<https://github.com/HaoJun0823/SR_GAME_CHINESE>　·　作者主页：<https://www.haojun0823.xyz/>"
+          } >> release_notes.md
+
+          # ── 7) 占位符替换 + 自检 ────────────────────────────────────────
+          sed -i "s/@@TAG@@/$tag/g" release_notes.md
+          if grep -q '@@TAG@@' release_notes.md; then
+            echo "!! 仍有未替换的 @@TAG@@" >&2; exit 1
+          fi
+          echo "── release_notes.md 生成完毕（$(wc -l < release_notes.md) 行）──"
+          head -8 release_notes.md
 
       # ★ 发布（两步，规避 GitHub 两层坑）：
       #   1) GitHub 已废弃 `api.github.com/repos/{o}/{r}/releases/{id}/assets` 端点
