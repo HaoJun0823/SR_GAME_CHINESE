@@ -514,6 +514,20 @@ jobs:
           #    只会把字符串 "@release_notes.md" 原样当正文；
           #    只有 `-F` 才会读文件内容（实测 run 36739064504，Release 正文
           #    一度是字面量 @release_notes.md —— 玩家看到的说明是空的）。
+          # ★ 建 release 前的「本地预检」：正文不达标就别去远端建（否则会留下
+          #   空 Release / 孤儿 tag，得手动清理）。比远端自检更早拦截。
+          if [ ! -f release_notes.md ]; then
+            echo "!! 未找到 release_notes.md" >&2; exit 1
+          fi
+          # ★ 段落标记一律用**不含 emoji** 的字符串：emoji 作命令行参数传给 grep
+          #   在 Windows Git Bash 下会被代码页转换破坏（本地无法复现验证）。
+          for sec in "Saint-Row-3-Common-CHS-Patch" "Saint-Row-4-Microsoft-CHS-Patch" "必读说明"; do
+            if ! grep -qF "$sec" release_notes.md; then
+              echo "!! release_notes.md 缺少段落「$sec」" >&2; exit 1
+            fi
+          done
+          echo "✓ release_notes.md 预检通过（$(wc -l < release_notes.md) 行）"
+
           REL_JSON=$(gh api -X POST "repos/$slug/releases" \
             -f "tag_name=$tag" -f "name=$tag" \
             -F "body=@release_notes.md" -F "draft=false")
@@ -525,10 +539,20 @@ jobs:
               -f "body=$(cat release_notes.md)" -F "draft=false")
           fi
           # ★ 最终自检：正文必须是「三段结构」而非空 / 字面占位符，否则直接失败
-          body_head="$(jq -r .body <<<"$REL_JSON" | head -1)"
-          if [ -z "$body_head" ] || [ "$body_head" != "## 《黑道圣徒》简体中文汉化补丁" ]; then
+          #   ★★ run 36740536134 踩坑：标题行带动态 tag 后缀
+          #   （「## 《黑道圣徒》简体中文汉化补丁 · `2026-10-01-00-09-01`」），
+          #   用 `!=` 精确相等会**把自己判失败**并中断发布 —— 必须前缀匹配。
+          body="$(jq -r .body <<<"$REL_JSON")"
+          body_head="${body%%$'\n'*}"
+          if [ -z "$body_head" ] || [[ "$body_head" != "## 《黑道圣徒》简体中文汉化补丁"* ]]; then
             echo "!! Release body 异常（首行=[$body_head]），检查 -f/-F 与 release_notes.md" >&2; exit 1
           fi
+          # 更强校验：下载对照表段 + 必读说明段必须真的进了正文（同预检标记）
+          for sec in "Saint-Row-4-Microsoft-CHS-Patch" "必读说明"; do
+            if ! grep -qF "$sec" <<<"$body"; then
+              echo "!! Release body 缺少段落「$sec」，说明生成不完整" >&2; exit 1
+            fi
+          done
           echo "✓ Release body 已写入（首行：${body_head}…）"
           UPLOAD_URL=$(echo "$REL_JSON" | jq -r .upload_url)
           BASE="${UPLOAD_URL%%\{*}"

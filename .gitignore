@@ -76,6 +76,13 @@ venv/
 # 内容全部可由源材料 + 工具链重建；入库只会带来巨大的二进制噪音。
 /release/
 
+# ---- CI 发布说明的「中间产物」（workflow 生成，仅供本 run 内使用）----
+# release_notes.md / commits.md 由 publish job 的「生成 Release 说明」步骤产出，
+# 只用于喂给 gh api 作 body、不需要存档；一旦忽略漏配，每次跑完 CI 仓库根目录
+# 都会冒出未跟踪文件，容易被误 git add 入库。
+/release_notes.md
+/commits.md
+
 # ---- 例外：Archives 留档区一律保留 ----
 !Archives/**
 !**/.gitkeep
