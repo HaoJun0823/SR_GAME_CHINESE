@@ -310,6 +310,14 @@ jobs:
     permissions:
       contents: write
     steps:
+      # ★ 必须检出仓库：publish job 用官方 gh CLI 发版，gh release create 需要 git 上下文
+      #   （确定仓库、commitish）才能建 tag + Release；否则报
+      #   "fatal: not a git repository"（2026-09-30 run 36719311009 实测踩坑）。
+      - name: 检出仓库（供 gh 发版确定 git 上下文）
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
       # 三个 artifact 分别下载（默认会落到 dist/<artifact-name>/ 子目录）
       - name: 下载 SR3 通用包
         uses: actions/download-artifact@v8.0.1
