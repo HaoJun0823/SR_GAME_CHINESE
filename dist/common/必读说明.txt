@@ -1,4 +1,4 @@
-《黑道圣徒 III / IV》 简体中文汉化补丁  必读说明
+《黑道圣徒 III 重制 / IV 升级》 简体中文汉化补丁  必读说明 BY HaoJun0823
 ============================================================
 
 # 安装方法
@@ -26,23 +26,25 @@
     若你先前装过其它模组也用了它们，请自行备份后再删。
 
 # 适用版本
-    - steam / GOG / EPIC 版本共用同一套文件。
+    - steam / GOG / EPIC 版本共用同一套文件，请下载 common 的构建。
     - Microsoft Store（MSIXVC）版请使用名称带 microsoft 的构建。
 
 # 常见问题
-    - 文字不显示 / 显示方块：确认 SourceHanSansHWSC-VF.ttf 在 scripts\ 下，
-      且 ini 中 font_file 与该文件名一致。
+    - 早期汉化通过 binkw64.dll 加载，若目录存在 binkw64Hooked.dll 或者安装过其他汉化组或者安装过我更早期的汉化，请复原binkw64.dll。
+    - 文字不显示 / 显示方块：确认 SourceHanSansHWSC-VF.ttf 在 scripts\ 下，且 ini 中 font_file 与该文件名一致。
     - 想换字体：把任意 TrueType 字体放进 scripts\，并修改 ini 的 font_file。
     - 缺字（个别字空白）：向作者反馈具体场景与句子，会补进 charlist。
-    - 崩溃：同一场景发生 2~3 次后再报告；请附上 scripts\ 下的日志文件
-      （SR3R_I18N.log / SR4R_I18N.log）。
-    - 不要用中文输入法玩游戏（已知部分输入法会导致崩溃）。
-    - 不要在加载过程中快速连按回车跳过。
+    - 崩溃：同一场景发生 2~3 次后再报告；请附上 scripts\ 下的日志文件（SR3R_I18N.log / SR4R_I18N.log）和 dumps\ 下的内存转储文件（带有最近一次崩溃时间的文件夹）。
+    - 三代游戏中，不要用中文输入法玩游戏（已知部分输入法会导致崩溃）。
+    - 三代游戏中，不要在最开始的加载过程中快速连按回车跳过。
+	- 屏幕出现黑块请尝试重启游戏。
+	- 请不要使用显卡的节电模式来运行游戏。
 
 # 免责声明
     本补丁仅供学习交流使用，请于下载后 24 小时内删除，
     不得用于任何商业用途。使用者请遵守当地法律。
+    相关开源依赖请参见License.txt
 
 # 参考
-    项目主页：https://github.com/HaoJun0823/SR3R_I18N
-              https://github.com/HaoJun0823/SR4R_I18N
+    项目主页：https://github.com/HaoJun0823/SR_GAME_CHINESE
+    作者主页：https://www.haojun0823.xyz/

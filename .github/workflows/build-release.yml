@@ -385,6 +385,9 @@ jobs:
           set -euo pipefail
           tag="${{ steps.tag.outputs.tag }}"
           slug="${{ github.repository }}"
+          # ★ slug 只给 gh api 用（repos/{slug}/...）；拼 **commit 链接** 必须带
+          #   https://github.com/ 前缀，否则 markdown 里只是一段普通文字、点不开。
+          repo_url="https://github.com/$slug"
 
           # ── 1) 提交记录范围：上次 Release 的 tag + 对应 commit ───────────
           #    ★ 坑：actions/checkout 默认只拉分支指针、**不拉 tag**（尽管 fetch-depth: 0
@@ -397,6 +400,15 @@ jobs:
           latest="$(gh api "repos/$slug/releases/latest" 2>/dev/null || true)"
           prev_tag="$(printf '%s' "$latest" | jq -r '.tag_name // empty' 2>/dev/null || true)"
           prev_sha="$(printf '%s' "$latest" | jq -r '.commit.sha // empty' 2>/dev/null || true)"
+          # ★ .commit.sha 对「由 tag 建出」的 release 实测返回空（本地实跑复现），
+          #   故退一路查 tag ref；我们是 `git tag <名>` 建的**轻量 tag**，
+          #   object.sha 直接就是 commit sha（annotated tag 才会指向 tag 对象）。
+          if [ -z "$prev_sha" ] && [ -n "$prev_tag" ]; then
+            prev_sha="$(gh api "repos/$slug/git/refs/tags/$prev_tag" --jq '.object.sha // empty' 2>/dev/null || true)"
+            if [ "$(git cat-file -t "$prev_sha" 2>/dev/null || true)" = "tag" ]; then
+              prev_sha="$(gh api "repos/$slug/git/refs/tags/$prev_tag" --jq '.object.object.sha // empty' 2>/dev/null || true)"
+            fi
+          fi
           if [ -n "$prev_sha" ] && git cat-file -e "${prev_sha}^{commit}" 2>/dev/null; then
             base="$prev_sha"; base_label="$prev_tag"
             echo "上一次 Release：$prev_tag（$prev_sha）"
@@ -411,7 +423,7 @@ jobs:
           git log --no-merges --max-count=60 --pretty=format:'%H%x09%s' "$base..HEAD" \
             | while IFS=$'\t' read -r h s; do
                 if [ -z "$h" ]; then continue; fi   # 不能用 "&& continue"，set -e 下会误退出
-                printf -- '- [`%s`](%s/commit/%s) %s\n' "${h:0:7}" "$slug" "$h" "$s" >> commits.md
+                printf -- '- [`%s`](%s/commit/%s) %s\n' "${h:0:7}" "$repo_url" "$h" "$s" >> commits.md
               done
           n=$(grep -c '^- ' commits.md || true)
           echo "本次提交记录：$n 条（基准 $base）"
