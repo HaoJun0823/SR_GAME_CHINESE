@@ -12,7 +12,8 @@ name: build-release
 #       每个 zip 可直接解压到游戏根目录；打 tag 时挂到 GitHub Release（三个独立文件）。
 #
 # 触发：
-#   push(main/master)   —— 构建 + 校验 + 上传 zip 到 Artifacts（不做 release）
+#   push(main/master)   —— 构建 + 校验 + 上传 zip 到 Artifacts；并由 auto-tag job
+#                          自动按日期打 tag，进而触发发 Release（见 auto-tag / package job）
 #   pull_request        —— 构建 + 校验（门禁）
 #   workflow_dispatch   —— 手动；可勾选跳过 DLL 编译
 #   push tag v*         —— 构建 + 校验 + 上传 zip + 发 Release（见 package job）
@@ -355,3 +356,42 @@ jobs:
 
             各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
             安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
+
+  # 每次 push 到 master（非纯文档改动）自动按日期打 tag，
+  # 从而触发上面的 package job 发 Release —— 实现「push 即发版」，无需手动打 tag。
+  # ★ 仅在 push 到 master 时打 tag；tag push 本身不触发本 job（否则无限循环）。
+  #   tag 名格式 vYYYY-MM-DD，同日多次自动加 -2 / -3 ...
+  auto-tag:
+    name: 自动按日期打 tag（触发发版）
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 检出（仅用于打 tag，fetch-depth 0 确保可 push）
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: 配置 git 身份
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 计算日期 tag 并推送
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          base="v$(date +%F)"
+          tag="$base"
+          n=2
+          # 同日已存在该 tag 则追加序号，避免重复打 tag 失败
+          while gh api "repos/${{ github.repository }}/git/ref/tags/$tag" >/dev/null 2>&1; do
+            tag="${base}-${n}"
+            n=$((n + 1))
+          done
+          echo "将创建 tag: $tag"
+          git tag "$tag"
+          git push origin "$tag"
