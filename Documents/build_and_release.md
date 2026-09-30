@@ -194,12 +194,15 @@ python Tools/pack_release.py release --date 20260922   :: 指定日期，便于�
 - **失败即整体失败**：脚本先做全量存在性检查，再开始压缩。
   缺任一期盼目录时 `rc=1` 且**不产出任何 zip**；否则会出现
   「先压出前两个再报错」的半套产物，调用方若只看「有没有 zip」就会误发不完整包。
-- **Artifact 只有一个**：`sr-release-zips`，`path: release/*.zip`，
-  `if-no-files-found: error`，保留 30 天。
-  （旧版曾同时传 `sr-release-all` 与 `sr-{run_number}-{sha}` 两个 artifact，
-  各 62.40 MB **内容完全相同** —— 同一批文件传两遍，已删除。）
-- `package` job 下载到 `dist/` 后有一条**硬断言**：`dist/*.zip` 必须恰好 3 个，
-  少任何一个都不创建 Release。`action-gh-release` 的 `files: dist/*.zip`。
+- **Artifact 拆成三个、命名清晰**（不再封进单个 `sr-release-zips` 大包）：
+  `sr3r-common` / `sr4r-common` / `sr4r-microsoft`，各自 `path: stage/<name>`，
+  内含 1 个中文名 zip（**扁平、无 `release/` 前缀**），`if-no-files-found: error`，保留 30 天。
+  - 拆分的**根因**：旧版用 `path: release/*.zip` 上传，upload-artifact 会保留
+    `release/` 前缀，下载后文件落在 `dist/release/*.zip` 而非 `dist/*.zip`，
+    导致 `package` job 的硬断言匹配到 0 个而放弃发 Release（「发不到 Release 页」的元凶）。
+    现在每个 artifact 是单文件目录上传，下载到 `dist/` 后三个 zip 直接落在根目录。
+- `package` job 把三个 artifact **分别下载到同一 `dist/`**，再**硬断言**：`dist/*.zip`
+  必须恰好 3 个，少任何一个都不创建 Release。`action-gh-release` 的 `files: dist/*.zip`。
 
 ### action 版本（必须 pin 到 Node 24）
 

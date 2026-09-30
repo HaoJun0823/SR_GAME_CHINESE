@@ -15,7 +15,7 @@ build_release_le_strings.py — 从 data/ 原始 le_string 模板 + Resource 中
   CI 构建请传 --out-dir 指向 release/<game>_<version>/update
 
 流程 (自动化构建):
-  1) 前置自检: 调用两侧 repack 模块的 self_test(), 验证 8 字节 offset 表读/写自洽;
+  1) 前置自检: 调用 le_string_codec.self_test(), 验证 8 字节 offset 表读/写自洽;
   2) 构建: 对每张表优先原位覆盖(repack_inplace), 超槽则降级全量重建(不丢条目);
   3) 产物校验: 逐个文件全量结构自检 (magic / bucket 总和 == stringCount /
      offset 表长度 / 回读条目数), 任一失败则打印并 [非零退出];
@@ -24,8 +24,11 @@ build_release_le_strings.py — 从 data/ 原始 le_string 模板 + Resource 中
 退出码: 0=全部成功; 1=有文件构建或校验失败 (供 CI / 自动化判定)。
 
 说明:
-  - SR3 用 Projects/SR3/Tools/le_strings_repack (裸 UTF-16LE, 8 字节 offset 表)
-  - SR4 用 Projects/SR4/Tools/sr4le_repack  (经 charlist 反向映射; 本仓库 SR4 无 charlist_zh, 传 None=裸 UTF-16LE)
+  - SR3 与 SR4 **共用** Projects/Common/tools/helper/le_string_codec.py
+    （原先各自一份 repack 实现已归档到 Archives/*/Tools_redundant/merged_into_common/）。
+    步长一律从源模板探测（SR3 实测全 UTF-16，SR4 common 混有 UTF-32 主机表，
+    SR4 microsoft 基本全 UTF-32）。
+  - charlist 反向映射：若模板目录下有 charlist_zh.dat 则启用（目前仅 SR3 侧存在）。
   - 两个游戏同时产出 _zh 与 _us, 保证 loose 加载无论游戏 locale 如何都能显示中文。
 
 作为库使用:
@@ -39,11 +42,23 @@ import struct
 import shutil
 import argparse
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(ROOT, 'Projects', 'SR4', 'Tools'))
-sys.path.insert(0, os.path.join(ROOT, 'Projects', 'SR3', 'Tools'))
-import sr4le_repack
-import le_strings_repack as sr3_lr
+# 路径：本文件位于 <ROOT>/Projects/Common/tools/automation/
+#   __file__ → .../automation/build_release_le_strings.py
+#   dirname 1 → .../automation     2 → .../tools     3 → .../Common
+#   4 → .../Projects               5 → <ROOT>
+TOOLS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # <ROOT>/Projects/Common/tools
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(TOOLS)))       # 再上跳 3 层
+assert os.path.isdir(os.path.join(ROOT, 'Projects', 'SR3')), \
+    f'ROOT 解析错误: {ROOT}（应指向仓库根，其下应有 Projects/SR3）'
+sys.path.insert(0, os.path.join(TOOLS, 'helper'))
+sys.path.insert(0, os.path.join(TOOLS, 'cli'))
+
+# ★★ 2026-09-21 重构：原先把 SR3/SR4 的 repack 模块各 import 一份，两份实现
+#    会给出**不同结论**（SR3 版探测到位却硬编码 term=2；SR4 版有 charlist 映射）。
+#    现已统一到 helper/le_string_codec.py，此处只依赖它一个。
+import le_string_codec as C
+
+# 历史模块已归档到 Archives/*/Tools_redundant/merged_into_common/，如需对照见那里。
 
 LINE_RE = re.compile(r'^"(.+?)":\s*"(.*)"\s*$')
 MAGIC = 0xA84C7F73
@@ -108,7 +123,10 @@ def parse_txt(path):
 def parse_le_strings(path, step=None):
     """解析 le_strings -> (nb, nstr, [text...], step); 结构非法时抛 ValueError。
 
-    与 repack 模块读路径同源逻辑, 用于构建后独立校验 (不依赖被校验对象的自检)。
+    ★★ 2026-09-21 重构：原先是本文件自带的一份独立解析器（与 repack 模块
+       同源逻辑重复实现）。现已**委托给 helper/le_string_codec.py**，
+       保证「构建」与「校验」用同一份字节级实现，不会出现两套结论。
+
     ★★ 载荷步长 (2=UTF-16LE / 4=UTF-32LE):
        microsoft 商店版的 le_strings 是 UTF-32LE, 若按 UTF-16 读会**每条截断成
        1 个字符** (遇到高字节 0x0000 即停), 从而把正常文本表误判成「单字符映射表」。
@@ -118,56 +136,8 @@ def parse_le_strings(path, step=None):
        这些都会干扰自动探测, 造成「校验器用错步长 -> 校验形同虚设」。
        仅在 step=None 时才自动探测 (用于查看任意第三方文件)。
     """
-    buf = open(path, 'rb').read()
-    if len(buf) < 12:
-        raise ValueError('文件过小 (<12B)')
-    fid, ver, nb, nstr = struct.unpack_from('<IHHI', buf, 0)
-    if fid != MAGIC:
-        raise ValueError(f'魔数错 ID=0x{fid:08X} (期望 0x{MAGIC:08X})')
-    if 12 + 16 * nb + 8 * nstr > len(buf):
-        raise ValueError(f'头部声明超出文件大小 (nb={nb} nstr={nstr} size={len(buf)})')
-
-    if step is None:
-        buckets = []
-        for i in range(nb):
-            cnt, _, off, _ = struct.unpack_from('<IIII', buf, 12 + i * 16)
-            buckets.append((off, cnt))
-        step = sr4le_repack.detect_text_step(buf, nb, buckets)
-    if step not in (2, 4):
-        raise ValueError(f'非法步长 {step}')
-    fmt = '<H' if step == 2 else '<I'
-
-    texts = []
-    total = 0
-    for i in range(nb):
-        cnt, _, off, _ = struct.unpack_from('<IIII', buf, 12 + i * 16)
-        total += cnt
-        for j in range(cnt):
-            so = off + j * 8
-            if so + 4 > len(buf):
-                raise ValueError(f'bucket[{i}] offset 表越界 @0x{so:X}')
-            s_off = struct.unpack_from('<I', buf, so)[0]
-            if s_off == 0:
-                texts.append('')
-                continue
-            if s_off + 4 > len(buf):
-                raise ValueError(f'bucket[{i}] 字符串偏移越界 @0x{s_off:X}')
-            e = s_off + 4
-            while e + step - 1 < len(buf) and \
-                    struct.unpack_from(fmt, buf, e)[0] != 0:
-                e += step
-            if step == 2:
-                texts.append(buf[s_off + 4:e].decode('utf-16-le', errors='replace'))
-            else:
-                cps = [struct.unpack_from('<I', buf, m)[0]
-                       for m in range(s_off + 4, e, 4)]
-                texts.append(''.join(chr(c) if c < 0x110000 else '\ufffd'
-                                     for c in cps))
-    if total != nstr:
-        raise ValueError(f'bucket 条目总数 {total} != header.stringCount {nstr}')
-    if len(texts) != nstr:
-        raise ValueError(f'解析出 {len(texts)} 条 != nstr {nstr}')
-    return nb, nstr, texts, step
+    _fid, _ver, nb, nstr, entries, st = C.read_with_bucket(path, step=step)
+    return nb, nstr, list(entries.values()), st
 
 
 def count_cjk(texts):
@@ -190,17 +160,13 @@ def template_hashes(path):
 
     ★ 必须按模板自身步长解析 —— 商店版是 UTF-32, 用 UTF-16 步长读会把
       条目边界算错, 取到的 hash 集合就是错的 (选源随之失效)。
+    ★★ 2026-09-21 重构：直接由 codec 返回 OrderedDict{hash: text}，无需再
+      另找一条「原始读路径」取 hash —— 那正是两套实现分歧的来源。
     """
     try:
-        _nb, _n, _texts, _step = parse_le_strings(path)
+        return set(C.read_texts(path).keys())
     except ValueError:
         return set()
-    # parse_le_strings 只给文本; 这里直接复用 repack 模块的原始读路径取 hash。
-    try:
-        entries = sr4le_repack.parse_le_strings_raw(path)[4]
-    except ValueError:
-        return set()
-    return {h for (_b, h, _t, _o, _l) in entries if h}
 
 
 _tpl_hash_cache = {}
@@ -217,15 +183,92 @@ def _key_cover(tpl_path, pairs):
 
 
 def _stub_ratio(pairs):
-    """未翻译占位桩比例: value 长度 <=1 的条目占比。
-
-    ★★ 2026-09-21 新增。原先这段逻辑内联在 build_game 里, 只有一处使用;
-    现在「候选源资格判定」与「换源后回退判定」也要用同一判据, 故提出来共用,
-    避免两处阈值各写各的、日后改一处漏一处。
-    """
     if not pairs:
         return 1.0
     return sum(1 for v in pairs.values() if len(v) <= 1) / len(pairs)
+
+
+def _repack_with_charmap(src, pairs, dst, rev_charmap, step, force_rebuild=False):
+    """带 charlist 反向映射的写回。
+
+    ★ 为什么不能直接用 codec.repack()：codec.repack 内部走 encode_text(rev=None)，
+      而 charlist 表要求把真实码位先换成槽位（伪码位）再编码。这里把同一套
+      布局逻辑复用一遍，只是 encode_text 多了 rev_charmap 参数。
+
+    force_rebuild=True 时跳过原位覆盖（用于超槽降级）。返回写出的条目数。
+    """
+    _fid, ver, nb, nstr, entries, _st = C.read_with_bucket(src, step=step)
+
+    if not force_rebuild:
+        # 先试原位覆盖：逐条比较新文本能否装进原槽
+        with open(src, 'rb') as f:
+            buf = bytearray(f.read())
+        written, overflow = 0, []
+        for off, count in C._bucket_table(buf, src)[4]:
+            for i in range(count):
+                p = off + C.OFFSET_ENTRY_SIZE * i
+                str_off = struct.unpack_from('<I', buf, p)[0]
+                h = struct.unpack_from('<I', buf, str_off)[0]
+                if h not in pairs:
+                    continue
+                new_txt = pairs[h]
+                if new_txt == entries.get(h):
+                    continue
+                _old, old_next = C._decode_cstr(buf, str_off + 4, step)
+                new_raw = C.encode_text(new_txt, rev_charmap, step)
+                room = old_next - (str_off + 4)
+                if len(new_raw) > room:
+                    overflow.append(h)
+                    continue
+                buf[str_off + 4: str_off + 4 + len(new_raw)] = new_raw
+                written += 1
+        if overflow:
+            raise ValueError(f'{len(overflow)} 条超槽（需降级重建）')
+        with open(dst, 'wb') as f:
+            f.write(bytes(buf))
+        back = C.read_with_bucket(dst, step=step)[4]
+        if len(back) != nstr:
+            raise ValueError(f'{dst}: 回读校验失败 {len(back)}/{nstr}')
+        return written
+
+    # 全量重建
+    merged = dict(entries)
+    merged.update(pairs)
+    hs = list(merged.keys())
+    total = len(hs)
+    n_b = nb if nb > 0 else 1
+    per = total // n_b
+    buckets, idx = [], 0
+    for i in range(n_b):
+        c = per if i < n_b - 1 else (total - idx)
+        buckets.append(hs[idx:idx + c])
+        idx += c
+
+    off_tbl_off = C.HEADER_SIZE + C.BUCKET_SIZE * n_b
+    body_off = off_tbl_off + C.OFFSET_ENTRY_SIZE * total
+    blob, offs = b'', []
+    for bl in buckets:
+        for h in bl:
+            offs.append(body_off + len(blob))
+            blob += struct.pack('<I', h) + C.encode_text(merged[h], rev_charmap, step)
+
+    bk, oi = b'', 0
+    for bl in buckets:
+        bk += struct.pack('<IIII', len(bl), 0,
+                          off_tbl_off + oi * C.OFFSET_ENTRY_SIZE, 0)
+        oi += len(bl)
+    ot = b''.join(struct.pack('<II', o, 0) for o in offs)
+    data = struct.pack('<IHHI', C.MAGIC, ver, n_b, total) + bk + ot + blob
+
+    written = sum(len(b) for b in buckets)
+    if written != total:
+        raise ValueError(f'{src}: 写回条目数 {written} != {total} —— 拒绝写出')
+    with open(dst, 'wb') as f:
+        f.write(data)
+    back = C.read_with_bucket(dst, step=step)[4]
+    if len(back) != total:
+        raise ValueError(f'{dst}: 回读校验失败 {len(back)}/{total}')
+    return total
 
 
 def check_sources(game, version):
@@ -425,66 +468,49 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False,
                 log(f'  [跳过] {stem}: 检测到未翻译占位桩 (单字符值占比 {stub:.0%}), 不发布')
                 _purge_out(stem, '占位桩')
                 continue
-        # SR3 charlist_zh 可选; SR4 本仓库无 charlist_zh -> None
-        charmap = None
-        if game == 'SR3':
-            zh_cl = os.path.join(data_misc, 'charlist_zh.dat')
-            if os.path.exists(zh_cl):
-                charmap = sr4le_repack.parse_charlist(zh_cl)
-        # 编码 pairs: SR4 用 str, SR3 用 utf16le 字节
+        # charlist 反向映射（可选）。
+        # ★★ 2026-09-21: 原先只对 SR3 尝试 charlist_zh.dat，且把「正向表」
+        #    直接当参数传下去 —— 语义含混。现改为显式构造**反向表**
+        #    {真实码位: 槽位}，两个游戏都探测，谁有 charlist_zh.dat 谁生效。
+        #    这与 le_string_codec 的 encode_text(rev_charmap=...) 契约一致。
+        rev_charmap = None
+        zh_cl = os.path.join(data_misc, 'charlist_zh.dat')
+        if os.path.exists(zh_cl):
+            cm = C.parse_charlist(zh_cl)
+            rev_charmap = C.build_reverse_charmap(cm)
+            log(f'  charlist_zh.dat: {len(cm)} 项 → 反向表 {len(rev_charmap)} 项')
         #
-        # ★★ 2026-09-20 修复: SR3 也改为「优先原位覆盖(repack_inplace)」。
-        #   原因: 旧版直接用 repack() 全量重建, 而 repack 内部 offset 表步长曾误用
-        #   4 字节, 导致一半条目被丢弃、header.stringCount 不变 -> 引擎按声明索引越界
-        #   -> 取到 NULL 字符串指针 -> 启动崩溃 (c0000005)。
-        #   现在两条路径都已修好步长, 且都带「写后自检 + 回读校验」。
-        #   默认 inplace: 布局与原版完全一致 (字节级可控), 引擎零风险。
-        #   若个别条目中文比英文长而超槽, 自动降级为全量 repack (保条目不丢, 并记录)。
-        if game == 'SR4':
-            repack_pairs = pairs
+        # ★★ 2026-09-21 重构：SR3 / SR4 的 repack 分派已合并。
+        #    原先两份实现有分歧（SR3 硬编码 term=2、SR4 另有 charmap 参数），
+        #    现在统一走 le_string_codec，两游戏**用同一条代码路径**：
+        #      · 步长一律从源模板探测（绝不硬编码 UTF-16）
+        #      · charlist 反向映射由 rev_charmap 承担（SR4 有则传，无则 None）
+        #      · 都是「先原位覆盖，超槽降级全量重建」
+        #    这消除了「同一份数据走不同模块得到不同结论」的隐患。
+        tpl_step = C.detect_file_step(tpl_path)
 
-            # ★★ 源模板步长: 校验产物时必须沿用写入时的步长, 不能让产物自证
-            #    (中文是 UTF-16 而原位覆盖会留长串 0, 会干扰自动探测)。
-            tpl_step = sr4le_repack.parse_le_strings_raw(tpl_path)[6]
-
-            def repack_fn(tp, pp, op, _cm=charmap):
-                """SR4: 先试原位覆盖; 超槽则降级全量重建 (不丢条目)。"""
-                try:
-                    sr4le_repack.repack_inplace(tp, pp, op, charmap=_cm)
-                    return 'inplace'
-                except ValueError as e:
-                    _overslot.setdefault(stem, []).append(str(e))
-                    sr4le_repack.repack(tp, pp, op, charmap=_cm)
-                    return 'repack(降级)'
-        else:
-            # ★★ 2026-09-20: SR3 也按模板步长注入, 不再硬编码 UTF-16。
-            #   结构与 SR4 完全一致, 只是实测文件全为 UTF-16; 一旦遇到 UTF-32
-            #   模板 (或误用 SR4 的 microsoft/主机牌文件), 硬编码会静默写坏。
-            tpl_step = sr3_lr.detect_file_step(tpl_path)
-            if tpl_step == 4:
-                repack_pairs = {
-                    h: (struct.pack(f'<{len(t)}I', *[ord(c) for c in t]) + b'\x00' * 4)
-                    for h, t in pairs.items()}
-            else:
-                repack_pairs = {
-                    h: (t.encode('utf-16-le') + b'\x00\x00') for h, t in pairs.items()}
-
-            def repack_fn(tp, pp, op):
-                """SR3: 先试原位覆盖; 超槽则降级全量重建 (不丢条目)。"""
-                try:
-                    sr3_lr.repack_inplace(tp, pp, op)
-                    return 'inplace'
-                except ValueError as e:
-                    _overslot.setdefault(stem, []).append(str(e))
-                    sr3_lr.repack(tp, pp, op)
-                    return 'repack(降级)'
+        def repack_fn(tp, pp, op, _rev=rev_charmap, _st=tpl_step):
+            """先试原位覆盖；超槽则降级全量重建（不丢条目）。"""
+            try:
+                if _rev:
+                    _repack_with_charmap(tp, pp, op, _rev, _st)
+                else:
+                    C.repack_inplace(tp, pp, op)
+                return 'inplace'
+            except ValueError as e:
+                _overslot.setdefault(stem, []).append(str(e))
+                if _rev:
+                    _repack_with_charmap(tp, pp, op, _rev, _st, force_rebuild=True)
+                else:
+                    C.repack(tp, pp, op)
+                return 'repack(降级)'
 
         base_ok = True
         for suf in suffixes:
             out_name = stem[:-3] + '_' + suf + '.le_strings'   # menu_us -> menu_zh / menu_us
             out_path = os.path.join(out_dir, out_name)
             try:
-                mode = repack_fn(tpl_path, repack_pairs, out_path)
+                mode = repack_fn(tpl_path, pairs, out_path)
             except Exception as e:
                 fails.append((out_name, str(e)))
                 base_ok = False
@@ -549,10 +575,10 @@ def main():
 
     # ── 1) 前置自检: 两侧 repack 模块的 8 字节 offset 表读/写自洽 ──────────
     if not args.no_self_test:
-        print('\n[1/3] 前置自检 (repack 模块 round-trip)')
+        print('\n[1/3] 前置自检 (le_string_codec round-trip)')
         try:
-            sr3_lr.self_test()
-            sr4le_repack.self_test()
+            if not C.self_test():
+                raise RuntimeError('le_string_codec.self_test() 返回失败')
         except Exception as e:
             print(f'  前置自检失败: {e}')
             print('\n构建中止 (自检未通过, 不产出任何文件).')

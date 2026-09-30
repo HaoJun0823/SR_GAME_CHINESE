@@ -1,14 +1,15 @@
 name: build-release
 
 # 构建 {game}_{version}_{lang} 发布包。
-# 流程见仓库根 `github_action流程.txt`，实现见 `build_release.py`（8 步）。
+# 流程见仓库根 `github_action流程.txt`，实现见 `Projects/Common/tools/automation/build_release.py`（8 步）。
 #
 # 产物（两个层次）：
 #   release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
 #       中间目录树，build_release.py 产出，**不上传**（只是打包的输入）。
 #   release/《黑道圣徒III》_简体中文_通用_补丁_<date>.zip 等三个中文名 zip
-#       Tools/pack_release.py 产出，**这就是 Artifact 与 Release 的内容**。
-#       每个 zip 可直接解压到游戏根目录。
+#       Projects/Common/tools/cli/pack_release.py 产出，**这就是 Artifact 与 Release 的内容**。
+#       上传为三个独立 artifact：sr3r-common / sr4r-common / sr4r-microsoft。
+#       每个 zip 可直接解压到游戏根目录；打 tag 时挂到 GitHub Release（三个独立文件）。
 #
 # 触发：
 #   push(main/master)   —— 构建 + 校验 + 上传 zip 到 Artifacts（不做 release）
@@ -216,13 +217,13 @@ jobs:
         run: |
           $extra = @()
           if ('${{ github.event.inputs.skip_dll }}' -eq 'true') { $extra += '--skip-dll' }
-          python build_release.py @extra
+          python Projects/Common/tools/automation/build_release.py @extra
           if ($LASTEXITCODE -ne 0) { throw "build_release.py 失败 (rc=$LASTEXITCODE)" }
 
       # ── 产物校验（独立于构建脚本再核一遍）────────────────────────────────
       - name: 校验产物完整性
         shell: pwsh
-        run: python Tools/verify_release.py release
+        run: python Projects/Common/tools/verify/verify_release.py release
 
       # ── 打包为可分发的中文名 zip ─────────────────────────────────────────
       # ★★ 为什么在 build 阶段就打包（而不是留到 package job 再压）：
@@ -230,7 +231,7 @@ jobs:
       #      不需要先把目录树下载下来再自己压，也不会让人看不懂里面是什么。
       #   2. **只有一处打包逻辑**。原先 package job 用 bash `zip -r -9 -UN=UTF8`，
       #      而 build job 只传目录树，等于同一个包存在两种形态、两处代码，
-      #      容易漂移。现在统一由 `Tools/pack_release.py` 产出，package job
+      #      容易漂移。现在统一由 `Projects/Common/tools/cli/pack_release.py` 产出，package job
       #      只负责把它挂到 Release。
       #   3. 中文文件名 + UTF-8 标志位由 Python zipfile 保证（见脚本内注释），
       #      比依赖 runner 上有没有 7-Zip / zip 更稳。
@@ -238,25 +239,61 @@ jobs:
         shell: pwsh
         run: |
           # 构建日期显式按 UTC+8 算（runner 默认 UTC，直接用会偏一天）
-          python Tools/pack_release.py release
+          python Projects/Common/tools/cli/pack_release.py release
           if ($LASTEXITCODE -ne 0) { throw "pack_release.py 失败 (rc=$LASTEXITCODE)" }
 
-      # ── 上传：artifact 里就是三个中文名 zip ──────────────────────────────
-      # ★ 只传 `release/*.zip`，**不再传目录树**：
-      #   · 目录树形态的 artifact（原先的 sr-release-all）有 62 MB，且与
-      #     另一个 artifact 内容完全相同 —— 同一批文件传两遍，纯浪费配额；
-      #   · 真正要分发的是 zip，目录树只是中间态。
-      #   zip 已是压缩后的形态（约 20 MB/个），三个合计约 62 MB，反而更小。
-      - name: 上传发布包（三个中文名 zip）
+      # ── 上传：三个独立、命名清晰的 artifact（不再封进单个 sr-release-zips 包）──
+      # ★ 每个 artifact 内含 1 个中文名 zip（扁平，无 release/ 前缀）：
+      #   · Artifacts 页是三个独立条目，不再是一个看不出内容的「大包」；
+      #   · package job 把三个分别下载到同一 dist/，断言/发布都按 dist/*.zip，
+      #     **根因修复** —— 旧版用 `path: release/*.zip` 上传，upload-artifact
+      #     会保留 release/ 前缀，下载后文件落在 dist/release/ 下，导致
+      #     `dist/*.zip` 匹配不到、断言 0 个而放弃发 Release（即「发不到 Release 页」）。
+      - name: 按游戏拆分暂存发布包
+        shell: pwsh
+        run: |
+          $items = @(
+            @{ name='sr3r-common';    pat='release/《黑道圣徒III》_简体中文_通用_补丁_*.zip' },
+            @{ name='sr4r-common';    pat='release/《黑道圣徒IV》_简体中文_通用_补丁_*.zip' },
+            @{ name='sr4r-microsoft'; pat='release/《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip' }
+          )
+          foreach ($it in $items) {
+            $m = @(Get-Item -Path $it.pat -ErrorAction SilentlyContinue)
+            if ($m.Count -ne 1) {
+              throw "期望恰好 1 个文件匹配 '$($it.pat)'，实际 $($m.Count) 个"
+            }
+            $dst = Join-Path stage $it.name
+            New-Item -ItemType Directory -Force -Path $dst | Out-Null
+            Copy-Item -Path $m[0].FullName -Destination $dst
+            Write-Host "staged $($it.name) <- $($m[0].Name)"
+          }
+
+      - name: "上传 SR3 通用包 (artifact: sr3r-common)"
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: sr-release-zips
-          path: release/*.zip
+          name: sr3r-common
+          path: stage/sr3r-common
           if-no-files-found: error
           retention-days: 30
 
-  # 打 tag 时把 build 阶段已打好的 zip 挂到 Release。
-  # ★ 这里**不再自己压 zip** —— 打包逻辑只有 `Tools/pack_release.py` 一处，
+      - name: "上传 SR4 通用包 (artifact: sr4r-common)"
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: sr4r-common
+          path: stage/sr4r-common
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: "上传 SR4 微软商店包 (artifact: sr4r-microsoft)"
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: sr4r-microsoft
+          path: stage/sr4r-microsoft
+          if-no-files-found: error
+          retention-days: 30
+
+  # 打 tag 时把 build 阶段已打好的三个 zip 挂到 Release（三个独立文件）。
+  # ★ 这里**不再自己压 zip** —— 打包逻辑只有 `Projects/Common/tools/cli/pack_release.py` 一处，
   #   本 job 只负责「取产物 + 发 Release」，避免两份代码漂移。
   package:
     name: 发布 Release（仅 tag）
@@ -266,10 +303,23 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: 下载发布包
+      # 三个 artifact 分别下载到同一 dist/（各自扁平含 1 个 zip，无 release/ 前缀）
+      - name: 下载 SR3 通用包
         uses: actions/download-artifact@v8.0.1
         with:
-          name: sr-release-zips
+          name: sr3r-common
+          path: dist
+
+      - name: 下载 SR4 通用包
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: sr4r-common
+          path: dist
+
+      - name: 下载 SR4 微软商店包
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: sr4r-microsoft
           path: dist
 
       - name: 列出待发布文件（便于核对）
@@ -278,6 +328,7 @@ jobs:
           echo "── 下载到的发布包 ──"
           ls -la dist/
           # ★ 硬断言：三个包必须齐，少任何一个都不能发 Release。
+          #   文件已扁平落在 dist/ 根目录（不再是 dist/release/），dist/*.zip 可直接命中。
           n=$(ls -1 dist/*.zip 2>/dev/null | wc -l)
           echo "共 $n 个 zip"
           if [ "$n" -ne 3 ]; then
@@ -293,7 +344,7 @@ jobs:
           body: |
             《黑道圣徒》简体中文汉化补丁
 
-            构建日期（UTC+8）：`${{ github.event.release.tag_name }}` 对应的提交
+            构建日期（UTC+8）：对应提交 `${{ github.ref_name }}`
             见下方 release notes；包内 `必读说明.txt` 有安装/卸载说明。
 
             | 压缩包 | 适用版本 |

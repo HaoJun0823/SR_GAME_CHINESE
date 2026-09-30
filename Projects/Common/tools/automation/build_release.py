@@ -47,8 +47,16 @@ import shutil
 import argparse
 import subprocess
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(ROOT, 'Tools'))
+# 路径：本文件位于 <ROOT>/Projects/Common/tools/automation/
+TOOLS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # <ROOT>/Projects/Common/tools
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(TOOLS)))       # 再上跳 3 层 → 仓库根
+assert os.path.isdir(os.path.join(ROOT, 'Tools')) or \
+       os.path.isdir(os.path.join(ROOT, 'Resource')), \
+    f'ROOT 解析错误: {ROOT}（应指向仓库根）'
+
+sys.path.insert(0, os.path.join(TOOLS, 'cli'))
+sys.path.insert(0, os.path.join(TOOLS, 'helper'))
+sys.path.insert(0, os.path.join(TOOLS, 'automation'))
 sys.path.insert(0, os.path.join(ROOT, 'Projects', 'SR4', 'Tools'))
 sys.path.insert(0, os.path.join(ROOT, 'Projects', 'SR3', 'Tools'))
 
