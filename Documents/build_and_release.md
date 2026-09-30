@@ -208,15 +208,43 @@ python Projects/Common/tools/cli/pack_release.py release --date 20260922   :: �
 - `publish` job（`needs: build`，**只在 push master 时跑**）发版流程：
   1. 三个 artifact **分别下载到 `dist/<artifact-name>/` 子目录**（每个含 1 个中文名 zip），各自校验恰好 1 个；
   2. 按 Asia/Shanghai 算 `tag = YYYY-MM-DD-HH-MM-SS`（无 `v`），`git tag` + push 建 tag；
-  3. `gh api POST /releases` 建 Release（body 用 release_notes.md，含「英文附件名 ↔ 中文原名」对照表），取返回的 `upload_url`；
-  4. 用 `curl` 向 `upload_url`（uploads.github.com）逐个上传，附件名用 ASCII（`Saint-Row-{Game}-{Platform}-CHS-Patch-{DateTime}.zip`）。
-- ★ **三层 GitHub 坑（2026-09-30 实测，均已修复）**：
+  3. **生成 Release 说明 `release_notes.md`**（三段，缺一不可）：
+     - 🧾 **本次构建相关的提交记录**：以「上一次 Release」为基准取
+       `git log <base>..HEAD`，每条渲染成
+       `- [<7位hash>](https://github.com/<slug>/commit/<完整hash>) <subject>`；
+     - 📦 **三个 ASCII 附件 ↔ 中文原名对照表**（附件名不能用中文，靠这张表对应）；
+     - 📖 **`dist/common/必读说明.txt` 全文**：`<details>+<pre>` 折叠嵌入，
+       与包内那份**同源同版**（`build_release.py` 第 6 步由该文件复制进 zip 再打包），
+       玩家不下载也能看到安装 / 卸载 / 常见问题 / 免责声明。
+  4. `gh api POST /releases` 建 Release（`body=@release_notes.md`），取返回的 `upload_url`；
+  5. 用 `curl` 向 `upload_url`（uploads.github.com）逐个上传，附件名用 ASCII（`Saint-Row-{Game}-{Platform}-CHS-Patch-{DateTime}.zip`）。
+- ★ **Release 说明的「基准 commit」怎么取（踩坑）**：`actions/checkout` 默认
+  **只拉分支指针、不拉 tag**（哪怕配了 `fetch-depth: 0`），所以 runner 本地没有
+  上次 release 的 tag 对象，`git log <tag>..HEAD` 会直接报
+  `fatal: ambiguous argument '<tag>..HEAD': unknown revision`。
+  正确做法是取 **release 的 commit.sha** 当范围起点（该 commit 必然在 master 历史里），
+  并加一道 `git cat-file -e "${sha}^{commit}"` 存在性校验，取不到就回退首个提交。
+  另外 `releases/latest` 的 `.commit.sha` 对「由 tag 建出」的 release **实测返回空**，
+  故再退一路查 `git/refs/tags/<tag>` 的 `.object.sha`（本仓库建的是轻量 tag，
+  该 sha 直接就是 commit sha；annotated 则要多剥一层 `.object.object.sha`）。
+- ★ **commit 链接必须另带 `https://github.com` 前缀**：`slug`（形如 `HaoJun0823/SR_GAME_CHINESE`）
+  只能喂给 `gh api repos/$slug/...`；拼 markdown 链接要另起
+  `repo_url="https://github.com/$slug"`，否则正文里的 hash 只是一段**点不开的普通文字**。
+- ★ **六层 GitHub 坑（2026-09-30 逐层实测，均已修复）**：
   1. **`GITHUB_TOKEN` 防循环**：最早 `auto-tag` 用 token push tag 指望重触发 `package` job，
      但 token 推送的 tag 不会再次触发 `on: push`，`package` 永远 skipped。现改为**同 run 内 `publish` 直接发版**。
   2. **必须用 `upload_url` 上传**：GitHub 已废弃 `api.github.com/.../releases/{id}/assets` 直传端点（404），
      必须用建 release 返回的 `upload_url`（uploads.github.com）。旧 `gh release create` / `softprops` 都踩此坑。
   3. **GitHub 不支持中文名附件**：即便用对端点，中文名经 API 上传会被静默破坏成 `_._._`，
      故附件名一律 ASCII；解压后内部文件仍为中文名，不影响使用。
+  4. **`publish` job 必须 checkout**：`gh` 需要 git 上下文，否则
+     `fatal: not a git repository`（run 36719311009 实测）。
+  5. **curl 不能 `-G` 配 `--data-binary`**：`-G` 会把 zip 字节也拼进 URL 查询串，
+     报 `curl: (3) URL rejected: Malformed input to a URL function`；
+     正确写法是 `name=` 直接写进查询串、zip 走请求体（`"${BASE}?name=${ascii}"`）。
+  6. **本地调试时可能没有 `jq`**：GitHub `ubuntu-latest` 镜像自带 jq，
+     但本地 Windows（Portable Git Bash）没有 —— 同一段脚本在本地会**静默取到空值**
+     并走进 fallback 分支，排查时勿误判为脚本逻辑 bug。
 
 ### action 版本（必须 pin 到 Node 24）
 
