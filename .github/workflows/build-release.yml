@@ -21,13 +21,12 @@ name: build-release
 # ★ 不再依赖「tag push 重新触发 workflow」来发版 —— 那样会因
 #   GITHUB_TOKEN 推送的 tag 不触发 on:push 工作流（GitHub 防循环机制）而静默失败
 #   （package 永远 skipped、Release 建不出 / 无附件）。改为在 push master 的同一
-#   run 内由 publish job 直接用 action-gh-release 建 tag + 发 Release。
+#   run 内由 publish job 用官方 gh CLI 直接建 tag + 发 Release（三个独立 zip 作为附件）。
 #
 # 忽略纯文档改动（不参与构建），避免无意义的 runner 消耗。
 #
-# ★ 所有 action 都 pin 到 **node24** 版本（GitHub 已弃用 Node 20）：
-#   checkout v7 / setup-python v7 / upload-artifact v7 / download-artifact v8 /
-#   action-gh-release v3。升级前务必核对各 action 的 `runs.using`。
+# ★ 发布环节用官方 `gh` CLI（GitHub-hosted runner 自带），不依赖第三方 release action，
+#   避免中文名附件在 asset label 还原步骤 404 导致发布失败。
 
 on:
   # ★ paths-ignore 对 **tag push 不生效**（GitHub 官方文档：
@@ -297,7 +296,7 @@ jobs:
           retention-days: 30
 
   # push 到 master 时，在「同一个 workflow run」内构建产物已就绪（needs: build），
-  # 直接用 action-gh-release 建 **日期-时间 tag** 并发布 Release（三个独立 zip 作为附件）。
+  # 用官方 gh CLI 建 **日期-时间 tag** 并发布 Release（三个独立 zip 作为附件）。
   # ★ 关键修正（2026-09-30 实测）：旧设计先让 auto-tag 用 GITHUB_TOKEN push 一个 tag，
   #   再指望该 tag push 触发 package job 发版；但 GitHub 规定 **GITHUB_TOKEN 推送的
   #   tag / commit 不会再次触发 on:push 工作流**（防循环），于是 package 永远 skipped，
@@ -362,24 +361,41 @@ jobs:
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "将使用 tag: $tag"
 
+      # ★ 用官方 gh CLI 直接建 Release + 上传附件（一条命令，已发布、无 label 还原环节）。
+      #   旧 softprops/action-gh-release 上传完附件后会逐个 PATCH asset 的 label，
+      #   对中文名附件这一步会 404 并让 job 失败（2026-09-30 实测：Release 卡成 draft、无附件）。
+      - name: 生成 Release 说明
+        run: |
+          set -euo pipefail
+          tag="${{ steps.tag.outputs.tag }}"
+          cat > release_notes.md <<'EOF'
+          《黑道圣徒》简体中文汉化补丁
+
+          构建标签：${TAG}
+          包内 `必读说明.txt` 有安装 / 卸载说明。
+
+          | 压缩包 | 适用版本 |
+          |---|---|
+          | `《黑道圣徒III》_简体中文_通用_补丁_*.zip` | SR3 重制版（Steam / GOG / EPIC） |
+          | `《黑道圣徒IV》_简体中文_通用_补丁_*.zip` | SR4 重制版（Steam / GOG / EPIC） |
+          | `《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip` | SR4 微软商店版 |
+
+          各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
+          安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
+          EOF
+          # 把占位符换成真实 tag（heredoc 用单引号，不会自展开）
+          sed -i "s/\${TAG}/$tag/" release_notes.md
+          echo "── release_notes.md 头部 ──"
+          head -5 release_notes.md
+
       - name: 创建 Release 并上传三个独立 zip
-        uses: softprops/action-gh-release@v3.0.3
-        with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          name: ${{ steps.tag.outputs.tag }}
-          files: dist/*.zip
-          generate_release_notes: true
-          body: |
-            《黑道圣徒》简体中文汉化补丁
-
-            构建日期（UTC+8）：tag `${{ steps.tag.outputs.tag }}`
-            包内 `必读说明.txt` 有安装/卸载说明。
-
-            | 压缩包 | 适用版本 |
-            |---|---|
-            | `《黑道圣徒III》_简体中文_通用_补丁_*.zip` | SR3 重制版（Steam / GOG / EPIC） |
-            | `《黑道圣徒IV》_简体中文_通用_补丁_*.zip` | SR4 重制版（Steam / GOG / EPIC） |
-            | `《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip` | SR4 微软商店版 |
-
-            各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
-            安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="${{ steps.tag.outputs.tag }}"
+          gh release create "$tag" dist/*.zip \
+            --title "《黑道圣徒》简体中文汉化补丁 $tag" \
+            --notes-file release_notes.md \
+            --latest
+          echo "✅ 已发布 Release: $tag"
