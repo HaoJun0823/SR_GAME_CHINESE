@@ -12,11 +12,16 @@ name: build-release
 #       每个 zip 可直接解压到游戏根目录；打 tag 时挂到 GitHub Release（三个独立文件）。
 #
 # 触发：
-#   push(main/master)   —— 构建 + 校验 + 上传 zip 到 Artifacts；并由 auto-tag job
-#                          自动按日期打 tag，进而触发发 Release（见 auto-tag / package job）
-#   pull_request        —— 构建 + 校验（门禁）
+#   push(master)        —— build 构建 + 校验 + 上传 zip 到 Artifacts；
+#                          随后 publish job 在**同一 run** 内自动按「日期-时间」打 tag
+#                          并发布 Release（三个独立 zip 作为附件），无需手动打 tag。
+#   pull_request        —— 构建 + 校验（门禁；不发布）
 #   workflow_dispatch   —— 手动；可勾选跳过 DLL 编译
-#   push tag v*         —— 构建 + 校验 + 上传 zip + 发 Release（见 package job）
+#
+# ★ 不再依赖「tag push 重新触发 workflow」来发版 —— 那样会因
+#   GITHUB_TOKEN 推送的 tag 不触发 on:push 工作流（GitHub 防循环机制）而静默失败
+#   （package 永远 skipped、Release 建不出 / 无附件）。改为在 push master 的同一
+#   run 内由 publish job 直接用 action-gh-release 建 tag + 发 Release。
 #
 # 忽略纯文档改动（不参与构建），避免无意义的 runner 消耗。
 #
@@ -26,14 +31,12 @@ name: build-release
 
 on:
   # ★ paths-ignore 对 **tag push 不生效**（GitHub 官方文档：
-  #   "Path filters are not evaluated for pushes of tags"）。
-  #   所以 tags 与 paths-ignore 可以共处一个 push 块：
-  #     · 推分支 → 走 paths-ignore 过滤（纯文档改动不触发）
-  #     · 打 tag → 忽略路径过滤，必定触发（tag 是显式发布动作）
-  #   `package` job 靠 `startsWith(github.ref, 'refs/tags/')` 把关，只在 tag 时打包。
+  #   "Path filters are not evaluated for pushes of tags"）。本仓库已不再用 tag
+  #   触发发布（见下方「关键修正」），paths-ignore 仅对推分支生效：
+  #     · 推分支 → 走 paths-ignore 过滤（纯文档改动不触发构建）
+  #     · 由 publish job 在 push master 的同一 run 内直接发版（不再依赖 tag 重触发）
   push:
     branches: [main, master]
-    tags: ['v*']
     paths-ignore:
       - '**.md'
       - 'Documents/**'
@@ -227,12 +230,12 @@ jobs:
         run: python Projects/Common/tools/verify/verify_release.py release
 
       # ── 打包为可分发的中文名 zip ─────────────────────────────────────────
-      # ★★ 为什么在 build 阶段就打包（而不是留到 package job 再压）：
+      # ★★ 为什么在 build 阶段就打包（而不是留到 publish job 再压）：
       #   1. **Artifacts 表层直接就是 {game}_{version}.zip** —— 下载即得，
       #      不需要先把目录树下载下来再自己压，也不会让人看不懂里面是什么。
-      #   2. **只有一处打包逻辑**。原先 package job 用 bash `zip -r -9 -UN=UTF8`，
+      #   2. **只有一处打包逻辑**。原先发布逻辑用 bash `zip -r -9 -UN=UTF8`，
       #      而 build job 只传目录树，等于同一个包存在两种形态、两处代码，
-      #      容易漂移。现在统一由 `Projects/Common/tools/cli/pack_release.py` 产出，package job
+      #      容易漂移。现在统一由 `Projects/Common/tools/cli/pack_release.py` 产出，publish job
       #      只负责把它挂到 Release。
       #   3. 中文文件名 + UTF-8 标志位由 Python zipfile 保证（见脚本内注释），
       #      比依赖 runner 上有没有 7-Zip / zip 更稳。
@@ -246,7 +249,7 @@ jobs:
       # ── 上传：三个独立、命名清晰的 artifact（不再封进单个 sr-release-zips 包）──
       # ★ 每个 artifact 内含 1 个中文名 zip（扁平，无 release/ 前缀）：
       #   · Artifacts 页是三个独立条目，不再是一个看不出内容的「大包」；
-      #   · package job 把三个分别下载到同一 dist/，断言/发布都按 dist/*.zip，
+      #   · publish job 把三个分别下载到同一 dist/，断言/发布都按 dist/*.zip，
       #     **根因修复** —— 旧版用 `path: release/*.zip` 上传，upload-artifact
       #     会保留 release/ 前缀，下载后文件落在 dist/release/ 下，导致
       #     `dist/*.zip` 匹配不到、断言 0 个而放弃发 Release（即「发不到 Release 页」）。
@@ -293,18 +296,22 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-  # 打 tag 时把 build 阶段已打好的三个 zip 挂到 Release（三个独立文件）。
-  # ★ 这里**不再自己压 zip** —— 打包逻辑只有 `Projects/Common/tools/cli/pack_release.py` 一处，
-  #   本 job 只负责「取产物 + 发 Release」，避免两份代码漂移。
-  package:
-    name: 发布 Release（仅 tag）
+  # push 到 master 时，在「同一个 workflow run」内构建产物已就绪（needs: build），
+  # 直接用 action-gh-release 建 **日期-时间 tag** 并发布 Release（三个独立 zip 作为附件）。
+  # ★ 关键修正（2026-09-30 实测）：旧设计先让 auto-tag 用 GITHUB_TOKEN push 一个 tag，
+  #   再指望该 tag push 触发 package job 发版；但 GitHub 规定 **GITHUB_TOKEN 推送的
+  #   tag / commit 不会再次触发 on:push 工作流**（防循环），于是 package 永远 skipped，
+  #   Release 建不出 / 无附件。故改为「同 run 内发版」，不再依赖 tag 重触发。
+  #   tag 名格式：YYYY-MM-DD-HH-MM-SS（无 v 前缀，按 Asia/Shanghai 本地时间）。
+  publish:
+    name: 发布 Release（push master 自动按日期-时间打 tag）
     needs: build
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      # 三个 artifact 分别下载到同一 dist/（各自扁平含 1 个 zip，无 release/ 前缀）
+      # 三个 artifact 分别下载（默认会落到 dist/<artifact-name>/ 子目录）
       - name: 下载 SR3 通用包
         uses: actions/download-artifact@v8.0.1
         with:
@@ -323,13 +330,17 @@ jobs:
           name: sr4r-microsoft
           path: dist
 
-      - name: 列出待发布文件（便于核对）
+      # 归拢到 dist 根目录（兼容「子目录布局」与「已扁平」两种 download 行为）
+      - name: 归拢 zip 到 dist 根目录
         run: |
           set -euo pipefail
-          echo "── 下载到的发布包 ──"
+          find dist -mindepth 2 -name '*.zip' -exec mv -t dist/ {} +
+          echo "── dist 内容 ──"
           ls -la dist/
-          # ★ 硬断言：三个包必须齐，少任何一个都不能发 Release。
-          #   文件已扁平落在 dist/ 根目录（不再是 dist/release/），dist/*.zip 可直接命中。
+
+      - name: 校验三个包齐全
+        run: |
+          set -euo pipefail
           n=$(ls -1 dist/*.zip 2>/dev/null | wc -l)
           echo "共 $n 个 zip"
           if [ "$n" -ne 3 ]; then
@@ -337,16 +348,32 @@ jobs:
             exit 1
           fi
 
-      - name: 创建 Release
+      - name: 计算日期-时间 tag
+        id: tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="$(TZ=Asia/Shanghai date +%Y-%m-%d-%H-%M-%S)"
+          # 极小概率同秒重复推送：若 tag 已存在则追加运行号，避免 action-gh-release 失败
+          if gh api "repos/${{ github.repository }}/git/ref/tags/$tag" >/dev/null 2>&1; then
+            tag="${tag}-${GITHUB_RUN_NUMBER}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "将使用 tag: $tag"
+
+      - name: 创建 Release 并上传三个独立 zip
         uses: softprops/action-gh-release@v3.0.3
         with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: ${{ steps.tag.outputs.tag }}
           files: dist/*.zip
           generate_release_notes: true
           body: |
             《黑道圣徒》简体中文汉化补丁
 
-            构建日期（UTC+8）：对应提交 `${{ github.ref_name }}`
-            见下方 release notes；包内 `必读说明.txt` 有安装/卸载说明。
+            构建日期（UTC+8）：tag `${{ steps.tag.outputs.tag }}`
+            包内 `必读说明.txt` 有安装/卸载说明。
 
             | 压缩包 | 适用版本 |
             |---|---|
@@ -356,42 +383,3 @@ jobs:
 
             各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
             安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
-
-  # 每次 push 到 master（非纯文档改动）自动按日期打 tag，
-  # 从而触发上面的 package job 发 Release —— 实现「push 即发版」，无需手动打 tag。
-  # ★ 仅在 push 到 master 时打 tag；tag push 本身不触发本 job（否则无限循环）。
-  #   tag 名格式 vYYYY-MM-DD，同日多次自动加 -2 / -3 ...
-  auto-tag:
-    name: 自动按日期打 tag（触发发版）
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: 检出（仅用于打 tag，fetch-depth 0 确保可 push）
-        uses: actions/checkout@v7.0.1
-        with:
-          fetch-depth: 0
-
-      - name: 配置 git 身份
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: 计算日期 tag 并推送
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          base="v$(date +%F)"
-          tag="$base"
-          n=2
-          # 同日已存在该 tag 则追加序号，避免重复打 tag 失败
-          while gh api "repos/${{ github.repository }}/git/ref/tags/$tag" >/dev/null 2>&1; do
-            tag="${base}-${n}"
-            n=$((n + 1))
-          done
-          echo "将创建 tag: $tag"
-          git tag "$tag"
-          git push origin "$tag"

@@ -122,12 +122,12 @@ SR4 的 vcxproj 写 `<WindowsTargetPlatformVersion>10.0</...>`（=「最新」�
 
 ### 独立复核
 
-CI 在构建脚本之后**再跑一遍** `Tools/verify_release.py`，不复用构建脚本的内部状态，
+CI 在构建脚本之后**再跑一遍** `Projects/Common/tools/verify/verify_release.py`，不复用构建脚本的内部状态，
 逐包断言「能否真的装进游戏跑起来」：
 
 ```bat
-python Tools/verify_release.py release
-python Tools/verify_release.py release --strict    :: 警告也当失败
+python Projects/Common/tools/verify/verify_release.py release
+python Projects/Common/tools/verify/verify_release.py release --strict    :: 警告也当失败
 ```
 
 覆盖：目录结构 / ASI 是否 x64 PE 且静态 CRT / ini 与 asi 基名及 font_file 指向 /
@@ -142,10 +142,10 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 
 | 触发 | 行为 |
 |---|---|
-| push 到 `main`/`master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + **打包 zip** + 上传 artifact |
-| pull request | 同上（验证不破坏构建） |
-| 手动 `workflow_dispatch` | 同上，可选 `skip_dll` |
-| 打 tag（`refs/tags/*`） | 额外把已打好的 zip 挂到 Release |
+| push 到 `master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + **打包 zip** + 上传 artifact，随后 `publish` job 在**同一 run** 内自动按「日期-时间」打 tag 并发布 Release（三个独立 zip 作为附件） |
+| pull request | 构建 + 校验（门禁；**不发布**） |
+| 手动 `workflow_dispatch` | 构建 + 校验，可选 `skip_dll`（不发布） |
+| 打 tag（`refs/tags/*`） | **不再单独触发发布**。旧设计依赖 tag 重触发 `package` job，但 `GITHUB_TOKEN` 推送的 tag 不会再次触发 `on:push` 工作流（GitHub 防循环机制），会静默失败，故已废弃该路径 |
 
 ### 产物分两个层次（重要）
 
@@ -154,16 +154,16 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 | 层次 | 位置 | 由谁产出 | 是否上传 |
 |---|---|---|---|
 | 中间目录树 | `release/sr3r_common/` 等三个目录 | `build_release.py` | **不上传**，只是打包的输入 |
-| 发布包 | `release/*.zip` 三个中文名 zip | `Tools/pack_release.py` | **就是 Artifact 与 Release 的内容** |
+| 发布包 | `release/*.zip` 三个中文名 zip | `Projects/Common/tools/cli/pack_release.py` | **就是 Artifact 与 Release 的内容** |
 
 命令：
 
 ```bat
 :: build 阶段（workflow 里在 windows runner 上跑）
-python Tools/pack_release.py release
-python Tools/pack_release.py release --date 20260922   :: 指定日期，便于本地复现
+python Projects/Common/tools/cli/pack_release.py release
+python Projects/Common/tools/cli/pack_release.py release --date 20260922   :: 指定日期，便于本地复现
 
-:: package 阶段（workflow 里在 ubuntu runner 上跑，只下载 + 挂 Release）
+:: publish 阶段（workflow 里在 push master 的同一 run 内，于 ubuntu runner 上跑：下载 + 归拢 + 打 tag + 挂 Release）
 ```
 
 ### 发布包命名（构建阶段即产出，Artifact 与 Release 同名）
@@ -176,8 +176,8 @@ python Tools/pack_release.py release --date 20260922   :: 指定日期，便于�
 | `sr4r_common` | `《黑道圣徒IV》_简体中文_通用_补丁_{BUILD_DATE}.zip` |
 | `sr4r_microsoft` | `《黑道圣徒IV》_简体中文_微软商店_补丁_{BUILD_DATE}.zip` |
 
-- **单一事实来源** = `Tools/pack_release.py` 里的 `ZIP_NAMES` 字典。
-  打包逻辑只此一处；`package` job 不再自己压 zip，只负责「下载 + 挂 Release」。
+- **单一事实来源** = `Projects/Common/tools/cli/pack_release.py` 里的 `ZIP_NAMES` 字典。
+  打包逻辑只此一处；`publish` job 不再自己压 zip，只负责「下载 + 归拢 + 打 tag + 挂 Release」。
   这样避免同一产物两种形态、两处代码各自漂移。
 - `{BUILD_DATE}` = **UTC+8** 的 `YYYYMMDD`。脚本里显式
   `datetime.now(timezone.utc) + timedelta(hours=8)`；
@@ -199,10 +199,20 @@ python Tools/pack_release.py release --date 20260922   :: 指定日期，便于�
   内含 1 个中文名 zip（**扁平、无 `release/` 前缀**），`if-no-files-found: error`，保留 30 天。
   - 拆分的**根因**：旧版用 `path: release/*.zip` 上传，upload-artifact 会保留
     `release/` 前缀，下载后文件落在 `dist/release/*.zip` 而非 `dist/*.zip`，
-    导致 `package` job 的硬断言匹配到 0 个而放弃发 Release（「发不到 Release 页」的元凶）。
-    现在每个 artifact 是单文件目录上传，下载到 `dist/` 后三个 zip 直接落在根目录。
-- `package` job 把三个 artifact **分别下载到同一 `dist/`**，再**硬断言**：`dist/*.zip`
-  必须恰好 3 个，少任何一个都不创建 Release。`action-gh-release` 的 `files: dist/*.zip`。
+    导致 `publish` job 的硬断言匹配到 0 个而放弃发 Release（「发不到 Release 页」的元凶）。
+    现在每个 artifact 是单文件目录上传，下载到 `dist/` 后三个 zip 直接落在根目录
+    （`publish` 还有一步 `find dist -mindepth 2 -name '*.zip' -exec mv -t dist/` 兜底，
+    即使下载仍落到子目录也能归拢到根目录）。
+- `publish` job（`needs: build`，**只在 push 到 `master` 时跑**）把三个 artifact
+  **分别下载到同一 `dist/`**，归拢后**硬断言** `dist/*.zip` 必须恰好 3 个，
+  少任何一个都不创建 Release；随后 `action-gh-release` 以
+  `tag_name = YYYY-MM-DD-HH-MM-SS`（无 `v` 前缀、按 Asia/Shanghai 本地时间）建 tag
+  并把三个 zip 作为独立附件挂到 Release（`files: dist/*.zip`）。
+  - ★ **2026-09-30 实测修正**：最早是 `auto-tag` job 用 `GITHUB_TOKEN` push 一个 tag、
+    再指望该 tag push 触发 `package` job 发版。但 GitHub 规定
+    **`GITHUB_TOKEN` 推送的 tag / commit 不会再次触发 `on: push` 工作流**（防循环），
+    于是 `package` 永远 `skipped`、Release 建不出 / 无附件。现改为
+    **在 push master 的同一 run 内由 `publish` 直接发版**，绕开 tag 重触发。
 
 ### action 版本（必须 pin 到 Node 24）
 
@@ -273,9 +283,9 @@ python Projects\SR4\Tools\sr4le_repack.py        :: 同上
 | `github_action流程.txt` | 流程原始规格（本文档实现的对象） |
 | `build_release.py` | **本文档主角**，8 步编排 |
 | `build_release_le_strings.py` | 步骤 3 的实现（le_string 封装） |
-| `Tools/build_charlist.py` | 步骤 4 的实现（字符清单生成） |
-| `Tools/verify_release.py` | 产物独立复核（CI 第二步） |
-| `Tools/pack_release.py` | **打成中文名 zip**（发布包唯一产出点，Artifact 与 Release 同名） |
+| `Projects/Common/tools/cli/build_charlist.py` | 步骤 4 的实现（字符清单生成） |
+| `Projects/Common/tools/verify/verify_release.py` | 产物独立复核（CI 第二步） |
+| `Projects/Common/tools/cli/pack_release.py` | **打成中文名 zip**（发布包唯一产出点，Artifact 与 Release 同名） |
 | `.github/workflows/build-release.yml` | CI 工作流 |
 | `Projects/SR3/Tools/`、`Projects/SR4/Tools/` | le_string 底层 repack / 解包工具 |
 | `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析（构建校验的由来） |
