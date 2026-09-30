@@ -245,6 +245,19 @@ python Projects/Common/tools/cli/pack_release.py release --date 20260922   :: �
   6. **本地调试时可能没有 `jq`**：GitHub `ubuntu-latest` 镜像自带 jq，
      但本地 Windows（Portable Git Bash）没有 —— 同一段脚本在本地会**静默取到空值**
      并走进 fallback 分支，排查时勿误判为脚本逻辑 bug。
+  7. **`gh api` 的 `-f` 不展开 `@file`**：`-f "body=@release_notes.md"` 会把字符串
+     `@release_notes.md` **原样当正文** —— 附件再齐、Release 再成功，玩家看到的说明也是空的。
+     **只有 `-F` 才读文件内容**（run 36739064504 实测，此前所有 Release 正文其实都是空的）。
+  8. **自检比对用前缀匹配，别用精确相等**（run 36740536134 实测）：正文标题带动态 tag 后缀
+     （`## 《黑道圣徒》简体中文汉化补丁 · \`2026-10-01-00-09-01\``），若自检写
+     `[ "$body_head" != "## 《黑道圣徒》简体中文汉化补丁" ]` 会**自己把自己判失败**并中断发布。
+     正解 `[[ "$body_head" == "## 《黑道圣徒》简体中文汉化补丁"* ]]`，并**在建 release 之前先做本地预检**，
+     避免远端留下空 Release + 孤儿 tag。
+  9. **shell 自检的段落标记不要带 emoji**：Windows Git Bash 下 emoji 作命令行参数传给 `grep`
+     会被代码页转换破坏（本地 `grep` 与 Python 传真真 UTF-8 都返回 0），导致**本地模拟无法通过**，
+     而 CI 上不复现。改用 ASCII 标记（如 `Saint-Row-4-Microsoft-CHS-Patch`）+ 中文（`必读说明`）。
+  10. **CI 中间产物要进 `.gitignore`**：`release_notes.md` / `commits.md` 由 publish job 产出、
+     只供本 run 喂 `gh api`，不入库；否则每次跑完 CI 仓库根目录都冒未跟踪文件，易被误 `git add`。
 
 ### action 版本（必须 pin 到 Node 24）
 
