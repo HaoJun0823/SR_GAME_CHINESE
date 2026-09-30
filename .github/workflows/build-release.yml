@@ -419,15 +419,19 @@ jobs:
           BASE="${UPLOAD_URL%%\{*}"
           echo "release 已建，upload_base=$BASE"
           # 2) 逐个上传（ASCII 附件名，内容仍是中文名 zip）
+          # ★ 不能用 `-G --data-urlencode name=...` + `--data-binary "@$src"` 的组合：
+          #   `-G` 会把**所有** --data 选项（含 --data-binary 的 zip 字节）拼进 URL
+          #   查询串，导致 `curl: (3) URL rejected: Malformed input to a URL function`。
+          #   正确做法：name 直接写进查询串（ASCII 名无需 urlencode），zip 字节走请求体。
           upload_one() {
             local src="$1" ascii="$2"
             echo "⬆️ 上传 $ascii"
             curl -fsSL -X POST \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Content-Type: application/zip" \
-              -G --data-urlencode "name=$ascii" \
+              -H "Accept: application/vnd.github+json" \
               --data-binary "@$src" \
-              "$BASE" \
+              "${BASE}?name=${ascii}" \
               | jq -r '.name'
             echo "✅ $ascii"
           }
