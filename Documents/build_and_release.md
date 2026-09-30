@@ -142,7 +142,7 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 
 | 触发 | 行为 |
 |---|---|
-| push 到 `master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + **打包 zip** + 上传 artifact，随后 `publish` job 在**同一 run** 内自动按「日期-时间」打 tag 并发布 Release（三个独立 zip 作为附件） |
+| push 到 `master`（忽略 `**.md`、`Documents/**`、`Archives/**`） | 构建 + 校验 + **打包 zip** + 上传 artifact，随后 `publish` job 在**同一 run** 内自动按「日期-时间」打 tag 并发布 Release（三个独立附件，GitHub 限制用 ASCII 名 `Saint-Row-…`，内容仍为中文名 zip） |
 | pull request | 构建 + 校验（门禁；**不发布**） |
 | 手动 `workflow_dispatch` | 构建 + 校验，可选 `skip_dll`（不发布） |
 | 打 tag（`refs/tags/*`） | **不再单独触发发布**。旧设计依赖 tag 重触发 `package` job，但 `GITHUB_TOKEN` 推送的 tag 不会再次触发 `on:push` 工作流（GitHub 防循环机制），会静默失败，故已废弃该路径 |
@@ -154,7 +154,7 @@ charlist 字符数区间 / 字体存在 / Loader 体积 / 说明与许可完整�
 | 层次 | 位置 | 由谁产出 | 是否上传 |
 |---|---|---|---|
 | 中间目录树 | `release/sr3r_common/` 等三个目录 | `build_release.py` | **不上传**，只是打包的输入 |
-| 发布包 | `release/*.zip` 三个中文名 zip | `Projects/Common/tools/cli/pack_release.py` | **就是 Artifact 与 Release 的内容** |
+| 发布包 | `release/*.zip` 三个中文名 zip | `Projects/Common/tools/cli/pack_release.py` | **Artifact 内容**；Release 附件因 GitHub 不支持中文名改用 ASCII 名（见发布机制） |
 
 命令：
 
@@ -166,18 +166,20 @@ python Projects/Common/tools/cli/pack_release.py release --date 20260922   :: �
 :: publish 阶段（workflow 里在 push master 的同一 run 内，于 ubuntu runner 上跑：下载 + 归拢 + 打 tag + 挂 Release）
 ```
 
-### 发布包命名（构建阶段即产出，Artifact 与 Release 同名）
+### 发布包命名
 
-包名统一为 **中文**，格式 `《游戏名》_语言_适用版本_补丁_{BUILD_DATE}.zip`：
+构建产物用**中文名** zip（Artifact 内容；解压后内部文件也中文）。但 **GitHub Release
+附件名不支持中文**（API 上传会被静默破坏成 `_._._`），故发到 Release 的附件改用 ASCII 名，
+二者对照：
 
-| 构建目标 | 压缩包名 |
-|---|---|
-| `sr3r_common` | `《黑道圣徒III》_简体中文_通用_补丁_{BUILD_DATE}.zip` |
-| `sr4r_common` | `《黑道圣徒IV》_简体中文_通用_补丁_{BUILD_DATE}.zip` |
-| `sr4r_microsoft` | `《黑道圣徒IV》_简体中文_微软商店_补丁_{BUILD_DATE}.zip` |
+| 构建目标 | 构建产物（中文名 zip，Artifact） | Release 附件名（ASCII） |
+|---|---|---|
+| `sr3r_common` | `《黑道圣徒III》_简体中文_通用_补丁_{BUILD_DATE}.zip` | `Saint-Row-3-Common-CHS-Patch-{DateTime}.zip` |
+| `sr4r_common` | `《黑道圣徒IV》_简体中文_通用_补丁_{BUILD_DATE}.zip` | `Saint-Row-4-Common-CHS-Patch-{DateTime}.zip` |
+| `sr4r_microsoft` | `《黑道圣徒IV》_简体中文_微软商店_补丁_{BUILD_DATE}.zip` | `Saint-Row-4-Microsoft-CHS-Patch-{DateTime}.zip` |
 
-- **单一事实来源** = `Projects/Common/tools/cli/pack_release.py` 里的 `ZIP_NAMES` 字典。
-  打包逻辑只此一处；`publish` job 不再自己压 zip，只负责「下载 + 归拢 + 打 tag + 挂 Release」。
+- **单一事实来源** = `Projects/Common/tools/cli/pack_release.py` 里的 `ZIP_NAMES` 字典（中文名）。
+  打包逻辑只此一处；`publish` job 不再自己压 zip，只负责「下载 + 校验 + 打 tag + 建 Release + 以 ASCII 名上传」。
   这样避免同一产物两种形态、两处代码各自漂移。
 - `{BUILD_DATE}` = **UTC+8** 的 `YYYYMMDD`。脚本里显式
   `datetime.now(timezone.utc) + timedelta(hours=8)`；
@@ -203,16 +205,18 @@ python Projects/Common/tools/cli/pack_release.py release --date 20260922   :: �
     现在每个 artifact 是单文件目录上传，下载到 `dist/` 后三个 zip 直接落在根目录
     （`publish` 还有一步 `find dist -mindepth 2 -name '*.zip' -exec mv -t dist/` 兜底，
     即使下载仍落到子目录也能归拢到根目录）。
-- `publish` job（`needs: build`，**只在 push 到 `master` 时跑**）把三个 artifact
-  **分别下载到同一 `dist/`**，归拢后**硬断言** `dist/*.zip` 必须恰好 3 个，
-  少任何一个都不创建 Release；随后 `action-gh-release` 以
-  `tag_name = YYYY-MM-DD-HH-MM-SS`（无 `v` 前缀、按 Asia/Shanghai 本地时间）建 tag
-  并把三个 zip 作为独立附件挂到 Release（`files: dist/*.zip`）。
-  - ★ **2026-09-30 实测修正**：最早是 `auto-tag` job 用 `GITHUB_TOKEN` push 一个 tag、
-    再指望该 tag push 触发 `package` job 发版。但 GitHub 规定
-    **`GITHUB_TOKEN` 推送的 tag / commit 不会再次触发 `on: push` 工作流**（防循环），
-    于是 `package` 永远 `skipped`、Release 建不出 / 无附件。现改为
-    **在 push master 的同一 run 内由 `publish` 直接发版**，绕开 tag 重触发。
+- `publish` job（`needs: build`，**只在 push master 时跑**）发版流程：
+  1. 三个 artifact **分别下载到 `dist/<artifact-name>/` 子目录**（每个含 1 个中文名 zip），各自校验恰好 1 个；
+  2. 按 Asia/Shanghai 算 `tag = YYYY-MM-DD-HH-MM-SS`（无 `v`），`git tag` + push 建 tag；
+  3. `gh api POST /releases` 建 Release（body 用 release_notes.md，含「英文附件名 ↔ 中文原名」对照表），取返回的 `upload_url`；
+  4. 用 `curl` 向 `upload_url`（uploads.github.com）逐个上传，附件名用 ASCII（`Saint-Row-{Game}-{Platform}-CHS-Patch-{DateTime}.zip`）。
+- ★ **三层 GitHub 坑（2026-09-30 实测，均已修复）**：
+  1. **`GITHUB_TOKEN` 防循环**：最早 `auto-tag` 用 token push tag 指望重触发 `package` job，
+     但 token 推送的 tag 不会再次触发 `on: push`，`package` 永远 skipped。现改为**同 run 内 `publish` 直接发版**。
+  2. **必须用 `upload_url` 上传**：GitHub 已废弃 `api.github.com/.../releases/{id}/assets` 直传端点（404），
+     必须用建 release 返回的 `upload_url`（uploads.github.com）。旧 `gh release create` / `softprops` 都踩此坑。
+  3. **GitHub 不支持中文名附件**：即便用对端点，中文名经 API 上传会被静默破坏成 `_._._`，
+     故附件名一律 ASCII；解压后内部文件仍为中文名，不影响使用。
 
 ### action 版本（必须 pin 到 Node 24）
 
@@ -285,7 +289,7 @@ python Projects\SR4\Tools\sr4le_repack.py        :: 同上
 | `build_release_le_strings.py` | 步骤 3 的实现（le_string 封装） |
 | `Projects/Common/tools/cli/build_charlist.py` | 步骤 4 的实现（字符清单生成） |
 | `Projects/Common/tools/verify/verify_release.py` | 产物独立复核（CI 第二步） |
-| `Projects/Common/tools/cli/pack_release.py` | **打成中文名 zip**（发布包唯一产出点，Artifact 与 Release 同名） |
+| `Projects/Common/tools/cli/pack_release.py` | **打成中文名 zip**（Artifact 内容；Release 附件因 GitHub 不支持中文名改用 ASCII 名） |
 | `.github/workflows/build-release.yml` | CI 工作流 |
 | `Projects/SR3/Tools/`、`Projects/SR4/Tools/` | le_string 底层 repack / 解包工具 |
 | `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析（构建校验的由来） |

@@ -247,11 +247,9 @@ jobs:
 
       # ── 上传：三个独立、命名清晰的 artifact（不再封进单个 sr-release-zips 包）──
       # ★ 每个 artifact 内含 1 个中文名 zip（扁平，无 release/ 前缀）：
-      #   · Artifacts 页是三个独立条目，不再是一个看不出内容的「大包」；
-      #   · publish job 把三个分别下载到同一 dist/，断言/发布都按 dist/*.zip，
-      #     **根因修复** —— 旧版用 `path: release/*.zip` 上传，upload-artifact
-      #     会保留 release/ 前缀，下载后文件落在 dist/release/ 下，导致
-      #     `dist/*.zip` 匹配不到、断言 0 个而放弃发 Release（即「发不到 Release 页」）。
+          #   · Artifacts 页是三个独立条目，不再是一个看不出内容的「大包」；
+      #   · publish job 把三个分别下载到 dist/<artifact-name>/ 子目录（每个含 1 个
+      #     中文名 zip），再各自校验、以 ASCII 附件名上传（GitHub 不支持中文名附件）。
       - name: 按游戏拆分暂存发布包
         shell: pwsh
         run: |
@@ -310,50 +308,44 @@ jobs:
     permissions:
       contents: write
     steps:
-      # ★ 必须检出仓库：publish job 用官方 gh CLI 发版，gh release create 需要 git 上下文
-      #   （确定仓库、commitish）才能建 tag + Release；否则报
+      # ★ 必须检出仓库：publish job 用 `gh api` 建 release + `curl` 上传附件，
+      #   需要 git 上下文（git tag + push 建 tag）；否则报
       #   "fatal: not a git repository"（2026-09-30 run 36719311009 实测踩坑）。
       - name: 检出仓库（供 gh 发版确定 git 上下文）
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
-      # 三个 artifact 分别下载（默认会落到 dist/<artifact-name>/ 子目录）
+      # 三个 artifact 分别下载到各自子目录（每个子目录含 1 个中文名 zip）
       - name: 下载 SR3 通用包
         uses: actions/download-artifact@v8.0.1
         with:
           name: sr3r-common
-          path: dist
+          path: dist/sr3r-common
 
       - name: 下载 SR4 通用包
         uses: actions/download-artifact@v8.0.1
         with:
           name: sr4r-common
-          path: dist
+          path: dist/sr4r-common
 
       - name: 下载 SR4 微软商店包
         uses: actions/download-artifact@v8.0.1
         with:
           name: sr4r-microsoft
-          path: dist
-
-      # 归拢到 dist 根目录（兼容「子目录布局」与「已扁平」两种 download 行为）
-      - name: 归拢 zip 到 dist 根目录
-        run: |
-          set -euo pipefail
-          find dist -mindepth 2 -name '*.zip' -exec mv -t dist/ {} +
-          echo "── dist 内容 ──"
-          ls -la dist/
+          path: dist/sr4r-microsoft
 
       - name: 校验三个包齐全
         run: |
           set -euo pipefail
-          n=$(ls -1 dist/*.zip 2>/dev/null | wc -l)
-          echo "共 $n 个 zip"
-          if [ "$n" -ne 3 ]; then
-            echo "!! 期望 3 个 zip，实际 $n 个" >&2
-            exit 1
-          fi
+          for d in sr3r-common sr4r-common sr4r-microsoft; do
+            n=$(ls -1 "dist/$d"/*.zip 2>/dev/null | wc -l)
+            if [ "$n" -ne 1 ]; then
+              echo "!! dist/$d 期望 1 个 zip，实际 $n 个" >&2
+              exit 1
+            fi
+          done
+          echo "✓ 三个包齐全（内部为中文名 zip；将以 ASCII 附件名上传，见下方发布步骤）"
 
       - name: 计算日期-时间 tag
         id: tag
@@ -362,16 +354,21 @@ jobs:
         run: |
           set -euo pipefail
           tag="$(TZ=Asia/Shanghai date +%Y-%m-%d-%H-%M-%S)"
-          # 极小概率同秒重复推送：若 tag 已存在则追加运行号，避免 action-gh-release 失败
+          # 极小概率同秒重复推送：若 tag 已存在则追加运行号
           if gh api "repos/${{ github.repository }}/git/ref/tags/$tag" >/dev/null 2>&1; then
             tag="${tag}-${GITHUB_RUN_NUMBER}"
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "将使用 tag: $tag"
 
-      # ★ 用官方 gh CLI 直接建 Release + 上传附件（一条命令，已发布、无 label 还原环节）。
-      #   旧 softprops/action-gh-release 上传完附件后会逐个 PATCH asset 的 label，
-      #   对中文名附件这一步会 404 并让 job 失败（2026-09-30 实测：Release 卡成 draft、无附件）。
+      - name: 建 git tag 并推送
+        run: |
+          set -euo pipefail
+          tag="${{ steps.tag.outputs.tag }}"
+          git tag "$tag"
+          git push origin "$tag"
+          echo "✓ 已建 tag: $tag"
+
       - name: 生成 Release 说明
         run: |
           set -euo pipefail
@@ -382,11 +379,15 @@ jobs:
           构建标签：${TAG}
           包内 `必读说明.txt` 有安装 / 卸载说明。
 
-          | 压缩包 | 适用版本 |
-          |---|---|
-          | `《黑道圣徒III》_简体中文_通用_补丁_*.zip` | SR3 重制版（Steam / GOG / EPIC） |
-          | `《黑道圣徒IV》_简体中文_通用_补丁_*.zip` | SR4 重制版（Steam / GOG / EPIC） |
-          | `《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip` | SR4 微软商店版 |
+          > 说明：GitHub Release 附件名不支持中文（经 API 上传会被静默破坏成
+          > `_._._` 这类），故附件使用英文文件名；解压后内部文件仍为中文名，
+          > 不影响使用。下表给出「英文附件名 ↔ 中文原名」对照。
+
+          | 英文附件名 | 对应中文原名 | 适用版本 |
+          |---|---|---|
+          | `Saint-Row-3-Common-CHS-Patch-${TAG}.zip` | 《黑道圣徒III》简体中文通用补丁 | SR3 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Common-CHS-Patch-${TAG}.zip` | 《黑道圣徒IV》简体中文通用补丁 | SR4 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Microsoft-CHS-Patch-${TAG}.zip` | 《黑道圣徒IV》简体中文微软商店补丁 | SR4 微软商店版 |
 
           各压缩包**解压到游戏根目录**即可（覆盖同名文件）。
           安装 / 卸载 / 常见问题见包内 `必读说明.txt`。
@@ -394,16 +395,43 @@ jobs:
           # 把占位符换成真实 tag（heredoc 用单引号，不会自展开）
           sed -i "s/\${TAG}/$tag/" release_notes.md
           echo "── release_notes.md 头部 ──"
-          head -5 release_notes.md
+          head -6 release_notes.md
 
-      - name: 创建 Release 并上传三个独立 zip
+      # ★ 发布（两步，规避 GitHub 两层坑）：
+      #   1) GitHub 已废弃 `api.github.com/repos/{o}/{r}/releases/{id}/assets` 端点
+      #      （直传返回 404），必须用建 release 时返回的 `upload_url`（指向
+      #      uploads.github.com）上传；
+      #   2) GitHub 不支持中文名 release 附件（API 上传会被静默破坏成 `_._._`），
+      #      故附件名用 ASCII（Saint-Row-{Game}-{Platform}-CHS-Patch-{DateTime}.zip），
+      #      内容仍是中文名 zip。
+      - name: 创建 Release 并上传三个 ASCII 名 zip
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           tag="${{ steps.tag.outputs.tag }}"
-          gh release create "$tag" dist/*.zip \
-            --title "《黑道圣徒》简体中文汉化补丁 $tag" \
-            --notes-file release_notes.md \
-            --latest
+          slug="${{ github.repository }}"
+          # 1) 建 release（api.github.com），取 upload_url
+          REL_JSON=$(gh api -X POST "repos/$slug/releases" \
+            -f "tag_name=$tag" -f "name=$tag" \
+            -f "body=@release_notes.md" -F "draft=false")
+          UPLOAD_URL=$(echo "$REL_JSON" | jq -r .upload_url)
+          BASE="${UPLOAD_URL%%\{*}"
+          echo "release 已建，upload_base=$BASE"
+          # 2) 逐个上传（ASCII 附件名，内容仍是中文名 zip）
+          upload_one() {
+            local src="$1" ascii="$2"
+            echo "⬆️ 上传 $ascii"
+            curl -fsSL -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Content-Type: application/zip" \
+              -G --data-urlencode "name=$ascii" \
+              --data-binary "@$src" \
+              "$BASE" \
+              | jq -r '.name'
+            echo "✅ $ascii"
+          }
+          upload_one "$(ls dist/sr3r-common/*.zip)"    "Saint-Row-3-Common-CHS-Patch-${tag}.zip"
+          upload_one "$(ls dist/sr4r-common/*.zip)"    "Saint-Row-4-Common-CHS-Patch-${tag}.zip"
+          upload_one "$(ls dist/sr4r-microsoft/*.zip)" "Saint-Row-4-Microsoft-CHS-Patch-${tag}.zip"
           echo "✅ 已发布 Release: $tag"
