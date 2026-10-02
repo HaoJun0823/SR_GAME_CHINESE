@@ -73,7 +73,7 @@
 "I know hacking's out, but there has to be another way through this door...": "我知道黑客这条路走不通，但肯定还有别的办法进这扇门……";
 "Fair enough.": "有道理。";
 "DELETE": "删除";
-"Hey Maero, how's Jessica?": "嘿马罗，杰茜卡怎么样？";
+"Hey Maero, how's Jessica?": "嘿梅罗，杰茜卡怎么样？";
 "No.": "不。";
 "We got more Zin!": "更多齐恩人！";
 "Solid thought there, Kinzie.": "想得挺周到的，金吉。";
@@ -137,7 +137,7 @@
 "Guess it's just you now, Veteran Child, and nowhere left to go.": "看来就剩你了，老兵之子，你已经无处可逃。";
 "You know what, fuck you.  You blew my planet up, so why play these mind games with me now?": "你知道么，去你的。你炸了我的星球，现在还跟我玩这些心理游戏？";
 "Yeah, this stuff doesn't seem to be doing anything.": "是啊，这东西似乎没啥用。";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质。给我修好它。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "Hold on. Why did I shoot the light if--": "等等。我为什么要打那灯光，如果——";
 "This is getting out of hand.": "这要失控了。";
 "Looks like another Rusty's Needle to hack.": "看起来又有个锈针纹身要黑。";
@@ -241,7 +241,7 @@
 "Say no more. I'm in.": "不用多说。我加入。";
 "Oleg! How the hell are you?": "奥列格！你他妈还好吗？";
 "Hey, the Saints are my crew. I'd take a bullet for any one of them.": "嘿，圣徒就是我的家人。我愿为他们任何一个挡子弹。";
-"Sure, CID.": "好的，C.I.D.。";
+"Sure, CID.": "没问题，C.I.D.。";
 "I considered a lot of people but in the end Keith David was the right man for the job.": "我考虑过很多人，但最后基思·大卫才是这份工作的不二人选。";
 "Shaundi, you ok?": "莎蒂，你没事吧？";
 "And you really thought Julius would've been able to help you?": "你真以为朱利叶斯能帮上你？";
@@ -785,7 +785,7 @@
 "I want to hear it from you, Matt. How amazing was that dance? Honestly.": "我想听你说，马特。那支舞有多棒？说实话。";
 "I think your people would get over it.": "我想你的人会接受的。";
 "Do evil geniuses usually leave their air duct covers unscrewed?": "邪恶天才通常会把通风管道的盖板就这么敞着吗？";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质。给我修好它。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "Gat, you with me?": "盖特，你跟我来吗？";
 "So what's the plan?": "那计划是什么？";
 "Sounds bad. ": "听起来不妙。";
@@ -885,7 +885,7 @@
 "There's only one of these, right?": "这东西只有一台，对吧？";
 "We're good. I'm surprised it took this long.": "我们没事。我惊讶居然撑了这么久。";
 "Both of you, cut it out.  Veteran Child isn't going anywhere and helping out young Shaundi first isn't going to hurt.  If she says this could help us, then I say we try it.": "你们俩，别闹了。老兵之子哪儿也去不了，先帮帮小莎蒂也不碍事。如果她说这能帮到我们，那我说咱们就试试。";
-"Whoa, wait.  That looks like Maero.": "哇，等等。那好像是马罗。";
+"Whoa, wait.  That looks like Maero.": "哇，等等。那好像是梅罗。";
 "I need every advantage I can get.": "我需要能用上的一切优势。";
 "Sorry, this area isn't secure.": "抱歉，这片区域不安全。";
 "And here I was going to give you a little upgrade to your power.  Maybe I'll keep that for myself now.": "本来我还想给你的能力升个级呢。也许我现在留着自己用了。";
@@ -940,7 +940,7 @@
 "I swear to shit you better be on your way, Kinzie.": "金吉，我拿命发誓你最好已经在路上。";
 "No. No way. I still have another slot in my power menu. I want to fill it with something.": "不。不行。我的能力菜单里还空着一个格子。我要拿点什么填满它。";
 "With you here, I guess you're right.": "有你在，我想你说得对。";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得动身了。趴下，跑！";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "I'm doing most of the work.": "大部分活儿都是我在干。";
 "That sounds awesome.": "那听起来棒极了。";
 "Oh what the hell...": "这他妈搞什么……";

@@ -1,0 +1,5 @@
+{"file": "Resource/SR3/CHS/dict/le_data_supplement.txt", "line": 652, "key": "BACK", "old": "背后", "new": "返回", "source": "L3-high", "note": "上下文为 BACK LEFT/BACK RIGHT 方向盘指令簇，此处应为 UI 返回"}
+{"file": "Resource/SR4/CHS/dict/le_data_supplement.txt", "line": 6415, "key": "BACK", "old": "背后", "new": "返回", "source": "L3-high", "note": "上下文为 退出游戏/保存读取/锒铛入狱，菜单键"}
+{"file": "Resource/SR4/CHS/dict/le_data_supplement.txt", "line": 11599, "key": "BACK", "old": "背后", "new": "返回", "source": "L3-high", "note": "同簇，菜单返回键"}
+{"file": "Resource/SR4/CHS/le_string/menu_us.txt", "line": 604, "key": "HASH_438825D7", "old": "背后", "new": "返回", "source": "L3-high", "note": "menu_us.txt 上下文：读取游戏/退出/单人游戏，确为菜单返回"}
+{"file": "Resource/SR4/CHS/le_string/static_us.txt", "line": 659, "key": "HASH_E4F559ED", "old": "背后", "new": "返回", "source": "L3-high", "note": "static_us.txt 上下文：读取游戏/单人游戏/退出，确为菜单返回"}

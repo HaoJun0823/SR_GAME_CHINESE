@@ -25,7 +25,7 @@
 "   CROUCH (TOGGLE)": "   蹲伏（切换）";
 "   DRIFT": "   漂移";
 "   FIRE WEAPON": "   开火";
-"   FIRE WEAPON 2": "   发射武器 2";
+"   FIRE WEAPON 2": "发射武器 2";
 "   FLY DOWN": "   下降";
 "   FLY UP": "   上升";
 "   GRENADE SLOT 1": "   手雷槽 1";
@@ -37,7 +37,7 @@
 "   MELEE ATTACK": "   近战攻击";
 "   MOVE BACKWARD": "   向后移动";
 "   MOVE DOWN": "   向下移动";
-"   MOVE FORWARD": "   向前移动";
+"   MOVE FORWARD": "向前移动";
 "   MOVE LEFT": "   向左移动";
 "   MOVE RIGHT": "   向右移动";
 "   MOVE UP": "   向上移动";
@@ -484,12 +484,12 @@
 "AS3 ULTIMAX": "AS3 终极者";
 "ASCENSION": "升天";
 "ASHWOOD": "灰木区";
-"ASIAN": "亚洲";
-"ASIAN 1": "亚洲 1";
-"ASIAN 2": "亚洲 2";
-"ASIAN 3": "亚洲 3";
-"ASIAN 4": "亚洲 4";
-"ASIAN 5": "亚洲 5";
+"ASIAN": "亚裔";
+"ASIAN 1": "亚裔 1";
+"ASIAN 2": "亚裔 2";
+"ASIAN 3": "亚裔 3";
+"ASIAN 4": "亚裔 4";
+"ASIAN 5": "亚裔 5";
 "ASPECT RATIO": "宽高比";
 "ASPECT RATIO CAN ONLY BE TOGGLED IN THE MAIN MENU": "宽高比只能在主菜单中切换";
 "ASSASSINATIONS": "暗杀";
@@ -506,7 +506,7 @@
 "ATTILARIMS": "阿提拉轮";
 "ATV VS ZOMBIES": "全地形车对丧尸";
 "AUBURN": "红棕发";
-"AUBURN  ": "红棕  ";
+"AUBURN  ": "红棕发";
 "AUBURN MATTE": "哑光赤褐";
 "AUDIO": "音频";
 "AUDIO MIC": "音频麦克风";
@@ -562,7 +562,7 @@
 "All followers take 30 seconds longer to bleed out": "所有同伴流血死亡时间延长 30 秒";
 "All healed up!": "满血复活！";
 "All levels of Flashing Diversion Completed!": "露械即时挑战全部关卡完成！";
-"All levels of Streaking Diversion Completed!": "天体即时挑战全部关卡完成！";
+"All levels of Streaking Diversion Completed!": "裸奔即时挑战全部关卡完成！";
 "All of your weapons are upgraded and enemies explode at your touch!": "你的所有武器都已强化，敌人一碰就炸！";
 "All pedestrians are mascots.": "所有路人都是吉祥物。";
 "All pedestrians are pimps and hos.": "所有路人都是妈咪与女孩。";
@@ -649,7 +649,7 @@
 "Avast!  There be nothin' like shootin' lubbers with fish guts to lure the elusive Steelport Sewer Shark.  Yarrr!": "哎哟喂！  用鱼杂碎招呼那帮旱鸭子，引出神出鬼没的钢埠下水道鲨鱼，没比这更带劲的了。  呦嗬嗬！";
 "Aw hell no!": "哎哟，想都别想！";
 "BABY-T": "童装 T";
-"BACK": "背后";
+"BACK": "返回";
 "BACK LEFT": "左后";
 "BACK RIGHT": "后右";
 "BACKDOOR": "后门";
@@ -687,7 +687,7 @@
 "BARRY": "巴里";
 "BASE": "基地";
 "BASE JUMPING": "低空跳伞";
-"BASE JUMPING ": "低空跳伞 ";
+"BASE JUMPING ": "低空跳伞";
 "BASE VALUE": "基础数值";
 "BASEBALL BAT": "棒球棒";
 "BASEBALL CAP": "棒球帽";
@@ -1140,12 +1140,12 @@
 "CATSUIT": "猫装";
 "CATWALK": "猫步";
 "CATWALK SCARF": "猫步围巾";
-"CAUCASIAN": "高加索";
+"CAUCASIAN": "白人";
 "CAUCASIAN 1": "白人 1";
-"CAUCASIAN 2": "高加索 2";
-"CAUCASIAN 3": "高加索 3";
+"CAUCASIAN 2": "白人 2";
+"CAUCASIAN 3": "白人 3";
 "CAUCASIAN 4": "白人 4";
-"CAUCASIAN 5": "高加索 5";
+"CAUCASIAN 5": "白人 5";
 "CAUGHT IN THE WEB": "困于蛛网";
 "CAUSE $%d DAMAGE BEFORE TIME RUNS OUT": "在时间耗尽前造成 $%d 损失";
 "CELEB'S LIFE": "名人的生命";
@@ -1658,7 +1658,7 @@
 "DALI": "达利";
 "DALLAS": "达拉斯";
 "DAMAGE": "伤害";
-"DAMAGE ": "损失 ";
+"DAMAGE ": "伤害";
 "DAMAGE - BULLET": "伤害 - 子弹";
 "DAMAGE - BULLET 2": "伤害 - 子弹 2";
 "DAMAGE - BULLET 3": "伤害 - 子弹 3";
@@ -2166,7 +2166,7 @@
 "EXIT TAGGING": "退出涂鸦";
 "EXIT THE CLIP EDITOR": "退出剪辑编辑器";
 "EXIT TO MAIN MENU": "返回主菜单";
-"EXIT TO THE MAIN MENU": "退回主菜单";
+"EXIT TO THE MAIN MENU": "返回主菜单";
 "EXIT UPGRADES?": "退出升级？";
 "EXIT WARDROBE": "退出衣橱";
 "EXOTIC": "异域";
@@ -2399,7 +2399,7 @@
 "FLOWER POWER EARRINGS": "花之力耳环";
 "FLOWER POWER SANDALS": "花之力凉鞋";
 "FLOWERED": "碎花";
-"FLOWERS": "花";
+"FLOWERS": "花朵";
 "FLY THROUGH HOOPS AND KILL MASCOTS TO EARN MORE CASH.": "穿过圆环、干掉吉祥物，赚取更多现金。";
 "FOLLOW": "跟随";
 "FOLLOW LOOK": "跟随查看";
@@ -4567,7 +4567,7 @@
 "NOTORIETY WIPE -?": "恶名清除 -?";
 "NOW!": "现在！";
 "NUCLEAR MELTDOWN MASK": "核熔毁面具";
-"NUDE": "天体";
+"NUDE": "裸奔";
 "NUMBER 1": "第一名";
 "NUMBER 10": "10 号";
 "NUMBER 11": "11 号";
@@ -4698,7 +4698,7 @@
 "OH SHIT! These ho's ain't ho's!": "我操！这帮人根本不是省油的灯！";
 "OILED AFRICAN AMERICAN 2": "油光非裔 2";
 "OILED ASIAN 1": "油亮亚裔 1";
-"OILED CAUCASIAN 1": "油光高加索 1";
+"OILED CAUCASIAN 1": "油光白人 1";
 "OILED HISPANIC 1": "油光拉美裔 1";
 "OILED SPRAY TAN": "油亮喷棕";
 "OK": "确定";
@@ -4955,7 +4955,7 @@
 "PEOPLE": "人数";
 "PEOPLE KILLED": "杀死的人数";
 "PEOPLE RUN OVER": "碾过的行人";
-"PEOPLE STREAKED": "天体经过人数";
+"PEOPLE STREAKED": "裸奔经过人数";
 "PERFORM A NEAR CRASH": "完成一次惊险擦身";
 "PERFORMANCE": "性能";
 "PERSONALITY": "个性";
@@ -5087,7 +5087,7 @@
 "PORT PRYOR": "普赖尔港";
 "POSITION CAMERA": "摆放摄像机";
 "POT LEAF": "草叶";
-"POWDER": "火药";
+"POWDER": "粉帮";
 "POWER AND LIGHT": "电力照明公司";
 "POWERSLIDE": "动力漂移";
 "POWERSLIDE TIME": "动力漂移时间";
@@ -5103,7 +5103,7 @@
 "PRESS %ls AGAIN TO CANCEL THE DIVERSION": "再按一次 %ls 取消即时挑战";
 "PRESS %ls AGAIN TO CLEAR THE HUD": "再次按下 %ls 以清除 HUD";
 "PRESS %ls AGAIN TO START FLASHING": "再次按下 %ls 开始露械";
-"PRESS %ls AGAIN TO START STREAKING": "再次按下 %ls 开始天体";
+"PRESS %ls AGAIN TO START STREAKING": "再次按下 %ls 开始裸奔";
 "PRESS %ls TO UNLOAD VEHICLE": "按 %ls 卸下载具";
 "PRESS %s TO QUIT": "按 %s 退出";
 "PRESS %s TO START %s STRONGHOLD": "按 %s 启动 %s 根据地";
@@ -5486,7 +5486,7 @@
 "RESPECT EARNED FROM ROADKILL": "碾杀获得声望";
 "RESPECT EARNED FROM SLICE 'N DICE KILLS": "飞车挥刀获得声望";
 "RESPECT EARNED FROM STOPPIES": "翘尾获得声望";
-"RESPECT EARNED FROM STREAKING": "天体获得声望";
+"RESPECT EARNED FROM STREAKING": "裸奔获得声望";
 "RESPECT EARNED FROM THROWN KILLS": "投掷击杀获得声望";
 "RESPECT EARNED FROM TWO WHEELS": "双轮行驶获得声望";
 "RESPECT EARNED FROM VEHICLE SURFING": "载具冲浪获得声望";
@@ -5919,7 +5919,7 @@
 "SET WAYPOINT": "设置路点";
 "SEX": "性别";
 "SEX APPEAL": "性感魅力";
-"SEX DOLL": "情趣人偶";
+"SEX DOLL": "充气娃娃";
 "SEX DOLLS FOUND": "充气娃娃发现数";
 "SEX PRESETS": "性别预设";
 "SEXY 1": "火辣 1";
@@ -6004,7 +6004,7 @@
 "SIGNAL LOST!": "信号丢失！";
 "SIGNAL {0}": "信号 {0}";
 "SILK": "丝绸";
-"SILVER": "银";
+"SILVER": "银色";
 "SILVER ": "银色 ";
 "SINGLE FRAME OR ACCUMULATIVE": "单帧或累积";
 "SITTING": "坐姿";
@@ -6345,7 +6345,7 @@
 "STRATAGEM MEDLEY": "谋略混搭";
 "STRAWBERRY BLONDE": "草莓金发";
 "STRAWBERRY BLONDE MATTE": "哑光草莓金发";
-"STREAKING TIME": "天体时长";
+"STREAKING TIME": "裸奔时长";
 "STREET 1": "街头 1";
 "STREET COMFORT BRA": "街头舒适文胸";
 "STREET FIGHTER": "街头格斗者";
@@ -6619,9 +6619,9 @@
 "Storage Device is no longer available.": "存储设备已不可用。";
 "Storm the Yarn": "猛攻毛线";
 "Strap it on.": "把它绑上。";
-"Streak closely to as many people as possible!": "尽可能贴着更多人天体！";
-"Streaking level %d complete!  Earned $%.0f": "天体第 %d 关完成！赚得 $%.0f";
-"Streaking level %d complete!  Earned %d respect.": "天体关卡 %d 完成！获得 %d 声望。";
+"Streak closely to as many people as possible!": "尽可能贴着更多人裸奔！";
+"Streaking level %d complete!  Earned $%.0f": "裸奔第 %d 关完成！赚得 $%.0f";
+"Streaking level %d complete!  Earned %d respect.": "裸奔关卡 %d 完成！获得 %d 声望。";
 "Street version of the SMG.  Full upgrade allows for incendiary bullets.": "冲锋枪的街头版。完全升级后可发射燃烧弹。";
 "Stripper pole?": "舞杆？";
 "Strippers incoming!": "舞娘来袭！";
@@ -6967,7 +6967,7 @@
 "TOKYO BEWARE!": "当心东京！";
 "TONY": "托尼";
 "TOO MANY CONTACTS DIED, RECRUIT THEM {RECRUIT_DISMISS_IMG} THEN QUICKLY FLEE THE SCENE": "太多联络人死了，招募他们 {RECRUIT_DISMISS_IMG} 然后迅速逃离现场";
-"TOO MANY HOS DIED, RECRUIT THEM {RECRUIT_DISMISS_IMG} THEN QUICKLY FLEE THE SCENE": "太多女孩死了，招募她们 {RECRUIT_DI私享ISS_IMG} 然后迅速逃离现场";
+"TOO MANY HOS DIED, RECRUIT THEM {RECRUIT_DISMISS_IMG} THEN QUICKLY FLEE THE SCENE": "太多女孩死了，招募她们 {RECRUIT_DISMISS_IMG} 然后迅速逃离现场";
 "TOO MUCH FOOTAGE WAS TAKEN, USE SIDE STREETS TO EVADE": "被拍到太多画面了，走小巷甩掉他们";
 "TOOTHBRUSH": "牙刷须";
 "TOP BUTTONED": "扣顶扣";
@@ -6992,7 +6992,7 @@
 "TOTAL OWNED %d/%d": "已占领 %d/%d";
 "TOTAL RESPECT EARNED": "累计获得声望";
 "TOTAL RESPECT: %d": "总声望：%d";
-"TOTAL STREAKING TIME": "天体总时长";
+"TOTAL STREAKING TIME": "裸奔总时长";
 "TOTAL TAUNTS GIVEN": "嘲讽总数";
 "TOTAL TIME PLAYED": "总游戏时长";
 "TOUCH MY HEART": "触动我心";
@@ -7360,7 +7360,7 @@
 "This username could not be found.": "找不到该用户名。";
 "This weapon has a limited number of uses and cannot be carried like regular weapons. It must be dropped to enter vehicles.": "这种武器使用次数有限，不能像常规武器那样随身携带。进入载具前必须丢弃它。";
 "This weapon is a special sniper rifle.": "这是一把特殊狙击步枪。";
-"This will remove all your current clothes. \nBeing nude allows you to Streak. \nAre you sure?": "这会脱掉你身上的所有衣物。\n光溜溜才能天体。\n确定吗？";
+"This will remove all your current clothes. \nBeing nude allows you to Streak. \nAre you sure?": "这会脱掉你身上的所有衣物。\n光溜溜才能裸奔。\n确定吗？";
 "This will replace your settings with defaults and choose a performance preset based on your video card. Are you sure you want to do this?": "这会用默认设置替换你的当前设置，并根据你的显卡选择一套性能预设。确定要这样做吗？";
 "This will skip loading a savegame and you will instead have to create a new character.  Continue?": "这将跳过读取存档，你需创建新角色。继续吗？";
 "This will stop your current recording and allow you to edit it, save it, and export it to video. To record a new Cinema Clip, you will need to return to the main menu. Proceed to the Cinema Clip Editor?": "这会停止当前录制，让你对其进行剪辑、保存并导出为视频。若要录制新的电影片段，你需要返回主菜单。要继续进入电影剪辑器吗？";
@@ -8721,7 +8721,7 @@
 "{MAP_MENU_IMG} ACCESS UPGRADE STORE \nYou just Ranked up! \nNew Upgrades are available for purchase at the Upgrade Store.": "{MAP_MENU_IMG} 进入升级商店 \n你刚刚升级了！\n升级商店现已上架新的升级项。";
 "{MELEE_POWER_ATTACK_IMG} HEAVY ATTACK \n{ATTACK_PRIMARY_IMG} LIGHT ATTACK": "{MELEE_POWER_ATTACK_IMG} 重击 \n{ATTACK_PRIMARY_IMG} 轻击";
 "{MENU_ABORT_IMG} QUIT CO-OP DIVERSION": "{MENU_ABORT_IMG} 退出合作即时挑战";
-"{MENU_DP_DOWN_IMG} twice to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "连按 {MENU_DP_DOWN_IMG} 两次开始天体。\n不穿任何衣服时即可使用天体这一消遣活动。 ";
+"{MENU_DP_DOWN_IMG} twice to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "连按 {MENU_DP_DOWN_IMG} 两次开始裸奔。\n不穿任何衣服时即可使用裸奔这一消遣活动。 ";
 "{MENU_DP_LEFT_IMG} TAUNT \n{MENU_DP_RIGHT_IMG} COMPLIMENT \nInteract with people and gain respect by taunting and killing gang members.": "{MENU_DP_LEFT_IMG} 嘲讽 \n{MENU_DP_RIGHT_IMG} 赞美 \n与人互动，通过嘲讽和击杀帮派成员来赚取声望。";
 "{MENU_SELECT_IMG} CONTINUE": "{MENU_SELECT_IMG} 继续";
 "{MENU_SELECT_IMG} PLAY ANOTHER MATCH": "{MENU_SELECT_IMG} 再赛一场";
@@ -8744,7 +8744,7 @@
 "{TANK_FIRE_PRIMARY_IMG} FIRE MACHINE GUN": "{TANK_FIRE_PRIMARY_IMG} 开火：机枪";
 "{TANK_FORW_BACK_IMG} / {TANK_LEFT_RIGHT_IMG} MOVE \nMOVE MOUSE TO AIM \n{TANK_FIRE_SECONDARY_IMG} FIRE MAIN WEAPON \n{TANK_FIRE_PRIMARY_IMG} FIRE SECONDARY WEAPON": "{TANK_FORW_BACK_IMG} / {TANK_LEFT_RIGHT_IMG} 移动 \n移动鼠标瞄准 \n{TANK_FIRE_SECONDARY_IMG} 开火（主武器） \n{TANK_FIRE_PRIMARY_IMG} 开火（副武器）";
 "{TAUNT_TWO_IMG} TAUNT \n{TAUNT_THREE_IMG} COMPLIMENT \nInteract with people and gain respect by taunting and killing gang members.": "{TAUNT_TWO_IMG} 嘲讽 \n{TAUNT_THREE_IMG} 赞美 \n与路人互动，靠嘲讽和干掉帮派成员来获取声望。";
-"{TAUNT_TWO_IMG} twice to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "连按两次 {TAUNT_TWO_IMG} 开始天体。\n不穿任何衣服时，天体这个消遣即可使用。 ";
+"{TAUNT_TWO_IMG} twice to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "连按两次 {TAUNT_TWO_IMG} 开始裸奔。\n不穿任何衣服时，裸奔这个消遣即可使用。 ";
 "{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} MOVE\nMOVE MOUSE TO LOOK\n{SKYDIVE_FLIP_IMG} FLIP UP OR DOWN": "{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} 移动\n移动鼠标查看四周\n{SKYDIVE_FLIP_IMG} 上下翻滚";
 "{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} MOVE \n{ATTACK_PRIMARY_IMG} PUNCH \nPunch Killbane to keep him moving in the steered direction.": "{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} 移动 \n{ATTACK_PRIMARY_IMG} 出拳 \n不断揍杀霸，让他朝你操控的方向移动。";
 "{WEAPON_MENU_IMG} + {WEAPON_SELECT_IMG} SWITCH WEAPONS": "{WEAPON_MENU_IMG} + {WEAPON_SELECT_IMG} 切换武器";

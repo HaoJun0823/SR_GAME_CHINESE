@@ -490,7 +490,7 @@
 "You're gonna need somethin' big to bring down those helis.  Take this...": "你需要大家伙才能打掉那些直升机。拿着这个……";
 "You're gonna take the lead for once?": "这回换你打头阵？";
 "You're good.": "你人不错。";
-"You're handling this naked thing better than I thought you would.": "你应对天体这事比我预想的淡定多了。";
+"You're handling this naked thing better than I thought you would.": "你应对裸奔这事比我预想的淡定多了。";
 "You're having fun with this.": "你玩上瘾了。";
 "You're hearing things, soldier.": "你听岔了，士兵。";
 "You're hitting the gas station first, aren't you?": "你打算先去加油站，对吧？";

@@ -187,7 +187,7 @@
 "Level_3": "第 3 关";
 "Logo": "标志";
 "M00_FAILURE_KILLED_BY_CYRUS": "赛勒斯杀了你！";
-"M01_OBJ_KILL_ZINYAK": "与 [format][color:kill]津亚克[/format] 战斗";
+"M01_OBJ_KILL_ZINYAK": "与 [format][color:kill]齐尼亚克[/format] 战斗";
 "M03_FAIL_QTE": "你死了！";
 "M03_FAIL_SHIP_DESTROYED": "你死了！";
 "M05_FAIL_ABANDON_CID": "CID被弃置了！";
@@ -323,7 +323,7 @@
 "MULTI_MATCHMAKING": "匹配";
 "MUST_LOG_IN_CONFIRM": "你必须登录 Xbox Live 才能使用此功能。\n要登录吗？";
 "MUST_SIGN_IN_PROFILE_CONFIRM": "你当前未使用任何档案登录。\n是否登录？";
-"Matt Miller Outfit": "迪克帮王者";
+"Matt Miller Outfit": "赛博帮王者";
 "Molotov": "燃烧瓶";
 "NOT_LOGGED_IN": "你必须登录 Xbox Live 才能使用此功能。";
 "NaughtyNice": "淘气与乖巧";
@@ -646,7 +646,7 @@
 "STAT_RUNNING_MAN_CASH_EARNED": "元气博士：赚取现金";
 "STAT_SHOT_HIT_PERCENTAGE": "射击命中率";
 "STAT_STORES_OWNED": "已入侵商店";
-"STAT_STREAKING_TOTAL_TIME": "天体总时长";
+"STAT_STREAKING_TOTAL_TIME": "裸奔总时长";
 "STAT_SWAT_KILLED": "SWAT 击杀数";
 "STAT_TANK_MAYHEM_DAMAGE_DONE": "坦克大破坏：造成伤害";
 "STAT_TAUNT": "挑衅";
@@ -685,7 +685,7 @@
 "TUT_HELICOPTER_ENTRY_PC": "{HELI_UP_IMG} 升高\n{HELI_DOWN_IMG} 降低\n{HELI_DRIVE_TURN_SELECT_IMG}+{HELI_LEFT_RIGHT_IMG} 快速转向";
 "TUT_NP_MOTORCYCLE_CONTROLS_PC": "{ACCELERATE_IMG} 加速 \n{BRAKE_REVERSE_IMG} 刹车 + 倒车 \n用 {LEAN_BACK_IMG} 后仰重心翘前轮，用 {LEAN_FORWARD_IMG} 前倾做翘尾。";
 "TUT_NP_TANK_CONTROLS_PC": "{TANK_FORW_BACK_IMG} / {TANK_LEFT_RIGHT_IMG} 移动 \n移动鼠标瞄准 \n{TANK_FIRE_SECONDARY_IMG} 开火（主武器） \n{TANK_FIRE_PRIMARY_IMG} 开火（副武器）";
-"TUT_STREAKING_PC": "{RECRUIT_DISMISS_IMG} 开始天体活动。 \n在不穿任何衣物时，天体娱乐活动可用。 ";
+"TUT_STREAKING_PC": "{RECRUIT_DISMISS_IMG} 开始裸奔活动。 \n在不穿任何衣物时，裸奔娱乐活动可用。 ";
 "TUT_TAUNTING_PC": "{TAUNT_TWO_IMG} 嘲讽 \n{TAUNT_THREE_IMG} 恭维 \n与人群互动，通过嘲讽外星人并击杀它们来获得[format][color:purple]XP[/format]。";
 "UNL_AIR_DASH_1": "跳跃 - 空中冲刺";
 "UNL_AIR_DASH_2": "跳跃 - 空中冲刺2";
@@ -826,7 +826,7 @@
 "UNL_HOMIE_DANE_VOGEL": "同伴 - 德恩·沃格尔";
 "UNL_HOMIE_DONNIE": "同伴 - 唐尼";
 "UNL_HOMIE_JULIUS": "搭档 - 朱利叶斯";
-"UNL_HOMIE_MAERO": "同伴 - 马罗";
+"UNL_HOMIE_MAERO": "同伴 - 梅罗";
 "UNL_HOMIE_SHARP": "同伴 - 威廉·夏普";
 "UNL_HOMIE_TANYA": "搭档 - 坦雅";
 "UNL_HOMIE_UFO": "同伴 - UFO";
@@ -1007,7 +1007,7 @@
 "cf_wrstr_80sbracelet": "80年代手镯";
 "cm_ap3_msspcl_eyes": "晨星帮专家眼镜";
 "cm_blowupdoll": "充气人偶";
-"cm_dkr01_hdphones": "迪克帮耳机";
+"cm_dkr01_hdphones": "赛博帮耳机";
 "cm_dkr01_suit": "赛博帮士兵";
 "cm_dlc_wwolf_foot_m": "狼人足";
 "cm_dlc_wwolf_hand_m_suit": "狼人手套";
@@ -1024,7 +1024,7 @@
 "cm_foot_bathslippers": "毛绒拖鞋";
 "cm_foot_benking": "金式便鞋";
 "cm_foot_bootslowtrendy": "针织翻边靴";
-"cm_foot_deckermatt": "迪克帮王者鞋";
+"cm_foot_deckermatt": "赛博帮王者鞋";
 "cm_foot_postapocman": "末世靴";
 "cm_foot_president_shoes": "总统鞋";
 "cm_foot_slshoes": "休闲步行鞋";
@@ -1080,7 +1080,7 @@
 "cm_lbdy_boardshorts01": "冲浪短裤";
 "cm_lbdy_bountyhunter": "赎金收缴者长裤";
 "cm_lbdy_cargoshorts": "工装短裤";
-"cm_lbdy_deckermatt": "迪克帮王者长裤";
+"cm_lbdy_deckermatt": "赛博帮王者长裤";
 "cm_lbdy_europants": "凌乱长裤";
 "cm_lbdy_hoochishorts": "黛西认证短裤";
 "cm_lbdy_pegleg": "木腿";
@@ -1187,13 +1187,13 @@
 "cm_ubdy_bballjersey": "圣徒球衣";
 "cm_ubdy_benking": "金式西装外套";
 "cm_ubdy_bountyhunter": "赎金收缴者装甲";
-"cm_ubdy_deckermatt": "迪克帮王者夹克";
+"cm_ubdy_deckermatt": "赛博帮王者夹克";
 "cm_ubdy_dlm": "死亡之巢连帽衫";
 "cm_ubdy_fbitchtee": "雀斑妞T恤";
 "cm_ubdy_ffiretee": "友军误伤T恤";
 "cm_ubdy_fleurs": "芙勒帽衫";
 "cm_ubdy_genkitee": "源木飞溅T恤";
-"cm_ubdy_hooddecker": "迪克帮连帽衫";
+"cm_ubdy_hooddecker": "赛博帮连帽衫";
 "cm_ubdy_jeanvest": "牛仔马甲";
 "cm_ubdy_joecolatee": "乔可乐T恤";
 "cm_ubdy_nolovetee": "没人爱我T恤";

@@ -112,7 +112,7 @@
 "Hey, I'm Roddy. Roddy Piper.": "嘿，我是罗迪。罗迪·派柏。";
 "Then let's quit wasting time and find a way to get Gat back.": "那我们就别浪费时间了，找个办法把盖特带回来。";
 "You're the one down there with them.  You deal with it.": "你在下面和他们待在一起。你来处理。";
-"TRY.": "试试看。";
+"TRY.": "试试。";
 "Wow, that may be the simplest explanation you've ever given.": "哇，这可能是我听过你最简洁的解释了。";
 "Wouldn't it be better for them if these shields weren't being made by three easily-destroyable objects?": "如果这些护盾不是由三个一打就碎的东西生成的，对他们来说不是更好吗？";
 "I'll get you out, Matt...": "我会把你弄出来的，马特……";
@@ -279,7 +279,7 @@
 "Both of you in!": "你们俩都上车！";
 "Overloading?": "过载？";
 "Ready, steady...": "准备，就绪……";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得行动了。趴下，快跑。";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "Okay, calm down, I'm going.": "好，冷静，我这就去。";
 "Oh. Cheers.": "哦，谢啦。";
 "Now why is Pierce fighting a giant soda can?": "皮尔斯怎么跟一个巨型汽水罐打起来了？";
@@ -592,7 +592,7 @@
 "Shit, now Zin are dropping in from the sky!  That's fucking cheating.": "操，现在齐恩从天而降！那简直是在作弊。";
 "What is this place?": "这是什么地方？";
 "Take your hands off her, Veteran Child.": "把你的手从她身上拿开，老兵之子。";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质。快把它修好。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "Here goes nothing...": "开始吧，听天由命……";
 "Target's in the next room!": "目标就在隔壁房间！";
 "Kinzie, there any other surprises?": "金吉，还有别的惊喜吗？";
@@ -653,7 +653,7 @@
 "Oh. Nicely done.": "哦，干得漂亮。";
 "I thought I was a goner there.  What happened?": "我以为我要交代在那儿了。发生什么了？";
 "Ah, c'mon now.  Gotta get that time back!": "啊，别这样。得把那时间追回来！";
-"Oh man. This place. *BEEP* ME.": "哦天。这地方。*哔*了我吧。";
+"Oh man. This place. *BEEP* ME.": "天哪。这地方。*哔*我。";
 "Were the roads always this bumpy?": "路一直这么颠吗？";
 "Look at this! The Genki Girls have entered the arena!": "快看！源鬼女孩们进场了！";
 "Gimme that!": "把它给我！";

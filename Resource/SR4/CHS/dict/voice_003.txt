@@ -740,7 +740,7 @@
 "Eddie...": "埃迪……";
 "Oh man. I think something's coming up...oh god.": "天。我想有什么要来了……我的天。";
 "Fuck no. If I don't have my crew then I'll get my crew.": "操，不行。如果我失去了我的队伍，那我就去把队伍找回来。";
-"JUST FIX IT.": "给我修好它。";
+"JUST FIX IT.": "赶紧修。";
 "The rift is beginning to stabilize.": "裂隙开始稳定了。";
 "Aaaaaah! Freckle Bitches!": "啊啊啊！雀斑婊子们！";
 "MATT! YOU TOUCHED IT!": "马特！你碰了它！";

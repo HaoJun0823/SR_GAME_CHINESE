@@ -1,0 +1,177 @@
+﻿类型,英文,简中,备注
+人物,Johnny Gat,约翰尼·盖特,主角团；全名用「约翰尼·盖特」，口语简称「盖特」
+人物,Kinzie Kensington,金吉·肯辛顿,主角团；简称「金吉」
+人物,Matt Miller,马特·米勒,主角团；简称「马特」
+人物,Ben King,本·金,主角团；别写「班·金」
+人物,Pierce Washington,皮尔斯·华盛顿,主角团；简称「皮尔斯」
+人物,Asha,阿莎,主角团
+人物,Shaundi,莎蒂,主角团
+人物,Keith,基思,主角团
+人物,Oleg,奥列格,主角团
+人物,Birk,伯克,PR 经理
+人物,Kewpie,丘比,帮派成员
+人物,Mr. Genki,源木,源木教授；旧译「根子」已全清零
+人物,Prof. Genki's M.O.M.,源木教授的母亲,注意与「源木教授」区分
+人物,Mr. X,X先生,三 king 首领
+人物,Ben King Outfit,本·金风格,服装命名
+人物,Matt Miller Outfit,赛博帮王者风格,原「迪克帮王者」已统一为赛博帮
+人物,Aisha,艾莎,服装命名
+人物,T-ROY,T-Roy,街头 promoter
+人物,Big Sean,Big Sean,说唱歌手客串
+人物,Mr. Wong,黄先生,三 king 军火商
+人物,Salucci,萨卢奇,三 king 军火商
+人物,Voron,沃隆,三 king 军火商
+人物,Kabal,卡巴尔,三 king 军火商
+人物,Umberto,翁贝托,三 king 军火商
+人物,Oleg (Talon),奥列格（泰隆）,Talon 本名 Oleg
+人物,Claire,克莱尔,总统万斯副手
+人物,Jules,茱尔斯,助理
+人物,Tatiana,塔季扬,Mirage 成员
+人物,Bondin,邦丁,Mr. X 手下
+人物,Dutay,杜泰,Mr. X 手下
+人物,Mr. Feng,方先生,暗杀者
+人物,ZinYak,齐尼亚克,SR4 DLC 人物；「津亚克」是错字，已全清零
+人物,Tanya,塔尼娅,SR4 剧情人物
+人物,Maero,梅罗,R1 裁决；「马罗」是错字，已全清零
+帮派,The Saints,圣徒,本作主角帮派；「SAINTS」单独出现时亦作「圣徒」
+帮派,Saints Row,黑道圣徒,系列名；与「圣徒帮」区分
+帮派,Decker,赛博帮,官方译名；「迪克帮」30 处已全清零
+帮派,Morningstar,晨星帮,SR3 三大帮派之一
+帮派,Brotherhood,兄弟会,SR3 三大帮派之一；原文含 THE 时作「兄弟会」
+帮派,Idol,偶像帮,SR3 三大帮派之一
+帮派,STAG,STAG 帮,SR3 三大帮派之一；保留英文缩写
+帮派,Lucha Libre,摔角帮,现译「摔角手」；「摔跤手帮」为旧译
+帮派,Three Kings,三位一体,三 king 军火组织
+帮派,Roly Poly,滚滚,三 king 成员
+帮派,Love Muscle,爱情肌肉,三 king 成员
+帮派,Hoxton,霍克斯顿,SR4 帮派
+帮派,Powder,粉帮,Powder Gang = 粉帮；「火药」是字面义，已改
+组织,Saints HQ,圣徒总部,常见于任务目标
+组织,PR Center,公关中心,英文 PUBLIC RELATIONS CENTER
+组织,Gateway,传送门,地图快速旅行点
+组织,Groove House,律动屋,任务据点
+组织,Bedlam,疯人院,任务据点
+组织,Dr. Ye's Medical Center,叶医生医疗中心,任务据点
+组织,MF Services,MF 服务,任务据点
+组织,X-Guy,X guy,X 先生手下据点
+地点,Steelport,钢城,SR3 主城；部分段落译「钢城港」，需统一
+地点,San Leandro,圣利安多,SR3 城区
+地点,Los Perdidos,洛斯佩尔迪多斯,SR3 帮派地盘
+地点,Downtown,市中心,SR4 传送点
+地点,North Downtown,北市中心,SR4 传送点
+地点,South Downtown,南市中心,SR4 传送点
+地点,Southwest District,西南城区,SR4 传送点
+地点,Pleasant View,愉景城区,SR4 传送点
+地点,Southport,南港,SR4 传送点
+地点,Port Pryor,普赖尔港,SR4 传送点
+地点,Camano Place,卡马诺广场,SR4 传送点
+地点,Loren Square,洛伦广场,SR4 传送点
+地点,Saintsblock,圣徒街区,SR4 传送点
+地点,Sunset Park,落日公园,SR4 传送点
+地点,Little Saigon,小西贡,SR4 传送点
+地点,Redlight,红灯区,SR4 传送点
+地点,Diamond Heights,钻石山,SR4 传送点
+地点,Ambrose,安布罗斯,SR4 传送点
+地点,Poseidon,波塞冬,SR4 传送点
+地点,Airport,机场,SR4 传送点
+地点,Hong Kong,香港,任务地
+地点,Wesley Cutter Intl,韦斯利·卡特国际机场,任务地
+地点,Stillwater,静水镇,SR4 DLC
+地点,Windrow,温德罗,SR4 DLC
+地点,Belfast,贝尔法斯特,SR4 DLC
+武器,Pistol,手枪,基础武器
+武器,Rifle,步枪,基础武器
+武器,Shotgun,霰弹枪,基础武器
+武器,SMG,冲锋枪,基础武器
+武器,Assault Rifle,突击步枪,基础武器
+武器,Sniper Rifle,狙击步枪,基础武器
+武器,Machine Gun,机枪,基础武器
+武器,Grenade,手雷,投掷类
+武器,Grenade Launcher,榴弹发射器,重武器
+武器,RPG,火箭筒,重武器
+武器,Minigun,转管机枪,重武器
+武器,Molotov Cocktail,莫洛托夫鸡尾酒,燃烧类
+武器,Flamethrower,火焰喷射器,R1 裁决（装备名统一）
+武器,Disintegrator,瓦解者,SR4 传说武器
+武器,Laser Rifle,外星步枪,SR4 传说武器
+武器,Mauler,巨锤,SR4 重武器
+武器,Bruiser,壮汉,近战武器
+武器,Knife,刀,近战武器
+武器,Baseball Bat,棒球棍,近战武器
+武器,Samurai Sword,武士刀,近战武器
+载具,Chaos,混沌,摩托
+载具,Oppressor,压制者,摩托
+载具,Loser,失败者,摩托
+载具,Wildcat,野猫,摩托
+载具,Zombie,僵尸,摩托
+载具,Interceptor,拦截者,直升机
+载具,Chopper,直升机,通用
+载具,Vulture,秃鹫,直升机
+载具,Banshee,女妖,直升机
+载具,Carnage,屠戮,直升机
+载具,Cobra,眼镜蛇,直升机
+载具,Shrike,伯劳,直升机
+载具,Bulkhead,壁垒,装甲车
+载具,Crusader,十字军,装甲车
+载具,Guardian,守护者,装甲车
+载具,Dr. Cruiser,博士豪华车,装甲车
+载具,Peacemaker,和平使者,装甲车
+载具,Rhino,犀牛,装甲车
+载具,Steed,骏马,轿车
+载具,Inferno,炼狱,轿车
+载具,Coroner,验尸官,轿车
+载具,Super GT,超级 GT,跑车
+载具,Torero,斗牛士,跑车
+载具,Microbe,微生物,跑车
+载具,Beater,扁担,跑车
+载具,Impaler,穿刺者,跑车
+载具,Thunderhawk,雷鹰,飞机
+载具,Annihilator,歼灭者,飞机
+载具,Overboss,霸主,飞机
+载具,Valkyrie,瓦尔基里,直升机
+载具,Nighthawk,夜鹰,飞机
+UI 界面,BACK,返回,一词多义：UI 导航=返回 / 躯干纹身=背部 / 习语=背后。禁止全局替换
+UI 界面,EXIT,退出,UI 导航
+UI 界面,CANCEL,取消,UI 导航
+UI 界面,CONTINUE,继续,UI 导航
+UI 界面,PAUSE,暂停,UI 导航
+UI 界面,SETTINGS,设置,UI 导航
+UI 界面,OPTIONS,选项,UI 导航
+UI 界面,START,开始,UI 导航
+UI 界面,TAKEOVER HOOD,接管街区,HOOD 单独出现应作「街区」
+UI 界面,HOOD,街区,易与「兜帽」混，需按语境判定
+UI 界面,CRIB,据点,玩家安全屋
+UI 界面,STRONGHOLD,据点,任务据点；与 CRIB 同译但语义不同
+UI 界面,MAYHEM,大破坏,SR3/SR4 现译不统一，需定一个
+UI 界面,SNATCH,抢夺,SR3 作「抢人」、SR4 作「抢夺」
+UI 界面,RESTORE DEFAULTS,恢复默认设置,设置项
+UI 界面,INVERT AIM LEFT/RIGHT,反转瞄准 左/右,设置项
+UI 界面,INSURANCE FRAUD,保险欺诈,SR3 作「碰瓷索赔」
+UI 界面,COMBAT TRICKS,战斗技巧,SR3 作「战斗特技」
+UI 界面,THE A BUTTON,A 键,跨平台按键；Xbox 为 A 键，另有右/左摇杆描述，非译法冲突
+UI 界面,LEVEL 1/2/3,等级 1/2/3,customize_us.txt=外观等级；le_data_supplement.txt=第 N 关，按文件分派
+UI 界面,WHITE,白色,R1 通用义；但 CUST_RACE_/RACE_ 前缀下译「白人」
+UI 界面,BLACK,黑色,R1 通用义；但 CUST_RACE_/RACE_ 前缀下译「黑人」
+UI 界面,RECRUIT_DISMISS_IMG,{RECRUIT_DISMISS_IMG},★ 占位符，禁止翻译（曾被误改成私享ISS_IMG）
+术语族,ASIAN,亚裔,R1 人种；「亚洲」是地域义。★ 地区名「Asia (excluding Japan and China)」仍保留「亚洲」
+术语族,CAUCASIAN,白人,R1 人种；旧译「高加索」19 处已全清零
+术语族,HISPANIC,拉美裔,R1 人种
+术语族,HOS,风尘女,SR 官方译名；带标记处「女孩」17 处已统一
+术语族,CONTACTS,联络人,官方译名；「联系人」是误译
+术语族,DEALER,供货商,Forbidden PX 任务；「货主」为旧译
+术语族,SCORING AREA,计分区,Mayhem 玩法计分区
+术语族,GOLD,金色,R1 颜色；奖牌等级语境另作「黄金」
+术语族,SILVER,银色,R1 颜色；奖牌等级语境另作「白银」
+术语族,STEEL,钢色,R1 颜色
+术语族,NORMAL,普通,R1 通用义
+术语族,MEDIUM,中号,R1 尺码语境
+术语族,LOW,低腰,R1 服装维度
+术语族,HIGH,高位,R1 服装维度
+术语族,NO,否,R1；「序号」是 NUMBER 串行误译
+术语族,CIRCLES,圆形,R1 形状
+术语族,FLOWERS,花朵,R1
+术语族,STREAKING,裸奔,R1；「天体」是星体，62 处已全清零
+术语族,POWDER,粉帮,Powder Gang = 粉帮
+术语族,FIGHT CLUB,搏击俱乐部,R1 裁决
+术语族,AUBURN,红棕发,R1 发色名，与「红棕 1..5」编号族对齐
+术语族,BUILD,体型,体型维度=体型；建造语境（如 STORE_BUILD）=建造。禁止全局替换

@@ -66,7 +66,7 @@
 "And...what just happened?": "然后……刚才发生了什么？";
 "You strategize. I'm going for revenge.": "你出谋划策。我去复仇。";
 "Dammit. These assholes are getting tougher and tougher with each kill.": "该死。每杀一个，这些混蛋就越发难缠。";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质。把它修好就行。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "Whoa, whoa, whoa. What the fuck is this shit? WHAT THE FUCK IS THIS SHIT?": "哇哇哇。这他妈是什么鬼？这他妈是什么鬼？";
 "You will need to leap from platform to platform.  By changing the red platforms to blue, the power connection to this simulation will remain open.  The closer you land to the center, the stronger the connection.": "你需要从一个平台跳到另一个平台。把红色平台变成蓝色，这个模拟的能量连接就会保持打开。你落得越靠近中心，连接就越强。";
 "I'm liking this.": "我喜欢这个。";
@@ -468,7 +468,7 @@
 "Gee, Ben. Thanks.": "哎呀，本，谢了。";
 "We're good. I'm surprised it took this long.": "我们没事。我只是没想到花了这么久。";
 "Can you imagine how many people are being tortured by Zinyak right now?": "你能想象现在有多少人正被齐尼亚克折磨吗？";
-"TRY.": "试试看。";
+"TRY.": "试试。";
 "Holy shit. My powers feel... whoa.": "我靠，我的能力感觉……哇哦。";
 "Oh. Well that was nice of you.": "哦，你人还挺好的。";
 "That goes without saying.": "这还用说。";

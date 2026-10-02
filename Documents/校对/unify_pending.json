@@ -1,0 +1,1930 @@
+[
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "%ls 发现了一个你错过的收集品",
+   "%ls 找到了你错过的收集品"
+  ],
+  "freq": {
+   "%ls 发现了一个你错过的收集品": 0,
+   "%ls 找到了你错过的收集品": 0
+  },
+  "source": "%ls FOUND A COLLECTIBLE YOU MISSED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（80年代×2 vs 80 年代风×1），需人工定夺",
+  "candidates": [
+   "80 年代风",
+   "80年代"
+  ],
+  "freq": {
+   "80年代": 2,
+   "80 年代风": 1
+  },
+  "source": "80S"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]客户[/format]想要舞女表演疯狂旋转",
+   "[format][color:green]客户[/format]想让艺人表演「邪恶之杖」"
+  ],
+  "freq": {
+   "[format][color:green]客户[/format]想让艺人表演「邪恶之杖」": 0,
+   "[format][color:green]客户[/format]想要舞女表演疯狂旋转": 0
+  },
+  "source": "[format][color:green]CLIENT[/format] WANTS THE ENTERTAINER TO DO THE WICKED WICK"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]客户[/format]想要「圣徒街特供」",
+   "[format][color:green]客户[/format]想要黑道圣徒特供"
+  ],
+  "freq": {
+   "[format][color:green]客户[/format]想要黑道圣徒特供": 0,
+   "[format][color:green]客户[/format]想要「圣徒街特供」": 0
+  },
+  "source": "[format][color:green]CLIENT[/format] WANTS THE SAINTS ROW SPECIAL"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "一名[format][color:red]晨星帮[/format]成员正抓住你的[format][color:green]风尘女[/format]，快把她抢回来",
+   "一名[format][color:red]晨星帮[/format]成员正抓走你的一名[format][color:green]风尘女[/format]，把人抢回来"
+  ],
+  "freq": {
+   "一名[format][color:red]晨星帮[/format]成员正抓住你的[format][color:green]风尘女[/format]，快把她抢回来": 0,
+   "一名[format][color:red]晨星帮[/format]成员正抓走你的一名[format][color:green]风尘女[/format]，把人抢回来": 0
+  },
+  "source": "A [format][color:red]MORNINGSTAR[/format] IS GRABBING ONE OF YOUR [format][color:green]HOS[/format], GET HER BACK"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "一批圣徒被捕了，摧毁[format][color:red]巴士[/format]逼停它们，然后把圣徒们送到安全处",
+   "数名圣徒被捕，砸毁[format][color:red]巴士[/format]拦下他们，再把圣徒送到安全地带"
+  ],
+  "freq": {
+   "数名圣徒被捕，砸毁[format][color:red]巴士[/format]拦下他们，再把圣徒送到安全地带": 0,
+   "一批圣徒被捕了，摧毁[format][color:red]巴士[/format]逼停它们，然后把圣徒们送到安全处": 0
+  },
+  "source": "A NUMBER OF SAINTS HAVE BEEN ARRESTED, DAMAGE THE [format][color:red]BUSES[/format] TO STOP THEM, THEN FLY THE SAINTS TO SAFETY"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（接受×9 vs 确认×5），需人工定夺",
+  "candidates": [
+   "接受",
+   "确认"
+  ],
+  "freq": {
+   "接受": 9,
+   "确认": 5
+  },
+  "source": "ACCEPT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（飞机操作×6 vs 飞行器操控×5），需人工定夺",
+  "candidates": [
+   "飞机操作",
+   "飞行器操控"
+  ],
+  "freq": {
+   "飞机操作": 6,
+   "飞行器操控": 5
+  },
+  "source": "AIRPLANE CONTROLS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（天使赌场×1 vs 安吉尔的游乐场×1），需人工定夺",
+  "candidates": [
+   "天使赌场",
+   "安吉尔的游乐场"
+  ],
+  "freq": {
+   "天使赌场": 1,
+   "安吉尔的游乐场": 1
+  },
+  "source": "ANGEL'S CASINO"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（阿莎！马特！该死。×8 vs 阿莎！马修！真他妈该死。×3），需人工定夺",
+  "candidates": [
+   "阿莎！马修！真他妈该死。",
+   "阿莎！马特！妈的！",
+   "阿莎！马特！真他妈的。",
+   "阿莎！马特！该死。"
+  ],
+  "freq": {
+   "阿莎！马特！该死。": 8,
+   "阿莎！马修！真他妈该死。": 3,
+   "阿莎！马特！妈的！": 2,
+   "阿莎！马特！真他妈的。": 1
+  },
+  "source": "Asha! Matt! GODDAMMIT."
+ },
+ {
+  "action": "manual",
+  "reason": "⚠ 需人工判定（必须按 key 前缀分派（UI=返回 / 纹身=背部 / 习语=背后））",
+  "candidates": [
+   "背后",
+   "背部",
+   "返回"
+  ],
+  "source": "BACK"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（左后×2 vs 后左×1），需人工定夺",
+  "candidates": [
+   "后左",
+   "左后"
+  ],
+  "freq": {
+   "左后": 2,
+   "后左": 1
+  },
+  "source": "BACK LEFT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（后右×2 vs 右后×1），需人工定夺",
+  "candidates": [
+   "右后",
+   "后右"
+  ],
+  "freq": {
+   "后右": 2,
+   "右后": 1
+  },
+  "source": "BACK RIGHT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（机车×6 vs 摩托车×3），需人工定夺",
+  "candidates": [
+   "摩托车",
+   "机车"
+  ],
+  "freq": {
+   "机车": 6,
+   "摩托车": 3
+  },
+  "source": "BIKE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（摩托党×6 vs 机车×6），需人工定夺",
+  "candidates": [
+   "摩托党",
+   "机车"
+  ],
+  "freq": {
+   "摩托党": 6,
+   "机车": 6
+  },
+  "source": "BIKER"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（充气娃娃×8 vs 充气人偶×7），需人工定夺",
+  "candidates": [
+   "充气人偶",
+   "充气娃娃"
+  ],
+  "freq": {
+   "充气娃娃": 8,
+   "充气人偶": 7
+  },
+  "source": "BLOWUP DOLL"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（双侧卷起，高位×2 vs 双卷，高腰×1），需人工定夺",
+  "candidates": [
+   "双侧卷起，高位",
+   "双卷，高腰"
+  ],
+  "freq": {
+   "双侧卷起，高位": 2,
+   "双卷，高腰": 1
+  },
+  "source": "BOTH ROLLED, HIGH"
+ },
+ {
+  "action": "manual",
+  "reason": "⚠ 需人工判定（必须按 key 前缀分派（体型维度=体型））",
+  "candidates": [
+   "体型",
+   "建造"
+  ],
+  "source": "BUILD"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（颧骨高度×4 vs 颧骨高低×3），需人工定夺",
+  "candidates": [
+   "颧骨高低",
+   "颧骨高度"
+  ],
+  "freq": {
+   "颧骨高度": 4,
+   "颧骨高低": 3
+  },
+  "source": "CHEEKBONE HEIGHT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（闭合×2 vs 已打烊×1），需人工定夺",
+  "candidates": [
+   "已打烊",
+   "闭合"
+  ],
+  "freq": {
+   "闭合": 2,
+   "已打烊": 1
+  },
+  "source": "CLOSED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（联机合作×12 vs 合作×10），需人工定夺",
+  "candidates": [
+   "合作",
+   "联机合作"
+  ],
+  "freq": {
+   "联机合作": 12,
+   "合作": 10
+  },
+  "source": "CO-OP"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（收集×2 vs 收藏×2），需人工定夺",
+  "candidates": [
+   "收藏",
+   "收集"
+  ],
+  "freq": {
+   "收集": 2,
+   "收藏": 2
+  },
+  "source": "COLLECTION"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（战斗技巧×4 vs 战斗特技×2），需人工定夺",
+  "candidates": [
+   "战斗技巧",
+   "战斗特技"
+  ],
+  "freq": {
+   "战斗技巧": 4,
+   "战斗特技": 2
+  },
+  "source": "COMBAT TRICKS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（已完成×14 vs 完成×10），需人工定夺",
+  "candidates": [
+   "完成",
+   "已完成"
+  ],
+  "freq": {
+   "已完成": 14,
+   "完成": 10
+  },
+  "source": "COMPLETED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（不保存并继续×7 vs 不保存继续×6），需人工定夺",
+  "candidates": [
+   "不保存并继续",
+   "不保存继续"
+  ],
+  "freq": {
+   "不保存并继续": 7,
+   "不保存继续": 6
+  },
+  "source": "CONTINUE WITHOUT SAVING"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（操作×11 vs 操控×5），需人工定夺",
+  "candidates": [
+   "操作",
+   "操控"
+  ],
+  "freq": {
+   "操作": 11,
+   "操控": 5
+  },
+  "source": "CONTROLS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（巡航控制×8 vs 定速巡航×6），需人工定夺",
+  "candidates": [
+   "定速巡航",
+   "巡航控制"
+  ],
+  "freq": {
+   "巡航控制": 8,
+   "定速巡航": 6
+  },
+  "source": "CRUISE CONTROL"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（该死！×43 vs 该死。×29），需人工定夺",
+  "candidates": [
+   "妈的。",
+   "该死。",
+   "该死！"
+  ],
+  "freq": {
+   "该死！": 43,
+   "该死。": 29,
+   "妈的。": 17
+  },
+  "source": "DAMMIT."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（从天而降×7 vs 天降死神×3），需人工定夺",
+  "candidates": [
+   "从天而降",
+   "天降杀戮",
+   "天降死神"
+  ],
+  "freq": {
+   "从天而降": 7,
+   "天降死神": 3,
+   "天降杀戮": 2
+  },
+  "source": "DEATH FROM ABOVE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（击杀赛博帮专家×2 vs 击杀迪克专家×1），需人工定夺",
+  "candidates": [
+   "击杀赛博帮专家",
+   "击杀迪克专家"
+  ],
+  "freq": {
+   "击杀赛博帮专家": 2,
+   "击杀迪克专家": 1
+  },
+  "source": "DECKER SPECIALISTS KILLED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（禁用发电机×5 vs 关闭发电机×3），需人工定夺",
+  "candidates": [
+   "关闭发电机",
+   "禁用发电机"
+  ],
+  "freq": {
+   "禁用发电机": 5,
+   "关闭发电机": 3
+  },
+  "source": "DISABLE GENERATOR"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "别担心，我会到场的，巴拉巴拉……操。",
+   "别担心，我会到的，吧啦吧啦他妈的",
+   "别担心，我会到的，吧啦吧啦去你妈的。",
+   "别担心，我会去的，废话少说，操。",
+   "别担心，我会去的，废话废话操",
+   "别担心，我会去的，废话废话，操！",
+   "别担心，我会去的，废话，操！"
+  ],
+  "freq": {
+   "别担心，我会去的，废话废话操": 0,
+   "别担心，我会去的，废话废话，操！": 0,
+   "别担心，我会去的，废话，操！": 0,
+   "别担心，我会去的，废话少说，操。": 0,
+   "别担心，我会到的，吧啦吧啦他妈的": 0,
+   "别担心，我会到的，吧啦吧啦去你妈的。": 0,
+   "别担心，我会到场的，巴拉巴拉……操。": 0
+  },
+  "source": "Don't worry, I'll be there, blah blah FUCK"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "别担心，我会到场的，巴拉巴拉——妈的。",
+   "别担心，我会到的，吧啦吧啦妈的。",
+   "别担心，我会去的，废话废话操。"
+  ],
+  "freq": {
+   "别担心，我会去的，废话废话操。": 0,
+   "别担心，我会到的，吧啦吧啦妈的。": 0,
+   "别担心，我会到场的，巴拉巴拉——妈的。": 0
+  },
+  "source": "Don't worry, I'll be there, blah blah FUCK."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（双下巴高低×5 vs 双下巴高度×4），需人工定夺",
+  "candidates": [
+   "双下巴高低",
+   "双下巴高度"
+  ],
+  "freq": {
+   "双下巴高低": 5,
+   "双下巴高度": 4
+  },
+  "source": "DOUBLE CHIN HEIGHT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（喝酒游戏×2 vs 饮酒游戏×1），需人工定夺",
+  "candidates": [
+   "喝酒游戏",
+   "饮酒游戏"
+  ],
+  "freq": {
+   "喝酒游戏": 2,
+   "饮酒游戏": 1
+  },
+  "source": "DRINKING GAME"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "开车把[format][color:green]供货商[/format]送到客户处",
+   "开车把[format][color:green]货主[/format]送到客户那里"
+  ],
+  "freq": {
+   "开车把[format][color:green]供货商[/format]送到客户处": 0,
+   "开车把[format][color:green]货主[/format]送到客户那里": 0
+  },
+  "source": "DRIVE THE [format][color:green]DEALER[/format] TO THE CLIENTS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（司机弃车×2 vs 司机弹射×1），需人工定夺",
+  "candidates": [
+   "司机弃车",
+   "司机弹射",
+   "司机跳车"
+  ],
+  "freq": {
+   "司机弃车": 2,
+   "司机弹射": 1,
+   "司机跳车": 1
+  },
+  "source": "DRIVER BAILOUT"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "在[format][color:teal]得分区[/format]移动前尽量多赚钱",
+   "在[format][color:teal]计分区[/format]移动前尽可能多赚钱"
+  ],
+  "freq": {
+   "在[format][color:teal]得分区[/format]移动前尽量多赚钱": 0,
+   "在[format][color:teal]计分区[/format]移动前尽可能多赚钱": 0
+  },
+  "source": "EARN AS MUCH MONEY AS POSSIBLE BEFORE THE [format][color:teal]SCORING AREA[/format] MOVES"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（护送×7 vs 护花使者×3），需人工定夺",
+  "candidates": [
+   "护花使者",
+   "护送"
+  ],
+  "freq": {
+   "护送": 7,
+   "护花使者": 3
+  },
+  "source": "ESCORT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（额外配件×11 vs 附加内容×6），需人工定夺",
+  "candidates": [
+   "附加内容",
+   "额外配件"
+  ],
+  "freq": {
+   "额外配件": 11,
+   "附加内容": 6
+  },
+  "source": "EXTRAS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（火焰×6 vs 火×3），需人工定夺",
+  "candidates": [
+   "火",
+   "火焰"
+  ],
+  "freq": {
+   "火焰": 6,
+   "火": 3
+  },
+  "source": "FIRE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（露械×2 vs 当街露鸟×1），需人工定夺",
+  "candidates": [
+   "当街露鸟",
+   "露械"
+  ],
+  "freq": {
+   "露械": 2,
+   "当街露鸟": 1
+  },
+  "source": "FLASHING"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（录像×2 vs 画面×2），需人工定夺",
+  "candidates": [
+   "录像",
+   "画面"
+  ],
+  "freq": {
+   "录像": 2,
+   "画面": 2
+  },
+  "source": "FOOTAGE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（靠！我……×8 vs 操！我……×6），需人工定夺",
+  "candidates": [
+   "操！我……",
+   "靠！我……"
+  ],
+  "freq": {
+   "靠！我……": 8,
+   "操！我……": 6
+  },
+  "source": "Fuck! I..."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（帮派成员被挑衅×2 vs 嘲讽的帮派成员数×1），需人工定夺",
+  "candidates": [
+   "嘲讽的帮派成员数",
+   "帮派成员被挑衅"
+  ],
+  "freq": {
+   "帮派成员被挑衅": 2,
+   "嘲讽的帮派成员数": 1
+  },
+  "source": "GANG MEMBERS TAUNTED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（镀金版×17 vs 镀金×15），需人工定夺",
+  "candidates": [
+   "镀金",
+   "镀金版"
+  ],
+  "freq": {
+   "镀金版": 17,
+   "镀金": 15
+  },
+  "source": "GOLD-PLATED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（画质模式×2 vs 图形模式×1），需人工定夺",
+  "candidates": [
+   "图形模式",
+   "画质模式"
+  ],
+  "freq": {
+   "画质模式": 2,
+   "图形模式": 1
+  },
+  "source": "GRAPHICS MODE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（手雷击杀×2 vs 手雷击杀数×1），需人工定夺",
+  "candidates": [
+   "手雷击杀",
+   "手雷击杀数"
+  ],
+  "freq": {
+   "手雷击杀": 2,
+   "手雷击杀数": 1
+  },
+  "source": "GRENADE KILLS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（入侵当地的边缘工坊×4 vs 入侵本地边缘工坊×2），需人工定夺",
+  "candidates": [
+   "入侵当地的边缘工坊",
+   "入侵本地边缘工坊"
+  ],
+  "freq": {
+   "入侵当地的边缘工坊": 4,
+   "入侵本地边缘工坊": 2
+  },
+  "source": "HACK THE LOCAL RIM JOBS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（恐怖组合包×2 vs 恐怖包×1），需人工定夺",
+  "candidates": [
+   "恐怖包",
+   "恐怖组合包"
+  ],
+  "freq": {
+   "恐怖组合包": 2,
+   "恐怖包": 1
+  },
+  "source": "HORROR PACK"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（劫持的人质×2 vs 劫持人质数×1），需人工定夺",
+  "candidates": [
+   "劫持人质数",
+   "劫持的人质"
+  ],
+  "freq": {
+   "劫持的人质": 2,
+   "劫持人质数": 1
+  },
+  "source": "HOSTAGES TAKEN"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（每小时城市收入×2 vs 城市每小时收入×1），需人工定夺",
+  "candidates": [
+   "城市每小时收入",
+   "每小时城市收入"
+  ],
+  "freq": {
+   "每小时城市收入": 2,
+   "城市每小时收入": 1
+  },
+  "source": "HOURLY CITY INCOME"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（液压系统×7 vs 液压悬挂×3），需人工定夺",
+  "candidates": [
+   "液压悬挂",
+   "液压系统"
+  ],
+  "freq": {
+   "液压系统": 7,
+   "液压悬挂": 3
+  },
+  "source": "HYDRAULICS"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "如果我没法用暴力修好这座城市，那我就要教这座城市跳舞。",
+   "如果我用暴力修不好这座城市，那我就教这座城市跳舞。",
+   "如果暴力救不了这座城市，那我就教这座城市跳舞。",
+   "如果暴力救不了这座城，那我就教这座城跳舞。",
+   "如果暴力治不了这城市，那我就教这城市跳舞。",
+   "要是没法用暴力治好这座城，那我就教这座城跳舞。"
+  ],
+  "freq": {
+   "如果暴力救不了这座城市，那我就教这座城市跳舞。": 0,
+   "如果我没法用暴力修好这座城市，那我就要教这座城市跳舞。": 0,
+   "如果暴力治不了这城市，那我就教这城市跳舞。": 0,
+   "如果暴力救不了这座城，那我就教这座城跳舞。": 0,
+   "要是没法用暴力治好这座城，那我就教这座城跳舞。": 0,
+   "如果我用暴力修不好这座城市，那我就教这座城市跳舞。": 0
+  },
+  "source": "If I can't fix this town with violence then I'm going to teach this town to DANCE."
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "中计了！招募 [format][color:green]联络人[/format] 并撤离。",
+   "这是个陷阱！招募[format][color:green]联络人[/format]并撤离。"
+  ],
+  "freq": {
+   "中计了！招募 [format][color:green]联络人[/format] 并撤离。": 0,
+   "这是个陷阱！招募[format][color:green]联络人[/format]并撤离。": 0
+  },
+  "source": "IT'S A TRAP! RECRUIT THE [format][color:green]CONTACTS[/format] AND GET AWAY."
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "有埋伏！招募[format][color:green]风尘女[/format]并撤离。",
+   "这是个陷阱！招募[format][color:green]风尘女[/format]并撤离。"
+  ],
+  "freq": {
+   "有埋伏！招募[format][color:green]风尘女[/format]并撤离。": 0,
+   "这是个陷阱！招募[format][color:green]风尘女[/format]并撤离。": 0
+  },
+  "source": "IT'S A TRAP! RECRUIT THE [format][color:green]HOS[/format] AND GET AWAY."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（金吉！×10 vs 金吉。×7），需人工定夺",
+  "candidates": [
+   "金吉。",
+   "金吉！"
+  ],
+  "freq": {
+   "金吉！": 10,
+   "金吉。": 7
+  },
+  "source": "KINZIE."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（局域网联机×14 vs 系统连线×6），需人工定夺",
+  "candidates": [
+   "局域网联机",
+   "系统连线"
+  ],
+  "freq": {
+   "局域网联机": 14,
+   "系统连线": 6
+  },
+  "source": "LAN PLAY"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（左卷，高腰×2 vs 左侧卷起，高位×1），需人工定夺",
+  "candidates": [
+   "左侧卷起，高位",
+   "左卷，高腰"
+  ],
+  "freq": {
+   "左卷，高腰": 2,
+   "左侧卷起，高位": 1
+  },
+  "source": "LEFT ROLLED, HIGH"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "我猜猜：你在军情六处受过这种训练。",
+   "让我猜猜：你在军情六处专门训练过这个。",
+   "让我猜猜：你在军情六处训练过这种事。",
+   "让我猜猜：你在军情六处训练过这种活儿。",
+   "让我猜猜：你这种活儿是在军情六处练的吧。",
+   "让我猜：你在军情六处训练过这种事。"
+  ],
+  "freq": {
+   "让我猜猜：你在军情六处专门训练过这个。": 0,
+   "让我猜猜：你这种活儿是在军情六处练的吧。": 0,
+   "我猜猜：你在军情六处受过这种训练。": 0,
+   "让我猜：你在军情六处训练过这种事。": 0,
+   "让我猜猜：你在军情六处训练过这种事。": 0,
+   "让我猜猜：你在军情六处训练过这种活儿。": 0
+  },
+  "source": "Let me guess: You train for this kind of thing in MI6."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（假装一下×8 vs 角色扮演×5），需人工定夺",
+  "candidates": [
+   "假装一下",
+   "角色扮演"
+  ],
+  "freq": {
+   "假装一下": 8,
+   "角色扮演": 5
+  },
+  "source": "LET'S PRETEND"
+ },
+ {
+  "action": "manual",
+  "reason": "⚠ 需人工判定（关卡/等级两义，需确认）",
+  "candidates": [
+   "关卡",
+   "等级"
+  ],
+  "source": "LEVEL"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（第 1 关×4 vs 等级 1×2），需人工定夺",
+  "candidates": [
+   "第 1 关",
+   "等级 1"
+  ],
+  "freq": {
+   "第 1 关": 4,
+   "等级 1": 2
+  },
+  "source": "LEVEL 1"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（第 2 关×4 vs 等级 2×2），需人工定夺",
+  "candidates": [
+   "第 2 关",
+   "等级 2"
+  ],
+  "freq": {
+   "第 2 关": 4,
+   "等级 2": 2
+  },
+  "source": "LEVEL 2"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（第 3 关×4 vs 等级 3×2），需人工定夺",
+  "candidates": [
+   "第 3 关",
+   "等级 3"
+  ],
+  "freq": {
+   "第 3 关": 4,
+   "等级 3": 2
+  },
+  "source": "LEVEL 3"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（徽标×5 vs 标志×5），需人工定夺",
+  "candidates": [
+   "徽标",
+   "标志"
+  ],
+  "freq": {
+   "徽标": 5,
+   "标志": 5
+  },
+  "source": "LOGO"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "看看谁来了！我喜欢的准特工和她的小跟班。",
+   "看看谁来了！我最喜欢的三流间谍和她的小跟班。",
+   "看看谁来了！我最喜欢的准间谍和她的好闺蜜。",
+   "看看谁来了！我最爱的冒牌特工和她的小跟班。",
+   "看看谁来了！我最爱的想当间谍的跟屁虫和她好闺蜜。",
+   "看看谁来了！我最爱的间谍预备役和她的闺蜜。"
+  ],
+  "freq": {
+   "看看谁来了！我最爱的冒牌特工和她的小跟班。": 0,
+   "看看谁来了！我最喜欢的三流间谍和她的小跟班。": 0,
+   "看看谁来了！我最爱的想当间谍的跟屁虫和她好闺蜜。": 0,
+   "看看谁来了！我喜欢的准特工和她的小跟班。": 0,
+   "看看谁来了！我最爱的间谍预备役和她的闺蜜。": 0,
+   "看看谁来了！我最喜欢的准间谍和她的好闺蜜。": 0
+  },
+  "source": "Look who's here! My favorite wannabe spy and her BFF."
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "看来她把你拒绝了，C.I.D.。",
+   "看来她拒绝你了，C.I.D.。"
+  ],
+  "freq": {
+   "看来她把你拒绝了，C.I.D.。": 0,
+   "看来她拒绝你了，C.I.D.。": 0
+  },
+  "source": "Looks like she shot you down, CID."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（匹配中×7 vs 匹配×7），需人工定夺",
+  "candidates": [
+   "匹配",
+   "匹配中"
+  ],
+  "freq": {
+   "匹配中": 7,
+   "匹配": 7
+  },
+  "source": "MATCHMAKING"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（大乱斗×8 vs 大破坏×8），需人工定夺",
+  "candidates": [
+   "大乱斗",
+   "大破坏"
+  ],
+  "freq": {
+   "大乱斗": 8,
+   "大破坏": 8
+  },
+  "source": "MAYHEM"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（机甲狂暴×7 vs 机甲战衣大混乱×4），需人工定夺",
+  "candidates": [
+   "机甲战衣大混乱",
+   "机甲狂暴"
+  ],
+  "freq": {
+   "机甲狂暴": 7,
+   "机甲战衣大混乱": 4
+  },
+  "source": "MECH SUIT MAYHEM"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（晨星帮×3 vs 晨星×2），需人工定夺",
+  "candidates": [
+   "晨星",
+   "晨星帮"
+  ],
+  "freq": {
+   "晨星帮": 3,
+   "晨星": 2
+  },
+  "source": "MORNING STAR"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（占领街区×3 vs 已获得街区×2），需人工定夺",
+  "candidates": [
+   "占领街区",
+   "已获得街区"
+  ],
+  "freq": {
+   "占领街区": 3,
+   "已获得街区": 2
+  },
+  "source": "NEIGHBORHOOD GAINED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（氮气×13 vs 氮气加速×5），需人工定夺",
+  "candidates": [
+   "氮气",
+   "氮气加速"
+  ],
+  "freq": {
+   "氮气": 13,
+   "氮气加速": 5
+  },
+  "source": "NITROUS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（未完成任何任务×2 vs 暂无完成任务×1），需人工定夺",
+  "candidates": [
+   "暂无完成任务",
+   "未完成任何任务"
+  ],
+  "freq": {
+   "未完成任何任务": 2,
+   "暂无完成任务": 1
+  },
+  "source": "NO MISSIONS COMPLETED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（打蛋×6 vs 蛋击×3），需人工定夺",
+  "candidates": [
+   "打蛋",
+   "蛋击"
+  ],
+  "freq": {
+   "打蛋": 6,
+   "蛋击": 3
+  },
+  "source": "NUT SHOT"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "哦。等等——多年的抗刑讯训练？我还以为你在FBI是干计算机犯罪的。",
+   "哦。等等——多年的耐刑训练？我以为你在 FBI 是搞网络犯罪的。",
+   "哦。等等——多年的酷刑抵抗训练？我以为你在 FBI 主管电脑犯罪。",
+   "哦。等等——多年的酷刑抵抗训练？我以为你在FBI里做计算机犯罪调查呢。",
+   "哦。等等——多年酷刑审讯训练？我以为你在FBI搞计算机犯罪。",
+   "哦。等等——好几年的抗刑讯训练？我还以为你在联邦调查局做网络犯罪调查呢。"
+  ],
+  "freq": {
+   "哦。等等——好几年的抗刑讯训练？我还以为你在联邦调查局做网络犯罪调查呢。": 0,
+   "哦。等等——多年的酷刑抵抗训练？我以为你在FBI里做计算机犯罪调查呢。": 0,
+   "哦。等等——多年酷刑审讯训练？我以为你在FBI搞计算机犯罪。": 0,
+   "哦。等等——多年的酷刑抵抗训练？我以为你在 FBI 主管电脑犯罪。": 0,
+   "哦。等等——多年的耐刑训练？我以为你在 FBI 是搞网络犯罪的。": 0,
+   "哦。等等——多年的抗刑讯训练？我还以为你在FBI是干计算机犯罪的。": 0
+  },
+  "source": "Oh. Wait--years of torture resistance? I thought you worked computer crime at the FBI."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（好……第一部分……×3 vs 好的……第一部分……×3），需人工定夺",
+  "candidates": [
+   "好……第一部分……",
+   "好的……第一部分……"
+  ],
+  "freq": {
+   "好……第一部分……": 3,
+   "好的……第一部分……": 3
+  },
+  "source": "Okay... Part 1..."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（奥列格家族大团圆×2 vs 奥列格家族团聚×1），需人工定夺",
+  "candidates": [
+   "奥列格家族团聚",
+   "奥列格家族大团圆"
+  ],
+  "freq": {
+   "奥列格家族大团圆": 2,
+   "奥列格家族团聚": 1
+  },
+  "source": "OLEG FAMILY REUNION"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（拍照点×2 vs 合影点×1），需人工定夺",
+  "candidates": [
+   "合影点",
+   "拍照点"
+  ],
+  "freq": {
+   "拍照点": 2,
+   "合影点": 1
+  },
+  "source": "PHOTO OP"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（暗细条纹×2 vs 细条×1），需人工定夺",
+  "candidates": [
+   "暗细条纹",
+   "细条"
+  ],
+  "freq": {
+   "暗细条纹": 2,
+   "细条": 1
+  },
+  "source": "PIN STRIPES"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（跑酷裂缝×5 vs 平台裂隙×2），需人工定夺",
+  "candidates": [
+   "平台裂隙",
+   "平台跳跃裂缝",
+   "跑酷裂缝"
+  ],
+  "freq": {
+   "跑酷裂缝": 5,
+   "平台裂隙": 2,
+   "平台跳跃裂缝": 1
+  },
+  "source": "PLATFORMING RIFT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（快感×2 vs 愉悦×2），需人工定夺",
+  "candidates": [
+   "快感",
+   "愉悦"
+  ],
+  "freq": {
+   "快感": 2,
+   "愉悦": 2
+  },
+  "source": "PLEASURE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（压印×4 vs 按下×2），需人工定夺",
+  "candidates": [
+   "压印",
+   "按下"
+  ],
+  "freq": {
+   "压印": 4,
+   "按下": 2
+  },
+  "source": "PRESS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（无法预览×2 vs 预览不可用×2），需人工定夺",
+  "candidates": [
+   "无法预览",
+   "预览不可用"
+  ],
+  "freq": {
+   "无法预览": 2,
+   "预览不可用": 2
+  },
+  "source": "PREVIEW UNAVAILABLE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（源木教授的「心灵杀戮」×6 vs 源木博士的M.O.M.×6），需人工定夺",
+  "candidates": [
+   "源木博士的M.O.M.",
+   "源木教授的 M.O.M.",
+   "源木教授的「心灵杀戮」"
+  ],
+  "freq": {
+   "源木教授的「心灵杀戮」": 6,
+   "源木博士的M.O.M.": 6,
+   "源木教授的 M.O.M.": 2
+  },
+  "source": "PROF. GENKI'S M.O.M."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（产业×6 vs 属性×3），需人工定夺",
+  "candidates": [
+   "产业",
+   "属性"
+  ],
+  "freq": {
+   "产业": 6,
+   "属性": 3
+  },
+  "source": "PROPERTIES"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（产业×6 vs 财产×3），需人工定夺",
+  "candidates": [
+   "产业",
+   "地产",
+   "财产"
+  ],
+  "freq": {
+   "产业": 6,
+   "财产": 3,
+   "地产": 1
+  },
+  "source": "PROPERTY"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "在今天的送货中保护[format][color:green]供货商[/format]",
+   "在今天的送货中保护[format][color:green]货主[/format]"
+  ],
+  "freq": {
+   "在今天的送货中保护[format][color:green]货主[/format]": 0,
+   "在今天的送货中保护[format][color:green]供货商[/format]": 0
+  },
+  "source": "PROTECT THE [format][color:green]DEALER[/format] DURING TODAY'S DELIVERIES"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "在[format][color:green]供货商[/format]送货时保护他们",
+   "在[format][color:green]货主[/format]送货时保护他们"
+  ],
+  "freq": {
+   "在[format][color:green]货主[/format]送货时保护他们": 0,
+   "在[format][color:green]供货商[/format]送货时保护他们": 0
+  },
+  "source": "PROTECT THE [format][color:green]DEALER[/format] WHILE THEY MAKE THEIR DELIVERIES"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（反推×2 vs 反攻×1），需人工定夺",
+  "candidates": [
+   "反推",
+   "反攻"
+  ],
+  "freq": {
+   "反推": 2,
+   "反攻": 1
+  },
+  "source": "PUSHBACK"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（不保存并继续×7 vs 不保存继续×6），需人工定夺",
+  "candidates": [
+   "不保存并继续",
+   "不保存继续"
+  ],
+  "freq": {
+   "不保存并继续": 7,
+   "不保存继续": 6
+  },
+  "source": "RESUME WITHOUT SAVING"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（右侧卷起，低位×2 vs 右卷，低腰×1），需人工定夺",
+  "candidates": [
+   "右侧卷起，低位",
+   "右卷，低腰"
+  ],
+  "freq": {
+   "右侧卷起，低位": 2,
+   "右卷，低腰": 1
+  },
+  "source": "RIGHT ROLLED, LOW"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "行，我们倒要看看结果如何。进去吧，C.I.D.。",
+   "行，我们走着瞧吧。进去吧，C.I.D.。"
+  ],
+  "freq": {
+   "行，我们倒要看看结果如何。进去吧，C.I.D.。": 0,
+   "行，我们走着瞧吧。进去吧，C.I.D.。": 0
+  },
+  "source": "Right, we'll see how that works out.  Get in there, CID."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（锈针纹身×5 vs 锈针纹身店×2），需人工定夺",
+  "candidates": [
+   "锈针纹身",
+   "锈针纹身店"
+  ],
+  "freq": {
+   "锈针纹身": 5,
+   "锈针纹身店": 2
+  },
+  "source": "RUSTY'S NEEDLE"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "向[format][color:red]巴士[/format]射击以逼停它们",
+   "向[format][color:red]巴士[/format]开火拦下它们"
+  ],
+  "freq": {
+   "向[format][color:red]巴士[/format]射击以逼停它们": 0,
+   "向[format][color:red]巴士[/format]开火拦下它们": 0
+  },
+  "source": "SHOOT AT THE [format][color:red]BUSES[/format] TO STOP THEM"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（发现的捷径×2 vs 发现的近道数×1），需人工定夺",
+  "candidates": [
+   "发现的捷径",
+   "发现的近道数"
+  ],
+  "freq": {
+   "发现的捷径": 2,
+   "发现的近道数": 1
+  },
+  "source": "SHORTCUTS FOUND"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（贴身×4 vs 皮肤×3），需人工定夺",
+  "candidates": [
+   "皮肤",
+   "贴身"
+  ],
+  "freq": {
+   "贴身": 4,
+   "皮肤": 3
+  },
+  "source": "SKIN"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（抢夺×8 vs 拐人救美×5），需人工定夺",
+  "candidates": [
+   "抢人",
+   "抢夺",
+   "拐人救美",
+   "营救"
+  ],
+  "freq": {
+   "抢夺": 8,
+   "拐人救美": 5,
+   "抢人": 3,
+   "营救": 1
+  },
+  "source": "SNATCH"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "地图上特别标记的[format][color:teal]位置[/format]能给你额外肾上腺素",
+   "地图上特别标记的[format][color:teal]位置[/format]能让你获得额外肾上腺素"
+  ],
+  "freq": {
+   "地图上特别标记的[format][color:teal]位置[/format]能让你获得额外肾上腺素": 0,
+   "地图上特别标记的[format][color:teal]位置[/format]能给你额外肾上腺素": 0
+  },
+  "source": "SPECIALLY MARKED [format][color:teal]LOCATIONS[/format] ON THE MAP WILL EARN YOU EXTRA ADRENALINE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（极速裂隙×5 vs 速度裂缝×2），需人工定夺",
+  "candidates": [
+   "极速裂缝",
+   "极速裂隙",
+   "速度裂缝"
+  ],
+  "freq": {
+   "极速裂隙": 5,
+   "速度裂缝": 2,
+   "极速裂缝": 2
+  },
+  "source": "SPEED RIFT"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（击杀 STAG 突击队员×2 vs STAG 突击队击杀数×1），需人工定夺",
+  "candidates": [
+   "STAG 突击队击杀数",
+   "击杀 STAG 突击队员"
+  ],
+  "freq": {
+   "击杀 STAG 突击队员": 2,
+   "STAG 突击队击杀数": 1
+  },
+  "source": "STAG COMMANDOS KILLED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（开始摔跤手帮任务×1 vs 开始摔角手任务×1），需人工定夺",
+  "candidates": [
+   "开始摔角手任务",
+   "开始摔跤手帮任务"
+  ],
+  "freq": {
+   "开始摔跤手帮任务": 1,
+   "开始摔角手任务": 1
+  },
+  "source": "START LUCHADORE MISSION"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（开启摔角手据点×2 vs 开始摔跤手帮根据地×1），需人工定夺",
+  "candidates": [
+   "开启摔角手据点",
+   "开始摔角手据点",
+   "开始摔跤手帮根据地"
+  ],
+  "freq": {
+   "开启摔角手据点": 2,
+   "开始摔跤手帮根据地": 1,
+   "开始摔角手据点": 1
+  },
+  "source": "START LUCHADORE STRONGHOLD"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（启动晨星帮据点×2 vs 开始晨星帮根据地×1），需人工定夺",
+  "candidates": [
+   "启动晨星帮据点",
+   "开始晨星帮据点",
+   "开始晨星帮根据地"
+  ],
+  "freq": {
+   "启动晨星帮据点": 2,
+   "开始晨星帮根据地": 1,
+   "开始晨星帮据点": 1
+  },
+  "source": "START MORNINGSTAR STRONGHOLD"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（开始 STAG 任务×1 vs 开始STAG任务×1），需人工定夺",
+  "candidates": [
+   "开始 STAG 任务",
+   "开始STAG任务"
+  ],
+  "freq": {
+   "开始 STAG 任务": 1,
+   "开始STAG任务": 1
+  },
+  "source": "START STAG MISSION"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（启动STAG据点×2 vs 开始STAG据点×1），需人工定夺",
+  "candidates": [
+   "启动STAG据点",
+   "开始 STAG 根据地",
+   "开始STAG据点"
+  ],
+  "freq": {
+   "启动STAG据点": 2,
+   "开始STAG据点": 1,
+   "开始 STAG 根据地": 1
+  },
+  "source": "START STAG STRONGHOLD"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（开始据点战×2 vs 开始据点×1），需人工定夺",
+  "candidates": [
+   "开始据点",
+   "开始据点战",
+   "开始根据地"
+  ],
+  "freq": {
+   "开始据点战": 2,
+   "开始据点": 1,
+   "开始根据地": 1
+  },
+  "source": "START STRONGHOLD"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "超级计算机已摧毁！\n使用机枪 {TANK_FIRE_PRIMARY_IMG} 安全摧毁它的轮胎。",
+   "超级计算机已摧毁！\n使用机枪 {TANK_FIRE_PRIMARY_IMG} 来安全摧毁它的轮胎。"
+  ],
+  "freq": {
+   "超级计算机已摧毁！\n使用机枪 {TANK_FIRE_PRIMARY_IMG} 安全摧毁它的轮胎。": 0,
+   "超级计算机已摧毁！\n使用机枪 {TANK_FIRE_PRIMARY_IMG} 来安全摧毁它的轮胎。": 0
+  },
+  "source": "SUPERCOMPUTER DESTROYED!\nUSE THE MACHINE GUN {TANK_FIRE_PRIMARY_IMG} TO SAFELY DESTROY IT'S TIRES."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（生存×2 vs 生存战×1），需人工定夺",
+  "candidates": [
+   "生存",
+   "生存战"
+  ],
+  "freq": {
+   "生存": 2,
+   "生存战": 1
+  },
+  "source": "SURVIVAL"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（局域网联机×14 vs 系统连线×6），需人工定夺",
+  "candidates": [
+   "局域网联机",
+   "系统连线",
+   "系统链接"
+  ],
+  "freq": {
+   "局域网联机": 14,
+   "系统连线": 6,
+   "系统链接": 3
+  },
+  "source": "SYSTEM LINK"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（坦克大乱斗×12 vs 坦克大破坏×11），需人工定夺",
+  "candidates": [
+   "坦克大乱斗",
+   "坦克大破坏"
+  ],
+  "freq": {
+   "坦克大乱斗": 12,
+   "坦克大破坏": 11
+  },
+  "source": "TANK MAYHEM"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（目标已清除×2 vs 消灭目标数×1），需人工定夺",
+  "candidates": [
+   "消灭目标数",
+   "目标已清除"
+  ],
+  "freq": {
+   "目标已清除": 2,
+   "消灭目标数": 1
+  },
+  "source": "TARGETS ELIMINATED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（嘲讽×20 vs 挑衅×7），需人工定夺",
+  "candidates": [
+   "嘲讽",
+   "挑衅"
+  ],
+  "freq": {
+   "嘲讽": 20,
+   "挑衅": 7
+  },
+  "source": "TAUNTING"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（念力裂隙×5 vs 念力裂缝×4），需人工定夺",
+  "candidates": [
+   "念力裂缝",
+   "念力裂隙"
+  ],
+  "freq": {
+   "念力裂隙": 5,
+   "念力裂缝": 4
+  },
+  "source": "TELEKINESIS RIFT"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]联络人[/format] 已被发现，快去营救他们",
+   "[format][color:green]联络人[/format]暴露了，去救他们"
+  ],
+  "freq": {
+   "[format][color:green]联络人[/format]暴露了，去救他们": 0,
+   "[format][color:green]联络人[/format] 已被发现，快去营救他们": 0
+  },
+  "source": "THE [format][color:green]CONTACTS[/format] HAVE BEEN DISCOVERED, GO RESCUE THEM"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]供货商[/format]必须成功完成%d笔交易",
+   "[format][color:green]货主[/format]必须成功完成 %d 笔交易"
+  ],
+  "freq": {
+   "[format][color:green]供货商[/format]必须成功完成%d笔交易": 0,
+   "[format][color:green]货主[/format]必须成功完成 %d 笔交易": 0
+  },
+  "source": "THE [format][color:green]DEALER[/format] MUST SUCCESSFULLY COMPLETE %d DEALS"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]风尘女[/format]们被捕了，快去保释她们",
+   "[format][color:green]风尘女[/format]被捕了，去保释她们"
+  ],
+  "freq": {
+   "[format][color:green]风尘女[/format]被捕了，去保释她们": 0,
+   "[format][color:green]风尘女[/format]们被捕了，快去保释她们": 0
+  },
+  "source": "THE [format][color:green]HOS[/format] HAVE BEEN ARRESTED, GO BAIL THEM OUT"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:green]风尘女[/format]们被带走了，快去救她们",
+   "[format][color:green]风尘女[/format]被带走了，去救她们"
+  ],
+  "freq": {
+   "[format][color:green]风尘女[/format]被带走了，去救她们": 0,
+   "[format][color:green]风尘女[/format]们被带走了，快去救她们": 0
+  },
+  "source": "THE [format][color:green]HOS[/format] HAVE BEEN TAKEN, GO RESCUE THEM"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:red]买家[/format] 要跑掉了",
+   "[format][color:red]买家[/format]正在逃脱"
+  ],
+  "freq": {
+   "[format][color:red]买家[/format] 要跑掉了": 0,
+   "[format][color:red]买家[/format]正在逃脱": 0
+  },
+  "source": "THE [format][color:red]BUYER[/format] IS GETTING AWAY"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:red]买家[/format] 没付钱就溜了。干掉他们。",
+   "[format][color:red]买家[/format]没付钱就走了。干掉他们。"
+  ],
+  "freq": {
+   "[format][color:red]买家[/format] 没付钱就溜了。干掉他们。": 0,
+   "[format][color:red]买家[/format]没付钱就走了。干掉他们。": 0
+  },
+  "source": "THE [format][color:red]BUYER[/format] LEFT WITHOUT PAYING.  KILL THEM."
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "[format][color:teal]得分区[/format]已移动",
+   "[format][color:teal]计分区[/format]已移动"
+  ],
+  "freq": {
+   "[format][color:teal]计分区[/format]已移动": 0,
+   "[format][color:teal]得分区[/format]已移动": 0
+  },
+  "source": "THE [format][color:teal]SCORING AREA[/format] HAS MOVED"
+ },
+ {
+  "action": "manual",
+  "reason": "⚠ 需人工判定（跨平台按键（A 键/右摇杆/左摇杆），不是译法冲突）",
+  "candidates": [
+   "A 键",
+   "右摇杆",
+   "左摇杆"
+  ],
+  "source": "THE A BUTTON"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（屠夫×2 vs 砍人魔×1），需人工定夺",
+  "candidates": [
+   "屠夫",
+   "砍人魔"
+  ],
+  "freq": {
+   "屠夫": 2,
+   "砍人魔": 1
+  },
+  "source": "THE SLASHER"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（浓妆×2 vs 粗款×1），需人工定夺",
+  "candidates": [
+   "浓妆",
+   "粗款"
+  ],
+  "freq": {
+   "浓妆": 2,
+   "粗款": 1
+  },
+  "source": "THICK"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（投掷×12 vs 投掷武器×5），需人工定夺",
+  "candidates": [
+   "投掷",
+   "投掷武器",
+   "投掷类"
+  ],
+  "freq": {
+   "投掷": 12,
+   "投掷武器": 5,
+   "投掷类": 1
+  },
+  "source": "THROWN"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（UFO狂暴×7 vs UFO 大混乱×4），需人工定夺",
+  "candidates": [
+   "UFO 大混乱",
+   "UFO狂暴"
+  ],
+  "freq": {
+   "UFO狂暴": 7,
+   "UFO 大混乱": 4
+  },
+  "source": "UFO MAYHEM"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（升级×18 vs 升级商店×15），需人工定夺",
+  "candidates": [
+   "升级",
+   "升级商店"
+  ],
+  "freq": {
+   "升级": 18,
+   "升级商店": 15
+  },
+  "source": "UPGRADES"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（上身×8 vs 上半身×3），需人工定夺",
+  "candidates": [
+   "上半身",
+   "上身"
+  ],
+  "freq": {
+   "上身": 8,
+   "上半身": 3
+  },
+  "source": "UPPER BODY"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（载具 - 元气战车×3 vs 载具 - 源木战车×2），需人工定夺",
+  "candidates": [
+   "载具 - 元气战车",
+   "载具 - 源木战车"
+  ],
+  "freq": {
+   "载具 - 元气战车": 3,
+   "载具 - 源木战车": 2
+  },
+  "source": "VEHICLE - GENKIMOBILE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（第 %d 波存活×1 vs 第%d波已存活×1），需人工定夺",
+  "candidates": [
+   "第 %d 波存活",
+   "第%d波已存活"
+  ],
+  "freq": {
+   "第 %d 波存活": 1,
+   "第%d波已存活": 1
+  },
+  "source": "WAVE %d SURVIVED"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（穿上×2 vs 穿戴×1），需人工定夺",
+  "candidates": [
+   "穿上",
+   "穿戴"
+  ],
+  "freq": {
+   "穿上": 2,
+   "穿戴": 1
+  },
+  "source": "WEAR"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（干得好×4 vs 干得漂亮×2），需人工定夺",
+  "candidates": [
+   "干得好",
+   "干得漂亮"
+  ],
+  "freq": {
+   "干得好": 4,
+   "干得漂亮": 2
+  },
+  "source": "WELL DONE"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（车轮×10 vs 轮胎×6），需人工定夺",
+  "candidates": [
+   "车轮",
+   "轮胎"
+  ],
+  "freq": {
+   "车轮": 10,
+   "轮胎": 6
+  },
+  "source": "WHEELS"
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（羽翼×8 vs 尾翼×7），需人工定夺",
+  "candidates": [
+   "尾翼",
+   "羽翼"
+  ],
+  "freq": {
+   "羽翼": 8,
+   "尾翼": 7
+  },
+  "source": "WINGS"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "你在[format][color:teal]得分区[/format]外俯冲，没赚到钱",
+   "你在[format][color:teal]计分区[/format]外摔倒了，没有赚到钱"
+  ],
+  "freq": {
+   "你在[format][color:teal]计分区[/format]外摔倒了，没有赚到钱": 0,
+   "你在[format][color:teal]得分区[/format]外俯冲，没赚到钱": 0
+  },
+  "source": "YOU TOOK A DIVE OUTSIDE OF THE [format][color:teal]SCORING AREA[/format], YOU EARNED NO MONEY"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "你中计了！招募[format][color:green]联络人[/format]并迅速撤离。",
+   "你发现了陷阱！招募[format][color:green]联络人[/format]并撤离。"
+  ],
+  "freq": {
+   "你发现了陷阱！招募[format][color:green]联络人[/format]并撤离。": 0,
+   "你中计了！招募[format][color:green]联络人[/format]并迅速撤离。": 0
+  },
+  "source": "YOU UNCOVERED A TRAP! RECRUIT THE [format][color:green]CONTACTS[/format] AND GET AWAY."
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "你中计了！招募[format][color:green]风尘女[/format]并迅速撤离。",
+   "你发现了陷阱！招募[format][color:green]风尘女[/format]并撤离。"
+  ],
+  "freq": {
+   "你中计了！招募[format][color:green]风尘女[/format]并迅速撤离。": 0,
+   "你发现了陷阱！招募[format][color:green]风尘女[/format]并撤离。": 0
+  },
+  "source": "YOU UNCOVERED A TRAP! RECRUIT THE [format][color:green]HOS[/format] AND GET AWAY."
+ },
+ {
+  "action": "manual",
+  "reason": "词频接近（僵尸×6 vs 丧尸×4），需人工定夺",
+  "candidates": [
+   "丧尸",
+   "僵尸"
+  ],
+  "freq": {
+   "僵尸": 6,
+   "丧尸": 4
+  },
+  "source": "ZOMBIES"
+ },
+ {
+  "action": "manual",
+  "reason": "所有候选词频均为 0，无法裁决",
+  "candidates": [
+   "{HELI_UP_IMG} 升高\n{HELI_DOWN_IMG} 降低\n{VTOL_TRANSITION_IMG} 切换飞行模式",
+   "{HELI_UP_IMG} 提升高度\n{HELI_DOWN_IMG} 降低高度\n{VTOL_TRANSITION_IMG} 切换飞行模式"
+  ],
+  "freq": {
+   "{HELI_UP_IMG} 提升高度\n{HELI_DOWN_IMG} 降低高度\n{VTOL_TRANSITION_IMG} 切换飞行模式": 0,
+   "{HELI_UP_IMG} 升高\n{HELI_DOWN_IMG} 降低\n{VTOL_TRANSITION_IMG} 切换飞行模式": 0
+  },
+  "source": "{HELI_UP_IMG} INCREASE ELEVATION\n{HELI_DOWN_IMG} DECREASE ELEVATION\n{VTOL_TRANSITION_IMG} SWITCH FLIGHT MODE"
+ },
+ {
+  "action": "unify",
+  "authoritative": "黑色",
+  "reason": "人工裁决（通用义优先原则）",
+  "candidates": [
+   "黑人",
+   "黑色"
+  ],
+  "forced": true,
+  "source": "BLACK"
+ },
+ {
+  "action": "unify",
+  "authoritative": "金色",
+  "reason": "人工裁决（通用义优先原则）",
+  "candidates": [
+   "金色",
+   "黄金"
+  ],
+  "forced": true,
+  "source": "GOLD"
+ },
+ {
+  "action": "unify",
+  "authoritative": "银色",
+  "reason": "人工裁决（通用义优先原则）",
+  "candidates": [
+   "白银",
+   "银色"
+  ],
+  "forced": true,
+  "source": "SILVER"
+ },
+ {
+  "action": "unify",
+  "authoritative": "白色",
+  "reason": "人工裁决（通用义优先原则）",
+  "candidates": [
+   "白人",
+   "白色"
+  ],
+  "forced": true,
+  "source": "WHITE"
+ }
+]

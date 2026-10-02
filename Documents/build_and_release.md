@@ -3,7 +3,7 @@
 本仓库的发布包由 **一条命令** 从源材料装配而成，产物目录形如 `release/{game}_{version}/`，
 可直接解压到游戏根目录。
 
-规格原始描述见仓库根 `github_action流程.txt`；实现见 `build_release.py`。
+规格原始描述见 `Documents/github_action流程.txt`（早期版本误标为「仓库根」）；实现见 `build_release.py`。
 
 ---
 
@@ -55,7 +55,7 @@ python build_release.py --lang CHS             :: 指定语言目录（默认 CH
 
 ## 三、八步流程
 
-`build_release.py` 对每个目标严格执行以下 8 步（编号与 `github_action流程.txt` 一致）：
+`build_release.py` 对每个目标严格执行以下 8 步（编号与 `Documents/github_action流程.txt` 一致）：
 
 | # | 步骤 | 输入 | 输出 |
 |---|---|---|---|
@@ -325,7 +325,7 @@ python Projects\SR4\Tools\sr4le_repack.py        :: 同上
 
 | 路径 | 说明 |
 |---|---|
-| `github_action流程.txt` | 流程原始规格（本文档实现的对象） |
+| `Documents/github_action流程.txt` | 流程原始规格（本文档实现的对象） |
 | `build_release.py` | **本文档主角**，8 步编排 |
 | `build_release_le_strings.py` | 步骤 3 的实现（le_string 封装） |
 | `Projects/Common/tools/cli/build_charlist.py` | 步骤 4 的实现（字符清单生成） |

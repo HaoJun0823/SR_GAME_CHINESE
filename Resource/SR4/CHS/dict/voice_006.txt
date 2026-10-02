@@ -84,7 +84,7 @@
 "Kinzie, she's falling too fast.": "金吉，她掉得太快了。";
 "Right.": "好。";
 "Was a time I could trust people.": "曾经我也信任过人。";
-"Don't kid yourself.  In reality, Maero's been dead for years.": "别自欺欺人了。现实中，马罗已经死了好多年。";
+"Don't kid yourself.  In reality, Maero's been dead for years.": "别自欺欺人了。现实中，梅罗已经死了好多年。";
 "We're almost to you.": "我们快到你那儿了。";
 "Gat! Let me go in first!": "盖特！让我先进去！";
 "Hey, I tried to warn him.": "嘿，我试着提醒过他。";
@@ -214,7 +214,7 @@
 "So you've failed like a thousand times already. Finally you decide to bring in help. And you choose who? My lesser half? That sociopath has never cared about anyone else in their entire life.": "所以你已经失败了一千次了。终于，你决定寻求帮助了。可你选了谁？我的另一半？那个变态狂这辈子从没在乎过任何人。";
 "Ben, there's more to kill outside.": "本，外面还有更多要杀的。";
 "Shoot those lights.": "射那些灯。";
-"Hold on, is that Maero?": "等等，那是马罗吗？";
+"Hold on, is that Maero?": "等等，那是梅罗吗？";
 "Ain't there some trick you can pull to make it go faster?": "你就没有什么花招能让它快点？";
 "We need more information.  Can you can trace where these gang members are coming from?": "我们需要更多情报。你能追踪这些帮派成员是从哪来的吗？";
 "Any disasters happen in the past five minutes?": "过去五分钟里有什么灾难发生吗？";
@@ -453,7 +453,7 @@
 "Perfect.": "完美。";
 "Here I come, you sonofabitch.": "我来找你了，你个狗娘养的。";
 "Asha, is that...a person?": "阿莎，那……是人吗？";
-"Hey Maero, how's Jessica?": "喂，马罗，杰西卡还好吗？";
+"Hey Maero, how's Jessica?": "喂，梅罗，杰西卡还好吗？";
 "First rule of life, Shaundi: never trust a man-cat.": "人生第一定律，莎蒂：永远别信猫人。";
 "Well I need your help to make it work.": "嗯，我需要你的帮助才能搞定它。";
 "This isn't for your empire, this is for the people of Earth.": "这不是为了你的帝国，这是为了地球上的人民。";
@@ -479,7 +479,7 @@
 "Translation device! Ha! Nice one, Kinz--oh, there it is.": "翻译装置！哈！漂亮，金吉——哦，在那儿呢。";
 "DELETE": "删除";
 "DELETE": "删除";
-"Hey Maero, how's Jessica?": "喂，马罗，杰西卡还好吗？";
+"Hey Maero, how's Jessica?": "喂，梅罗，杰西卡还好吗？";
 "DELETE": "删除";
 "Your whole empire is about to change.": "你的整个帝国就要变天了。";
 "Nevermind.": "没什么。";

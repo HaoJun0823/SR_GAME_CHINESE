@@ -51,7 +51,7 @@
 "Remember, Steelport's breaking down inside the Simulation right now.  Whoever you take with, I should be able to open portals into their personal nightmares.  But don't worry, whatever comes through will be on your side.": "记住，斯蒂尔沃特正在模拟里崩坏。不管你们带谁一起走，我应该都能为他们打开通向各自噩梦的传送门。不过别担心，过来的东西都会站在你们这边。";
 "Fine, let's see you do it without my assistance then.": "行，那你就别靠我帮忙试试。";
 "MATTHEW! Stop messing around!": "马修！别闹了！";
-"Maero...": "马罗……";
+"Maero...": "梅罗……";
 "You got it.": "没问题。";
 "Oh, for a second I thought this had to do with him attacking America.": "哦，我差点以为这跟他袭击美国有关。";
 "Wave Two! BURNING MAN!": "第二波！火烧人！";
@@ -280,7 +280,7 @@
 "Don't push it.": "别逼我。";
 "Yeah, well, better to dodge potholes than deal with Kinzie if we break the key.": "是啊，躲坑总比弄坏钥匙后应付金吉强。";
 "I wish everyone I went after just sat there waiting for me to kill them.": "我真希望我追杀的每个家伙都乖乖坐在原地等着我去杀。";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得走了。趴下跑！";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "You're showing a lot of restraint Kinzie...": "金吉，你表现得很有克制力……";
 "Look, I showed up to your \"rift\", so start explaining how you'll get me to my friends.": "听着，我准时到了你的「裂缝」，现在解释清楚你怎么带我去找我的朋友。";
 "Thanks for telling me in advance and not after I stole one of their devices and took to a supposedly safe spot.": "谢谢你提前告诉我，而不是等我偷了他们一个设备、躲到自以为安全的地方之后才说。";
@@ -717,7 +717,7 @@
 "DELETE": "删除";
 "Quit confusing \"love\" and \"loathe\" you pervert.": "别再把「爱」和「恨」搞混了，你这变态。";
 "Security work is a cereal box. You don't get to pick your prize.": "安保工作是盒麦片粥。你挑不了里面的奖品。";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质，给我修好它。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "Keep me posted.": "有进展告诉我。";
 "I, um...think we should get Matt.": "我，嗯……觉得我们该去找马特。";
 "Yeah, we're cool.": "对，我们没事。";
@@ -762,7 +762,7 @@
 "I told ya I knew what I was doing.": "我跟你说过我知道自己在干什么。";
 "Matt, where am I?": "马特，我在哪儿？";
 "Come on.": "来吧。";
-"See what happens when you trust my judgment?  We get shit done right.  I've tried to tell you for years I know how to make a plan.  Hell, most of what Shaundi comes up with was my idea first.  Now Maero's dead and we had some bonding time.  *sigh* All's right in the universe.  Well, except that whole Earth being blown up thing...but aside from that...": "看到相信我的判断会发生什么了吧？我们能把事办得漂亮。这些年来我一直告诉你我会做计划。见鬼，莎蒂想的那些主意大半都是我先想出来的。现在马罗死了，我们还增进了感情。*叹气* 天下太平。好吧，除了整个地球被炸飞那事……但除此之外……";
+"See what happens when you trust my judgment?  We get shit done right.  I've tried to tell you for years I know how to make a plan.  Hell, most of what Shaundi comes up with was my idea first.  Now Maero's dead and we had some bonding time.  *sigh* All's right in the universe.  Well, except that whole Earth being blown up thing...but aside from that...": "看到相信我的判断会发生什么了吧？我们能把事办得漂亮。这些年来我一直告诉你我会做计划。见鬼，莎蒂想的那些主意大半都是我先想出来的。现在梅罗死了，我们还增进了感情。*叹气* 天下太平。好吧，除了整个地球被炸飞那事……但除此之外……";
 "That's sounds...like it is dripping with irony.": "听起来……充满讽刺意味。";
 "That seems a bit excessive, doesn't it?": "那有点过头了，对吧？";
 "Kinzie.  Language.": "金吉。注意言辞。";

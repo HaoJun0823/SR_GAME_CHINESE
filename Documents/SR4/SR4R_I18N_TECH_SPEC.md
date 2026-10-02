@@ -1,5 +1,13 @@
 ﻿# SR4R_I18N — Saints Row IV 外挂汉化 DLL 技术方案
 
+> ⚠️ **过时标注（2026-10-02 盘点）**：本文提到的复现脚本里，
+> **已迁移到归档区的**（本文内路径已就地改成现路径）：
+> `gen_aob_relaxed.py` / `verify_runtime_globals.py` → `Archives/SR4/Tools_redundant/`；
+> `sr4_vpp.py` → 已合一为 `Projects/Common/tools/cli/vpp_{extract,pack}.py`。
+> **从未落地、仓库里找不到的**：`gen_aob2.py`、`sim_aobscan.py`、`build_check.py`、
+> `aob_relaxed_report.txt` —— 这三处表格行**保留原文未改**（那是当时的技术记录，改写会失真），
+> 但**不要照着执行**。工具路径总对照表见仓库根 `Readme.md` 第「九、工具」一节。
+
 ## 1. 项目目标
 
 为 Saints Row IV（Steam EOS 2024+ 版）实现运行时外挂式中文汉化，架构参照已交付的 SR3R_I18N（黑道圣徒3重制版）。
@@ -56,7 +64,8 @@ Data:  紧跟名字区（无 0x1000 对齐），每个文件 = zlib 流（无 ad
 未压缩特例: csz == usz 且数据非 0x78 开头 → 直接存储
 ```
 
-工具：`Tools/sr4_vpp.py`（已验证：misc.vpp_pc 317 文件全部解包成功）
+工具：`Projects/Common/tools/cli/vpp_extract.py`（原 `Tools/sr4_vpp.py`，已合一为 Common 工具链；
+已验证：misc.vpp_pc 317 文件全部解包成功）
 
 ---
 
@@ -397,7 +406,7 @@ else                { g_fontTabPtr = nullptr;           ... }   // 未知构建:
 
 | 脚本 | 作用 |
 |------|------|
-| `Tools/verify_runtime_globals.py` | **从 dllmain.cpp 源码正则解析**掩码模式，在 Steam/GOG/EPIC 三版上复刻 `AobScan` + `ResolveFontGlobalsDyn` 逻辑，断言解出的 fontTab/fontCount == `CFG_*` 硬编码值（当前三版全部 OK） |
+| `Archives/SR4/Tools_redundant/verify_runtime_globals.py` | **从 dllmain.cpp 源码正则解析**掩码模式，在 Steam/GOG/EPIC 三版上复刻 `AobScan` + `ResolveFontGlobalsDyn` 逻辑，断言解出的 fontTab/fontCount == `CFG_*` 硬编码值（当前三版全部 OK） |
 
 指纹未命中时日志仍打印 `NEWBUILD file=… TimeDateStamp=… EntryPoint=… SizeOfImage=…`
 （这三项**运行时**可正常读取）—— 用户跑一次即可把新构建补进 `kBuildFp`。
@@ -514,7 +523,7 @@ MSIXVC 版离线只能拿到密文（§6.7.1），但**注入进程内的 DLL �
 
 | 脚本 | 作用 |
 |------|------|
-| `Tools/gen_aob_relaxed.py` | 读三版 exe → `operand_wild_set()` 由反汇编推导 L2 通配位 → 与手工参考规格 `L2_SPEC` 做双向差集 → 断言三版 L1/L2 唯一 → 写 `SR4R_I18N/aob_l2_arrays.inc` → 反向校验 `.inc` 无漂移（`--dis` 看反汇编） |
+| `Archives/SR4/Tools_redundant/gen_aob_relaxed.py` | 读三版 exe → `operand_wild_set()` 由反汇编推导 L2 通配位 → 与手工参考规格 `L2_SPEC` 做双向差集 → 断言三版 L1/L2 唯一 → 写 `SR4R_I18N/aob_l2_arrays.inc` → 反向校验 `.inc` 无漂移（`--dis` 看反汇编） |
 | `Tools/aob_relaxed_report.txt` | 上述工具的产物报告（三版 TDS/EP/SizeOfImage + 每 hook 的 L1/L2 命中数与差集标注） |
 
 ### 6.9 L3 换代构建精确特征码 + 两阶段安装（v1.4，2026-09-17）——面向「换了一代编译器」的构建
@@ -635,7 +644,7 @@ MSIXVC 版离线只有密文（§6.7.1），唯一可用的分析素材是 §6.8
 4. **用 CC 填充边界交叉确认**：x64 函数入口通常紧跟在 `int3`（`CC`）对齐填充之后 ——
    检查候选位置前方是否是对齐填充，以及 `ret` 之后的填充形态。
 
-结果（与 `Tools/gen_aob_relaxed.py` 的 `MS_VA` 表一致）：
+结果（与 `Archives/SR4/Tools_redundant/gen_aob_relaxed.py` 的 `MS_VA` 表一致）：
 
 | Hook | MS Store 入口 VA | 依据 |
 |------|-----------------|------|
@@ -675,7 +684,7 @@ MH_Initialize()
 - 顺带把「哪些 hook 定位失败」在落盘前就算清楚了，`text_dump=auto` 的判据更准确
   （不再依赖「安装阶段的失败标志」，安装晚于落盘）
 
-#### 6.9.7 复现工具更新（`Tools/gen_aob_relaxed.py`）
+#### 6.9.7 复现工具更新（`Archives/SR4/Tools_redundant/gen_aob_relaxed.py`）
 
 | 新增 | 作用 |
 |------|------|
@@ -920,7 +929,7 @@ early_diag = 0
 - [x] **v1.2 全局变量运行时自解**（2026-09-17）：fontTab/fontCount 从 AOB 命中的
       FontLookup 函数体内按掩码模式反解；D3D 设备/上下文改为 SRV→`GetDevice()` 反查；
       自学习槽位表兜底；未知构建下全局指针置空以降级不崩溃。
-      三版验证 `Tools/verify_runtime_globals.py` 全绿（解出值 == CFG 硬编码值）
+      三版验证 `Archives/SR4/Tools_redundant/verify_runtime_globals.py` 全绿（解出值 == CFG 硬编码值）
 - [x] **MS Store（MSIXVC）版调查结论**：`sriv_microsoft.exe` 为**加密密文**
       （熵 8.0000 / 无 MZ / 无明文串），离线取不到任何地址；v1.2 后无需离线地址即可支持
       （见 §6.7）
@@ -930,7 +939,7 @@ early_diag = 0
       Format/Subtitle 换了编译器（前导指令形态与长度均不同），L2 无法覆盖 → 新增
       `R3_FORMAT` / `R3_SUBTITLE` 纯精确特征码；修复 VA 回退路径只校验 L1 的 bug
       （`MatchAnyLayerAt`）；dump 改为**安装前**落盘（干净映像）。四构建唯一性由
-      `Tools/gen_aob_relaxed.py` 离线断言（见 §6.9）
+      `Archives/SR4/Tools_redundant/gen_aob_relaxed.py` 离线断言（见 §6.9）
 
 ### 待处理
 

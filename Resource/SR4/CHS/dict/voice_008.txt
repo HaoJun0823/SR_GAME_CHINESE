@@ -519,7 +519,7 @@
 "Someday we should probably name this ship.  I've been giving it a lot of thought and I think we need a name that confuses our enemies by seeming innocuous to the uninformed.  That's why I'd vote for Tea Cup.": "总有一天我们该给这艘船起个名字。我考虑了很多，觉得我们需要一个名字，让不知情的人听着人畜无害，从而迷惑敌人。所以我投「茶杯」一票。";
 "No shit. I want in on that action.": "废话。这种热闹我要参与。";
 "Great, you're just a voice in my head, that's way more reassurring. Look, Kinzie, I ain't armed. How 'bout getting me out?": "太好了，你只是我脑子里的一个声音，这让人安心多了。听着，金吉，我没带武器。把我弄出去怎么样？";
-"Sure, CID.": "好的，C.I.D.。";
+"Sure, CID.": "没问题，C.I.D.。";
 "But a crash would be a good thing, yes?": "但坠毁是件好事，对吧？";
 "Find the rhythm, find the beat!": "找到节奏，找到节拍！";
 "It'd make sense sense...": "那样就说得通了……";

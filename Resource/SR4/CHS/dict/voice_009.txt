@@ -561,7 +561,7 @@
 "Asha, about Matt...": "阿莎，关于马特……";
 "Yeah, I'm not feeling anything here.": "是啊，我在这边什么感觉都没有。";
 "How far away do I need to be?": "我得站多远？";
-"Oh man. This place. *BEEP* ME.": "哦天啊。这地方。*哔——*了我吧。";
+"Oh man. This place. *BEEP* ME.": "天哪。这地方。*哔*我。";
 "Manually?": "手动？";
 "*coughs*": "*咳嗽*";
 "I don't really sweat the details.": "我不太在意细节。";
@@ -734,7 +734,7 @@
 "You think?": "你觉得呢？";
 "Okay people, once we get there we get this thing unloaded and into the System as fast as we can, got it?": "好了各位，我们一到那儿就尽快把这东西卸下来送进系统，明白了吗？";
 "Shit, I don't think Pierce's own death is gonna break his stride.": "操，我觉得皮尔斯就算死了也不会停下脚步。";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得行动了。趴下快跑！";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "After this is all over, are you two gonna play nice?": "等这一切结束后，你俩会好好相处吗？";
 "Kinzie? Kinzie, where are you?": "金吉？金吉，你在哪？";
 "What is this, Kinzie?": "这是什么，金吉？";

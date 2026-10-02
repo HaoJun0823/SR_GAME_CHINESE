@@ -213,7 +213,7 @@
 "Neither could I.  Look, you can't blame-- what the hell?": "我也不能。听着，你不能怪——什么鬼？";
 "That's right, I'm the fuckin' President! Ha ha!": "没错，我就是该死的总统！哈哈！";
 "She's a professional spy, man. She doesn't say shit about shit.": "她是个职业特工，老兄。她什么也不说。";
-"JUST FIX IT.": "给我修好它。";
+"JUST FIX IT.": "赶紧修。";
 "The enemy light has been eradicated.": "敌方光源已被消灭。";
 "I think our contestant isn't paying attention down there...": "我看下面那位选手走神了……";
 "I set people on fire just by invading their personal space? Kinzie I could kiss you! But then you'd be set on fire...": "我只要侵入他们的个人空间就能让他们着火？金吉我真想亲你！但那样你也会着火……";
@@ -732,7 +732,7 @@
 "I'm at the... oh, no!": "我在……哦，不！";
 "STAGE TWO - COMPLETE!": "第二阶段——完成！";
 "Okay, I'm gonna be sick...": "好吧，我要吐了……";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得快走。趴下跑。";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "Ben's plan was to overload the simulation. We can still do that but not if the Zin know our every move.": "本的计划是让模拟超载。我们还能做到，但如果辛人知道我们的每一步就不行。";
 "All right, got another.": "好，又拿了一个。";
 "Why even ask?  That Shaundi's not real.": "还问什么？那个莎蒂不是真的。";

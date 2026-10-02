@@ -405,7 +405,7 @@
 "Dpad right": "Dpad right";
 "Enemy Gang": "敌对帮派";
 "Entry Only": "Entry Only";
-"FIGHT CLUB": "格斗俱乐部";
+"FIGHT CLUB": "搏击俱乐部";
 "Fight Club": "格斗俱乐部";
 "Film Grain": "胶片颗粒";
 "Fire Sweep": "Fire Sweep";
@@ -1024,7 +1024,7 @@
 "TEAM DESPAWN": "队伍消除";
 "TELEPORT CAR": "传送车辆";
 "TELEPORTS TO": "传送到";
-"TIGER ESCORT": "老虎护送";
+"TIGER ESCORT": "老虎护驾";
 "Tattoo Store": "纹身店";
 "Tentacle Bat": "触手棒";
 "Tree Shadows": "树木阴影";
@@ -1343,7 +1343,7 @@
 "Veh Collision": "Veh Collision";
 "Vehicle Group": "载具组";
 "Vehicle slots": "载具槽位";
-"WARP TO SHORE": "传送到岸边";
+"WARP TO SHORE": "传送回岸边";
 "Water volumes": "水体体积";
 "Weather Stage": "Weather Stage";
 "Zinyak Statue": "齐尼亚克雕像";
@@ -1585,7 +1585,7 @@
 "Fine Aim Stand": "精确瞄准站立";
 "Freefall Cover": "自由落体掩护";
 "Freeze Shatter": "Freeze Shatter";
-"GUARDIAN ANGEL": "守护天使";
+"GUARDIAN ANGEL": "天使护卫";
 "Gameplay Vsync": "Gameplay Vsync";
 "Gang, Friendly": "帮派，友好";
 "Genki complete": "源木完成";
@@ -1945,7 +1945,7 @@
 "HeroMatte Paint": "英雄哑光漆";
 "High Mip Weight": "High Mip Weight";
 "Hydraulics off.": "Hydraulics off.";
-"INSURANCE FRAUD": "保险欺诈";
+"INSURANCE FRAUD": "碰瓷索赔";
 "Infinite Sprint": "无限冲刺";
 "Interface slots": "Interface slots";
 "Invalid element": "Invalid element";

@@ -182,7 +182,7 @@
 "YOUR PARTNER WAS BUSTED": "你的搭档被逮捕";
 "Lights out, dude.": "哥们儿，灯灭了。";
 "Earn money by destroying targets, killing enemies, and exiting the arena before time runs out. If you destroy things in quick succession, you will earn a combo bonus.": "在时间耗尽前，通过摧毁目标、击杀敌人与撤离竞技场来赚钱。连续快速破坏可获得连击奖励。";
-"PROF. GENKI'S M.O.M.": "根子博士的M.O.M.";
+"PROF. GENKI'S M.O.M.": "源木博士的M.O.M.";
 "PROTECT THE [format][color:green]DEALER[/format] WHILE THEY MAKE THEIR DELIVERIES": "在[format][color:green]供货商[/format]送货时保护他们";
 "HELI ASSAULT LEVEL SELECTION": "武直突击关卡选择";
 "YOUR HOMIES HAVE DIED": "你的兄弟已经死了";
@@ -203,7 +203,7 @@
 "START TANK MAYHEM": "开始坦克大破坏";
 "WAITING FOR HOST TO PLACE ANY WAGER ON THE NEXT ROUND": "等待主机对下一轮下盘";
 "C.I.D. WAS ABANDONED.": "C.I.D.被遗弃。";
-"TOO MANY HOS DIED, RECRUIT THEM {RECRUIT_DISMISS_IMG} THEN QUICKLY FLEE THE SCENE": "太多女孩死了，招募她们 {RECRUIT_DI私享ISS_IMG} 然后迅速逃离现场";
+"TOO MANY HOS DIED, RECRUIT THEM {RECRUIT_DISMISS_IMG} THEN QUICKLY FLEE THE SCENE": "太多女孩死了，招募她们 {RECRUIT_DISMISS_IMG} 然后迅速逃离现场";
 "FRAUD PINBALL CAR RECORD": "碰瓷弹球车纪录";
 "AREA BONUS": "区域奖励";
 "FEAR": "恐惧";
@@ -294,7 +294,7 @@
 "DROP [format][color:green]LIN[/format] [format][color:blue]OFF[/format]": "让[format][color:green]琳[/format][format][color:blue]下车[/format]";
 "START SNATCH": "开始拐人救美";
 "KILL THE [format][color:red]COPS[/format] AND RESCUE THE [format][color:green]CONTACTS[/format]": "击杀[format][color:red]警察[/format]并救出[format][color:green]联络人[/format]";
-"A [format][color:red]DECKER[/format] IS GRABBING ONE OF THE [format][color:green]CONTACTS[/format], GET THEM BACK!": "一名[format][color:red]迪克帮[/format]成员正抓走一名[format][color:green]联络人[/format]，把人抢回来！";
+"A [format][color:red]DECKER[/format] IS GRABBING ONE OF THE [format][color:green]CONTACTS[/format], GET THEM BACK!": "一名[format][color:red]赛博帮[/format]成员正抓走一名[format][color:green]联络人[/format]，把人抢回来！";
 "Get %.2f seconds of air time": "获得 %.2f 秒滞空时间";
 "ENTER %ls": "进入%ls";
 "SILVER CONNECTION": "银级联络";
@@ -311,7 +311,7 @@
 "START MAYHEM": "开始大破坏";
 "UNDERCOVER STING!  RESCUE THE [format][color:green]DEALER[/format] FROM THE COPS!": "卧底行动！从警察手里救出[format][color:green]供货商[/format]！";
 "DRIVE THE [format][color:green]DEALER[/format] TO THE CLIENTS": "开车把[format][color:green]供货商[/format]送到客户处";
-"IT'S A TRAP! KILL ALL [format][color:red]DECKERS[/format] BEFORE RECRUITING THE [format][color:green]CONTACTS[/format].": "这是个陷阱！招募[format][color:green]联络人[/format]前先杀光[format][color:red]迪克帮[/format]。";
+"IT'S A TRAP! KILL ALL [format][color:red]DECKERS[/format] BEFORE RECRUITING THE [format][color:green]CONTACTS[/format].": "这是个陷阱！招募[format][color:green]联络人[/format]前先杀光[format][color:red]赛博帮[/format]。";
 "TIME LEFT": "剩余时间";
 "SET CHARGES TO DESTROY THIS [format][color:blue]STRUCTURE[/format]": "安放炸药摧毁这座[format][color:blue]建筑[/format]";
 "LIN WAS KILLED": "琳被击杀";
@@ -326,10 +326,10 @@
 "ADRENALINE:": "肾上腺素：";
 "DESTABILIZE THE RIFT": "使裂缝失稳";
 "GOLD CONNECTION": "金级联络";
-"PROF. GENKI'S M.O.M.": "根子博士的M.O.M.";
+"PROF. GENKI'S M.O.M.": "源木博士的M.O.M.";
 "WOULD YOU LIKE TO BET YOU CURRENT WINNINGS FOR DOUBLE OR NOTHING ON THE NEXT LEVEL?\n\nFINISH THE NEXT LEVEL SUCCESSFULLY, AND DOUBLE YOUR MONEY!!!  JUST DON'T MESS IT UP OR YOU'LL WALK AWAY WITH NOTHING.\n\nWHAT DO YOU SAY?": "要在下一关拿你目前的赢款拼一把翻倍或清零吗？\n\n成功通关下一关，你的钱就翻倍！！！只要别搞砸，否则你将两手空空地离开。\n\n你意下如何？";
 "THE DEALER WAS ARRESTED": "货主被捕了";
-"YOU UNCOVERED A TRAP! KILL ALL THE [format][color:red]DECKERS[/format] BEFORE RECRUITING THE [format][color:green]CONTACTS[/format].": "你发现了陷阱！招募[format][color:green]联络人[/format]前先杀光[format][color:red]迪克帮[/format]。";
+"YOU UNCOVERED A TRAP! KILL ALL THE [format][color:red]DECKERS[/format] BEFORE RECRUITING THE [format][color:green]CONTACTS[/format].": "你发现了陷阱！招募[format][color:green]联络人[/format]前先杀光[format][color:red]赛博帮[/format]。";
 "ONE OF YOUR HOS DIED, YOU'LL NEED ANOTHER": "你的一个女孩死了，你还需要再找一个";
 "LINEAR DISTANCE BONUS": "直线距离奖励";
 "BRONZE DAMAGE": "铜级伤害";
@@ -356,7 +356,7 @@
 "PROTECT [format][color:green]C.I.D.[/format]": "保护[format][color:green]C.I.D.[/format]";
 "STOP THE [format][color:red]VEHICLE[/format] AND GET THE [format][color:green]HOS[/format]": "拦下[format][color:red]载具[/format]并接回[format][color:green]风尘女[/format]";
 "YOU UNCOVERED A TRAP! RECRUIT THE [format][color:green]CONTACTS[/format] AND GET AWAY.": "你发现了陷阱！招募[format][color:green]联络人[/format]并撤离。";
-"KILL THE [format][color:red]DECKERS[/format] AND RESCUE THE [format][color:green]CONTACT[/format]": "击杀[format][color:red]迪克帮[/format]并救出[format][color:green]联络人[/format]";
+"KILL THE [format][color:red]DECKERS[/format] AND RESCUE THE [format][color:green]CONTACT[/format]": "击杀[format][color:red]赛博帮[/format]并救出[format][color:green]联络人[/format]";
 "OBJECTIVES COMPLETED": "已完成目标";
 "You ran out of time.": "你时间用完了。";
 "You ran out of time.": "你时间用完了。";
@@ -576,10 +576,10 @@
 "FRONT BUMPER MODS": "前保险杠改装";
 "ACID HOUSE RINGS": "迷幻浩室戒指";
 "RED ORANGE 8": "红橙 8";
-"ASIAN 2": "亚洲 2";
+"ASIAN 2": "亚裔 2";
 "STRAIGHT LEG CLASSICS": "直筒经典裤";
 "3RD STREET KNIGHT": "第三街骑士";
-"ASIAN": "亚洲";
+"ASIAN": "亚裔";
 "PAIN": "痛苦";
 "SUPER PANDA": "超级熊猫";
 "WASHED UP ROCKER T": "过气摇滚 T 恤";
@@ -587,7 +587,7 @@
 "NINJA2 GLOVES": "忍者2型手套";
 "RANSOM COLLECTOR": "赎金收缴者";
 "Murder time, fun time!": "杀戮时刻，欢乐时光！";
-"CAUCASIAN 3": "高加索 3";
+"CAUCASIAN 3": "白人 3";
 "FRENCH BRAID": "法式辫";
 "WINGS": "羽翼";
 "FRONT SPINNERS": "前转轮毂";
@@ -750,7 +750,7 @@
 "MURDERBRAWL WRAPS": "混战格斗缠手带";
 "WAKE AND BAKE": "起床烘焙";
 "DRESSED TO IMPRESS": "盛装出席";
-"DECKER KING PANTS": "迪克帮王者长裤";
+"DECKER KING PANTS": "赛博帮王者长裤";
 "THE SUPERHERO": "超级英雄发型";
 "ELECTRO DJ": "电音 DJ";
 "WINGS": "羽翼";
@@ -801,7 +801,7 @@
 "You have reached the maximum number of items allowed in your wardrobe.": "你的衣柜已达到可存放物品的数量上限。";
 "BED MODS": "货箱改装";
 "DOUBLE PIERCED": "双耳洞";
-"DECKER HEADPHONES": "迪克帮耳机";
+"DECKER HEADPHONES": "赛博帮耳机";
 "HARSH LINER": "凌厉眼线";
 "DISINTEGRATOR": "瓦解者";
 "CHIN": "下巴";
@@ -817,7 +817,7 @@
 "RIM SET 6": "轮辋套组 6";
 "MORNINGSTAR SPECIALIST EYEGLASSES": "晨星帮专家眼镜";
 "PRINCESS PURPLE": "公主紫";
-"SILVER": "银";
+"SILVER": "银色";
 "STEELPORT HERO": "钢埠英雄";
 "TWIN SERPENTS": "双蛇";
 "EYE FOLDS HEIGHT": "眼褶高度";
@@ -903,7 +903,7 @@
 "TOILET": "马桶";
 "DARK MAIDEN": "暗黑少女";
 "FREE THROW SHORTS": "罚球短裤";
-"DECKER KING JACKET": "迪克帮王者夹克";
+"DECKER KING JACKET": "赛博帮王者夹克";
 "YELLOW ORANGE 5": "黄橙 5";
 "CANDY CANE": "糖果手杖";
 "BRETON GREEN": "布列塔尼绿";
@@ -1108,7 +1108,7 @@
 "Selecting this preset will discard your current settings.\nAre you sure you want to do this?": "选择此预设将放弃你当前的设置。\n确定要这么做吗？";
 "SPACE PRINCESS TIGHTS": "太空公主打底裤";
 "Allows the weapon to fire more before its charge is depleted": "使武器在耗尽蓄能前能多开几枪";
-"Zinyak's favorite color": "津亚克最爱的颜色";
+"Zinyak's favorite color": "齐尼亚克最爱的颜色";
 "UPPER CHEST": "上胸";
 "BONDAGE PANTS": "束缚裤";
 "BLOCK BOOTS": "方块靴";
@@ -1156,7 +1156,7 @@
 "NOSTRIL WIDTH": "鼻孔宽度";
 "ENTIRE CHEST": "整片胸膛";
 "SHOOT 'EM UP T": "突突射击 T 恤";
-"SILVER": "银";
+"SILVER": "银色";
 "BLUE LIGHT TINT": "淡蓝染";
 "SPIDER BITE": "蜘蛛咬痕";
 "ANTENNA": "天线";
@@ -1294,13 +1294,13 @@
 "BUG EYES": "虫眼";
 "MONO GLASSES": "单眼镜";
 "LEFT FOREARM": "左前臂";
-"CAUCASIAN 2": "高加索 2";
+"CAUCASIAN 2": "白人 2";
 "MODERN SOLDIER HELMET": "现代士兵头盔";
 "POTATO GUN": "土豆炮";
 "LOVE BITE": "爱痕";
 "RED ORANGE 9": "红橙 9";
 "WHOLE LEFT ARM": "整个左臂";
-"ASIAN 3": "亚洲 3";
+"ASIAN 3": "亚裔 3";
 "HYDRAULICS": "液压系统";
 "JOYSTICK JUNKIES HOT SAINT": "摇杆成瘾者·火辣圣徒";
 "STEELPORT FIGHTER GLOVES": "钢埠斗士手套";
@@ -1783,7 +1783,7 @@
 "MR. PRESIDENT": "总统先生";
 "BEATEN": "鼻青脸肿";
 "EYEWEAR": "眼镜";
-"ASIAN 4": "亚洲 4";
+"ASIAN 4": "亚裔 4";
 "EYES": "眼睛";
 "EYELINER": "眼线";
 "MISCELLANEOUS": "其他";
@@ -1801,7 +1801,7 @@
 "FAUXHAWK": "仿鹰冠头";
 "BLUE 8": "蓝色 8";
 "LEVER-ACTION": "杠杆式";
-"CAUCASIAN 5": "高加索 5";
+"CAUCASIAN 5": "白人 5";
 "EXIT": "退出";
 "TORQUE": "扭矩";
 "JOYSTICK JUNKIES CODE CONTROL": "摇杆狂魔密令服";
@@ -1870,13 +1870,13 @@
 "SAINTS CAP": "圣徒帽";
 "UNDERGLOW COLOR": "底盘灯颜色";
 "TEAL DARK TINT": "深青染";
-"NUDE": "天体";
+"NUDE": "裸奔";
 "PENETRATING SHOTS": "穿透射击";
 "For hitting screwballs": "专治各路疯子";
 "TINT": "染色";
 "ROAD HOG": "公路霸王";
 "CARDINAL HAT": "红衣主教帽";
-"DECKER HOODIE": "迪克帮连帽衫";
+"DECKER HOODIE": "赛博帮连帽衫";
 "HERO SHIRT": "英雄衬衫";
 "HORSE MASK": "马面具";
 "FREE LOVE": "自由之爱";
@@ -2035,7 +2035,7 @@
 "OVERPLUCKED": "拔过度";
 "ENTIRE LEFT ARM": "整个左臂";
 "TEXTURED AFRO": "蓬松爆炸头";
-"DECKER KING SHOES": "迪克帮王者鞋";
+"DECKER KING SHOES": "赛博帮王者鞋";
 "EYES": "眼睛";
 "EAR WIDTH": "耳朵宽度";
 "THE JENKINS": "詹金斯";
@@ -2279,7 +2279,7 @@
 "BIGGER BOW": "更大蝴蝶结";
 "BLUSHING BRIDE": "羞涩新娘";
 "GREY 7": "灰色 7";
-"OILED CAUCASIAN 1": "油光高加索 1";
+"OILED CAUCASIAN 1": "油光白人 1";
 "BLUSH GRAY": "羞红灰";
 "SPACE PRINCESS OUTFIT": "太空公主套装";
 "QUIFF": "飞机头";
@@ -2438,7 +2438,7 @@
 "BRIGHT PINK": "亮粉";
 "JUMPS": "跳跃鞋";
 "JAW HEIGHT": "下颌高度";
-"ASIAN 5": "亚洲 5";
+"ASIAN 5": "亚裔 5";
 "DECAL 9": "贴花 9";
 "TINT 80%%": "染色 80%%";
 "THE BROTHERHOOD": "兄弟会";
@@ -2557,13 +2557,13 @@
 "Simple. Straightforward. Lethal.": "简单。直接。致命。";
 "If you're going to erase someone from existence, do it in style.": "既然要让人从世上消失，那就优雅地消失。";
 "EARS": "耳朵";
-"MAERO MULLET": "马罗鲻鱼头";
+"MAERO MULLET": "梅罗鲻鱼头";
 "FLEUR DE SAINTS HOODIE": "圣徒花连帽衫";
 "DOUBLE FRENCH BRAID": "双法式辫";
 "J7 ROCKET LAUNCHER": "J7火箭发射器";
 "DISCO MAN HEELS": "迪斯科男跟鞋";
 "FORGED": "锻造款";
-"ASIAN 1": "亚洲 1";
+"ASIAN 1": "亚裔 1";
 "GANGSTERS IN SPACE SUIT": "太空黑帮太空服";
 "FUNTIME! TOP": "欢乐时光！上衣";
 "FLEUR DE SAINTS": "圣徒花";
@@ -2685,7 +2685,7 @@
 "SAFEWORD BOOTS": "暗号靴";
 "REDHEAD": "红发";
 "Bling that bounce, playa!": "会弹跳的bling，老铁！";
-"FLAMETHROWER": "喷火器";
+"FLAMETHROWER": "火焰喷射器";
 "AUTUMN WOOD BROWN": "秋木棕";
 "MYSTERY MAN T": "神秘人 T恤";
 "ARMOR PIERCING AMMO": "穿甲弹药";
@@ -2821,7 +2821,7 @@
 "MOLE 3": "痣 3";
 "DEEP POCK MARKS": "深麻点";
 "DUBSTEP GUN": "回响贝斯枪";
-"CAUCASIAN": "高加索";
+"CAUCASIAN": "白人";
 "ZOMBIE PANTS": "丧尸长裤";
 "Increases the weapon's accuracy": "提升武器精准度";
 "V.I.P. WATCH": "贵宾腕表";
@@ -2915,7 +2915,7 @@
 "POP THE CHERRIES": "破樱桃";
 "Once a Saint, always a Saint.": "一日圣徒，终身圣徒。";
 "INFLATO-RAY": "充气射线";
-"ASIAN": "亚洲";
+"ASIAN": "亚裔";
 "SO DEVILISH SWIM BOTTOM": "恶魔泳裤";
 "FACE PIERCINGS": "面部穿刺";
 "ENTIRE RIGHT LEG": "整个右腿";
@@ -3073,7 +3073,7 @@
 "CHERRY ON TOP": "锦上樱桃";
 "RELOAD SPEED": "换弹速度";
 "WHEATFIELD YELLOW": "麦田黄";
-"DECKER KING": "迪克帮王者";
+"DECKER KING": "赛博帮王者";
 "SAMURAI HELMET": "武士头盔";
 "DESERT DWELLER ROBE": "沙漠居民长袍";
 "GREY 6": "灰色 6";
@@ -3092,7 +3092,7 @@
 "Go to indicated location, steal the Target Vehicle [image: ui_saintsbook_vehicle], then return it to the start point": "前往指定地点，偷取目标载具[image: ui_saintsbook_vehicle]，然后将其开回起点";
 "FRAGMENTS COLLECTED": "已收集碎片";
 "Go to the location then wait for the TARGET to appear. \nDestroy the Test Visual to create rendering glitches.": "前往该地点，然后等待目标出现。\n摧毁测试画面以制造渲染故障。";
-"All levels of Streaking Diversion Completed!": "天体即时挑战全部关卡完成！";
+"All levels of Streaking Diversion Completed!": "裸奔即时挑战全部关卡完成！";
 "COMPLETED": "已完成";
 "%s'S SCORE:": "%s的分数：";
 "TANK KILL": "坦克击杀";
@@ -3123,7 +3123,7 @@
 "TARGET ELIMINATED": "目标已消灭";
 "CHAPTER": "章节";
 "KILLS:": "击杀：";
-"Streaking level %d complete!  Earned {GAME_CASH}%.0f": "天体关卡 %d 完成！获得 {GAME_CASH}%.0f";
+"Streaking level %d complete!  Earned {GAME_CASH}%.0f": "裸奔关卡 %d 完成！获得 {GAME_CASH}%.0f";
 "RECORD CAR TORPEDO DAMAGE": "人肉鱼雷伤害纪录";
 "BEAT DOWN": "痛扁";
 "VIRUS COLLECTION": "病毒收集";
@@ -3140,7 +3140,7 @@
 "Chop Shop contract accepted. Once you finish your current mission or activity, GPS will enable.": "已接受拆车坊委托。完成当前任务或活动后，GPS 将启用。";
 "Go to the location then wait for the TARGET to appear. \nDestroy this Security Program to damage the system.": "前往该地点，然后等待目标出现。\n摧毁这个安全程序以破坏系统。";
 "DO THE %ls %ls": "来一套 %ls %ls";
-"Streaking level %d complete!  Earned %d [format][color:purple]XP[/format].": "天体关卡 %d 完成！获得 %d [format][color:purple]XP[/format]。";
+"Streaking level %d complete!  Earned %d [format][color:purple]XP[/format].": "裸奔关卡 %d 完成！获得 %d [format][color:purple]XP[/format]。";
 "DIVERSION FAILED": "即时挑战失败";
 "THEIR SCORE:": "他们的得分：";
 " {ATTACK_PRIMARY_IMG} TO REVIVE IN CAT & MOUSE DIVERSION": " {ATTACK_PRIMARY_IMG} 在猫鼠游戏娱乐活动中复活";
@@ -3149,7 +3149,7 @@
 "LOCATIONS FOUND": "发现的地点";
 "YOU KILLED %ls!": "你击杀了 %ls！";
 "VIRUS COLLECTION": "病毒收集";
-"MAERO AUDIO LOGS": "马罗音频日志";
+"MAERO AUDIO LOGS": "梅罗音频日志";
 "ZINNIMDA": "齐宁达";
 "{ANALOG_LS_IMG} TO BALANCE YOURSELF ON THE VEHICLE": "{ANALOG_LS_IMG} 在载具上保持平衡";
 "HOSTAGE ESCAPED": "人质逃脱";
@@ -3193,7 +3193,7 @@
 "VICE PRESIDENT AUDIO LOGS": "副总统音频日志";
 "TANYA AUDIO LOGS": "塔尼娅音频日志";
 "WINDSHIELD CANNON": "挡风玻璃炮";
-"STREAKING": "天体";
+"STREAKING": "裸奔";
 "RECORD NEAR CRASH DISTANCE": "纪录：近撞距离";
 "All the hostages got away.": "所有人质都逃走了。";
 "BURNOUT": "烧胎";
@@ -3205,7 +3205,7 @@
 "Return the Vehicle [image: ui_saintsbook_vehicle] to the indicated location in one piece to collect the Virus code from it.": "将载具[image: ui_saintsbook_vehicle]完好无损地开回指定地点，以从中获取病毒代码。";
 "S.T.A.G.": "S.T.A.G.";
 "VEHICLE SURFING": "载具冲浪";
-"Streak closely to as many people as possible!": "尽可能贴着更多人天体！";
+"Streak closely to as many people as possible!": "尽可能贴着更多人裸奔！";
 "The target vehicle was destroyed!": "目标车辆被摧毁了！";
 "VIRUS COLLECTED!": "病毒已收集！";
 "VEHICLE MOD SPENDING": "载具改装花费";
@@ -3292,7 +3292,7 @@
 "SUNSET PARK": "落日公园";
 "WINDSHIELD CANNON": "挡风玻璃炮";
 "RECORD HANDSTAND": "倒立纪录";
-"HOLD %ls TO START STREAKING": "按住 %ls 开始天体";
+"HOLD %ls TO START STREAKING": "按住 %ls 开始裸奔";
 "POWERSLIDE": "动力漂移";
 "CHOP SHOP": "拆车坊";
 "DIVERSION CANCELED": "即时挑战已取消";
@@ -3309,7 +3309,7 @@
 " {ATTACK_SECONDARY_IMG} TO REVIVE IN DEATH TAG DIVERSION": " {ATTACK_SECONDARY_IMG} 在死亡标记娱乐活动中复活";
 "[format][color:location]RETURN[/format] VEHICLE": "[format][color:location]归还[/format]载具";
 "Go to indicated hood, find and steal the Target Vehicle [image: ui_saintsbook_vehicle], then return it to the start point": "前往指定街区，找到并偷取目标载具[image: ui_saintsbook_vehicle]，然后将其开回起点";
-"Go to the location then wait for the TARGET to appear. \nKill Maero to be able to spawn him as a Saints Homie.": "前往该地点，然后等待目标出现。\n击杀马罗，即可将其作为圣徒兄弟生成。";
+"Go to the location then wait for the TARGET to appear. \nKill Maero to be able to spawn him as a Saints Homie.": "前往该地点，然后等待目标出现。\n击杀梅罗，即可将其作为圣徒兄弟生成。";
 "START SECURITY DELETION": "开始安全删除";
 "AIRPORT": "机场";
 "NEAR CRASH": "贴地险飞";
@@ -3351,7 +3351,7 @@
 "It's going to destroy the city!": "它会摧毁城市！";
 "USE [format][color:use]DEVICE[/format]": "使用 [format][color:use]装置[/format]";
 "ULTIMATE HOT POTATO": "终极烫手山芋";
-"FLAMETHROWER": "喷火器";
+"FLAMETHROWER": "火焰喷射器";
 "PIRATE'S BOOTY PACK": "海盗掠夺包";
 "My Hand. My heart. My Kingdom. All belongs to you.": "我的手。我的心。我的王国。全都属于你。";
 "Are you serious?": "你认真的？";
@@ -3435,7 +3435,7 @@
 "What the hell? Who is that? More Zin?": "什么鬼？那是谁？更多齐人？";
 "GO TO [format][color:location]SHAUNDI[/format]": "前往 [format][color:location]香蒂[/format]";
 "DEFEAT [format][color:kill]DOMINATRIX[/format]": "击败 [format][color:kill]女王[/format]";
-"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]津亚克[/format] 战斗";
+"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]齐尼亚克[/format] 战斗";
 "SHAUNDI DIED!": "肖恩蒂阵亡！";
 "Totally.": "完全同意。";
 "I think there must have been like 4 escort missions in a row.": "我记得好像连续有四个护送任务。";
@@ -4451,7 +4451,7 @@
 "VOICE CHAT": "语音聊天";
 "FEET": "英尺";
 "The Full Kinzie": "全金吉";
-"STREAKING": "天体";
+"STREAKING": "裸奔";
 "Use your Stomp power to destroy everything!": "使用你的践踏能力摧毁一切！";
 "All followers get a 30%% health increase": "所有随从生命值提升 30%%";
 "URINAL": "小便池";
@@ -4575,7 +4575,7 @@
 "{0}SILVER[/format] {1}": "{0}银色[/format] {1}";
 "CLOTHING STORES": "服装店";
 "BONUS - XP 2": "奖励 - 经验值 2";
-"PROF. GENKI'S M.O.M.": "根子博士的M.O.M.";
+"PROF. GENKI'S M.O.M.": "源木博士的M.O.M.";
 "OUTFIT - UNCLE SAM SUIT": "服装 - 山姆大叔套装";
 "This Stronghold is yours!\nCustomize and Upgrade it at the 'Burns Hill Reactors' Crib to extend the Saints control and receive huge upgrade bonuses.": "这个根据地归你了！\n在伯恩斯山核反应堆据点进行自定义与升级，拓展圣徒的势力范围并获取丰厚升级奖励。";
 "Minor reduction in damage taken from falls.": "从坠落中受到的伤害小幅降低。";
@@ -4853,7 +4853,7 @@
 "Watch from the air as you direct a missile to it's exact target.": "在空中盯着导弹一路飞向它命中注定的目标。";
 "Didn't Need to See Him Naked": "不想看他裸体";
 "GENKI MOBILE": "元气战车";
-"{DPAD_DOWN_IMG} to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "{DPAD_DOWN_IMG} 开始天体。\n不穿任何衣物时，天体活动可用。";
+"{DPAD_DOWN_IMG} to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "{DPAD_DOWN_IMG} 开始裸奔。\n不穿任何衣物时，裸奔活动可用。";
 "%ls ADDED TO YOUR GARAGE": "%ls 已存入你的车库";
 "Equip the Reaper Drone Weapon at your Crib Weapon Cache.": "在你的据点武器库装备死神无人机武器。";
 "Hourly Cache Transfer of {game_cash}500": "每小时缓存转入 {game_cash}500";
@@ -4935,7 +4935,7 @@
 "Recruit Two Saint followers. Press {RECRUIT_DISMISS_IMG}  to recruit nearby Saints.": "招募两名圣徒兄弟。按 {RECRUIT_DISMISS_IMG}  招募附近的圣徒。";
 "MELEE - POWER 3": "近战 - 威力 3";
 "Call in a squad of Super Saints to back you up.": "呼叫一队超级圣徒前来支援。";
-"Use TK [image:ui_hud_gsi_obj_tele] to throw explosive CIDs at Zinyak.": "使用念力 [image:ui_hud_gsi_obj_tele] 向津亚克投掷爆裂 CID。";
+"Use TK [image:ui_hud_gsi_obj_tele] to throw explosive CIDs at Zinyak.": "使用念力 [image:ui_hud_gsi_obj_tele] 向齐尼亚克投掷爆裂 CID。";
 "You now have a set of Watercraft available at your Gateway Garage": "你的门户车库现已提供一批水上载具";
 "Saints Backup can be found in your HUB \\\"PHONE\\\" menu. Saints will arrive to help in combat": "在你的HUB\"手机\"菜单中可以找到圣徒后援。圣徒会赶来战斗支援";
 "You now receive a 15%% bonus to all Respect earned for upgrading the Nuke Plant crib.": "升级伯恩斯山核反应堆据点后，你获得的所有声望额外增加 15%%";
@@ -5194,7 +5194,7 @@
 "HR": "小时";
 "CAR CONTROLS": "载具操控";
 "HEALTH - UPGRADE 2": "生命 - 升级 2";
-"Decker vehicles are available at your Gateway Garage": "你的门户车库现已提供迪克帮载具";
+"Decker vehicles are available at your Gateway Garage": "你的门户车库现已提供赛博帮载具";
 "Viola can be found in your Cell Phone \\\"PHONE\\\" menu. She will help the Saints in combat.": "在你的手机\"手机\"菜单中可以找到薇奥拉。她会在战斗中帮助圣徒。";
 "OBJECTIVE": "目标";
 "YOU CAN'T STORE THAT KIND OF VEHICLE HERE": "你不能在这里存放这种载具";
@@ -5494,7 +5494,7 @@
 "ASHWOOD": "灰木区";
 "CONFIRMING START WITH %ls": "确认开局：%ls";
 "Purchase Upgrades to make you, your cars, and your gang better, stronger, and more deadly.": "购买升级，让你、你的座驾与你的帮派变得更强、更硬、更致命。";
-"STREAKING": "天体";
+"STREAKING": "裸奔";
 "Cause widespread carnage with the weapons provided.": "用提供的武器制造一场大范围混战。";
 "NOTORIETY - ALIEN 3": "通缉度 - 外星 3";
 "GANG CUSTOMIZATION": "帮派自定义";
@@ -5584,13 +5584,13 @@
 "'MERICA": "美利坚";
 "BEHEMOTH": "巨兽";
 "UPGRADE STORE": "升级商店";
-"Race through Cyberspace hitting [format][color:blue]Decker targets[/format] while avoiding [format][color:red]Firewalls[/format] before the time runs out.": "在赛博空间中竞速，在时间耗尽前击中 [format][color:blue]迪克帮目标[/format]，同时避开 [format][color:red]防火墙[/format]。";
+"Race through Cyberspace hitting [format][color:blue]Decker targets[/format] while avoiding [format][color:red]Firewalls[/format] before the time runs out.": "在赛博空间中竞速，在时间耗尽前击中 [format][color:blue]赛博帮目标[/format]，同时避开 [format][color:red]防火墙[/format]。";
 "HOMIE - TANK": "兄弟 - 坦克";
 "HOMIE - JOSH BIRK": "兄弟 - 乔什·伯克";
 "Maximize the length of the Stamina bar.": "将耐力条长度增至最大。";
 "Repair Homie can be found in your Cell Phone \\\"PHONE\\\" menu. He will repair your current vehicle.": "在你的手机\"手机\"菜单中可以找到维修伙计。他会修理你当前的载具。";
 "Your City Income Transfer Limit is increased for upgrading the Nuke Plant crib.": "升级伯恩斯山核反应堆据点后，你的城市收入转账上限提升。";
-"ZINYAK": "津亚克";
+"ZINYAK": "齐尼亚克";
 "Double Team": "双人夹击";
 "{ACTION_IMG} THROW SHIELD": "{ACTION_IMG} 投掷人盾";
 "Cause widespread carnage by throwing balls.": "投掷球弹制造大范围杀戮。";
@@ -5840,7 +5840,7 @@
 "CHARACTER GALLERY": "角色图鉴";
 "NO PROFILE DETECTED": "未检测到档案";
 "INVERT AIM LEFT/RIGHT": "反转瞄准 左/右";
-"SILVER": "银";
+"SILVER": "银色";
 "You Are Currently Logged In": "你目前已登录";
 "TAKEOVER ASSIST": "接管协助";
 "LOCKED": "已锁定";
@@ -6177,7 +6177,7 @@
 "This menu can not be accessed while your partner is joining the game. Please try again when your partner has finished joining.": "队友正在加入游戏时无法访问此菜单。请等队友加入完毕后再试。";
 "Complete Optional Quests to Unlock this Element": "完成支线任务以解锁此属性";
 "You currently own {0}%%% of this hood. Taking over this hood will complete remaining activities, gang operations and purchase all properties. Are you sure?": "你目前拥有该街区的 {0}%%%。占领该街区将完成剩余活动、帮派行动并买下所有产业。确定吗？";
-"FIGHT CLUB": "格斗俱乐部";
+"FIGHT CLUB": "搏击俱乐部";
 "LOAD SUCCESSFUL": "读取成功";
 "SPRINT": "冲刺";
 "Enter the two digits of your birth year.": "输入出生年份的两位数字。";
@@ -6306,7 +6306,7 @@
 "UNAVAILABLE DUE TO NOTORIETY": "恶名太高，暂不可用";
 "NORMAL": "普通";
 "TRANSFERRING": "转账中";
-"SELECT BLAST": "选择爆破";
+"SELECT BLAST": "选择冲击波";
 "[Reward]": "[奖励]";
 "One way to get money and Respect in Steelport is to go big or go home.  It's not much to kill 1 brute, but kill 50 and people will notice.  Complete Challenges by doing something repeatedly and see what you can earn.": "在钢埠获取金钱与声望的方法之一，就是要么放手一搏，要么回家睡觉。击杀 1 个蛮兵不算什么，但击杀 50 个就会引人注目。通过反复完成某事来达成挑战，看看你能赢得什么。";
 "Invalid Save Game Version": "无效的存档版本";
@@ -6412,7 +6412,7 @@
 "XP": "经验值";
 "You must select a Storage Device to save or load a game. Select a Storage Device?": "要保存或读取游戏，你必须选择存储设备。是否选择存储设备？";
 "IMPRISONED": "锒铛入狱";
-"BACK": "背后";
+"BACK": "返回";
 "Are you sure you want to quit Saints Row?": "确定要退出《黑道圣徒》吗？";
 "CIVILIAN": "平民";
 "ALL DOWNLOADABLE CONTENT": "全部下载内容";
@@ -6468,7 +6468,7 @@
 "A password must consist of 6 to 16 characters.": "密码必须由 6 至 16 个字符组成。";
 "MUSIC": "音乐";
 "NITROUS": "氮气";
-"SILVER": "银";
+"SILVER": "银色";
 "Connect to your Silverlink account.": "连接到你的 Silverlink 账户。";
 "NEW ELEMENTS": "新属性";
 "A network connection is needed to access this feature.": "访问此功能需要网络连接。";
@@ -6558,7 +6558,7 @@
 "PLAYLIST": "播放列表";
 "STATION SELECTION": "选择电台";
 "JAPAN": "日本";
-"HUB MENU": "中枢菜单";
+"HUB MENU": "中心枢纽菜单";
 "CONTINUE WITHOUT SAVING": "不保存继续";
 "Desired Username": "想要的用户名";
 "Account not activated.": "账户未激活。";
@@ -6859,7 +6859,7 @@
 "CARJACK THE DATA": "抢走数据";
 "GO TO [format][color:location]THE BROKEN SHILLELAGH[/format]": "前往 [format][color:location]断杖酒馆[/format]";
 "Not only did I sample the goods at Zinkar's shoppe but I spent a summer there sweeping the floor, tending the counter, and even learning a bit of the culinary arts. I took to baking with zeal. Clients enjoyed my baked goods and I became known throughout Zinshire for my:": "我不仅在津卡尔的店里尝过货，还在那里度过一个夏天——扫地、看柜台，甚至学了点烹饪手艺。我满怀热忱地投入烘焙。客人们喜欢我的点心，我因此在辛郡以：";
-"WIN ZINYAK'S FAVORITE GAME SHOW": "赢下津亚克最爱的游戏节目";
+"WIN ZINYAK'S FAVORITE GAME SHOW": "赢下齐尼亚克最爱的游戏节目";
 "INITIALIZE VIRUS INJECTION": "启动病毒注入";
 "HACK [format][color:Location]RIM JOBS[/format]": "入侵 [format][color:Location]边缘工坊[/format]";
 "DECOY HELICOPTER DESTROYED!": "诱饵直升机被击毁！";
@@ -7081,8 +7081,8 @@
 "TELEKINESIS RIFT": "念力裂隙";
 "SUPERCOMPUTER DESTROYED!\nUSE THE MACHINE GUN {TANK_FIRE_PRIMARY_IMG} TO SAFELY DESTROY IT'S TIRES.": "超级计算机已摧毁！\n使用机枪 {TANK_FIRE_PRIMARY_IMG} 来安全摧毁它的轮胎。";
 "GO TO [format][color:LOCATION]ROOFTOP[/format]": "前往 [format][color:LOCATION]屋顶[/format]";
-"KILL [format][color:Location]MAERO[/format]": "击杀 [format][color:Location]马罗[/format]";
-"KILL (ASSASSINATE MAERO)": "击杀（暗杀马罗）";
+"KILL [format][color:Location]MAERO[/format]": "击杀 [format][color:Location]梅罗[/format]";
+"KILL (ASSASSINATE MAERO)": "击杀（暗杀梅罗）";
 "HOMIE ABANDONED!\nTHE SAINTS NEED TO STICK TOGETHER!": "兄弟被抛弃了！\n圣徒必须团结一致！";
 "GO TO [format][color:location]PRESS CONFERENCE[/format]": "前往 [format][color:location]新闻发布会[/format]";
 "[format][color:blue]THE HIGH ROAD[/format]": "[format][color:blue]正道[/format]";
@@ -7296,7 +7296,7 @@
 "BACK BY POPULAR DEMAND": "应众要求回归";
 "GO TO [format][color:location]MIND OVER MURDER[/format]": "前往 [format][color:location]心智胜杀戮[/format]";
 "CONQUERING WORLDS": "征服世界";
-"Thus ends my years as a plucky child. Next we meet, I shall regale you with the tale of Zinyak, the young man.": "我作为无畏孩童的岁月就此落幕。下次相见，我将向你娓娓道来青年津亚克的故事。";
+"Thus ends my years as a plucky child. Next we meet, I shall regale you with the tale of Zinyak, the young man.": "我作为无畏孩童的岁月就此落幕。下次相见，我将向你娓娓道来青年齐尼亚克的故事。";
 "HACK [format][color:Location]FRIENDLY FIRE[/format]": "入侵 [format][color:Location]友军误击[/format]";
 "MEET FUN SHAUNDI ON THE SHIP": "在飞船上会见俏皮肖恩蒂";
 "MYSTERIOUS CALLER": "神秘来电者";
@@ -7307,7 +7307,7 @@
 "CREAM PUFFS": "奶油泡芙";
 "COMPLETE [format][color:Location]VIRUS INJECTION[/format]": "完成 [format][color:Location]病毒注入[/format]";
 "UPLOAD [format][color:Location]VIRUS[/format]": "上传 [format][color:Location]病毒[/format]";
-"KILL [format][color:kill]MAERO[/format]": "击杀 [format][color:kill]马罗[/format]";
+"KILL [format][color:kill]MAERO[/format]": "击杀 [format][color:kill]梅罗[/format]";
 "The good doctor's work is among the finest in literature, there is no doubting that, but I did not get lost amongst his colorful characters and impeccable rhyming structure as much as others.": "好医生的作品确属文学上乘，这一点毋庸置疑，但我并不像旁人那般迷失于他那些色彩斑斓的角色与无可挑剔的押韵结构之中。";
 "EXPLORE THE RIFT": "探索裂缝";
 "We're not leaving Kinzie behind.": "我们不会丢下金吉。";
@@ -7619,7 +7619,7 @@
 "RESCUE THE [format][color:defend]VIP[/format]": "营救 [format][color:defend]贵宾[/format]";
 "KILL [format][color:kill]ALIENS[/format]": "消灭[format][color:kill]外星人[/format]";
 "JANE AUSTEN": "简·奥斯汀";
-"WIN ZINYAK'S FAVORITE GAME SHOW": "赢下津亚克最爱的游戏节目";
+"WIN ZINYAK'S FAVORITE GAME SHOW": "赢下齐尼亚克最爱的游戏节目";
 "SHUT DOWN [format][color:Location]HOTSPOT[/format]": "关闭 [format][color:Location]热点[/format]";
 "THE TURN": "转折";
 "GO TO [format][color:location]AMBUSH[/format]": "前往 [format][color:location]伏击点[/format]";
@@ -7966,15 +7966,15 @@
 "THOUGHTS OF MY CHILDHOOD, A MORE INNOCENT TIME IN MY LIFE": "对我童年的追忆，那段生命中更纯真的时光";
 "I had acquired the money to attend the finest school in Zinland but that was just the beginning. While I would love to say Zinkov Preparatory Academy embraced me with open arms, the truth of the matter is I was not the finest student. In order to gain admission, I had to endure rigorous physical and academic testing before they would grant me access to their legendary halls of learning.": "我已筹得学费，得以入读津族领地最顶尖的学府，但那仅仅是开始。虽我乐于宣称津科夫预校张开双臂迎接了我，事实却是我并非最出色的学生。为获准入校、踏入那传奇的治学殿堂，我不得不经受严苛的体魄与学业测验。";
 "COMPLETE TRAINING PROGRAM": "完成训练计划";
-"Want to piss off Zinyak? Let's say we give him a taste of the old filibuster.": "想惹毛津亚克吗？咱们给他来点儿老式冗长演说尝尝。";
+"Want to piss off Zinyak? Let's say we give him a taste of the old filibuster.": "想惹毛齐尼亚克吗？咱们给他来点儿老式冗长演说尝尝。";
 "MEET JOHNNY ON THE SHIP": "在飞船上会见强尼";
-"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]津亚克[/format] 战斗";
+"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]齐尼亚克[/format] 战斗";
 "CONTAINER DESTROYED!\n ONLY USE THE SONIC BOOM TO KEEP THE CONTAINERS INTACT.": "集装箱被毁！\n 只能用音爆让集装箱保持完好。";
 "SCAN PLANET": "扫描星球";
 "CLEAR OUT ZIN TROOPS": "清剿辛族部队";
 "OPEN THE DOOR": "打开门";
 "KILL [format][color:kill]WARDEN[/format]": "消灭[format][color:kill]典狱长[/format]";
-"ZINYAK LIED": "津亚克撒谎了";
+"ZINYAK LIED": "齐尼亚克撒谎了";
 "\\\"I WONDER WHY...\\\"": "\"我想知道为什么……\"";
 "STEALTH BOX 9000": "隐形箱 9000";
 "CLEAR [format][color:Location]ZIN TROOPS[/format]": "肃清 [format][color:Location]辛族部队[/format]";
@@ -8104,7 +8104,7 @@
 "WAIT FOR [format][color:defend]RESCUE VEHICLE[/format]": "等待 [format][color:defend]救援载具[/format]";
 "FAILED TO ESCAPE THE SAINTS HQ IN TIME": "未能及时逃出圣徒总部";
 "Matt Miller takes advantage of Killbane's surprise and punches him again.\n\nKillbane yells, \\\"This is impossible!\\\"\n\nWhat should Matt do?": "马特·米勒趁基尔班不备又打了一拳。\n\n基尔班喊道：\"这不可能！\"\n\n马特该怎么做？";
-"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]津亚克[/format] 战斗";
+"FIGHT [format][color:kill]ZINYAK[/format]": "与 [format][color:kill]齐尼亚克[/format] 战斗";
 "It was time to leave terra firma behind me and venture toward the stars. After forcibly convincing my crew to celebrate my newly-appointed position with a soiree in my honor, we lifted anchor and spread our sails (again, metaphorically speaking) towards destinations just ripe for the picking. \n\nAnd that, dear reader, is where my tale gets most exciting.": "是时候将坚实大地抛在身后，向群星进发。在强行说服部下为我新晋的职位举办一场致敬晚会后，我们起锚扬帆（再次声明，这是比喻），驶向那些正待采摘的彼岸。\n\n而亲爱的读者，我的故事正是在那里变得最为精彩。";
 "If you stabilize the environment, I can upgrade your powers.": "若你稳住环境，我就能升级你的能力。";
 "STAND [format][color:defend]GUARD[/format]": "担任 [format][color:defend]守卫[/format]";
@@ -8140,7 +8140,7 @@
 "PUNCH KILLBANE AGAIN": "再次出拳击打基尔班";
 "ASCEND THE TOWER": "登上高塔";
 "STEAL [format][color:Location]VEHICLE[/format]": "偷走 [format][color:Location]载具[/format]";
-"She may not be the most pleasant person, but if you're going to stop Zinyak, you need Asha.": "她或许不是最讨喜的人，但你要阻止津亚克，就少不了阿莎。";
+"She may not be the most pleasant person, but if you're going to stop Zinyak, you need Asha.": "她或许不是最讨喜的人，但你要阻止齐尼亚克，就少不了阿莎。";
 "GET BACK TO THE [format][color:location]UFO[/format]": "回到 [format][color:location]幽浮[/format]";
 "DEFEND [format][color:defend]POSITION[/format]": "防守 [format][color:defend]阵地[/format]";
 "Jane. Sweet, sweet Jane, how like my mother's dreams, you are. Even now, all these years later, just the thought of Emma, Elinor, and Elizabeth's exploits and romantic missteps brings a lump to my throat. Oh, the intoxicating back and forth between Miss Bennet and Mr. Darcy, how I could read those lines toward infinity.": "简。甜美的、甜美的简，你多像我母亲的梦境。纵使时光流转数载，如今只要一想到艾玛、艾琳诺与伊丽莎白她们的历险与情路坎坷，我仍不免喉头哽咽。噢，班内特小姐与达西先生之间那令人沉醉的拉锯，我真是百读不厌。";
@@ -8150,7 +8150,7 @@
 "SOURCE HEALTH": "源点生命值";
 "\\\"I WANT TO RESCUE MATT MILLER\\\"": "\"我要救出马特·米勒\"";
 "PICK UP [format][color:use]ROCKET LAUNCHER[/format]": "拾取 [format][color:use]火箭筒[/format]";
-"Zin may not be the most cultured celestial body but it's still my home.": "津族或许不是最有文化的天体，但它仍是我的家园。";
+"Zin may not be the most cultured celestial body but it's still my home.": "津族或许不是最有文化的裸奔，但它仍是我的家园。";
 "START LUCHADORE STRONGHOLD": "开启摔角手据点";
 "If you want 100%, you'll do this.": "若你想要100%，就得做这个。";
 "KILL [format][color:Location]TARGET[/format]": "击杀 [format][color:Location]目标[/format]";
@@ -8241,7 +8241,7 @@
 "Matt Miller winds up and takes a swing, hitting Killbane in the jaw.\n\nKillbane yells, \\\"Ow!  What the hell was that!\\\"\n\nWhat should Matt do?": "马特·米勒蓄力挥出一拳，打在基尔班的下巴上。\n\n基尔班喊道：\"嗷！那是什么鬼！\"\n\n马特该怎么做？";
 "\\\"I'M AWESOME\\\"": "\"我很厉害\"";
 "We're stretching out gameplay. Come see me!": "我们在拉长游戏流程。来找我吧！";
-"MEET THE CREW TO BRING DOWN ZINYAK": "会见联手扳倒津亚克的船员";
+"MEET THE CREW TO BRING DOWN ZINYAK": "会见联手扳倒齐尼亚克的船员";
 "DEFEAT THE [format][color:kill]THROWBACK CLONE[/format]": "击败 [format][color:kill]复古克隆体[/format]";
 "GO TO [format][color:location]LOGIC GATE[/format]": "前往 [format][color:location]逻辑门[/format]";
 "\\\"I AM THE LEADER OF THE SAINTS\\\"": "\"我是圣徒的老大\"";
@@ -8265,7 +8265,7 @@
 "As part of their theocratic doctrine, the Jetyang do not believe in flat surfaces.": "作为神权教义的一环，杰扬人不信平坦表面这一套。";
 "HACK THE RUSTYS NEEDLE IN ASHWOOD": "入侵阿什伍德的拉斯蒂针管店";
 "MEET [format][color:Location]CID[/format] ON SHIP": "在飞船上会见 [format][color:Location]CID[/format]";
-"Keith said he can't go on a date until Zinyak is dead. Can we speed this up?": "基思说，在津亚克死前他没法去约会。咱们能快点吗？";
+"Keith said he can't go on a date until Zinyak is dead. Can we speed this up?": "基思说，在齐尼亚克死前他没法去约会。咱们能快点吗？";
 "COMPLETE [format][color:Location]RACE[/format]": "完成 [format][color:Location]竞速[/format]";
 "ASCEND THE TOWER": "登上高塔";
 "FOLLOW [format][color:location]TARGET[/format]": "尾随 [format][color:location]目标[/format]";
@@ -8286,7 +8286,7 @@
 "REWIRE SPEAKER": "重新接线扬声器";
 "GO TO THE [format][color:location]SHIELD GENERATOR[/format]": "前往 [format][color:location]护盾发生器[/format]";
 "\\\"No.\\\"\n\nWhat do you say?": "\"不。\"\n\n你说什么？";
-"I could not trust those who fell before my might to roam around unsupervised in the real world but a virtual one, that was another matter entirely. It came to me as a vision! A vast interconnected web of simulated worlds designed not only to contain the best and brightest in the universe but to break their wills and make them subservient to me, Zinyak, Galactic Overlord and Head Emperor Supreme of the Zin Empire. Oh, did I forget to mention I killed my predecessor and claimed his throne for my own? My apologies for the oversight.": "那些败于我威势之下的人，我绝不敢任其在现实世界中游荡；但虚拟世界另当别论。这念头如异象般降临！一张庞大互联的模拟世界之网，不仅用以囚禁宇宙间最杰出之辈，更要摧垮他们的意志，令其俯首称臣于我——津亚克，辛族帝国的银河霸主、至高皇帝。哦，我是否忘了提及，我弑了前任、将那王座据为己有？恕我失言。";
+"I could not trust those who fell before my might to roam around unsupervised in the real world but a virtual one, that was another matter entirely. It came to me as a vision! A vast interconnected web of simulated worlds designed not only to contain the best and brightest in the universe but to break their wills and make them subservient to me, Zinyak, Galactic Overlord and Head Emperor Supreme of the Zin Empire. Oh, did I forget to mention I killed my predecessor and claimed his throne for my own? My apologies for the oversight.": "那些败于我威势之下的人，我绝不敢任其在现实世界中游荡；但虚拟世界另当别论。这念头如异象般降临！一张庞大互联的模拟世界之网，不仅用以囚禁宇宙间最杰出之辈，更要摧垮他们的意志，令其俯首称臣于我——齐尼亚克，辛族帝国的银河霸主、至高皇帝。哦，我是否忘了提及，我弑了前任、将那王座据为己有？恕我失言。";
 "After basic, I entered service and was sent to the front line of the great war that was brewing on Planet Bedard. There, I led the charge against the great Bedardian commander Franscot. Using my innately keen insight, I surprised Franscot by:": "新兵训练后，我入伍并被派往贝多星上那场一触即发的大战前线。在那里，我率军冲锋，直取贝多名将弗兰斯科特。凭着我与生俱来的敏锐洞察，我以如下方式令弗兰斯科特措手不及：";
 "DEATH FROM ABOVE": "从天而降";
 "HACK THE PLANET ZIN IN LOREN SQUARE": "入侵洛伦广场的辛族星球";
@@ -8734,7 +8734,7 @@
 "{ATTACK_PRIMARY_IMG} FIRE PRIMARY CANNONS \n{ANALOG_RS_IMG} FINE AIM": "{ATTACK_PRIMARY_IMG} 开火主炮 \n{ANALOG_RS_IMG} 精确瞄准";
 "FREEZE BLAST": "冰冻冲击波";
 "BREAK [format][color:kill]CRATES[/format] TO REPAIR": "砸碎[format][color:kill]木箱[/format]以修复";
-"FIGHT CLUB": "格斗俱乐部";
+"FIGHT CLUB": "搏击俱乐部";
 "DFA a hundred Zin.  Just remember... if you're going commando, they can see it all.": "用天降杀戮干掉一百个辛族。只要记住……要是光着身子，他们可全看在眼里。";
 "SUPER ENERGY - FASTER RECOVERY 3": "超能能量 - 更快恢复 3";
 "HOMIE - RODDY PIPER": "同伴 - 罗迪·派珀";
@@ -8775,7 +8775,7 @@
 "PURCHASE [format][color:use]UPGRADE[/format]": "购买[format][color:use]升级[/format]";
 "FAILED TO ESCAPE IN TIME": "未能及时逃脱";
 "TELEKINESIS": "念力";
-"FIGHT CLUB": "格斗俱乐部";
+"FIGHT CLUB": "搏击俱乐部";
 "Recover your powers much faster after using Nuke": "使用核爆后，力量恢复速度大幅加快";
 "You'll want to change your middle name to \\\"Motherfucking\\\" when you put these clothes on. This suit is now available at your Gateway Wardrobe.": "穿上这身衣服，你会想把中间名改成\"他妈的\"。这套服装现在可以在你的传送门衣柜中找到。";
 "Gain a boost of speed in midair by pressing {SPRINT_IMG}.": "按下 {SPRINT_IMG} 即可在空中获得加速。";
@@ -8783,7 +8783,7 @@
 "FIRE BLAST": "火焰冲击波";
 "PIERCE AND SHAUNDI": "皮尔斯与肖恩蒂";
 "Block their shots with your sprint-shield.": "用你的冲刺护盾挡下他们的射击。";
-"HOMIE - MAERO": "同伴 - 马罗";
+"HOMIE - MAERO": "同伴 - 梅罗";
 "NUKE - RECHARGE 3": "核爆 - 充能 3";
 "SUPER POWERED RACING": "超能竞速";
 "WEAPON - MURDERBOT MINETHROWER": "武器 - 杀戮机器人布雷器";
@@ -8837,7 +8837,7 @@
 "Bring a little Holiday Cheer": "带来一点节日欢欣";
 "SHIP CONTROLS": "飞船操控";
 "DEFEND [format][color:defend]KEY[/format]": "防守[format][color:defend]钥匙[/format]";
-"ZINYAK STATUES DESTROYED": "津亚克雕像已摧毁";
+"ZINYAK STATUES DESTROYED": "齐尼亚克雕像已摧毁";
 "TELEKINESIS - FIRE": "念力 - 火焰";
 "EXITING DEFEND AREA": "正在离开防守区域";
 "Carver Island has been revealed!": "卡弗岛已揭晓！";
@@ -9021,7 +9021,7 @@
 "Shield uses only 50%% Stamina.": "护盾仅消耗 50%% 体力。";
 "Charged Super Jumps fly farther and faster.": "蓄力超级跳跃飞得更远更快。";
 "FIRE": "火";
-"Call in Maero": "呼叫马罗";
+"Call in Maero": "呼叫梅罗";
 "DOUBLE TAP {SUPER_QUICK_TELEKINESIS_IMG}\nQUICK SWAP [format][color:power_tele]TELEKINESIS[/format] ELEMENT\n\nQuickly select from all earned [format][color:power_tele]TELEKINESIS[/format] elements.": "双击 {SUPER_QUICK_TELEKINESIS_IMG}\n快速切换[format][color:power_tele]念力[/format]元素\n\n从所有已获得的[format][color:power_tele]念力[/format]元素中快速选择。";
 "Activate Stomp": "激活践踏";
 "[format][color:power_pound]STOMP ENEMIES[/format]": "[format][color:power_pound]践踏敌人[/format]";
@@ -9199,7 +9199,7 @@
 "BLAST - DURATION": "冲击波 - 持续时间";
 "Start a new saved game": "开始新的存档游戏";
 "STOMP CLUSTERS": "践踏簇";
-"PROF. GENKI'S M.O.M.": "根子博士的M.O.M.";
+"PROF. GENKI'S M.O.M.": "源木博士的M.O.M.";
 "SUPER HOMIE - FUN SHAUNDI": "超级同伴 - 俏皮肖恩蒂";
 "Asha can be called into the simulation using your HUB \\\"PHONE\\\" menu. She will help the Saints in combat.": "可以使用你的HUB\"手机\"菜单将阿莎呼叫到模拟世界中。她会在战斗中帮助圣徒。";
 "BUFF - AOE": "增益 - 范围效果";
@@ -9446,7 +9446,7 @@
 "HACK FAILED": "黑客失败";
 "TK RIFT SILVER MEDALS": "念力裂缝银牌";
 "Killing with bank shots is fun!  Remember, only Zin kills count.": "用反弹射击击杀很有趣！记住，只有齐恩击杀才算数。";
-"FIGHT CLUB": "格斗俱乐部";
+"FIGHT CLUB": "搏击俱乐部";
 "NUKE - POWER RECOVERY 3": "核能 - 能力恢复3";
 "Harder instances of the MECH SUIT MAYHEM Activity are available in the simulation.\nCheck your MAP for locations.": "模拟世界中有更难的机甲大破坏活动。\n查看你的地图寻找位置。";
 "ACCESS [format][color:use]HUB MENU[/format]": "访问[format][color:use]HUB菜单[/format]";
@@ -9508,7 +9508,7 @@
 "DISABLE [format][color:use]SUPRESSION DEVICES[/format]": "禁用[format][color:use]压制装置[/format]";
 "TAKE OVER 50%%": "占领50%%";
 "TALK TO KINZIE": "与金吉交谈";
-"SILVER": "银";
+"SILVER": "银色";
 "Voted \\\"Most Painful Challenge to Complete\\\" by Saints everywhere.": "被所有圣徒评为\"最痛苦的挑战\"。";
 "START FIGHT CLUB": "开始斗拳俱乐部";
 "Activate Explosive Telekinesis": "激活爆炸念力";
@@ -9653,9 +9653,9 @@
 "HOMIE - TANYA": "搭档 - 坦雅";
 "SUPER HOMIE - PIERCE": "超级搭档 - 皮尔斯";
 "Recover your powers a bit faster after being hit by a Power Suppression Grenade.": "被能力压制手雷击中后，能力恢复稍快一些。";
-"GENKI'S M.O.M. GOLD MEDALS": "根子博士的M.O.M.金牌";
+"GENKI'S M.O.M. GOLD MEDALS": "源木博士的M.O.M.金牌";
 "VEHICLE - CHROME RATTLER": "载具 - 镀铬响尾蛇";
-"Genki Backup can be found in your HUB \\\"PHONE\\\" menu. The Genki Girls will arrive to help in combat.": "在你的HUB\"手机\"菜单中可以找到根子后援。根子女孩们会赶到战斗支援。";
+"Genki Backup can be found in your HUB \\\"PHONE\\\" menu. The Genki Girls will arrive to help in combat.": "在你的HUB\"手机\"菜单中可以找到源木后援。源木女孩们会赶到战斗支援。";
 "Activate Force Telekinesis": "激活力场念力";
 "Call in Santa Claus": "呼叫圣诞老人";
 "{JUMP_CLIMB_IMG} JUMP": "{JUMP_CLIMB_IMG} 跳跃";
@@ -9687,7 +9687,7 @@
 "BUFF - RECHARGE 4": "增益 - 充能4";
 "Activate Bling Telekinesis": "激活闪亮念力";
 "GET [format][color:use]WEAPON[/format]": "获取[format][color:use]武器[/format]";
-"GENKI'S M.O.M. SILVER MEDALS": "根子博士的M.O.M.银牌";
+"GENKI'S M.O.M. SILVER MEDALS": "源木博士的M.O.M.银牌";
 "INFLATO-RAY KILLS": "膨胀射线击杀";
 "Buff Energy recharges very quickly.": "增益能量恢复极快。";
 "SET GPS AT [format][color:location]FRIENDLY FIRE[/format]": "在[format][color:location]友好火力[/format]处设置GPS";
@@ -9740,7 +9740,7 @@
 "TELEKINESIS - CARS": "念力 - 汽车";
 "Greatly decrease the cost of hovering while in the Mech Suit.": "大幅降低机甲悬浮的消耗。";
 "Remove even more security protocols and allow the Mech Suit's weapons to recharge even faster.": "移除更多安全协议，让机甲武器充能更快。";
-"PROF. GENKI'S M.O.M.": "根子博士的M.O.M.";
+"PROF. GENKI'S M.O.M.": "源木博士的M.O.M.";
 "{PLANE_TURN_LEFT_IMG}/{PLANE_TURN_RIGHT_IMG} ROLL\nDouble tap to do a barrel roll!": "{PLANE_TURN_LEFT_IMG}/{PLANE_TURN_RIGHT_IMG} 翻滚\n双击进行桶滚！";
 "{ATTACK_SECONDARY_IMG} FREEZE [format][color:power_blast]BLAST[/format] \nFreezing enemies stops them and you can do much more damage to them while they're frozen.": "{ATTACK_SECONDARY_IMG} 冰冻[format][color:power_blast]冲击波[/format] \n冰冻敌人可以让他们停止，你在他们冰冻时能造成更多伤害。";
 "GO TO [/format][color:location]PLANET ZIN[/format]": "前往[/format][color:location]行星齐恩[/format]";
@@ -10467,13 +10467,13 @@
 "CAMERA MODE": "相机模式";
 "RECORD CINEMA CLIPS": "录制电影片段";
 "Your co-op partner is using cheats. Any new save games created will have cheats enabled.\nAutosaving has been disabled and you will not be able to earn any more Achievments.": "你的合作队友正在使用作弊。之后新建的存档都会默认开启作弊。\n自动存档已停用，你也无法再获得任何成就。";
-"   FIRE WEAPON 2": "   发射武器 2";
+"   FIRE WEAPON 2": "发射武器 2";
 "   WALK (HOLD)": "   行走（按住）";
 "   COMPLIMENT": "   赞美";
 "   PUSH TO TALK": "   按键通话";
 "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_rs][/format]": "[format][scale:0.9][color:full_bright][image:ui_ctrl_360_btn_rs][/format]";
 "ALLOW MORE ADVANCED EDITING TECHNIQUES": "允许使用更高级的剪辑手法";
-"   FIRE WEAPON 2": "   发射武器 2";
+"   FIRE WEAPON 2": "发射武器 2";
 "{PRATFALL_ALT_IMG} / {PRATFALL_IMG} RAGDOLL \n{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} AIRBORNE AFTERTOUCH": "{PRATFALL_ALT_IMG} / {PRATFALL_IMG} 布娃娃 \n{WALK_FORW_BACK_IMG} / {WALK_LEFT_RIGHT_IMG} 空中微调";
 "SHOW KEYS": "显示按键";
 "WARNING": "警告";
@@ -10580,7 +10580,7 @@
 "SHOW THE CAMERA ZONE PROPERTIES DIALOG": "显示摄像机区域属性对话框";
 "ADDITIONAL PROPERTIES": "其他属性";
 "GAMEPAD OPTIONS": "手柄选项";
-"   SELECT BLAST": "   选择冲击波";
+"   SELECT BLAST": "选择冲击波";
 "THE A BUTTON": "A 键";
 "VIEW PLAYER GAMERCARD": "查看玩家卡片";
 "This is What I See With My Eyes Closed": "这是我闭眼所见";
@@ -10613,7 +10613,7 @@
 "CLOSE-UP": "特写";
 "OFF": "关";
 "TF2 FLAMETHROWER": "TF2 火焰喷射器";
-"   HUB MENU": "   中心枢纽菜单";
+"   HUB MENU": "中心枢纽菜单";
 "   NEXT POWER": "   下一个超能力";
 "You must be signed in to Xbox Live to use this feature.": "你必须登录 Xbox Live 才能使用此功能。";
 "Your stats were damaged and must be reset.\nThis will not affect any Achievements you may have earned.": "你的统计数据已损坏，必须重置。\n这不会影响你已经获得的任何成就。";
@@ -10638,7 +10638,7 @@
 "DOF DISTANCE": "景深距离";
 "You do not have the Online Pass. Go to the title screen and enter the Downloadable Content Store to purchase or use redeem code.": "你未持有在线通行证。请前往标题画面，进入可下载内容商店购买或使用兑换码。";
 "   FIRE WEAPON": "   开火";
-"   SELECT BLAST": "   选择冲击波";
+"   SELECT BLAST": "选择冲击波";
 "THE A BUTTON": "A 键";
 "MONITOR": "显示器";
 "Unable to Save Video.  More disk space is required.": "无法保存视频，需要更多磁盘空间。";
@@ -10669,7 +10669,7 @@
 "PRIMARY": "主色";
 "CUT": "硬切";
 "TURN ON/OFF ALL VOICE": "开启/关闭全部语音";
-"   FIRE WEAPON 2": "   发射武器 2";
+"   FIRE WEAPON 2": "发射武器 2";
 "   WEAPON SLOT 3": "   武器槽 3";
 "   PITCH DOWN": "   机头下压";
 "   FLY DOWN": "   下降";
@@ -10770,7 +10770,7 @@
 "NORMAL": "普通";
 "LOAD DEFAULT": "载入默认";
 "THE DEPTH OF FIELD DISTANCE": "景深距离";
-"   FIRE WEAPON 2": "   发射武器 2";
+"   FIRE WEAPON 2": "发射武器 2";
 "   TURN RIGHT": "   向右转";
 "   PAUSE": "   暂停";
 "Here you can create a new Saints Row Account or link your profile to an existing one.": "你可以在此创建新的《黑道圣徒》账户，或将你的档案关联到现有账户。";
@@ -10872,8 +10872,8 @@
 "Builders League United forever!": "建筑者联盟永存！";
 "   NEXT WEAPON": "   下一把武器";
 "   SAVE VIDEO": "   保存视频";
-"   MOVE FORWARD": "   向前移动";
-"   MOVE FORWARD": "   向前移动";
+"   MOVE FORWARD": "向前移动";
+"   MOVE FORWARD": "向前移动";
 "THE A BUTTON": "A 键";
 "The Save Process has failed because the default\nStorage Device is no longer available.": "保存失败，因为默认的\n存储设备已不可用。";
 "    LIGHTING DETAIL": "    光照细节";
@@ -10885,7 +10885,7 @@
 "HIDE THE TIMELINE AND OTHER INFO DURING EXPORT": "导出时隐藏时间轴等信息";
 "   TURN LEFT": "   向左转";
 "   WEAPON SLOT 7": "   武器槽 7";
-"   MOVE FORWARD": "   向前移动";
+"   MOVE FORWARD": "向前移动";
 "RIGHT STICK": "右摇杆";
 "LOCAL PLAY": "本地游玩";
 "HIGHER IS BETTER, BUT SLOWER": "越高越好，但速度越慢";
@@ -10934,14 +10934,14 @@
 "Your co-op partner is using Cheats. Any new save games created will have Cheats enabled.\nAutosaving has been disabled and you will not be able to earn any more Achievements.": "你的合作搭档正在使用秘籍。任何新建的存档都将启用秘籍。\n自动保存已禁用，你将无法再获得任何成就。";
 "   TURN RIGHT": "   向右转";
 "MATCHMAKING": "匹配";
-"{RECRUIT_DISMISS_IMG} to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "{RECRUIT_DISMISS_IMG} 开始天体活动。 \n在不穿任何衣物时，天体娱乐活动可用。 ";
+"{RECRUIT_DISMISS_IMG} to start Streaking. \nWhile not wearing any clothes the Streaking diversion is available. ": "{RECRUIT_DISMISS_IMG} 开始裸奔活动。 \n在不穿任何衣物时，裸奔娱乐活动可用。 ";
 "PROPERTIES": "产业";
 "LOAD THE DEFAULT CHARACTER MODEL": "载入默认角色模型";
 "TOGGLE VEHICLE RENDERING": "切换载具渲染";
 "THE CAMERA TILT": "摄像机俯仰";
 "   SWITCH VTOL MODE": "   切换 VTOL 模式";
 "   SELECT BUFF": "   选择增益";
-"   HUB MENU": "   中心枢纽菜单";
+"   HUB MENU": "中心枢纽菜单";
 "THE A BUTTON": "A 键";
 "UPGRADE STRONGHOLD": "升级根据地";
 "SCOOTER": "小绵羊";
@@ -11131,7 +11131,7 @@
 "TAXI": "出租车";
 "PROF. GENKI: CASH EARNED": "元气博士：赚取现金";
 "ACTIVITIES COMPLETED": "活动完成数";
-"This will remove all your current clothes. \nBeing nude allows you to Streak. \nAre you sure?": "这会脱掉你身上的所有衣物。\n光溜溜才能天体。\n确定吗？";
+"This will remove all your current clothes. \nBeing nude allows you to Streak. \nAre you sure?": "这会脱掉你身上的所有衣物。\n光溜溜才能裸奔。\n确定吗？";
 "PLASTIC SURGEON": "整形医生";
 "Switch to Gravity Stomp": "切换至 重力践踏";
 "motherfucker": "王八蛋";
@@ -11273,7 +11273,7 @@
 "Control Options": "操控选项";
 "Audio Settings": "音频设置";
 "asshole": "混蛋";
-"ZINYAK STATUES DESTROYED": "津亚克雕像已摧毁";
+"ZINYAK STATUES DESTROYED": "齐尼亚克雕像已摧毁";
 "TANK MAYHEM: DAMAGE DONE": "坦克大破坏：造成伤害";
 "CLUSTERS FOUND": "已发现簇";
 "FRIENDLY FIRE": "队友火力";
@@ -11387,7 +11387,7 @@
 "Switch to Freeze Blast": "切换至 冰冻爆破";
 "Casual": "休闲";
 "Phone": "手机";
-"TIME LISTENING TO ZINYAK RADIO": "收听津亚克电台的时长";
+"TIME LISTENING TO ZINYAK RADIO": "收听齐尼亚克电台的时长";
 "MILKSHAKE": "奶昔";
 "REQUIRED": "必需";
 "You will never die.": "你永远不会死。";
@@ -11596,7 +11596,7 @@
 "LAN": "局域网";
 "Operator stay on the line": "接线员请勿挂线";
 "Load Game": "读取游戏";
-"BACK": "背后";
+"BACK": "返回";
 "Single Player": "单人游戏";
 "Quit": "退出";
 "VIRUS INJECTION": "病毒注入";
@@ -11648,7 +11648,7 @@
 "ROYAL": "皇家";
 "CLEAR NOTORIETY": "清除通缉度";
 "INFINITE SPRINT": "无限冲刺";
-"TOTAL STREAKING TIME": "天体总时长";
+"TOTAL STREAKING TIME": "裸奔总时长";
 "FAVORITE MODE OF TRANSPORTATION": "最常用的交通方式";
 "VIRUS INJECTION": "病毒注入";
 "INSUFFICIENT FUNDS": "现金不足";
@@ -12117,7 +12117,7 @@
 "Boss, stay down!": "老大，趴下！";
 "I'm smarter than all these people.": "我比这里所有人都聪明。";
 "As the face of the Saints, Pierce Washington was always comfortable in the public's eye.  Some may think he's gone soft because of this, but he's always been loyal to the crew no matter what had to get done.": "作为圣徒的门面，皮尔斯·华盛顿一直在公众视野中游刃有余。有人可能觉得他因此变软了，但无论需要做什么，他一直对团队忠心耿耿。";
-"Welcome to MIND! OVER! MURDER! The rules are simple: Each scoring area contains a variety of floating rings. The color of the ring denotes the type of object you need to throw through it in order to score a point. Vehicles go through blue, people through green, and the head of our very own Professor Genki through the pink ones. Score a point on every hoop within the time limit and you win. Good luck!": "欢迎来到心灵！压制！谋杀！规则很简单：每个得分区域包含各种漂浮的圆环。圆环的颜色表示你需要将哪种东西投进去才能得分。载具走蓝色，人走绿色，我们的根子教授本人走粉色。在时间限制内每个环都得分即可获胜。祝你好运！";
+"Welcome to MIND! OVER! MURDER! The rules are simple: Each scoring area contains a variety of floating rings. The color of the ring denotes the type of object you need to throw through it in order to score a point. Vehicles go through blue, people through green, and the head of our very own Professor Genki through the pink ones. Score a point on every hoop within the time limit and you win. Good luck!": "欢迎来到心灵！压制！谋杀！规则很简单：每个得分区域包含各种漂浮的圆环。圆环的颜色表示你需要将哪种东西投进去才能得分。载具走蓝色，人走绿色，我们的源木教授本人走粉色。在时间限制内每个环都得分即可获胜。祝你好运！";
 "Zinyak was fascinated with Earth culture, he made it a point to go back and build a menagerie of his favorite humans.": "齐尼亚克痴迷于地球文化，他特意回去收藏了他最喜欢的人类。";
 "Guys, don't take this the wrong way...but I've spent years living in the past. I'm ready for the future.": "伙计们，别误会……但我已经在过去生活了好多年了。我准备好了面对未来。";
 "It would seem your reputation doesn't do you justice.": "看来你的名不副实。";

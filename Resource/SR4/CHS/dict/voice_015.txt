@@ -349,7 +349,7 @@
 "I have to shoot the light and then him. I got it.": "我得先打灯再打他。明白了。";
 "I'm there.": "我到了。";
 "Yeah I get it, life beyond a computer is mysterious and beautiful now can you snap out of it and tell me what we're supposed to do?": "是是，我懂了，电脑之外的生活神秘又美好，现在你能振作起来告诉我我们该做什么吗？";
-"TRY.": "试。";
+"TRY.": "试试。";
 "*sigh* I will take care of it.": "*叹气* 我来处理。";
 "Oh hey, I found the tracking device.": "哦嘿，我找到追踪器了。";
 "The fuck aren't the guns working Matt!": "枪怎么不能用马特！";

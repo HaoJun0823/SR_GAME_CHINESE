@@ -96,7 +96,7 @@
 "Not if you want me to actually understand what you need me to do.": "除非你是真的想让我搞清楚你要我做什么。";
 "Didn't count on me, did ya?": "没想到我会来吧？";
 "I hear ya.": "听到了。";
-"JUST FIX IT.": "给我修好就行了！";
+"JUST FIX IT.": "赶紧修。";
 "What's the deal with three? Everything always happens in three.": "三这个数是怎么回事？怎么什么事都凑成三。";
 "Great.": "太好了。";
 "Thanks for sharing your high school potery...": "谢谢你的高中诗作……";
@@ -329,7 +329,7 @@
 "One more to go!": "还差一个！";
 "This is getting weird...": "这越来越怪了……";
 "Or that'll help blow shit up.": "或者那能帮忙把东西炸上天。";
-"Sure, CID.": "好的，C.I.D.。";
+"Sure, CID.": "没问题，C.I.D.。";
 "That ain't so, Shaundi. *pauses* Shaundi?": "不是那样的，莎蒂。*停顿* 莎蒂？";
 "Kinzie, goddammit! I didn't get this far to sit on my ass--": "金吉，妈的！我走到这一步，不是来干坐着的——";
 "Don't push your luck.": "别得寸进尺。";
@@ -466,7 +466,7 @@
 "Look, all we need to do is to get to the docks and destroy all the trucks. Think you can do that?": "听着，我们只需要赶到码头，把那些卡车全毁掉。你觉得你能行吗？";
 "Good point.": "有道理。";
 "Ours is not to reason why.  Ours is but to do or die.  Make your choice.": "我们不该问为什么。我们只该去做，或者去死。选吧。";
-"Then we gotta move. STAY DOWN AND RUN.": "那我们得动了。趴下，快跑。";
+"Then we gotta move. STAY DOWN AND RUN.": "那我们得动。低下头跑。";
 "Before we do anything, we need some breathing room. Let's take out those tanks!": "在动手之前，我们需要点喘息空间。先把那些坦克干掉！";
 "Fine. I'll go get us a vehicle.": "行。我去弄辆车来。";
 "Save a seat, Zinyak. I'm on my way.": "留个位子，齐尼亚克。我这就上路。";
@@ -822,7 +822,7 @@
 "I'd be happier if my favorite Russian brute was here to watch my back.": "要是我最爱的俄国猛男在这儿给我看着后背，我就更开心了。";
 "The cops just transformed into Zin.": "那些警察刚变成了齐恩人。";
 "So you still being superstitious?": "所以你还信那些迷信吗？";
-"JUST FIX IT.": "给我修好就行了！";
+"JUST FIX IT.": "赶紧修。";
 "Pretty handy for landing, too.": "用来着陆也挺方便的。";
 "We're not done yet.": "我们还没完。";
 "Well, get in the car.": "行了，上车吧。";

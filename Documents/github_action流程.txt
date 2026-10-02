@@ -1,5 +1,12 @@
 # github action 构建流程
 
+⚠️ 说明（2026-10-02 盘点）：本文是**原始草稿**，下方 8 步流程的语义与
+`Projects/Common/tools/automation/build_release.py` 完全一致（那才是执行体），
+但写法潦草需注意三处偏离仓库事实：
+① 路径分隔符用反斜杠；② 目录名小写（`resource\{game}\{lang}\`），实际是 `Resource/<game>/CHS/`；
+③ 首步“位于project”表述不清，实指 `Projects/<游戏>/SRxR_I18N/`。
+要读规范化版本请见 `Documents/build_and_release.md`。
+
 以下流程用{game}_{version}_{lang}的方式来描述各个版本的构建。
 game:sr3r,sr4r
 version:common,microsoft（目前只有sr4r有）。

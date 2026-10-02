@@ -26,7 +26,7 @@
 "Zombie Level Selection": "僵尸关卡选择";
 "START 3RD STREET SAINTS MISSION": "开始第三街圣徒任务";
 "START DECKER STRONGHOLD": "开始骇客据点";
-"START DECKERS MISSION": "开始骇客任务";
+"START DECKERS MISSION": "开始赛博帮任务";
 "START LUCHADORE MISSION": "开始摔角手任务";
 "START LUCHADORE STRONGHOLD": "开始摔角手据点";
 "START MORNINGSTAR STRONGHOLD": "开始晨星帮据点";
@@ -173,7 +173,7 @@
 "WINDSHIELD CANNON": "挡风玻璃炮";
 "GET BACK TO THE TARGETS!": "回到目标处！";
 "GET BACK TO YOUR ASSIGNED AREA!": "回到指定区域！";
-"DAMAGED GAMER PROFILE STATS": "损坏的玩家档案数据";
+"DAMAGED GAMER PROFILE STATS": "玩家档案数据损坏";
 "(LOC) All the saints died": "所有圣徒都死了";
 "(LOC)The client request you preform the %s %s move on him or her": "客户要求你对他/她执行%s %s动作";
 "(LOCALIZE) Diversion canceled": "支线已取消";

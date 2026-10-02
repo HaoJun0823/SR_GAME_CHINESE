@@ -297,7 +297,7 @@
 "I'm maintaining a healthy skepticism.": "我保持着健康的怀疑态度。";
 "I'm makin' a monster here.": "我这是在造怪物呢。";
 "I'm moving stuff into my place.  There are boxes.  Some are too heavy for me.  I need help.  Got it?": "我正把东西搬进我那儿。有一堆箱子。有几个太沉我搬不动。我需要帮忙。明白吗？";
-"I'm naked...?": "我天体……？";
+"I'm naked...?": "我裸奔……？";
 "I'm not a walking deus ex machina.  Use this STAG sonic gun to knock the explosives into the water.": "我又不是会走路的\"天降神兵\"。用这把STAG声波枪把炸药打进水里。";
 "I'm not ashamed of what I have...": "我对我拥有的东西不感到羞耻……";
 "I'm not calling for a story.  I'm calling regarding a shipment of girls the Morningstar are bringing into Steelport.": "我打来不是为了抢新闻。我是为了晨星帮正往钢埠运的那批姑娘。";

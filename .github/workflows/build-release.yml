@@ -1,7 +1,8 @@
 name: build-release
 
 # 构建 {game}_{version}_{lang} 发布包。
-# 流程见仓库根 `github_action流程.txt`，实现见 `Projects/Common/tools/automation/build_release.py`（8 步）。
+# 流程见 `Documents/github_action流程.txt`（2026-10-02 前误写为「仓库根」，该文件其实在 Documents/ 下）；
+# 实现见 `Projects/Common/tools/automation/build_release.py`（8 步）。
 #
 # 产物（两个层次）：
 #   release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/

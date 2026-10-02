@@ -1,5 +1,12 @@
 # le_strings 打包工具重大缺陷修复报告
 
+> ℹ️ **历史记录声明（2026-10-02 追加，正文未改写）**：本文是 2026-09-20 那次
+> 「offset 表步长写 4 字节 → 启动崩溃 c0000005」事故的事故复盘，文内出现的
+> `Projects/SR3/Tools/le_strings_repack.py` **是当时的真实现场路径，已不存在**，
+> **不要改写为现路径**、更不要据此去跑旧脚本。结论（8 字节步长 + 写回后必须校验条目数守恒）
+> 已固化在 `Projects/Common/tools/helper/le_string_codec.py`，现工具链会自动执行这些断言。
+> 工具路径总对照见 `Readme.md` 第「九、工具」一节。
+
 **日期**: 2026-09-20
 **影响范围**: SR3 Remastered (`SR3R_I18N`) / Saints Row IV (`SR4R_I18N`) 的全部 loose `*_us/_zh.le_strings`
 **后果**: `loose_first=1` 时游戏启动即崩溃（`c0000005`），且汉化条目大面积丢失

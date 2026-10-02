@@ -1,6 +1,10 @@
 # 自动化构建流程 — SR3 / SR4 le_string 汉化
 ============================================================
 
+⚠️ 过时标注（2026-10-02 盘点）：本文正文流程仍有效，但文末「八、相关文件」的工具路径
+已于同日更新 —— 旧的 `Projects/{SR3,SR4}/Tools/*.py` 已整体迁至 `Projects/Common/tools/`。
+第 8 步事故分析（`Documents/le_strings_repack_bugfix.md`）里的旧路径属历史记录，勿改写。
+
 本文档说明如何从「原始 le_string 模板 + 中文翻译 txt」自动构建出可直接分发的
 `le_strings` 文件，以及每一步的校验与失败处理。
 
@@ -143,9 +147,13 @@ hash = Volition CRC32（初始 0、无 final xor、输入先小写化）。
 | 路径 | 说明 |
 |---|---|
 | `build_release_le_strings.py` | 顶层构建入口（本文档主角） |
-| `Projects/SR3/Tools/le_strings_repack.py` | SR3 repack 底层库 |
-| `Projects/SR3/Tools/sr3le_repack.py` | SR3 批量 CLI |
-| `Projects/SR3/Tools/sr3le_extract.py` | SR3 解包 |
-| `Projects/SR4/Tools/sr4le_repack.py` | SR4 repack + 批量 CLI |
-| `Projects/SR4/Tools/sr4le_extract.py` | SR4 解包 |
-| `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析报告 |
+| `Projects/Common/tools/automation/build_release_le_strings.py` | 顶层构建入口（现路径 / current path） |
+| `Projects/Common/tools/cli/le_string_pack.py` | repack 与批量 CLI（原 `sr3le_repack` / `sr4le_repack`，已 SR3+SR4 合一） |
+| `Projects/Common/tools/cli/le_string_extract.py` | 解包（原 `sr3le_extract` / `sr4le_extract`，已合一） |
+| `Projects/Common/tools/helper/le_string_codec.py` | 字节级内核（原 `le_strings_repack.py` 底库） |
+| `Documents/le_strings_repack_bugfix.md` | 8 字节步长事故分析报告（**历史记录，路径勿改**） |
+
+> ⚠️ 上表 2026-10-02 已更新：旧路径 `Projects/{SR3,SR4}/Tools/*.py` 全部迁至
+> `Projects/Common/tools/`，其中 `sr3le_*` / `sr4le_*` 两份实现因「同一份数据两个结论」而被
+> 合一（详见 `Readme.md` 第「九、工具」一节）。原文表格里的 `Projects/SR3/Tools/le_strings_repack.py`
+> 属事故复盘记录，保留原样未改写。

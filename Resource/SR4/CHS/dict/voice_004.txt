@@ -262,7 +262,7 @@
 "Ever since that night on Loren's plane things haven't been the same.  I used to be fun and carefree.  I used to smile and laugh.  Now, I just want everyone to pay for what the Syndicate did.  Johnny didn't deserve to die like that.  He was the toughest person I knew.  And it's my fault.  I should've gone back for him.": "自从洛伦飞机上那一夜之后，一切都变了。我以前又好玩又无忧无虑，会笑会闹。现在我只想让他们全都为辛迪加干的事付出代价。约翰尼不该那样死。他是我认识的最硬的人。这是我的错，我该回去救他的。";
 "Woo. Tingly.": "呜。酥麻。";
 "Keith!": "基思！";
-"Do I remem--PFFT.": "我记不——噗。";
+"Do I remem--PFFT.": "我记不记得——噗。";
 "(YOU. WILL. DIE.)": "（你。会。死。）";
 "CID...?": "C.I.D.…在哪儿？";
 "Killing you will be my greatest triumph!": "杀了你将是我最大的胜利！";
@@ -304,7 +304,7 @@
 "Kinzie...are are those pods full of people?": "金吉……那些舱里装满了人吗？";
 "Definitely no stranger to handling a gun!": "用枪显然是老手！";
 "You require what?": "你要什么？";
-"Oh man. This place. *BEEP* ME.": "哦天。这地方。*哔*了我。";
+"Oh man. This place. *BEEP* ME.": "天哪。这地方。*哔*我。";
 "DELETE": "删除";
 "Merde.": "见鬼。";
 "I love technology.  So where are these things you want me to find?": "我爱科技。那你要我找的东西在哪儿？";
@@ -452,7 +452,7 @@
 "Let's give your plan one more try. Then we find Veteran Child.": "再试一次你的计划。然后我们去找老兵之子。";
 "What... oh shit.": "什么……哦操。";
 "More are coming!": "还有更多要来了！";
-"JUST FIX IT.": "给老子修好。";
+"JUST FIX IT.": "赶紧修。";
 "Is this okay?": "这样可以吗？";
 "Excellent job.  I have something special waiting for you back here.": "干得漂亮。我这里给你准备了个特别的东西。";
 "Let's sneak past this guard.": "我们偷偷溜过这个守卫。";
@@ -688,12 +688,12 @@
 "Kinzie? Kinzie?": "金吉？金吉？";
 "What the hell?!": "搞什么？！";
 "I thought this island was deserted, no?": "我以为这岛是荒无人烟的，不是吗？";
-"Whoa, head rush.  Where am I--": "哇，头好晕。我在哪儿——";
+"Whoa, head rush.  Where am I--": "哇，头脑发晕。我在哪——";
 "Mine would have had a little sofa, and a vanity, and a gun safe...": "我的那间会有张小沙发、一个梳妆台，还有保险柜……";
 "I'm venting, Matt. Let it go.": "我在发泄，马特。随它去吧。";
 "Been a while since I had to steal my own car.": "好久没偷自己的车了。";
 "Had to say it, didn't you...": "非要说出来是吧……";
-"Maero...": "马罗……";
+"Maero...": "梅罗……";
 "Kinzie, are you guys shooting at this ship?": "金吉，你们在朝这船开火吗？";
 "We'll give this one more shot. Then we're helping old--er Shaundi.": "我们再试一次。然后就去帮老——呃，莎蒂。";
 "Kinzie... am I...?": "金吉……我……？";
@@ -905,7 +905,7 @@
 "DELETE": "删除";
 "Maybe I can find the programs for Tony and Tanya inside the simulation's code and force them to spawn.": "也许我能从模拟的代码里找到托尼和塔尼娅的程序，强制把它们刷出来。";
 "Well... when you put it like that... Sorry?  I'll get on that taking over a neighborhood thing for you...": "好吧……你这么一说……抱歉？我这就去帮你搞定那个街区的事……";
-"JUST FIX IT.": "给老子修好。";
+"JUST FIX IT.": "赶紧修。";
 "I'm your number one fan!": "我是你的头号粉丝！";
 "So you and old you had a talk then?": "所以你和过去的你谈过了？";
 "Reminds me of fireworks.": "让我想起烟花。";
@@ -925,7 +925,7 @@
 "Way to balance inspirational speech and totally creepy cult leader, Asha.": "真会拿捏啊，一边打鸡血一边当吓人的邪教头子，阿莎。";
 "Bout fucking time.": "终于他妈的了。";
 "DELETE": "删除";
-"TRY.": "试试看。";
+"TRY.": "试试。";
 "Right boss.": "明白，老大。";
 "Goddammit.": "该死。";
 "Cheers.": "干杯。";

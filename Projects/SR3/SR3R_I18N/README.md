@@ -7,6 +7,13 @@ External, runtime-only localization DLL: no game resource files are touched; tex
 > **License**: GPL-3.0（与本项目仓库一致 / same as this repository）
 > **Author**: HaoJun0823 — https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N
 
+> ⚠️ **过时标注（2026-10-02 盘点）**：本文早期版本提到的 `Tools/verify_aob.py`
+> （在两个 EXE 上离线校验 AOB 特征唯一命中）**从未落地** —— 仓库里没有这个脚本，
+> SR3 也没有 `aob_l2_arrays.inc`（SR3 的 AOB pattern 内联在 `dllmain.cpp` 中，
+> 靠运行时 `AobFind()` 打日志核对）。本文正文的 AOB 原理描述仍然有效，
+> 但**那条离线自检命令不要照抄执行**。旧工具路径 `Tools/*.py` 已迁至
+> `Projects/Common/tools/`，对照表见仓库根 `Readme.md` 第「九、工具」一节。
+
 ---
 
 ## 目录 / Contents
@@ -115,11 +122,13 @@ If the dictionary folder is missing or empty, the DLL goes idle: it logs and ins
 > 运行时改由 **AOB 特征扫描**定位：函数入口在 `.text` 段内按字节特征唯一匹配；引擎全局
 > （字体表/字体数/D3D device/context）由锚点函数内的 rip-relative 指令现场解码。
 > 因此同一份 `SR3R_I18N.asi` 同时适用于 **Steam 版 `SRTTR.exe`** 与 **Epic 版 `SRTTR_EPIC.exe`**。
-> 离线自检：`python Tools/verify_aob.py`（在两个 EXE 上验证 12 条特征唯一命中 + 全局解算）。
+> 离线自检：~~`python Tools/verify_aob.py`~~ —— **该脚本从未落地，勿引用**（见文首过时标注）。
+> 唯一命中断言在运行时由 `AobFind()` 执行：找不到或命中 >1 条都会 `Log` 并跳过该 hook。
 > Since v7.6 targets are **not hardcoded** (names in parentheses are Steam-build IDA labels, for reference only).
 > Function entries are found by unique AOB byte-pattern scan in `.text`; engine globals are decoded from
 > rip-relative operands inside anchor functions. One binary therefore serves both **Steam `SRTTR.exe`**
-> and **Epic `SRTTR_EPIC.exe`**. Offline self-check: `python Tools/verify_aob.py`.
+> and **Epic `SRTTR_EPIC.exe`**. Runtime uniqueness assertion lives in `AobFind()`;
+> the never-existing offline `Tools/verify_aob.py` must not be invoked.
 
 要点 / Key points:
 

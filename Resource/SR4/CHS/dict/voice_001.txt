@@ -65,7 +65,7 @@
 "Cardboard boxes? You're serious?": "纸箱子？你是认真的吗？";
 "When that power's active your weapons will be able to bring down a Warden's shield.": "那个能力激活时，你的武器就能击破典狱长的护盾了。";
 "All right, I'll give this plan of yours one more try then we're helping Shaundi.  The... the other Shaundi.": "好吧，我再试一次你的计划，然后就帮莎蒂。那个……另一个莎蒂。";
-"Hold on, is that Maero?": "等等，那是马罗吗？";
+"Hold on, is that Maero?": "等等，那是梅罗吗？";
 "He can think whatever he wants...he's not stopping me.": "随他怎么想……他阻止不了我。";
 "Fuck, you know what I mean.": "操，你知道我什么意思。";
 "Shit. Did I just kill her?": "靠，我刚才是不是杀了她？";
@@ -76,7 +76,7 @@
 "Die, you sons-a-bitches!": "去死吧，你们这些杂种！";
 "Mmm. Breakfast sure smells good!": "嗯，早餐闻起来真香！";
 "Fine...": "行...";
-"You're just a program, Maero.  In the real world, you're dead.": "你只是段程序，马罗。在现实世界，你已经死了。";
+"You're just a program, Maero.  In the real world, you're dead.": "你只是段程序，梅罗。在现实世界，你已经死了。";
 "My.  Way.  Works.": "我的。方法。行得通。";
 "I am in the zone! The zone!": "我进入状态了！状态！";
 "The American people don't exactly look favorably upon the President committing grand theft auto.": "美国人民可不乐意看到总统犯下偷车大罪。";
@@ -277,7 +277,7 @@
 "Ha! I got him!": "哈！我搞定他了！";
 "As IF--!": "想得美——！";
 "Don't push it.": "别逼我。";
-"Hey Maero, how's Jessica?": "喂，马罗，杰西卡还好吗？";
+"Hey Maero, how's Jessica?": "喂，梅罗，杰西卡还好吗？";
 "Are you really abandoning--": "你真要抛下——";
 "Honey, is there some reason you WANT me to get shot?": "亲爱的，你是不是故意想让我挨枪子？";
 "Not anymore.  We've got nothing left in common.": "已经不是了。我们已经没什么共同点了。";
@@ -554,7 +554,7 @@
 "What the hell's he gonna do with a broadcast tower?": "他拿广播塔要干什么？";
 "That must've been nice...": "那一定很爽吧……";
 "I knew Genki couldn't be too far behind.": "我就知道源鬼不会离得太远。";
-"Sure, CID.": "当然，C.I.D.。";
+"Sure, CID.": "没问题，C.I.D.。";
 "You're really reaching here...": "你真是在强词夺理……";
 "Is it a good plan?": "这是个好计划吗？";
 "Both of you in!": "你们都进来！";
@@ -639,7 +639,7 @@
 "Alright, I like the sound of that.  What is it you need?": "行，我喜欢这个主意。你需要什么？";
 "Fuckin'-a right I did.": "他妈的当然做到了。";
 "All set.": "都就绪了。";
-"Don't blame the hostage. JUST FIX IT.": "别怪人质，给我修好它。";
+"Don't blame the hostage. JUST FIX IT.": "别怪人质。赶紧修好它。";
 "That CID is a curious one, isn't he?": "那个C.I.D.真是个奇怪的家伙，对吧？";
 "DELETE": "删除";
 "No shit.": "废话。";
@@ -763,7 +763,7 @@
 "It is exactly as I remember. *sniffs*  The air is redolent of hopelessness and desperation.  ": "和我记忆里一模一样。*嗅* 空气里弥漫着绝望的气息。";
 "You worry too much, Kinzie. It's just an escort job.": "你担心过头了，金吉。只是一趟护送任务。";
 "This time I want to change up the tasks you were performing before.  General same idea, but this time I want to gauge the simulation's stability overall.": "这次我想改变你之前执行的任务。大方向不变，但我想整体评估一下模拟世界的稳定性。";
-"Sure, CID.": "当然，C.I.D.。";
+"Sure, CID.": "没问题，C.I.D.。";
 "Look, you tell me what needs to get done and I'll take care of it.  Deal?": "听着，你告诉我需要做什么，我来搞定。成交？";
 "Just don't get any blood on ya, she's got the Hep!": "别沾上她的血，她有肝炎！";
 "Sure, for this. You know, because up until now Zinyak's crimes haven't been that bad.": "当然，就这个。你知道的，因为到目前为止齐尼亚克犯的罪还不算太严重。";
@@ -798,7 +798,7 @@
 "Wait, wait, wait... Wait a what? What's going on?": "等等，等等，等等……等个什么？怎么回事？";
 "It's not Gat's nightmare, it's Shaundi's.  She's here somewhere.": "那不是盖特的噩梦，是莎蒂的。她就在这儿的某个地方。";
 "What Jinx?  I said this was easy...": "什么灾星？我说过这很容易……";
-"Wait a minute.  I think that's Maero--!": "等一下。我觉得那是马罗——！";
+"Wait a minute.  I think that's Maero--!": "等一下。我觉得那是梅罗——！";
 "Yeah, I'm having a bit of a stronger reaction.": "是啊，我的反应更强烈一些。";
 "Matt, I've been thinking...we could all be dead soon, so...shit I can't believe I'm saying this...you don't have to die a virgin.": "马特，我一直在想……我们可能很快都会死，所以……妈的，真不敢相信我要说这个……你不必以处男之身死去的。";
 "Pierce has drank so much Saints Flow, I don't think he *can* die.": "皮尔斯喝了太多圣徒能量饮料，我觉得他根本死不了。";

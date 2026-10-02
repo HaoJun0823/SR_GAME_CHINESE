@@ -83,6 +83,30 @@ venv/
 /release_notes.md
 /commits.md
 
+# ---- 校对工具链的中间产物 ----
+# 校对流程会产生大量可重新生成的报告/快照/复核包：跑一次就出一份，
+# 入库只会污染历史，且数 MB 的 CSV 没有留存价值。
+#
+# ⚠ gitignore 规则**自上而下首次匹配即生效**。要「忽略目录内某子目录、
+#   但保留同级的另一个文件」，不能写 `/reports/` + `!` 反向（`!` 会连带
+#   放行子目录），必须**用精确路径**逐条声明。
+#
+# ★★ 另一个坑：**行尾注释（`#`）不被 gitignore 支持**！
+#   写成 `/reports/baseline/# 说明` 会被整行当成 pattern，规则**静默失效**
+#   （v1 实测踩过：check-ignore 返回 not-ignored）。注释必须单独占一行。
+/reports/baseline/
+/.tmp_lint/
+/.tmp_work/
+/.tmp_w/
+*.lint.json
+*.review.jsonl
+
+# 校对资产与审计凭据，必须入库：
+#   - glossary.csv         术语表（L2 校验的依据）
+#   - Documents/校对/      修复单、裁决清单、方案文档
+#   - reports/fix_log.csv  修复留痕（时间/文件/行/旧值/新值/来源），
+#     ★ 缺了它就无法追溯「到底改了哪几条、为什么改」，是回滚与复核的唯一凭据。
+
 # ---- 例外：Archives 留档区一律保留 ----
 !Archives/**
 !**/.gitkeep
