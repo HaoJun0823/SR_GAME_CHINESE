@@ -1,0 +1,106 @@
+Randerion (HaoJun0823) Project License
+Copyright (c) 2026 Randerion (HaoJun0823). All rights reserved.
+Homepage: https://www.haojun0823.xyz
+
+----------------------------------------------------------------------
+Main License
+----------------------------------------------------------------------
+
+This project (the Chinese translation data, documentation, build scripts
+and tools authored for it) is licensed under:
+
+    GNU General Public License v3.0 or later
+
+SPDX-License-Identifier: GPL-3.0-or-later
+
+The full license text is available at:
+    ./LICENSES/GPLv3.txt
+
+----------------------------------------------------------------------
+Game Copyright Notice (Saints Row Series)
+----------------------------------------------------------------------
+
+This project is an independent, fan-made Chinese localization ("translation
+patch") for the Saints Row video game series. It is not affiliated with,
+endorsed by, or sponsored by the copyright holders of those games.
+
+Saints Row and all related titles, characters, artwork, music, and trademarks
+are the property of their respective copyright holders, including but not
+limited to:
+
+    - THQ (2006-2012)
+    - Volition, Inc. (original developer)
+    - Deep Silver (2013-present)
+
+Copyright (c) their respective owners. All rights reserved.
+
+This project distributes NO copyrighted game assets. It provides only
+translation text and data that users must apply to their own legally
+acquired copies of the games. The games themselves are not redistributed
+by this project and remain governed by their own licenses and copyright.
+
+----------------------------------------------------------------------
+Additional Terms
+----------------------------------------------------------------------
+
+None.
+
+----------------------------------------------------------------------
+Other Copyright Notices
+----------------------------------------------------------------------
+
+Copyright (c) 2026 Randerion (HaoJun0823). All rights reserved.
+
+Portions of this project are Copyright (c) their respective authors.
+
+Third-party components retain their original copyright notices, including:
+
+    - stb: Copyright (c) 2017 Sean Barrett
+    - ASI Loader: Copyright (c) 2023 ThirteenAG
+    - MinHook: Copyright (c) 2009-2017 Tsuda Kageyu
+    - Source Han Serif: Copyright 2017-2022 Adobe
+
+----------------------------------------------------------------------
+Third-Party Components
+----------------------------------------------------------------------
+
+The following third-party components are distributed under their own licenses
+and are not covered by the main license of this project:
+
+- stb - MIT License or Public Domain - Copyright (c) 2017 Sean Barrett
+  See ./LICENSES/stb.txt
+
+- ASI Loader - MIT License - Copyright (c) 2023 ThirteenAG
+  See ./LICENSES/ASILoader.txt
+
+- MinHook - BSD 2-Clause License - Copyright (c) 2009-2017 Tsuda Kageyu
+  See ./LICENSES/MinHook.txt
+
+- Source Han Serif - SIL Open Font License 1.1 - Copyright 2017-2022 Adobe
+  See ./LICENSES/source-han-serif.txt
+
+----------------------------------------------------------------------
+Disclaimer
+----------------------------------------------------------------------
+
+The main license of this project, GNU General Public License v3.0 or later,
+includes its own warranty disclaimer and limitation of liability. The
+following disclaimer is a project-specific summary and does not replace,
+modify, or override the main license. The main license controls in case of
+any conflict.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+----------------------------------------------------------------------
+Notes
+----------------------------------------------------------------------
+
+This file describes the main license, additional terms, copyright notices,
+third-party components, and disclaimer of this project.
+The full license texts are located in the ./LICENSES/ directory.
