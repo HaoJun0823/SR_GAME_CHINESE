@@ -29,7 +29,7 @@ build_release.py — {game}_{version}_{lang} 一键发布构建编排
     5. 复制 Fonts/ 下的字体 → release/{gv}/scripts/
     6. 复制 dist/common/winmm.dll 与 必读说明.txt → release/{gv}/
     7. 复制 dist/{game}/scripts/*.ini → release/{gv}/scripts/
-    8. 合并 License/ 下全部 txt → release/{gv}/License.txt
+    8. 合并 Licenses/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE
 
 用法
     python build_release.py                      # 全部：sr3r_common / sr4r_common / sr4r_microsoft
@@ -414,16 +414,18 @@ def step7_ini(cfg, out_root):
     return n
 
 
+LICENSE_DIR = 'Licenses'
 LICENSE_ORDER = ['ASILoader.txt', 'MinHook.txt', 'stb.txt', 'source-han-serif.txt', 'GPLv3.txt']
 
 
 def step8_license(cfg, out_root):
-    """8. 合并 License/ 下全部 txt → release/{gv}/License.txt"""
-    src = os.path.join(ROOT, 'License')
-    files = sorted(f for f in os.listdir(src) if f.lower().endswith('.txt')) \
-        if os.path.isdir(src) else []
+    """8. 合并 Licenses/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE"""
+    src = os.path.join(ROOT, LICENSE_DIR)
+    if not os.path.isdir(src):
+        raise RuntimeError(f'许可目录不存在：{src}（已重命名为 {LICENSE_DIR}/）')
+    files = sorted(f for f in os.listdir(src) if f.lower().endswith('.txt'))
     if not files:
-        raise RuntimeError(f'License/ 下没有 txt：{src}')
+        raise RuntimeError(f'{LICENSE_DIR}/ 下没有 txt：{src}')
     known = [f for f in LICENSE_ORDER if f in files]
     rest = [f for f in files if f not in LICENSE_ORDER]
 
@@ -434,12 +436,21 @@ def step8_license(cfg, out_root):
         parts.append(f'{bar}\n== {f}\n{bar}\n\n{t}\n')
     text = '\n\n'.join(parts) + '\n'
 
-    dst = os.path.join(out_root, cfg['rel'], 'License.txt')
-    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    pkg_dir = os.path.join(out_root, cfg['rel'])
+    os.makedirs(pkg_dir, exist_ok=True)
+    dst = os.path.join(pkg_dir, 'License.txt')
     with open(dst, 'w', encoding='utf-8', newline='\n') as fh:
         fh.write(text)
     p(f'  License.txt  合并 {len(files)} 份：{", ".join(known + rest)}')
-    return len(files)
+
+    # 复制仓库根 LICENSE（项目主许可，含游戏版权声明）到包根，独立成文件，
+    # 供 pack_release.py 的 os.walk 一并压入 zip。
+    root_license = os.path.join(ROOT, 'LICENSE')
+    if not os.path.isfile(root_license):
+        raise RuntimeError(f'仓库根 LICENSE 不存在：{root_license}')
+    shutil.copy2(root_license, os.path.join(pkg_dir, 'LICENSE'))
+    p(f'  LICENSE      复制自 {os.path.relpath(root_license, ROOT)}')
+    return len(files) + 1
 
 
 STEPS = [
@@ -450,7 +461,7 @@ STEPS = [
     ('复制字体 -> scripts\\', step5_fonts),
     ('复制 ASI Loader + 说明 -> 根', step6_loader),
     ('复制 ini -> scripts\\', step7_ini),
-    ('合并 License -> License.txt', step8_license),
+    ('合并 License -> License.txt + 复制 LICENSE', step8_license),
 ]
 
 

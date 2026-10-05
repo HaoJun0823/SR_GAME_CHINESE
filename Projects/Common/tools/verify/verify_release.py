@@ -323,6 +323,13 @@ def verify_pkg(rel, root, rep, strict):
         else:
             rep.add(pkg, 'License.txt', RESULT_OK, f'{os.path.getsize(lic):,}B, 各许可齐全')
 
+    # 9b. 包根 LICENSE（项目主许可，含游戏版权声明；由 build_release.py 第 8 步复制）
+    root_lic = os.path.join(d, 'LICENSE')
+    if not os.path.isfile(root_lic) or os.path.getsize(root_lic) < 1000:
+        rep.add(pkg, 'LICENSE', RESULT_FAIL, '缺失或内容过少')
+    else:
+        rep.add(pkg, 'LICENSE', RESULT_OK, f'{os.path.getsize(root_lic):,}B')
+
 
 # ══════════════════════════════════════════════════════════════════════════
 def main():
