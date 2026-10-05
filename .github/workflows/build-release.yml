@@ -98,7 +98,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ── 工具集：确保 v141 (MSVC 14.16) + Windows SDK 19041 存在 ──────────
+      # ── 工具集：v141 必装（硬断言）+ Windows SDK 19041 尽力加装 ─────────
       #
       # ★★ 为什么必须是 v141（2026-09-21 CI 实测定位）：
       #   MinHook 1.3.3 的 `build\native\minhook.targets` 里工具集**只列到 v141**
@@ -115,13 +115,25 @@ jobs:
       #   ComponentGroup.VC.Tools.142.x86.x64 与 VC.Tools.x86.x64（v142/v143），
       #   因此仍必须在这里用 VS Installer 现场加装（与原 windows-2022 同法）。
       #
-      # ★★ windows-2025 带来的第二个坑：Windows SDK。新镜像预装 SDK **只有
-      #   10.0.26100.0**，而 build_release.py 的 find_winsdk() 首选 10.0.19041.0
-      #   （v141 时代的官方搭配 SDK，也是原 windows-2022 上实测通过的组合）。
-      #   若不装 19041，find_winsdk() 会静默回退到 26100 —— v141（19.16 老编译器）
-      #   配 26100 属微软不再测试的组合。为让「换镜像不引入新变量」，这里把
-      #   Windows10SDK.19041 与 v141 **同一批**加装，构建环境与 2022 时代一致。
-      - name: 确保 v141 (MSVC 14.16) + Windows SDK 19041 可用
+      # ★★ 2026-10-05 run 37323099359 实测翻车与对策：
+      #   · 现象：「v141 + SDK19041 一次 modify」跑了 6.5 分钟后 exit 1，
+      #     annotation 只有一句 "Process completed with exit code 1"：
+      #     连是哪个组件挂的、vs_installer 退出码多少、装了多少，全都无从知晓。
+      #     modify 耗时 6.5 分钟说明组件下载/安装进行了很久（两件合计 3GB+），
+      #     中途失败的头号嫌疑是 **磁盘耗尽**（windows-2025 的 C: 远比 2022
+      #     时代紧张），组件 ID 失效 / 安装器自更新被挡为次要嫌疑。
+      #   · 对策（三管齐下，任何一条失败下次日志都能直接定位根因）：
+      #     1) **拆分安装**：v141 单独一次 modify —— 必需项，失败=硬失败并
+      #        dump 安装器日志；SDK 19041 单独一次 modify —— 加固项。
+      #        谁挂谁知道，互不拖累；
+      #     2) **可观测性**：Start-Process -PassThru 拿 vs_installer 退出码
+      #        并打印；任一路径失败都 dump %TEMP%\dd_*.log 尾部；
+      #     3) **降级策略**：SDK 19041 装不上**不再阻断构建** ——
+      #        find_winsdk() 会自动回退到镜像自带的 10.0.26100.0，
+      #        v141+26100 组合直接交给 MSBuild 实测（编不过会有明确报错，
+      #        不再是环境步骤里一句没头没尾的 exit 1）。磁盘余量不足 6 GB
+      #        时也主动跳过加装（SDK 19041 展开约需 3-4 GB）。
+      - name: 确保 v141 (MSVC 14.16) 工具集可用（SDK 19041 尽力加装，失败降级 26100）
         shell: pwsh
         run: |
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -137,53 +149,97 @@ jobs:
             return (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.19041.0\um\windows.h")
           }
 
-          $needV141 = -not (Test-V141)
-          $needSdk  = -not (Test-Sdk19041)
-          if (-not $needV141 -and -not $needSdk) {
-            Write-Host "v141 与 Windows SDK 10.0.19041.0 均已存在，跳过安装。"
-          } else {
-            $adds = @()
-            if ($needV141) { $adds += 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' }
-            if ($needSdk)  { $adds += 'Microsoft.VisualStudio.Component.Windows10SDK.19041' }
-            Write-Host "镜像内缺: $($adds -join ', ')，开始安装 ..."
+          # 带重试的断言：installer 主进程退出后，后台 MSI 事务可能仍在收尾落盘，
+          # 立刻断言存在「明明装成功却被判失败」的误杀（15s × 4）。
+          function Wait-Until([scriptblock]$test, [string]$what) {
+            for ($i = 1; $i -le 4; $i++) {
+              if (& $test) { return $true }
+              if ($i -lt 4) {
+                Write-Host "  ${what} 尚未就绪，等待后台事务收尾（第 $i 次，15s）..."
+                Start-Sleep -Seconds 15
+              }
+            }
+            return $false
+          }
+
+          # VS Installer modify：打印完整命令与退出码。0 / 3010 均视为安装器
+          # 正常结束（3010 = 成功但需重启）；文件是否真落地交给后续断言。
+          function Invoke-VsModify([string[]]$addComponentIds) {
             $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
             if (!(Test-Path $installer)) { throw "找不到 vs_installer.exe：$installer" }
-
             $vsPath = & $vswhere -latest -products * -property installationPath |
                         Select-Object -First 1
             if (!$vsPath) { throw "vswhere 取不到 Visual Studio 安装路径" }
             Write-Host "目标 VS 安装路径: $vsPath"
 
-            # ★ vs_installer.exe 是 GUI 程序：直接调用会立刻返回，CI 不等它。
-            #   必须用 Start-Process -Wait 显式等待。
-            #   另外它在 CI 上**不产生控制台输出**（无 console host），属正常现象，
-            #   所以失败与否只能靠后面的 vswhere / Test-Path 断言判断。
-            # ★ v141 与 SDK 19041 同批 --add：只触发一次 installer modify，
-            #   少一轮安装器自更新/等待，也保证两者状态一致。
             $instArgs = @('modify',
                           '--installPath', "`"$vsPath`"",
                           '--quiet', '--norestart', '--nocache', '--noUpdateInstaller')
-            foreach ($a in $adds) { $instArgs += @('--add', $a) }
-            Start-Process -FilePath $installer -Wait -ArgumentList $instArgs
+            foreach ($a in $addComponentIds) { $instArgs += @('--add', $a) }
+            Write-Host "vs_installer modify --add $($addComponentIds -join ' --add ')"
 
-            if (!(Test-V141)) {
-              # 注意：这里不用 here-string（@"..."@）。它的结束符 "@ 必须顶格，
-              # 与 YAML 的 run: | 缩进块冲突，会让 YAML 解析失败。
+            # ★ vs_installer.exe 是 GUI 程序：必须 Start-Process -Wait 显式等待，
+            #   否则立刻返回、CI 不等它。它也不产生控制台输出（无 console host），
+            #   所以成功与否只能靠退出码 + 下面的 Test-* 断言判断。
+            $proc = Start-Process -FilePath $installer -ArgumentList $instArgs -Wait -PassThru
+            Write-Host "vs_installer 退出码: $($proc.ExitCode)（0=成功；3010=成功但需重启）"
+            return $proc.ExitCode
+          }
+
+          # 失败时把安装器自己的日志尾巴翻出来 —— 没有它，CI 上的 exit 1
+          # 永远是一笔糊涂账（run 37323099359 的教训）。
+          function Dump-VsLogs {
+            Write-Host "── VS Installer 日志尾部（%TEMP%\dd_*.log）──"
+            $logs = Get-ChildItem $env:TEMP -Filter 'dd_*.log' -ErrorAction SilentlyContinue |
+                      Sort-Object LastWriteTime -Descending | Select-Object -First 3
+            if (!$logs) { Write-Host "  （未找到 dd_*.log）"; return }
+            foreach ($f in $logs) {
+              Write-Host "── $($f.Name) 最后 25 行 ──"
+              Get-Content -LiteralPath $f.FullName -Tail 25 -ErrorAction SilentlyContinue |
+                ForEach-Object { Write-Host "  $_" }
+            }
+          }
+
+          # ── 1) v141：必需项，单独 modify，装不上 = 硬失败 ─────────────────
+          if (Test-V141) {
+            Write-Host "v141 已存在，跳过安装。"
+          } else {
+            Invoke-VsModify @('Microsoft.VisualStudio.Component.VC.v141.x86.x64') | Out-Null
+            if (Wait-Until { Test-V141 } 'v141 (MSVC 14.16)') {
+              Write-Host "v141 安装成功。"
+            } else {
+              Dump-VsLogs
               Write-Host "!! v141 (MSVC 14.16) 安装后仍不可用。"
               Write-Host "   可能原因："
               Write-Host "     1) 镜像无法在线拉取 VS 组件（需要外网）；"
-              Write-Host "     2) 组件 ID 已变更（原 Microsoft.VisualStudio.Component.VC.v141.x86.x64）；"
-              Write-Host "     3) 需改用其他带旧工具集的 runner。"
+              Write-Host "     2) 磁盘耗尽（看上方 C: 剩余空间与 dd 日志尾部）；"
+              Write-Host "     3) 组件 ID 已变更（原 Microsoft.VisualStudio.Component.VC.v141.x86.x64）。"
               Write-Host "   v141 是 MinHook 1.3.3 的硬约束，缺它必定 LNK1104，无法绕过。"
               throw "v141 (MSVC 14.16) 不可用"
             }
-            if (!(Test-Sdk19041)) {
-              Write-Host "!! Windows SDK 10.0.19041.0 安装后仍不可用。"
-              Write-Host "   可能原因：组件 ID 已变更（原 Microsoft.VisualStudio.Component.Windows10SDK.19041）。"
-              Write-Host "   缺 19041 时 find_winsdk() 会回退到镜像自带的 26100，v141+26100 属未验证组合。"
-              throw "Windows SDK 10.0.19041.0 不可用"
+          }
+
+          # ── 2) Windows SDK 19041：加固项，尽力而为，装不上不阻断 ──────────
+          #    find_winsdk() 首选 19041，缺它则回退 26100（见 build_release.py）。
+          if (Test-Sdk19041) {
+            Write-Host "Windows SDK 10.0.19041.0 已存在，跳过安装。"
+          } else {
+            $freeGb = [math]::Round((Get-PSDrive C).Free / 1GB, 1)
+            Write-Host "C: 剩余空间 ${freeGb} GB（SDK 19041 组件展开约需 3-4 GB）"
+            if ($freeGb -lt 6) {
+              Write-Host "★ 剩余空间不足 6 GB，跳过 SDK 19041 加装（磁盘耗尽是 run 37323099359 首要嫌疑，"
+              Write-Host "   不能让加固项把必需的 v141 安装也拖垮）。find_winsdk() 将回退 10.0.26100.0。"
+            } else {
+              Invoke-VsModify @('Microsoft.VisualStudio.Component.Windows10SDK.19041') | Out-Null
+              if (Wait-Until { Test-Sdk19041 } 'Windows SDK 10.0.19041.0') {
+                Write-Host "Windows SDK 10.0.19041.0 安装成功。"
+              } else {
+                Dump-VsLogs
+                Write-Host "!! Windows SDK 10.0.19041.0 加装失败 —— **不阻断构建**："
+                Write-Host "   find_winsdk() 将回退到镜像自带的 10.0.26100.0；"
+                Write-Host "   v141+26100 组合由本次构建实测，MSBuild 若报错会在日志中直接可见。"
+              }
             }
-            Write-Host "v141 与 Windows SDK 10.0.19041.0 安装成功。"
           }
 
       - name: 展示编译器工具集 / Windows SDK（诊断用）
@@ -197,8 +253,10 @@ jobs:
           Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -ErrorAction SilentlyContinue |
             ForEach-Object { Write-Host "  $($_.Name)" }
           # Windows SDK 19041 是 build_release.py 的 find_winsdk() 首选；
-          # windows-2025 镜像原生只有 10.0.26100.0，19041 由上一步与 v141 同批
-          # 加装，故此处应恰好列出 10.0.19041.0 与 10.0.26100.0 两个。
+          # windows-2025 镜像原生只有 10.0.26100.0，19041 由上一步尽力加装：
+          #   · 装成功 → 此处应列出 10.0.19041.0 与 10.0.26100.0 两个；
+          #   · 降级（磁盘不足/加装失败）→ 只有 10.0.26100.0，find_winsdk()
+          #     将用它，属预期内回退，构建会实测 v141+26100 的兼容性。
 
       - name: 还原 NuGet 包 (MinHook)
         shell: pwsh
