@@ -1,40 +1,64 @@
 name: build-release
 
-# 构建 {game}_{version}_{lang} 发布包。
-# 流程见 `Documents/github_action流程.txt`（2026-10-02 前误写为「仓库根」，该文件其实在 Documents/ 下）；
-# 实现见 `Projects/Common/tools/automation/build_release.py`（8 步）。
+# ══════════════════════════════════════════════════════════════════════════
+# 构建 {game}_{version}_{lang} 发布包 —— ubuntu-latest + msvc-wine 版
+# ══════════════════════════════════════════════════════════════════════════
+# 流程见 `Documents/github_action流程.txt`；实现见
+# `Projects/Common/tools/automation/build_release.py`（8 步，资源步骤与本
+# workflow 无关，纯 Python 跨平台）。
 #
 # 产物（两个层次）：
 #   release/sr3r_common/ 、release/sr4r_common/ 、release/sr4r_microsoft/
 #       中间目录树，build_release.py 产出，**不上传**（只是打包的输入）。
 #   release/《黑道圣徒III》_简体中文_通用_补丁_<date>.zip 等三个中文名 zip
-#       Projects/Common/tools/cli/pack_release.py 产出，**这就是 Artifact 与 Release 的内容**。
-#       上传为三个独立 artifact：sr3r-common / sr4r-common / sr4r-microsoft。
-#       每个 zip 可直接解压到游戏根目录；打 tag 时挂到 GitHub Release（三个独立文件）。
+#       Projects/Common/tools/cli/pack_release.py 产出，**这就是 Artifact 与
+#       Release 的内容**。上传为三个独立 artifact：sr3r-common / sr4r-common /
+#       sr4r-microsoft；打 tag 时挂到 GitHub Release（三个独立文件）。
+#
+# ★★ 2026-10-05 架构切换：Windows runner → ubuntu-latest + msvc-wine。
+#   背景：windows-2022 → windows-latest(2025) 后，v141 (MSVC 14.16) 组件在
+#   VS Installer 里加装连续翻车（run 37323099359：6.5 分钟后 exit 1 且日志
+#   无诊断信息；头号嫌疑是 2025 镜像 C 盘空间紧张），Windows 路线的维护成本
+#   已经高于迁移成本。
+#
+#   新路线（https://github.com/mstorsjo/msvc-wine）：
+#     · vsdownload.py 用与 VS 安装器**同一份官方 manifest** 从微软 CDN 拉包，
+#       `--major 15 --msvc-version 15.9` 精确锁定 VS2017 15.9 的
+#       VC.Tools.14.16 —— 即 **v141 工具集本体**（cl 19.16）+ Win10 SDK
+#       10.0.17763（v141 官方搭档）。产出仍是 **v141 编译的 x64 位 .asi**，
+#       与历史产物同源同版本；
+#     · wine 运行真 cl/link（msvc-wine 的 bin/x64/ 包装脚本自动设置
+#       INCLUDE/LIB 并做过大小写修复），没有 MSBuild —— 步骤 1 由
+#       build_release.py 的 compile_dll_wine() 把 vcxproj Release|x64 的
+#       选项逐项翻译成 cl/link 命令行（见其 docstring 的翻译表）；
+#     · MinHook 1.3.3：workflow 从 nuget.org 下载 nupkg（zip 格式）解压出
+#       libMinHook-x64-v141-mt.lib 直接链接，**不经过 minhook.targets**
+#       （那是 MSBuild 才会跑的 Copy 步骤 —— Windows CI 上「必须 v141」
+#       的根因；直接 cl/link 路径上该约束不存在，v141 只是保持与历史
+#       产物一致的选择）；
+#     · 步骤 2~8（词典/le_string/charlist/字体/Loader/ini/License）是纯
+#       Python，Linux 原生运行；verify_release.py 独立校验产出的 x64 PE、
+#       /MT 静态 CRT、包结构 —— 质量门禁不因换平台而放松。
+#
+#   依赖（见 msvc-wine README）：wine64 / msitools(msiextract) / winbind /
+#   ca-certificates。工具链目录 ~1GB 落 .msvc/，用 actions/cache 缓存，
+#   命中后每次构建省去 5 分钟下载+解包。
 #
 # 触发：
-#   push(master)        —— build 构建 + 校验 + 上传 zip 到 Artifacts；
-#                          随后 publish job 在**同一 run** 内自动按「日期-时间」打 tag
-#                          并发布 Release（三个独立 zip 作为附件），无需手动打 tag。
+#   push(master)        —— 构建 + 校验 + 上传 zip 到 Artifacts；publish job
+#                          在同一 run 内自动按「日期-时间」打 tag 并发布 Release。
 #   pull_request        —— 构建 + 校验（门禁；不发布）
 #   workflow_dispatch   —— 手动；可勾选跳过 DLL 编译
 #
-# ★ 不再依赖「tag push 重新触发 workflow」来发版 —— 那样会因
-#   GITHUB_TOKEN 推送的 tag 不触发 on:push 工作流（GitHub 防循环机制）而静默失败
-#   （package 永远 skipped、Release 建不出 / 无附件）。改为在 push master 的同一
-#   run 内由 publish job 用官方 gh CLI 直接建 tag + 发 Release（三个独立 zip 作为附件）。
+# ★ 不再依赖「tag push 重新触发 workflow」发版（GITHUB_TOKEN 推送的 tag
+#   不触发 on:push 工作流，GitHub 防循环机制）；发布一律在同 run 内由
+#   publish job 用官方 gh CLI 直接建 tag + 发 Release。
 #
 # 忽略纯文档改动（不参与构建），避免无意义的 runner 消耗。
-#
-# ★ 发布环节用官方 `gh` CLI（GitHub-hosted runner 自带），不依赖第三方 release action，
-#   避免中文名附件在 asset label 还原步骤 404 导致发布失败。
 
 on:
-  # ★ paths-ignore 对 **tag push 不生效**（GitHub 官方文档：
-  #   "Path filters are not evaluated for pushes of tags"）。本仓库已不再用 tag
-  #   触发发布（见下方「关键修正」），paths-ignore 仅对推分支生效：
-  #     · 推分支 → 走 paths-ignore 过滤（纯文档改动不触发构建）
-  #     · 由 publish job 在 push master 的同一 run 内直接发版（不再依赖 tag 重触发）
+  # ★ paths-ignore 对 tag push 不生效（官方文档）；本仓库已不用 tag 触发，
+  #   paths-ignore 仅对推分支生效。
   push:
     branches: [main, master]
     paths-ignore:
@@ -64,245 +88,193 @@ concurrency:
 
 jobs:
   build:
-    name: 构建发布包
-    # ★ windows-latest：GitHub 官方已将其从 windows-2022 迁到 **windows-2025**
-    #   （Windows Server 2025 + Visual Studio 2022 Enterprise 17.14，见官方
-    #   runner-images 的 Windows2025-Readme）。构建所需的三样东西在新镜像上
-    #   全部成立：VS2022 Enterprise（NuGet.exe/MSBuild 路径与下方查找逻辑一致）、
-    #   vs_installer.exe 可在线加装 v141、pwsh / Python 3.12 无差异。
-    #   ★ 唯一实质差异：预装 Windows SDK **只有 10.0.26100.0**（2022 是
-    #   17763/19041/22621/26100 四个）——19041 需与 v141 一起在下方加装。
-    runs-on: windows-latest
+    name: 构建发布包（ubuntu-latest + msvc-wine MSVC v141）
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     env:
-      # 本仓库所有 .py 都用 UTF-8；CI 上 Python 默认 stdin/stdout 编码需强制为 UTF-8，
-      # 否则中文输出（构建日志、charlist 统计）会在 Windows 控制台抛 UnicodeEncodeError。
+      # 本仓库所有 .py 都用 UTF-8；强制 Python stdin/stdout 为 UTF-8。
       PYTHONUTF8: '1'
       PYTHONIOENCODING: 'utf-8'
+      # msvc-wine 安装目录（vsdownload.py --dest / install.sh 的目标）。
+      # 传给 build_release.py 的 compile_dll_wine() 定位 bin/x64/cl|link。
+      MSVC_WINE_PREFIX: ${{ github.workspace }}/.msvc
+      # msvc-wine 上游 checkout 的 ref。升级时改这里 —— cache key 含它，
+      # 会自动换缓存；install.sh 对新旧缓存幂等。
+      MSVCWINE_REF: master
 
     steps:
       - name: 检出仓库
         uses: actions/checkout@v7.0.1
-        # ★ 不使用 lfs: 本仓库**没有任何 LFS 追踪文件**（.gitattributes 只做
-        #   二进制声明与 eol 约定，未启用 filter=lfs）。开 lfs: true 会让
-        #   checkout 多跑一次 `git lfs pull`，一旦 runner 上 LFS 缺配就报错，
-        #   属于无谓的风险面。将来真启用 LFS 时再打开。
-        #
-        # ★ 版本：v4 跑在 Node 20（GitHub 已弃用并强制升到 24，会刷 warning）。
-        #   v5 起为 node24。下面所有 action 都对齐到 node24 版本。
+        # ★ 不使用 lfs：本仓库没有任何 LFS 追踪文件（.gitattributes 只做
+        #   二进制声明与 eol 约定）。开 lfs: true 属于无谓的风险面。
 
-      # ── 环境准备 ─────────────────────────────────────────────────────────
+      # ★ 必须完整 checkout msvc-wine（不能只下载 vsdownload.py）：
+      #   install.sh 会用到仓库里的 lowercase / fixinclude（大小写修复，
+      #   Linux 大小写敏感文件系统下 MSVC/SDK 头文件名互相引用不区分大小写
+      #   的修复必需）、wrappers/（cl/link 包装脚本）、msvctricks.cpp
+      #   （自举编译一次 cl 实测可用性）。
+      - name: 检出 msvc-wine
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: mstorsjo/msvc-wine
+          ref: ${{ env.MSVCWINE_REF }}
+          path: .msvc-wine
+
       - name: 配置 Python
         uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.12'
 
-      # ── 工具集：确保 v141 (MSVC 14.16) + Windows SDK 19041 存在 ──────────
-      #
-      # ★★ 为什么必须是 v141（2026-09-21 CI 实测定位）：
-      #   MinHook 1.3.3 的 `build\native\minhook.targets` 里工具集**只列到 v141**
-      #   （v90/v100/v110/v120/v140/v141），且 `.nupkg` 内**不含** libMinHook.lib
-      #   —— 它靠 targets 按 $(PlatformToolset) 前缀匹配后 <Copy> 生成。
-      #   v142/v143/v145 全部匹配不上 -> MH_LibSuffix="x64--md" -> 58 条 Copy
-      #   条件无一命中 -> `lib\MinHook.lib` 不存在 -> **LNK1104**。
-      #   所以这是依赖包的硬约束，不是版本偏好；两个工程已统一改 v141。
-      #   （产出即 **v141 工具集编译的 x64 位 .asi**，见 build_release.py 的
-      #   /p:Platform=x64 + /p:PlatformToolset=v141。）
-      #
-      # ★ windows-latest（= windows-2025，VS2022 Enterprise 17.14）**默认同样
-      #   不带 v141**：官方 Windows2025-Readme 的组件清单里只有
-      #   ComponentGroup.VC.Tools.142.x86.x64 与 VC.Tools.x86.x64（v142/v143），
-      #   因此仍必须在这里用 VS Installer 现场加装（与原 windows-2022 同法）。
-      #
-      # ★★ windows-2025 带来的第二个坑：Windows SDK。新镜像预装 SDK **只有
-      #   10.0.26100.0**，而 build_release.py 的 find_winsdk() 首选 10.0.19041.0
-      #   （v141 时代的官方搭配 SDK，也是原 windows-2022 上实测通过的组合）。
-      #   若不装 19041，find_winsdk() 会静默回退到 26100 —— v141（19.16 老编译器）
-      #   配 26100 属微软不再测试的组合。为让「换镜像不引入新变量」，这里把
-      #   Windows10SDK.19041 与 v141 **同一批**加装，构建环境与 2022 时代一致。
-      - name: 确保 v141 (MSVC 14.16) + Windows SDK 19041 可用
-        shell: pwsh
+      # ── wine 侧依赖（msvc-wine README 的 Prerequisites 原样）─────────
+      #   wine64     : 运行真 cl.exe/link.exe
+      #   msitools   : msiextract，解 VS 组件与 WinSDK 的 .msi（需 >= 0.98）
+      #   winbind    : cl 用 /Zi 时 mspdbsrv 的命名管道通信需要；
+      #                本构建不用 /Zi，装上纯属保险
+      #   ca-certificates: https 拉微软 CDN
+      - name: 安装 wine / msitools 等依赖
         run: |
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-          if (!(Test-Path $vswhere)) { throw "找不到 vswhere.exe，镜像里没有 Visual Studio？" }
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y wine64 msitools ca-certificates winbind
+          wine --version
 
-          function Test-V141 {
-            $p = & $vswhere -latest -products * -find "VC\Tools\MSVC\14.16*" |
-                   Select-Object -First 1
-            return [bool]$p
-          }
-          # 与 build_release.py 的 find_winsdk() 同口径：以 um\windows.h 判定「已装」
-          function Test-Sdk19041 {
-            return (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.19041.0\um\windows.h")
-          }
+      # ── MSVC 工具链缓存 ────────────────────────────────────────────────
+      #   缓存 .msvc/（解包完成的工具链，~1GB）。key 含组件组合与 msvc-wine
+      #   ref；改下载参数 / 升级 msvc-wine 时 key 自动失效重下。
+      #   ★ 注意：缓存命中后 **install.sh 仍会重跑**（下一步无条件执行）：
+      #     install.sh 幂等（ln_s 检查存在才建、cp -a 覆盖 wrapper），且能
+      #     修复缓存 tar 对 symlink farm 的任何潜在损伤。
+      - name: 还原 MSVC 工具链缓存
+        uses: actions/cache@v6
+        with:
+          path: .msvc
+          key: msvcwine-v141-vs15.9-sdk17763-x64-${{ env.MSVCWINE_REF }}-v1
 
-          $needV141 = -not (Test-V141)
-          $needSdk  = -not (Test-Sdk19041)
-          if (-not $needV141 -and -not $needSdk) {
-            Write-Host "v141 与 Windows SDK 10.0.19041.0 均已存在，跳过安装。"
-          } else {
-            $adds = @()
-            if ($needV141) { $adds += 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' }
-            if ($needSdk)  { $adds += 'Microsoft.VisualStudio.Component.Windows10SDK.19041' }
-            Write-Host "镜像内缺: $($adds -join ', ')，开始安装 ..."
-            $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-            if (!(Test-Path $installer)) { throw "找不到 vs_installer.exe：$installer" }
-
-            $vsPath = & $vswhere -latest -products * -property installationPath |
-                        Select-Object -First 1
-            if (!$vsPath) { throw "vswhere 取不到 Visual Studio 安装路径" }
-            Write-Host "目标 VS 安装路径: $vsPath"
-
-            # ★ vs_installer.exe 是 GUI 程序：直接调用会立刻返回，CI 不等它。
-            #   必须用 Start-Process -Wait 显式等待。
-            #   另外它在 CI 上**不产生控制台输出**（无 console host），属正常现象，
-            #   所以失败与否只能靠后面的 vswhere / Test-Path 断言判断。
-            # ★ v141 与 SDK 19041 同批 --add：只触发一次 installer modify，
-            #   少一轮安装器自更新/等待，也保证两者状态一致。
-            $instArgs = @('modify',
-                          '--installPath', "`"$vsPath`"",
-                          '--quiet', '--norestart', '--nocache', '--noUpdateInstaller')
-            foreach ($a in $adds) { $instArgs += @('--add', $a) }
-            Start-Process -FilePath $installer -Wait -ArgumentList $instArgs
-
-            if (!(Test-V141)) {
-              # 注意：这里不用 here-string（@"..."@）。它的结束符 "@ 必须顶格，
-              # 与 YAML 的 run: | 缩进块冲突，会让 YAML 解析失败。
-              Write-Host "!! v141 (MSVC 14.16) 安装后仍不可用。"
-              Write-Host "   可能原因："
-              Write-Host "     1) 镜像无法在线拉取 VS 组件（需要外网）；"
-              Write-Host "     2) 组件 ID 已变更（原 Microsoft.VisualStudio.Component.VC.v141.x86.x64）；"
-              Write-Host "     3) 需改用其他带旧工具集的 runner。"
-              Write-Host "   v141 是 MinHook 1.3.3 的硬约束，缺它必定 LNK1104，无法绕过。"
-              throw "v141 (MSVC 14.16) 不可用"
-            }
-            if (!(Test-Sdk19041)) {
-              Write-Host "!! Windows SDK 10.0.19041.0 安装后仍不可用。"
-              Write-Host "   可能原因：组件 ID 已变更（原 Microsoft.VisualStudio.Component.Windows10SDK.19041）。"
-              Write-Host "   缺 19041 时 find_winsdk() 会回退到镜像自带的 26100，v141+26100 属未验证组合。"
-              throw "Windows SDK 10.0.19041.0 不可用"
-            }
-            Write-Host "v141 与 Windows SDK 10.0.19041.0 安装成功。"
-          }
-
-      - name: 展示编译器工具集 / Windows SDK（诊断用）
-        shell: pwsh
+      # ── 下载并解包 MSVC v141 + Win10 SDK ─────────────────────────────
+      #   ★ --major 15（VS2017 channel）是**关键**：Microsoft.VisualStudio.
+      #     Component.VC.Tools.14.16（= v141）只存在于 VS2017 的 manifest；
+      #     VS2022+ manifest 里 v141 兼容组件的 ID 不同（VC.v141.x86.x64），
+      #     vsdownload.py 找不到时会**静默回退最新工具集**，故必须锁 15。
+      #   ★ --msvc-version 15.9 -> VC.Tools.14.16 + SDK 10.0.17763（v141
+      #     官方搭档）。SDK 版本不再与 vcxproj 的 WindowsTargetPlatformVersion
+      #     字段耦合（那只影响 MSBuild），直接编译用 17763 头/库即可 ——
+      #     比 2025 镜像自带的 26100 老编新配稳得多。
+      #   ★ 其余 --with-*=no 砍掉 MSBuild/devcmd/DIA/ATL/ASAN：直接
+      #     cl/link 用不上，能省几百 MB 下载。
+      - name: 下载并解包 MSVC v141 + Win10 SDK（缓存未命中时）
         run: |
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-          Write-Host "── 已安装的 MSVC 工具集 ──"
-          & $vswhere -latest -products * -find "VC\Tools\MSVC\*" |
-            ForEach-Object { Write-Host "  $_" }
-          Write-Host "── 已安装的 Windows SDK ──"
-          Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -ErrorAction SilentlyContinue |
-            ForEach-Object { Write-Host "  $($_.Name)" }
-          # Windows SDK 19041 是 build_release.py 的 find_winsdk() 首选；
-          # windows-2025 镜像原生只有 10.0.26100.0，19041 由上一步与 v141 同批
-          # 加装，故此处应恰好列出 10.0.19041.0 与 10.0.26100.0 两个。
+          set -euo pipefail
+          if [ -x "${MSVC_WINE_PREFIX}/bin/x64/cl" ]; then
+            echo "工具链缓存命中，跳过下载（install.sh 仍会重跑以修复 symlink）。"
+          else
+            python3 .msvc-wine/vsdownload.py \
+              --accept-license \
+              --major 15 \
+              --msvc-version 15.9 \
+              --architecture x64 --host-arch x64 \
+              --with-msbuild=no --with-devcmd=no --with-dia=no \
+              --with-atl=no --with-asan=no \
+              --dest "${MSVC_WINE_PREFIX}"
+          fi
 
-      - name: 还原 NuGet 包 (MinHook)
-        shell: pwsh
+      # ── install.sh：大小写修复 + 包装脚本生成（幂等，永远跑）────────
+      #   它做四件事：a) VC/WindowsKits 目录小写 symlink 化（Linux 大小写
+      #   敏感下的必需修复）；b) 生成 bin/x64/{cl,link,...} 包装脚本 +
+      #   msvcenv.sh（自动探测 MSVC/SDK 版本目录）；c) wineboot 初始化 wine
+      #   prefix；d) 自举编译 msvctricks.cpp —— 一次真实的 wine cl 调用，
+      #   编译失败会在日志里直说（比「链路坏了跑构建时才炸」好定位得多）。
+      - name: install.sh（生成包装脚本 / 大小写修复）
         run: |
-          # vcxproj Import 了 ..\packages\minhook.1.3.3\build\native\minhook.targets，
-          # 缺失时 EnsureNuGetPackageBuildImports 会直接令构建失败。
-          # Projects/**/packages/ 在 .gitignore 里 → CI 全新 clone 后必须还原。
-          #
-          # ★ build_release.py 的 ensure_nuget() 已能自动找 NuGet.exe 并还原，
-          #   所以这一步只是「提前、显式」地做一遍，失败能更早暴露且日志更清晰。
-          #   找不到 NuGet.exe 时**不报错**，交给 build_release.py 兜底。
-          $nuget = $null
-          foreach ($cand in @(
-            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe",
-            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe",
-            "${env:ProgramFiles}\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.exe"
-          )) {
-            if (Test-Path $cand) { $nuget = $cand; break }
-          }
-          if (!$nuget) {
-            $found = Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft Visual Studio" -Recurse `
-                       -Filter NuGet.exe -ErrorAction SilentlyContinue |
-                     Select-Object -First 1
-            if ($found) { $nuget = $found.FullName }
-          }
-          if (!$nuget) {
-            Write-Host "镜像内无 NuGet.exe，下载官方命令行版"
-            $nuget = "$env:RUNNER_TEMP\nuget.exe"
-            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" `
-                              -OutFile $nuget
-          }
-          Write-Host "NuGet: $nuget"
+          set -euo pipefail
+          sh .msvc-wine/install.sh "${MSVC_WINE_PREFIX}"
 
-          # 每个工程各自还原到同级 packages\（与 vcxproj 里 ..\packages\ 的相对路径一致）
-          foreach ($rel in @("Projects\SR3\SR3R_I18N", "Projects\SR4\SR4R_I18N")) {
-            $cfg = Join-Path $rel "packages.config"
-            $dest = Join-Path (Split-Path $rel -Parent) "packages"
-            if (!(Test-Path $cfg)) { throw "缺少 $cfg" }
-            Write-Host "restore $cfg -> $dest"
-            & $nuget restore $cfg -PackagesDirectory $dest -NonInteractive
-            if ($LASTEXITCODE -ne 0) { throw "NuGet restore 失败: $cfg" }
-          }
+      # ── 编译器验证（门禁 + 诊断）──────────────────────────────────────
+      #   cl 无参数打印 banner（Microsoft (R) C/C++ Optimizing Compiler
+      #   Version 19.16.x for x64）—— **必须**看到 19.16 才放行，防止
+      #   vsdownload 参数被上游改动后静默回退成新版工具集（那会改变产物
+      #   工具集，违背「与历史 v141 产物一致」的约束）。
+      - name: 验证编译器为 MSVC v141（诊断 + 门禁）
+        run: |
+          set -euo pipefail
+          export PATH="${MSVC_WINE_PREFIX}/bin/x64:$PATH"
+          banner="$(cl 2>&1 || true)"
+          echo "── cl banner ──"
+          echo "$banner" | head -2
+          if ! echo "$banner" | grep -q "19\.16"; then
+            echo "!! cl 不是 MSVC 14.16 (v141) —— vsdownload 可能回退了版本" >&2
+            exit 1
+          fi
+          echo "── Win SDK 版本 ──"
+          ls "${MSVC_WINE_PREFIX}/kits/10/include/"
+          echo "── 磁盘余量 ──"
+          df -h .
 
-          # 硬校验产物落地（还原『成功』不等于文件存在）
-          $targets = Get-ChildItem -Recurse -Path Projects -Filter minhook.targets
-          if ($targets.Count -lt 2) {
-            throw "minhook.targets 只找到 $($targets.Count) 个（期望 2 个）"
-          }
-          $targets | ForEach-Object { Write-Host "OK: $($_.FullName)" }
+      # ── MinHook 1.3.3：nupkg 即 zip，解出 v141 静态库直接链接 ─────────
+      #   packages/ 在 .gitignore 里（Projects/**/packages/），CI 必须自备。
+      #   直接点名 libMinHook-x64-v141-mt.lib：x64、/MT（与工程
+      #   RuntimeLibrary=MultiThreaded 一致）、v141 编译 —— 三者都对齐
+      #   vcxproj 经 minhook.targets 在 Windows 上最终链接的那份库，
+      #   产物二进制语义不变。
+      - name: 下载 MinHook 1.3.3 并解压到两个工程
+        run: |
+          set -euo pipefail
+          curl -fsSL -o minhook.1.3.3.nupkg https://www.nuget.org/api/v2/package/minhook/1.3.3
+          rm -rf .minhook_tmp && mkdir .minhook_tmp
+          unzip -qo minhook.1.3.3.nupkg -d .minhook_tmp
+          for proj in Projects/SR3 Projects/SR4; do
+            mkdir -p "$proj/packages/minhook.1.3.3"
+            cp -a .minhook_tmp/lib   "$proj/packages/minhook.1.3.3/"
+            cp -a .minhook_tmp/build "$proj/packages/minhook.1.3.3/"
+          done
+          rm -rf .minhook_tmp minhook.1.3.3.nupkg
+          for proj in Projects/SR3 Projects/SR4; do
+            test -f "$proj/packages/minhook.1.3.3/lib/native/lib/libMinHook-x64-v141-mt.lib"
+            test -f "$proj/packages/minhook.1.3.3/lib/native/include/MinHook.h"
+          done
+          echo "✓ MinHook 1.3.3 (x64-v141-mt) 就位"
 
-      # ── 构建（8 步流程）──────────────────────────────────────────────────
+      # ── 构建（8 步流程；步骤 1 走 compile_dll_wine）─────────────────
       - name: 构建 release/{game}_{version}
-        shell: pwsh
         run: |
-          $extra = @()
-          if ('${{ github.event.inputs.skip_dll }}' -eq 'true') { $extra += '--skip-dll' }
-          python Projects/Common/tools/automation/build_release.py @extra
-          if ($LASTEXITCODE -ne 0) { throw "build_release.py 失败 (rc=$LASTEXITCODE)" }
+          set -euo pipefail
+          extra=()
+          if [ "${{ github.event.inputs.skip_dll }}" = "true" ]; then
+            extra+=(--skip-dll)
+          fi
+          python3 Projects/Common/tools/automation/build_release.py "${extra[@]}"
 
-      # ── 产物校验（独立于构建脚本再核一遍）────────────────────────────────
+      # ── 产物校验（独立于构建脚本再核一遍：x64 PE / 静态 CRT / 包结构）──
       - name: 校验产物完整性
-        shell: pwsh
-        run: python Projects/Common/tools/verify/verify_release.py release
+        run: python3 Projects/Common/tools/verify/verify_release.py release
 
-      # ── 打包为可分发的中文名 zip ─────────────────────────────────────────
-      # ★★ 为什么在 build 阶段就打包（而不是留到 publish job 再压）：
-      #   1. **Artifacts 表层直接就是 {game}_{version}.zip** —— 下载即得，
-      #      不需要先把目录树下载下来再自己压，也不会让人看不懂里面是什么。
-      #   2. **只有一处打包逻辑**。原先发布逻辑用 bash `zip -r -9 -UN=UTF8`，
-      #      而 build job 只传目录树，等于同一个包存在两种形态、两处代码，
-      #      容易漂移。现在统一由 `Projects/Common/tools/cli/pack_release.py` 产出，publish job
-      #      只负责把它挂到 Release。
-      #   3. 中文文件名 + UTF-8 标志位由 Python zipfile 保证（见脚本内注释），
-      #      比依赖 runner 上有没有 7-Zip / zip 更稳。
+      # ── 打包为可分发的中文名 zip（Python zipfile，UTF-8 标志位保证）──
       - name: 打包为中文名 zip
-        shell: pwsh
         run: |
-          # 构建日期显式按 UTC+8 算（runner 默认 UTC，直接用会偏一天）
-          python Projects/Common/tools/cli/pack_release.py release
-          if ($LASTEXITCODE -ne 0) { throw "pack_release.py 失败 (rc=$LASTEXITCODE)" }
+          set -euo pipefail
+          python3 Projects/Common/tools/cli/pack_release.py release
 
-      # ── 上传：三个独立、命名清晰的 artifact（不再封进单个 sr-release-zips 包）──
-      # ★ 每个 artifact 内含 1 个中文名 zip（扁平，无 release/ 前缀）：
-          #   · Artifacts 页是三个独立条目，不再是一个看不出内容的「大包」；
-      #   · publish job 把三个分别下载到 dist/<artifact-name>/ 子目录（每个含 1 个
-      #     中文名 zip），再各自校验、以 ASCII 附件名上传（GitHub 不支持中文名附件）。
+      # ── 按游戏拆分暂存（供三个独立 artifact）──────────────────────────
       - name: 按游戏拆分暂存发布包
-        shell: pwsh
         run: |
-          $items = @(
-            @{ name='sr3r-common';    pat='release/《黑道圣徒III》_简体中文_通用_补丁_*.zip' },
-            @{ name='sr4r-common';    pat='release/《黑道圣徒IV》_简体中文_通用_补丁_*.zip' },
-            @{ name='sr4r-microsoft'; pat='release/《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip' }
+          set -euo pipefail
+          shopt -s nullglob
+          declare -A items=(
+            [sr3r-common]="release/《黑道圣徒III》_简体中文_通用_补丁_*.zip"
+            [sr4r-common]="release/《黑道圣徒IV》_简体中文_通用_补丁_*.zip"
+            [sr4r-microsoft]="release/《黑道圣徒IV》_简体中文_微软商店_补丁_*.zip"
           )
-          foreach ($it in $items) {
-            $m = @(Get-Item -Path $it.pat -ErrorAction SilentlyContinue)
-            if ($m.Count -ne 1) {
-              throw "期望恰好 1 个文件匹配 '$($it.pat)'，实际 $($m.Count) 个"
-            }
-            $dst = Join-Path stage $it.name
-            New-Item -ItemType Directory -Force -Path $dst | Out-Null
-            Copy-Item -Path $m[0].FullName -Destination $dst
-            Write-Host "staged $($it.name) <- $($m[0].Name)"
-          }
+          for name in sr3r-common sr4r-common sr4r-microsoft; do
+            pat="${items[$name]}"
+            matches=( $pat )
+            if [ "${#matches[@]}" -ne 1 ]; then
+              echo "!! '$pat' 期望恰好 1 个文件，实际 ${#matches[@]} 个" >&2
+              exit 1
+            fi
+            mkdir -p "stage/$name"
+            cp "${matches[0]}" "stage/$name/"
+            echo "staged $name <- $(basename "${matches[0]}")"
+          done
 
       - name: "上传 SR3 通用包 (artifact: sr3r-common)"
         uses: actions/upload-artifact@v7.0.1

@@ -206,6 +206,177 @@ def copy_files(src_dir, dst_dir, exts=None):
 # ══════════════════════════════════════════════════════════════════════════
 # 步骤 1: 编译 DLL
 # ══════════════════════════════════════════════════════════════════════════
+
+# ── Linux / msvc-wine 构建路径（CI ubuntu-latest 使用）───────────────────
+#
+# ★★ 2026-10-05 决策：CI 弃用 Windows runner（v141 组件在 windows-2025 上
+#   加装不稳 + 磁盘紧张），改用 mstorsjo/msvc-wine 在 ubuntu-latest 上直接驱动
+#   **微软官方 MSVC v141 编译器**（Wine 运行）：
+#     · vsdownload.py --major 15 --msvc-version 15.9 下载的正是 VS2017 15.9 的
+#       Microsoft.VisualStudio.Component.VC.Tools.14.16（= v141 工具集本体）
+#       + Win10 SDK 10.0.17763（v141 的官方搭档）—— 与原 Windows runner 上
+#       VS Installer 加装的 v141 组件同源同版本，产出仍是 **v141 x64** DLL；
+#     · wine 下没有 MSBuild（vcxproj 的 targets/props 链极重，msvc-wine 官方
+#       也只支持直接调 cl/link），因此本函数把 vcxproj Release|x64 的选项
+#       **逐项翻译**成命令行；
+#     · MinHook 不再经 minhook.targets（那是 MSBuild 才会跑的 Copy 步骤），
+#       而是直接链接 nupkg 里现成的 libMinHook-x64-v141-mt.lib：纯 C 静态库、
+#       /MT 变体与工程 RuntimeLibrary=MultiThreaded 一致。
+#       （当年「v141 是硬约束」的根因 —— targets 按 PlatformToolset 前缀 Copy
+#        生成 libMinHook.lib —— 在直接 cl/link 的路径上根本不存在，v141
+#        现在只是「与历史产物完全一致」的选择，而非技术强制。）
+#
+# MinHook 1.3.3 nupkg 内的关键文件（相对 packages/minhook.1.3.3/）：
+MINHOOK_INCLUDE = os.path.join('lib', 'native', 'include')             # MinHook.h
+MINHOOK_LIB_X64_V141_MT = os.path.join('lib', 'native', 'lib',
+                                       'libMinHook-x64-v141-mt.lib')  # x64 /MT 静态库
+
+# MSBuild 对「未显式指定 AdditionalDependencies 的 DynamicLibrary」链接的
+# 默认系统库集（照搬，保证与 vcxproj 在 Windows 上的行为一致）：
+DEFAULT_SYSTEM_LIBS = ('kernel32.lib user32.lib gdi32.lib winspool.lib '
+                       'comdlg32.lib advapi32.lib shell32.lib ole32.lib '
+                       'oleaut32.lib uuid.lib odbc32.lib odbccp32.lib').split()
+
+
+def find_wine_prefix():
+    """定位 msvc-wine 安装目录；返回 (prefix, cl, link)。
+
+    install.sh 跑过之后 <prefix>/bin/x64/ 下有 cl / link（shell 包装脚本，
+    内部经 wine 调真工具，并已设好 INCLUDE/LIB / 大小写 symlink）。
+    """
+    prefix = os.environ.get('MSVC_WINE_PREFIX', '').strip()
+    if not prefix:
+        raise RuntimeError(
+            'Linux 构建需要环境变量 MSVC_WINE_PREFIX（msvc-wine 安装目录；'
+            'CI 由 workflow 设置，见 .github/workflows/build-release.yml）。')
+    prefix = os.path.abspath(prefix)
+    cl = os.path.join(prefix, 'bin', 'x64', 'cl')
+    link = os.path.join(prefix, 'bin', 'x64', 'link')
+    for tool in (cl, link):
+        if not os.path.isfile(tool):
+            raise RuntimeError(
+                f'msvc-wine 工具缺失：{tool}\n'
+                f'       install.sh 是否跑过？（bin/x64/ 下应有 cl / link 包装脚本）')
+    return prefix, cl, link
+
+
+def _run_wine_tool(cmd, cwd, what, timeout=900):
+    """运行 cl / link（wine 包装脚本），失败时把输出尾部抛出。
+
+    cl / link 的诊断信息基本都打在 stdout；wrapper 是 shell 脚本，可被
+    subprocess 直接 exec（install.sh 的 cp -a 保留了可执行位）。
+    """
+    r = subprocess.run(cmd, capture_output=True, text=True,
+                       encoding='utf-8', errors='replace',
+                       env=clean_env(), cwd=cwd, timeout=timeout)
+    if r.returncode != 0:
+        tail = '\n'.join((r.stdout or '').splitlines()[-30:])
+        err = '\n'.join((r.stderr or '').splitlines()[-15:])
+        raise RuntimeError(f'{what} 失败 (rc={r.returncode}):\n{tail}\n--- stderr ---\n{err}')
+    return r
+
+
+def compile_dll_wine(cfg):
+    """Linux 上经 msvc-wine（Wine 里的 MSVC **v141** = 14.16）直接编译 x64 Release DLL。
+
+    选项翻译表（Release|x64，两个工程配置一致）：
+      WarningLevel=Level3        -> -W3
+      SDLCheck=true               -> -sdl
+      ConformanceMode=true        -> -permissive-
+      LanguageStandard=stdcpp17   -> -std:c++17
+      AdditionalOptions=/utf-8    -> -utf-8
+      RuntimeLibrary=MultiThreaded-> -MT（与 MinHook 的 -mt 变体一致）
+      MSBuild Release 默认优化    -> -O2 -Oi -Gy -EHsc（GS/GF/Gd 等均为 cl 默认）
+      CharacterSet=Unicode         -> -D_UNICODE -DUNICODE
+      ConfigurationType=DynamicLibrary -> -D_WINDLL（MSBuild 自动定义项）
+      预处理器定义                -> -DNDEBUG -D{SRxRI18N}_EXPORTS -D_WINDOWS -D_USRDLL
+      PrecompiledHeader=Use/Create -> 不使用 PCH：两文件规模下 /Yu 无收益还多
+                                     一层 wine 的坑；dllmain.cpp / pch.cpp 都自带
+                                     #include "pch.h"，直接编译完全等价。
+      Link: SubSystem=Windows     -> -SUBSYSTEM:WINDOWS
+      Link: EnableUAC=false       -> DLL 不生成 manifest（等效，ASI 无需 manifest）
+      Link: GenerateDebugInformation=true -> 省略 -DEBUG：asi 分发包不带 pdb，
+                                     产物少 debug 目录不影响运行（verify_release.py
+                                     不检查 pdb），还避开 /Zi 触发 wine 下
+                                     mspdbsrv 需要 winbind 通信的问题。
+      默认 AdditionalDependencies -> DEFAULT_SYSTEM_LIBS
+      MinHook                     -> 直接链 libMinHook-x64-v141-mt.lib（见上文注释）
+
+    产物仍写 x64/Release/{stem}.dll —— 与 MSBuild 的输出路径完全一致，
+    故 find_existing_dll（--skip-dll）与 step1 的既有逻辑都不用改。
+    """
+    proj = os.path.join(ROOT, cfg['proj'])
+    if not os.path.isfile(proj):
+        raise RuntimeError(f'找不到工程文件 {proj}')
+    proj_dir = os.path.dirname(proj)
+    stem = os.path.splitext(os.path.basename(proj))[0]
+
+    _prefix, cl, link = find_wine_prefix()
+
+    # MinHook 包（CI 由 workflow 从 nuget.org 下载解压；本地需先 NuGet 还原）
+    mh_dir = os.path.join(proj_dir, '..', 'packages', 'minhook.1.3.3')
+    mh_hdr = os.path.join(mh_dir, MINHOOK_INCLUDE, 'MinHook.h')
+    mh_lib = os.path.join(mh_dir, MINHOOK_LIB_X64_V141_MT)
+    for need in (mh_hdr, mh_lib):
+        if not os.path.isfile(need):
+            raise RuntimeError(
+                f'缺少 MinHook 文件：{os.path.relpath(need, ROOT)}\n'
+                f'       packages/minhook.1.3.3/ 需先就位（CI 见 workflow 的下载步骤；'
+                f'本地先对 vcxproj 的 packages.config 做 NuGet 还原）。')
+
+    out_dir = os.path.join(proj_dir, 'x64', 'Release')
+    os.makedirs(out_dir, exist_ok=True)
+
+    # ★ 全部用**相对路径**（cwd=工程目录）：wine 下 cl 的 cwd 即 Unix cwd 的
+    #   映射，相对路径原样有效；绝对路径才涉及 Z:\ 盘转换，这里完全绕开。
+    #   cl/link 的选项一律用 '-' 前缀形式（避免以 '/' 开头的选项与路径混淆）。
+    rel_out = 'x64/Release'
+    rel_inc = '../packages/minhook.1.3.3/' + MINHOOK_INCLUDE.replace(os.sep, '/')
+    rel_lib = '../packages/minhook.1.3.3/' + MINHOOK_LIB_X64_V141_MT.replace(os.sep, '/')
+
+    # vcxproj Release|x64 的 PreprocessorDefinitions: NDEBUG;{X}RI18N_EXPORTS;_WINDOWS;_USRDLL
+    # 加上 MSBuild 按工程属性自动注入的 _UNICODE/UNICODE（CharacterSet）与
+    # _WINDLL（ConfigurationType=DynamicLibrary）。
+    defines = ['NDEBUG', stem.replace('_', '') + '_EXPORTS',
+               '_WINDOWS', '_USRDLL', '_WINDLL', '_UNICODE', 'UNICODE']
+
+    # ── 编译：一条 cl 编两个源文件；-Fo 目录形式按源文件基名产 .obj ──────
+    cl_cmd = [cl,
+              '-utf-8', '-W3', '-sdl', '-permissive-', '-std:c++17', '-EHsc',
+              '-MT', '-O2', '-Oi', '-Gy',
+              *[f'-D{d}' for d in defines],
+              f'-I{rel_inc}',
+              '-c', f'-Fo{rel_out}/', 'dllmain.cpp', 'pch.cpp']
+    p(f'  cl (Release|x64, msvc-wine v141)  cwd={os.path.relpath(proj_dir, ROOT)}')
+    p(f'    defines: {" ".join(defines)}')
+    _run_wine_tool(cl_cmd, proj_dir, f'cl({stem})')
+
+    objs = [os.path.join(out_dir, f'{s}.obj') for s in ('dllmain', 'pch')]
+    for o in objs:
+        if not os.path.isfile(o):
+            raise RuntimeError(f'编译成功但缺少 obj：{o}')
+
+    # ── 链接 ──────────────────────────────────────────────────────────────
+    link_cmd = [link,
+                '-DLL', f'-OUT:{rel_out}/{stem}.dll',
+                '-MACHINE:X64', '-SUBSYSTEM:WINDOWS',
+                '-OPT:REF', '-OPT:ICF', '-DYNAMICBASE', '-NXCOMPAT',
+                f'{rel_out}/dllmain.obj', f'{rel_out}/pch.obj',
+                rel_lib,
+                *DEFAULT_SYSTEM_LIBS]
+    _run_wine_tool(link_cmd, proj_dir, f'link({stem})')
+
+    out_dll = os.path.abspath(os.path.join(out_dir, f'{stem}.dll'))
+    if not os.path.isfile(out_dll):
+        raise RuntimeError(f'链接成功但找不到产物：{out_dll}')
+    with open(out_dll, 'rb') as fh:      # PE 快速自检（MZ 头；x64 由 verify_release 查）
+        head = fh.read(0x40)
+    if head[:2] != b'MZ':
+        raise RuntimeError(f'产物不是 PE 文件：{out_dll}')
+    p(f'  -> {os.path.relpath(out_dll, ROOT)}  ({os.path.getsize(out_dll):,} B)')
+    return out_dll
+
+
 def find_nuget():
     """定位 NuGet.exe（VS 自带优先，其次 PATH）。找不到返回 None。"""
     pats = []
@@ -261,10 +432,15 @@ def ensure_nuget(proj):
 def compile_dll(cfg, msbuild):
     """编译 x64 Release DLL，返回产物 .dll 绝对路径。
 
-    工具集：显式传 /p:PlatformToolset（默认 v141，见 TOOLSET 的注释 —— 这是
-    MinHook 1.3.3 的硬约束，不是偏好）。vcxproj 里四个配置也都已改成 v141。
-    SDK：显式传入探测到的版本（见 find_winsdk），避免 MSB8036。
+    平台分支：
+      Windows : 走 MSBuild（vcxproj + minhook.targets）。工具集显式传
+                /p:PlatformToolset（默认 v141，见 TOOLSET 注释 —— MinHook 1.3.3
+                的硬约束）+ /p:WindowsTargetPlatformVersion（见 find_winsdk）。
+      Linux   : 走 msvc-wine（Wine 里的 MSVC v141）直接 cl/link，
+                见 compile_dll_wine（CI ubuntu-latest 路径）。
     """
+    if os.name != 'nt':
+        return compile_dll_wine(cfg)
     proj = os.path.join(ROOT, cfg['proj'])
     if not os.path.isfile(proj):
         raise RuntimeError(f'找不到工程文件 {proj}')
@@ -613,12 +789,19 @@ def main():
 
     msbuild = None
     if not args.skip_dll:
-        msbuild = find_msbuild()
-        if not msbuild:
-            p('!! 找不到 MSBuild.exe。请安装 Visual Studio（含 C++ 生成工具），'
-              '或使用 --skip-dll 复用已有产物。')
-            return 1
-        p(f'  MSBuild: {msbuild}')
+        if os.name == 'nt':
+            msbuild = find_msbuild()
+            if not msbuild:
+                p('!! 找不到 MSBuild.exe。请安装 Visual Studio（含 C++ 生成工具），'
+                  '或使用 --skip-dll 复用已有产物。')
+                return 1
+            p(f'  MSBuild: {msbuild}')
+        else:
+            # Linux（CI ubuntu-latest）：编译走 msvc-wine（见 compile_dll_wine）。
+            # 在这里提前预检 bin/x64/cl|link，让「环境没装好」在动任何资源
+            # 之前就报错，而不是跑到第一个 target 的 [1/8] 才挂。
+            find_wine_prefix()
+            p('  编译器: msvc-wine bin/x64/cl + link（MSVC v141 via Wine）')
 
     dll_cache = {}
     built, fails_all = [], []
