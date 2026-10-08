@@ -8,14 +8,21 @@
 //   3. Hook B  sub_140CF9A00  Volition formatter — RDX = 格式串 -> 查词典替换
 //   4. DumpText.dtxt 未命中文本去重收集（仅英文，过滤 CJK）
 //
-//  [字形层]（引擎结构 2026-09-07 IDA 逆向实证）
-//   字体对象布局（SR4 cpeg cvbm_pc, ≥592B 头 + 变长区）:
-//     +8  u32 字形数  +12 u32 baseChar  +16 i32 missAdvance  +20 u16 行高
-//     +22 u16 cell高  +28 i32 全局字距 +32 u32 kern数  +36/+38 i16 顶部/左侧偏移
-//     +552 kern表(6B/项{u16 left,u16 right,i8 off})  +560 metrics(16B/项)
+//  [字形层]（引擎结构 2026-09-07 IDA 逆向实证; 2026-10 复核修正）
+//   字体对象布局（SR4 cpeg cvbm_pc, 592B 头 + 变长区）:
+//     +8  u32 字形数  +12 u32 baseChar  +16 i32 missAdvance  +20 u16 行高(行距步进)
+//     +22 u16 cell高(quad 垂直 UV 范围; 即本文件沿用的 cellH)  +28 i32 全局字距
+//     +32 u32 kern数  +36/+38 i16 顶部/左侧偏移
+//     +104 图集名     +552 kern表(6B/项{u16 left,u16 right,i8 off})  +560 metrics(16B/项)
 //     +568 u32 texId  +576 xtab(u32/项 图集X)  +584 ytab(u32/项 图集Y)
 //   metrics 16B/项: +0 i32 advance  +4 i32 cell宽  +12 i16 kern起始idx(-1=无)
-//   渲染(DrawWide): quad宽=metrics[+4], quad高=font[+22], UV=(xtab,ytab)+cell尺寸
+//   渲染(DrawWide sub_140DC36A0):
+//     quad宽=metrics[+4], quad高=font[+22], UV=(xtab,ytab)+cell尺寸
+//     ** SRV 绑定(Hook E sub_140E2C9E0 解析 font[+568] texId)与图集尺寸获取(TexObj
+//        wrapper sub_140B7AC00 读 +8/+10)都在字形循环之外 —— 每次绘制调用只绑一张纹理;
+//        每顶点 28B 无纹理索引 -> 一次绘制内无法跨图集分页。**
+//     ** UV 由引擎现场做 xtab[i]/atlasW、ytab[i]/atlasH 除法, DLL 无法预计算成浮点。**
+//   注: variants/speed 属纹理对象(Hook D sub_140B7AF30 的 +20/+34), 不是字体对象字段。
 //   (SR3R 对比: kern +168→+552, metrics +176→+560, texId +184→+568, xtab +192→+576, ytab +200→+584)
 //
 //   方案:
@@ -49,6 +56,22 @@
 //     任一路径都需通过入口特征码校验, 防游戏更新后错位
 //   - 引擎全局变量(fontTab/fontCount/D3D)运行时自解, 未知构建下失效即**降级不崩溃**
 //     （详见 §运行时自解引擎全局变量）
+//
+//  [v7.9 图集优化]（显存 ↓4x + 容量加固; 详见 reports/字体渲染库性能与风险评审_20261003.md）
+//   O1 bc3_atlas(默认1): 魔法图集由 BGRA8 改 BC3 —— 官方图集本就是 BC3/BC2, 而 DLL 原用
+//      4B/px, 实测单字体约 511MB。改 1B/px 后约 1/4。
+//      官方区按原始压缩块直拷(零二次损失), 中文区现场编码; sRGB 视图同步。
+//      开关置 0 可回退到 BGRA8 无损路径。
+//   O2' 容量加固: ① 高度预算预留 32px(ATLAS_H_LIMIT), 原逻辑贴着 16384 算,
+//      字符集再增即 H 溢出 -> state=4 整个字形层失效;
+//      ② cellW 强制 4 对齐(BC3 按 4x4 块, 非对齐会让相邻字形在共享块内互相渗透);
+//      ③ 容量不足时日志明确标注 WILL TRUNCATE, 不再静默截断。
+//   O4 格式分支: 补 BC5 解码器、BC6H/BC7 识别与 sRGB/TYPELESS 判定; 新增 CanDecodeBc
+//      闸门 —— 识别≠能解码, BC6H/BC7 无解码器时优雅放弃(否则 default 分支会把
+//      官方区清零, 英文渲染成透明, 比不升级更糟)。
+//   O5 注释修订: 修正早期把「纹理对象字段(+20 变体/+34 速度)」误记入字体对象的注释;
+//      并记录「一次绘制只绑一张纹理 / UV 除法在引擎内」—— 说明图集分页与 UV 预计算
+//      在当前 hook 层级不可行, 避免后续重复尝试。
 
 #include "pch.h"
 #include <intrin.h>          // _ReturnAddress (v7.4 Format 调用点分类诊断)
@@ -530,6 +553,17 @@ static constexpr uint32_t FAKE_FONT_MAX    = 256;
 static constexpr uint32_t FAKE_GLYPHS      = 0xFFE0u;       // 0x20..0xFFFF 全覆盖
 static constexpr uint32_t FONT_BASECHAR_DEFAULT = 0x20u;
 
+// v7.9 O2': 图集高度安全预算。
+//   D3D11 纹理硬上限为 16384（且部分 Feature Level 更低）, 原逻辑贴着 16384 算行数
+//   导致 font1 实测 H=16348 —— 只差 36px。字符集再增一个字就会 H>16384 ->
+//   "H overflow" 直接 state=4（整个中文字形层失效, 比缺字更严重）。
+//   这里预留 32px 余量：由 rows<=maxRows 可得 H<=offH+(ATLAS_H_LIMIT-offH)=ATLAS_H_LIMIT,
+//   再经 4 对齐最多 +3 -> 恒 <=16355 < 16384, 任何情况下都不会溢出。
+//   取值经仿真校准: 留 64px 会把 font1 的 cellW 从 172 压到 164（字形缩小 4.7%）,
+//   属无谓画质回归; 32px 与原版字形大小完全一致且安全。
+//   收窄循环与 FinishFont 两处共用本常量, 保证容量判定一致。
+static constexpr uint32_t ATLAS_H_LIMIT = 16384u - 32u;
+
 static constexpr size_t ARENA_BYTES   = 128u << 20;   // 词典字符串区（几万条译文上限安全值）
 static constexpr uint32_t DICT_BUCKETS = 1u << 15;
 static constexpr uint32_t ORIG_BUCKETS = 1u << 14;   // origin 联表 16384 桶（1 万+ ID 键）
@@ -690,6 +724,7 @@ struct Config
     bool     subtitleEarly;       // v7.5: 字幕绘制入口整串替换（Hook J）
     int      textDump;            // v1.3: 可执行段落盘 0=关 1=总是 2=auto(仅定位失败时)
     bool     looseFirst;          // v1.9: 挂载表磁盘项插队(loose 文件优先于 vpp_pc)
+    bool     bc3Atlas;            // v7.9: 魔法图集用 BC3 压缩（显存 ↓4x; 0=回到 BGRA8 无损）
     wchar_t  exeOverride[16];     // 强制指定构建 (auto/steam/gog/epic/msstore); 默认 auto=按 PE 指纹识别
 };
 
@@ -704,6 +739,7 @@ static Config g_cfg = {
     true,                          // subtitle_early
     2,                             // text_dump = auto
     true,                          // loose_first = 开（loose 资源优先于 vpp_pc）
+    true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
     L"auto",                       // exe: 按 PE 指纹自动识别
 };
 
@@ -770,15 +806,16 @@ static void LoadConfig(const wchar_t* iniPath)
             else                                                                      g_cfg.textDump = 2;
         }
         else if (_wcsicmp(key, L"loose_first") == 0)  g_cfg.looseFirst = (*val != L'0');
+        else if (_wcsicmp(key, L"bc3_atlas") == 0)    g_cfg.bc3Atlas   = (*val != L'0');
         else if (_wcsicmp(key, L"exe") == 0)  wcsncpy_s(g_cfg.exeOverride, val, _TRUNCATE);
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d loose=%d exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d loose=%d bc3=%d exe=%ls)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
         (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, g_cfg.textDump,
-        (int)g_cfg.looseFirst, g_cfg.exeOverride);
+        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas, g_cfg.exeOverride);
 }
 
 // ---------- CRC-32 (IEEE 反射, 与 zlib.crc32 一致) ----------
@@ -1486,7 +1523,8 @@ struct FakeFont
     uint32_t  nCells;
     uint32_t  blankY;           // 预留空白 cell 的图集 Y（缺字槽位指到这里, 超容量字符空白渲染）
     uint16_t  cellW, cellH;     // cellH=官方行高(不可变); cellW=光栅化宽度(容量不足时收窄)
-    // 伪纹理对象（sub_14085D930 读 +8/+10 宽高; +20 变体数; +34 速度）
+    // 伪纹理对象（sub_140B7AC00 读 +8/+10 宽高; +20 变体数; +34 速度）
+    //   O5 修正: +20/+34 属**纹理对象**字段（帧动画变体）, 不是字体对象字段。
     uint8_t   fakeTexObj[64];
 };
 static FakeFont g_fake[FAKE_FONT_MAX];
@@ -1869,13 +1907,33 @@ static DWORD WINAPI RasterizeThread(LPVOID arg)
                 offHGuess = oh;                    // 官方区真实高度(容量高度预算)
             }
         }
+        // v7.9 O2': 高度用 16384 减安全余量(而非贴着 16384), 且 cellW 保持 4 对齐。
+        //   动机(实测): font1 原本 H 距 D3D11 硬上限只差几十 px; 字符集再增
+        //   一个低频字就会 maxRows 不足 -> 截断, 甚至 H>16384 -> state=4 整个中文字形层失效。
+        //   余量 32px 可吸收官方图集高度变化/取整误差, 避免"贴边失效"。
+        //   cellW 4 对齐: BC3 以 4x4 块为单位, cellW 非 4 倍数时相邻字形会共享块,
+        //   压缩域互相渗透 -> 边缘出现邻字残影。
+        constexpr uint32_t H_LIMIT = ATLAS_H_LIMIT;          // 安全高度预算
         while (nGuess > 1)
         {
             uint32_t per  = capW / cellW;                    // 图集每行列数
-            uint32_t maxR = (16384 - offHGuess) / cellH - 1; // 行数上限(16384 高预算, 末行恒留空白)
+            uint32_t maxR = (H_LIMIT - offHGuess) / cellH - 1; // 行数上限(末日恒留 1 行空白)
             if (per >= 1 && (uint64_t)per * maxR >= nGuess) break;
-            if (cellW <= 32 + 8) break;                       // 收窄下限(32px 以下无意义)
+            if (cellW <= 32 + 8) { cellW = 32; break; }       // 收窄下限(再小无意义)
             cellW = (uint16_t)(cellW - 8);
+            if (cellW & 3) cellW = (uint16_t)(cellW & ~3u);   // O2': BC3 块对齐
+        }
+        if (cellW & 3) cellW = (uint16_t)(cellW & ~3u);
+        if (cellW < 32) cellW = 32;
+        // 记录容量决策（便于复现"为何收窄/是否注定截断"）
+        {
+            uint32_t per  = capW / cellW;
+            uint32_t maxR = (H_LIMIT - offHGuess) / cellH - 1;
+            Log("font%u: capacity capW=%u offH=%u cellW=%u cellH=%u perRow=%u maxRows=%u "
+                "capacity=%llu need=%u%s",
+                fontId, capW, offHGuess, cellW, cellH, per, maxR,
+                (unsigned long long)((uint64_t)per * maxR), nGuess,
+                ((uint64_t)per * maxR >= nGuess) ? "" : "  <-- WILL TRUNCATE (cellW at floor)");
         }
     }
     f->cellW = cellW; f->cellH = cellH;
@@ -2004,8 +2062,10 @@ static uint32_t BppOf(DXGI_FORMAT fmt)
     switch (fmt)
     {
     case DXGI_FORMAT_B8G8R8A8_UNORM:
+    case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:      // O4: sRGB 变体（先前缺失 -> 误判不支持而放弃升级）
     case DXGI_FORMAT_B8G8R8X8_UNORM:
     case DXGI_FORMAT_R8G8B8A8_UNORM:
+    case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:      // O4: 同上
         return 4;
     case DXGI_FORMAT_B5G6R5_UNORM:
     case DXGI_FORMAT_B5G5R5A1_UNORM:
@@ -2035,6 +2095,16 @@ static bool IsBcFormat(DXGI_FORMAT fmt)
     case DXGI_FORMAT_BC4_UNORM:
     case DXGI_FORMAT_BC4_TYPELESS:
     case DXGI_FORMAT_BC4_SNORM:
+    // O4: 补 BC5 / BC6H / BC7（官方或后续图集可能使用）
+    case DXGI_FORMAT_BC5_UNORM:
+    case DXGI_FORMAT_BC5_TYPELESS:
+    case DXGI_FORMAT_BC5_SNORM:
+    case DXGI_FORMAT_BC6H_TYPELESS:
+    case DXGI_FORMAT_BC6H_UF16:
+    case DXGI_FORMAT_BC6H_SF16:
+    case DXGI_FORMAT_BC7_UNORM:
+    case DXGI_FORMAT_BC7_TYPELESS:
+    case DXGI_FORMAT_BC7_UNORM_SRGB:
         return true;
     default:
         return false;
@@ -2065,6 +2135,15 @@ static const char* FmtName(DXGI_FORMAT fmt)
     case DXGI_FORMAT_BC4_UNORM:
     case DXGI_FORMAT_BC4_TYPELESS:
     case DXGI_FORMAT_BC4_SNORM:      return "BC4";
+    case DXGI_FORMAT_BC5_UNORM:
+    case DXGI_FORMAT_BC5_TYPELESS:
+    case DXGI_FORMAT_BC5_SNORM:      return "BC5";   // O4
+    case DXGI_FORMAT_BC6H_TYPELESS:
+    case DXGI_FORMAT_BC6H_UF16:
+    case DXGI_FORMAT_BC6H_SF16:      return "BC6H";  // O4: 已识别(无解码器, 优雅放弃)
+    case DXGI_FORMAT_BC7_UNORM:
+    case DXGI_FORMAT_BC7_TYPELESS:
+    case DXGI_FORMAT_BC7_UNORM_SRGB: return "BC7";   // O4: 同上
     default:                          return "?";
     }
 }
@@ -2072,12 +2151,71 @@ static const char* FmtName(DXGI_FORMAT fmt)
 // BC 块字节数
 static uint32_t BcBlockBytes(DXGI_FORMAT fmt)
 {
-    // BC1/BC4: 8B/块; BC2/BC3: 16B/块
+    // BC1/BC4: 8B/块; BC2/BC3/BC5/BC6H/BC7: 16B/块
+    // O4: 补 BC5/BC6H/BC7（16B，落到下面的默认分支）
     return (fmt == DXGI_FORMAT_BC1_UNORM || fmt == DXGI_FORMAT_BC1_TYPELESS ||
             fmt == DXGI_FORMAT_BC1_UNORM_SRGB ||
             fmt == DXGI_FORMAT_BC4_UNORM || fmt == DXGI_FORMAT_BC4_TYPELESS ||
             fmt == DXGI_FORMAT_BC4_SNORM)
                ? 8u : 16u;
+}
+
+// O4: BC3 家族（TYPELESS/UNORM/SRGB 三者块布局完全一致）
+//   用途: 官方图集若为 BC3 且目标也是 BC3, 可直接 memcpy 原始块 ->
+//   官方英文区零损失（避免"解码再编码"的二次压缩）
+static bool IsBc3Family(DXGI_FORMAT fmt)
+{
+    return fmt == DXGI_FORMAT_BC3_UNORM || fmt == DXGI_FORMAT_BC3_TYPELESS ||
+           fmt == DXGI_FORMAT_BC3_UNORM_SRGB;
+}
+
+// O4: 是否有可用解码器。识别 ≠ 能解码 —— 若只把 BC6H/BC7 加进 IsBcFormat 却不补解码,
+//   DecodeBcStrip 会走 default 把官方区清零（英文区变透明/黑），比"不升级"更糟。
+//   故 FinishFont 必须先过这道闸: 不能解码就优雅放弃（保留官方字体, 中文不生效）。
+static bool CanDecodeBc(DXGI_FORMAT fmt)
+{
+    switch (fmt)
+    {
+    case DXGI_FORMAT_BC1_UNORM:
+    case DXGI_FORMAT_BC1_TYPELESS:
+    case DXGI_FORMAT_BC1_UNORM_SRGB:
+    case DXGI_FORMAT_BC2_UNORM:
+    case DXGI_FORMAT_BC2_TYPELESS:
+    case DXGI_FORMAT_BC2_UNORM_SRGB:
+    case DXGI_FORMAT_BC3_UNORM:
+    case DXGI_FORMAT_BC3_TYPELESS:
+    case DXGI_FORMAT_BC3_UNORM_SRGB:
+    case DXGI_FORMAT_BC4_UNORM:
+    case DXGI_FORMAT_BC4_TYPELESS:
+    case DXGI_FORMAT_BC4_SNORM:
+    case DXGI_FORMAT_BC5_UNORM:          // O4 新增: 双通道（字形常放 R）
+    case DXGI_FORMAT_BC5_TYPELESS:
+    case DXGI_FORMAT_BC5_SNORM:
+        return true;
+    default:
+        // BC6H / BC7: 已识别但无解码器 -> 走优雅放弃（见上）
+        return false;
+    }
+}
+
+// O4: sRGB 变体识别。用途: 自建魔法图集要与官方 SRV **同 sRGB 语义**，
+//   否则中文区与英文区 gamma 不一致（R5 风险）。
+//   判定来源是官方 SRV 的 view 格式（TYPELESS 资源由 view 决定实际语义）。
+static bool IsSrgbFormat(DXGI_FORMAT fmt)
+{
+    switch (fmt)
+    {
+    case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+    case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+    case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
+    case DXGI_FORMAT_BC1_UNORM_SRGB:
+    case DXGI_FORMAT_BC2_UNORM_SRGB:
+    case DXGI_FORMAT_BC3_UNORM_SRGB:
+    case DXGI_FORMAT_BC7_UNORM_SRGB:
+        return true;
+    default:
+        return false;
+    }
 }
 
 static inline uint32_t Rgb565(uint16_t v, uint8_t* r, uint8_t* g, uint8_t* b)
@@ -2188,6 +2326,34 @@ static void DecodeBc4(const uint8_t* blk, uint32_t* out16)
     }
 }
 
+// O4: BC5 单块解码 -> 4x4（双通道 R/G, 与 BC4 同插值算法 ×2）
+//   字形图集若用 BC5 通常把覆盖值放在 R 通道 -> 取 R 复制到 BGRA（灰度语义）
+//   第二通道 G 与字形无关, 不解（省一半计算）
+static void DecodeBc5(const uint8_t* blk, uint32_t* out16)
+{
+    uint8_t r[8];
+    r[0] = blk[0];
+    r[1] = blk[1];
+    if (r[0] > r[1])
+    {
+        for (int i = 0; i < 6; ++i) r[2 + i] = (uint8_t)(((6 - i) * r[0] + (1 + i) * r[1]) / 7);
+    }
+    else
+    {
+        for (int i = 0; i < 4; ++i) r[2 + i] = (uint8_t)(((4 - i) * r[0] + (1 + i) * r[1]) / 5);
+        r[6] = 0; r[7] = 255;
+    }
+    for (int i = 0; i < 16; ++i)
+    {
+        int bit = i * 3;
+        int byteIdx = 2 + (bit >> 3);
+        uint32_t v = blk[byteIdx];
+        if (byteIdx < 7 && (bit & 7) > 5) v |= (uint32_t)blk[byteIdx + 1] << 8;
+        uint8_t g = r[(v >> (bit & 7)) & 7];
+        out16[i] = 0xFF000000u | ((uint32_t)g << 16) | ((uint32_t)g << 8) | g;
+    }
+}
+
 // BC 纹理按块行解码: 解一个 4 像素高条带（每块只解一次）, 写入 atlas 的 [y0,y0+4) 行
 // （宽 W 裁剪, 高 hMax 裁剪; atlas 为 BGRA, pitch 字节）
 static void DecodeBcStrip(DXGI_FORMAT fmt, const uint8_t* src, uint32_t srcRowBytes,
@@ -2212,6 +2378,8 @@ static void DecodeBcStrip(DXGI_FORMAT fmt, const uint8_t* src, uint32_t srcRowBy
             DecodeBc3(blk, tmp); break;
         case DXGI_FORMAT_BC4_UNORM: case DXGI_FORMAT_BC4_TYPELESS:
             DecodeBc4(blk, tmp); break;
+        case DXGI_FORMAT_BC5_UNORM: case DXGI_FORMAT_BC5_TYPELESS: case DXGI_FORMAT_BC5_SNORM:
+            DecodeBc5(blk, tmp); break;                                  // O4 新增
         default:
             memset(tmp, 0, sizeof(tmp)); break;
         }
@@ -2226,6 +2394,130 @@ static void DecodeBcStrip(DXGI_FORMAT fmt, const uint8_t* src, uint32_t srcRowBy
         }
     }
 }
+
+// ============ v7.9 O1: BC3 编码器（仅用于自建魔法图集，显存 ↓4x） ============
+//   背景: 官方图集本身就是 BC 家族（SR4 font0 = BC2 512x512、font1 = BC3 1024x1024），
+//   本 DLL 却把拼好的大图集建成 BGRA8 -> 4B/px。改用 BC3 后 1B/px -> 约 1/4。
+//   策略（保真）:
+//     - 官方区: 源也是 BC3 家族时「按块直拷原始压缩字节」-> 官方英文零二次损失
+//       （BC2 不属 BC3 家族: 其 alpha 为显式 4bit、块布局与 BC3 不同 -> 走解码+重编码）
+//     - 中文区: 由灰度覆盖值现场编码（BC3 alpha 块存覆盖, 色块存灰度）
+//   alpha 语义: 官方样本 00FFFFFF(RGB=白,A=0) 说明覆盖值走 alpha 通道 ->
+//     中文区必须把 cov 同时写进 RGB 与 A（现有 BGRA 合成已是如此），编码时取 A 作覆盖。
+
+static inline uint8_t Bc3Clamp8(int v)
+{
+    return (uint8_t)(v < 0 ? 0 : (v > 255 ? 255 : v));
+}
+
+// 单块编码: 输入 16 像素 BGRA（行优先 4x4），输出 16B BC3 块
+//   布局: [0..7] alpha 块(mx,mn,16×3bit) [8..15] 色块(2×565 + 16×2bit)
+static void EncodeBc3Block(const uint8_t* bgra16, uint8_t* out16)
+{
+    uint8_t a16[16], g16[16];
+    for (int i = 0; i < 16; ++i)
+    {
+        const uint8_t* p = bgra16 + (size_t)i * 4;
+        a16[i] = p[3];                                  // 覆盖值在 alpha
+        g16[i] = (uint8_t)(((uint32_t)p[0] + p[1] + p[2]) / 3);   // BGR 均值当灰度
+    }
+
+    // ---- alpha 块（8B）: 端点 mx/mn + 最近邻 3bit 索引 ----
+    uint8_t mn = 255, mx = 0;
+    for (int i = 0; i < 16; ++i) { if (a16[i] < mn) mn = a16[i]; if (a16[i] > mx) mx = a16[i]; }
+    out16[0] = mx; out16[1] = mn;
+    if (mx == mn)
+    {
+        out16[2] = out16[3] = out16[4] = out16[5] = out16[6] = out16[7] = 0;
+    }
+    else
+    {
+        uint8_t pal[8];
+        pal[0] = mx; pal[1] = mn;
+        for (int i = 0; i < 6; ++i)
+            pal[2 + i] = (uint8_t)(((6 - i) * (int)mx + (1 + i) * (int)mn) / 7);
+        uint64_t bits = 0;
+        for (int i = 0; i < 16; ++i)
+        {
+            int best = 0, bd = 1 << 30;
+            for (int k = 0; k < 8; ++k)
+            {
+                int d = (int)a16[i] - (int)pal[k]; if (d < 0) d = -d;
+                if (d < bd) { bd = d; best = k; }
+            }
+            bits |= (uint64_t)best << (3 * i);
+        }
+        out16[2] = (uint8_t)bits;        out16[3] = (uint8_t)(bits >> 8);
+        out16[4] = (uint8_t)(bits >> 16); out16[5] = (uint8_t)(bits >> 24);
+        out16[6] = (uint8_t)(bits >> 32); out16[7] = (uint8_t)(bits >> 40);
+    }
+
+    // ---- 色块（8B）: 灰度两端点 -> 565 + 最近邻 2bit 索引 ----
+    uint8_t cmn = 255, cmx = 0;
+    for (int i = 0; i < 16; ++i) { if (g16[i] < cmn) cmn = g16[i]; if (g16[i] > cmx) cmx = g16[i]; }
+    uint16_t c0 = (uint16_t)((((cmx >> 3) & 0x1F) << 11) | (((cmx >> 2) & 0x3F) << 5) | ((cmx >> 3) & 0x1F));
+    uint16_t c1 = (uint16_t)((((cmn >> 3) & 0x1F) << 11) | (((cmn >> 2) & 0x3F) << 5) | ((cmn >> 3) & 0x1F));
+    out16[8]  = (uint8_t)(c0 & 0xFF); out16[9]  = (uint8_t)(c0 >> 8);
+    out16[10] = (uint8_t)(c1 & 0xFF); out16[11] = (uint8_t)(c1 >> 8);
+    if (cmx == cmn)
+    {
+        out16[12] = out16[13] = out16[14] = out16[15] = 0;
+        return;
+    }
+    // 565 端点还原成 8bit 参与最近邻（与解码端一致, 避免端点误差反噬）
+    uint8_t e0 = (uint8_t)(((cmx >> 3) << 3) | (cmx >> 5));
+    uint8_t e1 = (uint8_t)(((cmn >> 3) << 3) | (cmn >> 5));
+    uint8_t cpal[4];
+    cpal[0] = e0; cpal[1] = e1;
+    cpal[2] = Bc3Clamp8((2 * (int)e0 + (int)e1) / 3);
+    cpal[3] = Bc3Clamp8(((int)e0 + 2 * (int)e1) / 3);
+    uint32_t cbits = 0;
+    for (int i = 0; i < 16; ++i)
+    {
+        int best = 0, bd = 1 << 30;
+        for (int k = 0; k < 4; ++k)
+        {
+            int d = (int)g16[i] - (int)cpal[k]; if (d < 0) d = -d;
+            if (d < bd) { bd = d; best = k; }
+        }
+        cbits |= (uint32_t)best << (2 * i);
+    }
+    out16[12] = (uint8_t)cbits;        out16[13] = (uint8_t)(cbits >> 8);
+    out16[14] = (uint8_t)(cbits >> 16); out16[15] = (uint8_t)(cbits >> 24);
+}
+
+// 把 BGRA8 图集的块区间 [bx0,bx1) x [by0,by1)（块坐标）编码进 BC3 缓冲
+//   注意: 必须整区域编码, 不能逐 cell 编码 —— SR4 font0 的 cellW/cellH=33 不是 4 的倍数,
+//   相邻 cell 会共享 4x4 块, 逐 cell 编码会让后一个 cell 覆盖前一个在共享块里的像素。
+static void EncodeBc3Region(const uint8_t* atlas, uint32_t pitch,
+                            uint8_t* dstBc3, uint32_t dstPitch,
+                            uint32_t bx0, uint32_t bx1, uint32_t by0, uint32_t by1,
+                            uint32_t imgW, uint32_t imgH)
+{
+    uint8_t px[64];
+    for (uint32_t by = by0; by < by1; ++by)
+    for (uint32_t bx = bx0; bx < bx1; ++bx)
+    {
+        bool any = false;
+        for (uint32_t r = 0; r < 4; ++r)
+        for (uint32_t c = 0; c < 4; ++c)
+        {
+            uint32_t x = bx * 4 + c, y = by * 4 + r;
+            size_t o = ((size_t)r * 4 + c) * 4;
+            if (x < imgW && y < imgH)
+            {
+                memcpy(px + o, atlas + (SIZE_T)y * pitch + (SIZE_T)x * 4, 4);
+                if (px[o + 3]) any = true;
+            }
+            else memset(px + o, 0, 4);
+        }
+        if (!any) continue;                       // 全透明 -> 保持已清零块
+        EncodeBc3Block(px, dstBc3 + (SIZE_T)by * dstPitch + (SIZE_T)bx * 16);
+    }
+}
+
+// 逐个 cell 直编的版本已被 EncodeBc3Region 取代（区域编码天然处理非 4 对齐的
+// cellW/cellH —— 如 SR4 font0 的 33px —— 相邻 cell 共享块的问题），此处不再保留。
 
 // ---------- 渲染线程阶段: 官方图集读回 + 拼接 + D3D 创建 + 伪对象组装 ----------
 static bool FinishFont(FakeFont* f)
@@ -2262,6 +2554,15 @@ static bool FinishFont(FakeFont* f)
     D3D11_TEXTURE2D_DESC dd{};
     srcTex->GetDesc(&dd);
 
+    // v7.9 O4: 取官方 SRV 的 view 格式。资源常为 TYPELESS, 实际语义由 view 决定;
+    //   sRGB 判定必须以 view 为准（否则自建图集与官方 gamma 不一致 -> 明暗差异）。
+    DXGI_FORMAT srvFmt = dd.Format;
+    {
+        D3D11_SHADER_RESOURCE_VIEW_DESC svd{};
+        offSrv->GetDesc(&svd);
+        if (svd.Format != DXGI_FORMAT_UNKNOWN) srvFmt = svd.Format;
+    }
+
     uint32_t W = dd.Width;
     uint32_t offW = W;               // 官方图集宽（读回官方区按此宽; 加宽后官方区只占伪图集左侧）
     uint32_t offH = dd.Height;
@@ -2269,26 +2570,42 @@ static bool FinishFont(FakeFont* f)
     if (perRow == 0) { Log("font%u: atlas width %u < cellW %u, abort", fontId, W, f->cellW); srcTex->Release(); f->state = 4; return false; }
     uint32_t nCellsWanted = f->nCells;   // 截断前记录（日志用）
     uint32_t rows = (f->nCells + perRow - 1) / perRow;
-    uint32_t maxRows = (16384 - offH) / f->cellH - 1;   // 末尾恒留 1 行空白 cell（缺字槽位指向这里）
+    uint32_t maxRows = (ATLAS_H_LIMIT - offH) / f->cellH - 1; // O2': 与收窄循环共用安全预算
     if (rows > maxRows && W < 8192)
     {
         // 显存换全字覆盖: 加宽伪图集减少截断
         // （font1 官方 4096 宽仅 18 列; 8192 宽 37 列; 16384 宽曾致卡死, 回退）
+        //   O1 起图集为 BC3（1B/px）, 8192 宽的显存代价已降到原来的 1/4。
         uint32_t oldW = W;
         W = 8192;
         perRow = W / f->cellW;
+        if (perRow == 0) { Log("font%u: perRow=0 after widen (cellW=%u>8192), abort", fontId, f->cellW); srcTex->Release(); f->state = 4; return false; }
         rows = (f->nCells + perRow - 1) / perRow;
-        maxRows = (16384 - offH) / f->cellH - 1;
+        maxRows = (ATLAS_H_LIMIT - offH) / f->cellH - 1;
         Log("font%u: atlas widened %u -> %u (perRow %u -> %u)", fontId, oldW, W, oldW / f->cellW, perRow);
     }
     if (rows > maxRows)
     {
         rows = maxRows;
         f->nCells = rows * perRow;   // 截断低频字（数组已按频率降序, 尾部被截）
-        Log("font%u: atlas cells clamped %u -> %u (low-freq chars blank)",
-            fontId, nCellsWanted, f->nCells);
+        Log("font%u: atlas cells clamped %u -> %u (%u low-freq chars render blank)",
+            fontId, nCellsWanted, f->nCells, nCellsWanted - f->nCells);
     }
     uint32_t H = offH + (rows + 1) * f->cellH;
+    // v7.9 O1: BC 格式以 4x4 块为单位 -> 高度与宽度都按 4 对齐（向上取整，多占 <4 行透明像素）
+    if (g_cfg.bc3Atlas)
+    {
+        if (H & 3) H = (H + 3) & ~3u;
+        if (W & 3)
+        {
+            W = (W + 3) & ~3u;
+            perRow = W / f->cellW;                  // W 变了要重算列数（否则槽位布局与图集宽不符）
+            if (perRow == 0) { Log("font%u: perRow=0 after align (cellW=%u>W=%u), abort", fontId, f->cellW, W); srcTex->Release(); f->state = 4; return false; }
+            rows = (f->nCells + perRow - 1) / perRow;
+            H = offH + (rows + 1) * f->cellH;
+            if (H & 3) H = (H + 3) & ~3u;
+        }
+    }
     f->blankY = offH + rows * f->cellH;   // 空白行: 图集该区已 memset 0
     if (H > 16384) { Log("font%u: H=%u overflow, abort", fontId, H); srcTex->Release(); f->state = 4; return false; }
 
@@ -2322,14 +2639,16 @@ static bool FinishFont(FakeFont* f)
     }
 
     // 格式信息前置记录（拷贝循环前, 崩溃也能拿到; 宽高指官方源图集）
-    Log("font%u: src atlas %ux%u fmt=%s(%u) mips=%u arr=%u RowPitch=%u",
+    Log("font%u: src atlas %ux%u fmt=%s(%u) srvFmt=%s(%u) mips=%u arr=%u RowPitch=%u",
         fontId, offW, offH, FmtName(dd.Format), (unsigned)dd.Format,
-        dd.MipLevels, dd.ArraySize, ms.RowPitch);
+        FmtName(srvFmt), (unsigned)srvFmt, dd.MipLevels, dd.ArraySize, ms.RowPitch);
 
     // 格式感知读回 -> atlas 统一为 BGRA8
+    //   O4: 闸门用 CanDecodeBc 而非 IsBcFormat —— BC6H/BC7 虽被识别但无解码器,
+    //   若放行会在 DecodeBcStrip 的 default 分支把官方区清零(英文变透明), 比不升级更糟。
     bool     bc  = IsBcFormat(dd.Format);
     uint32_t bpp = BppOf(dd.Format);
-    if (!bc && bpp == 0)
+    if ((bc && !CanDecodeBc(dd.Format)) || (!bc && bpp == 0))
     {
         Log("font%u: unsupported format %s(%u), graceful abort (official font kept)",
             fontId, FmtName(dd.Format), (unsigned)dd.Format);
@@ -2418,25 +2737,90 @@ static bool FinishFont(FakeFont* f)
         }
     }
 
-    // 3) 创建纹理 + SRV（显式 BGRA8: 不继承官方压缩格式, 上传数据即 atlas 布局）
+    // 3) 创建纹理 + SRV
+    //    v7.9 O1: bc3_atlas=1 时改用 BC3（1B/px, 显存 ↓4x）。
+    //    保真策略: 官方区若是 BC3 家族, 直接按块 memcpy 官方原始压缩字节 ->
+    //      英文/符号区零二次损失; 中文区由 BGRA 合成区现场编码。
+    //    仍走 BGRA 中转的理由: 官方区与中文区可能共享首/末块行, 分区编码会互相覆盖。
+    // 释放 BGRA 中转后立即编码（降低峰值内存: BC3 模式下不再需要 4B/px 大缓冲）
     D3D11_TEXTURE2D_DESC nd = dd;
     nd.Width     = W;
     nd.Height    = H;
     nd.MipLevels = 1;
     nd.ArraySize = 1;
-    nd.Format          = DXGI_FORMAT_B8G8R8A8_UNORM;
     nd.SampleDesc.Count = 1;
     nd.SampleDesc.Quality = 0;
     nd.Usage          = D3D11_USAGE_DEFAULT;
-    nd.BindFlags      = D3D11_BIND_SHADER_RESOURCE;
+    nd.BindFlags      = D3D11_BIND_SHADER_RESOURCE;   // 显式覆盖官方可能带的额外标志
     nd.CPUAccessFlags = 0;
     nd.MiscFlags      = 0;
-    D3D11_SUBRESOURCE_DATA initData{ atlas, pitch, 0 };
+
+    const bool srgb   = IsSrgbFormat(srvFmt);
+    bool useBc3 = g_cfg.bc3Atlas && (W % 4 == 0) && (H % 4 == 0);
+    if (g_cfg.bc3Atlas && !useBc3)
+        Log("font%u: bc3 disabled for this font (W=%u H=%u not 4-aligned)", fontId, W, H);
+
+    uint8_t* upload = atlas;
+    uint32_t uploadPitch = pitch;
+    uint8_t* bc3buf = nullptr;
+    if (useBc3)
+    {
+        uint32_t bcPitch = (W >> 2) * 16;                 // 每块行 16B
+        size_t   bcBytes = (size_t)bcPitch * (H >> 2);
+        bc3buf = static_cast<uint8_t*>(VirtualAlloc(nullptr, bcBytes,
+                                                    MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
+        if (!bc3buf)
+        {
+            Log("font%u: bc3 alloc failed (%zu MB), fallback to BGRA8", fontId, bcBytes >> 20);
+            useBc3 = false;
+        }
+    }
+    if (useBc3)
+    {
+        uint32_t bcPitch = (W >> 2) * 16;                 // 每块行 16B
+        memset(bc3buf, 0, (size_t)bcPitch * (H >> 2));
+        // 3a) 官方区: 同族 BC3 则原样搬块（零二次损失）。
+        //   注意不要加 `offW == W` 条件 —— 官方区常被加宽（2048 -> 8192），
+        //   此时每行只搬 offW>>2 个块, 右侧加宽部分保持 0, 正是所需行为。
+        if (IsBc3Family(dd.Format))
+        {
+            uint32_t blocksY = (offH + 3) >> 2;
+            uint32_t blocksX = (offW + 3) >> 2;          // 向上取整（官方宽通常已是 4 的倍数）
+            for (uint32_t by = 0; by < blocksY; ++by)
+                memcpy(bc3buf + (SIZE_T)by * bcPitch,
+                       (const uint8_t*)ms.pData + (SIZE_T)by * ms.RowPitch,
+                       (size_t)blocksX * 16);
+        }
+        else
+        {
+            uint32_t offBlocksX = (offW + 3) >> 2, offBlocksY = (offH + 3) >> 2;
+            EncodeBc3Region(atlas, pitch, bc3buf, bcPitch,
+                            0, offBlocksX, 0, offBlocksY, offW, offH);
+        }
+        // 3b) 中文区: 由 BGRA 合成区编码（整区域, 避免相邻 cell 共享块互相覆盖）
+        uint32_t by0 = offH >> 2, by1 = (H + 3) >> 2;
+        EncodeBc3Region(atlas, pitch, bc3buf, bcPitch,
+                        0, (W + 3) >> 2, by0, by1, W, H);
+
+        nd.Format = srgb ? DXGI_FORMAT_BC3_UNORM_SRGB : DXGI_FORMAT_BC3_UNORM;
+        upload = bc3buf;
+        uploadPitch = bcPitch;
+    }
+    else
+    {
+        nd.Format = srgb ? DXGI_FORMAT_B8G8R8A8_UNORM_SRGB : DXGI_FORMAT_B8G8R8A8_UNORM;
+    }
+
+    D3D11_SUBRESOURCE_DATA initData{ upload, uploadPitch, 0 };
     HRESULT hr = dev->CreateTexture2D(&nd, &initData, &f->tex);
+    if (bc3buf) VirtualFree(bc3buf, 0, MEM_RELEASE);
     VirtualFree(atlas, 0, MEM_RELEASE);
     if (FAILED(hr)) { Log("font%u: CreateTexture2D failed hr=%08X", fontId, (unsigned)hr); f->state = 4; return false; }
     hr = dev->CreateShaderResourceView(f->tex, nullptr, &f->srv);
     if (FAILED(hr)) { Log("font%u: CreateSRV failed hr=%08X", fontId, (unsigned)hr); f->tex->Release(); f->tex = nullptr; f->state = 4; return false; }
+    Log("font%u: tex created %ux%u fmt=%s(%u) sRGB=%d vram=%zuKB",
+        fontId, W, H, FmtName(nd.Format), (unsigned)nd.Format, (int)srgb,
+        ((size_t)uploadPitch * (useBc3 ? (H >> 2) : H)) >> 10);
 
     // 4) 伪字体对象 blob: 592B 头 + metrics(16B) + xtab(4B) + ytab(4B)
     //    SR4 头大小 592B (SR3R was 208B): kern +552, metrics +560, texId +568, xtab +576, ytab +584
@@ -4381,9 +4765,9 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("SR4R v1.9.4 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, applied=%d, idling",
+    Log("SR4R v2.0 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, bc3_atlas=%d, applied=%d, idling",
         g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j,
-        (int)g_cfg.looseFirst, (int)g_mountRegApplied);
+        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas, (int)g_mountRegApplied);
     // 注: 挂载表插队由独立「守候线程」异步完成（引擎注册晚于本线程）,
     //     此处 applied 可能仍为 0 —— 属正常, 不等同失败; 结果以 [watch] 行日志为准。
     return 0;
@@ -4460,7 +4844,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N");
-	        Log("[DllMain] ATTACH SR4R v1.9.4");
+	        Log("[DllMain] ATTACH SR4R v2.0 (BC3 atlas + format branches + capacity guard)");
             // v1.9: 这里**只做只读定位**, 绝不调用引擎注册器。
             //   原因（v1.8 实测崩溃）: 注册器内部 EnterCriticalSection(&挂载表锁),
             //   该临界区由引擎 CRT 静态构造初始化, 而 ASI 的 DllMain 跑在
