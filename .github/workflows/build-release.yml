@@ -426,8 +426,16 @@ jobs:
 
           # ── 2) 本次构建相关的提交记录 ───────────────────────────────────
           #    字段用 TAB 分隔（%H%x09%s），规避 subject 里的 | 等分隔符字符。
+          # ★★ 必须用 --pretty=**tformat**（不是 format）：
+          #   `format:` 的输出**末尾不带换行符**，而 `read` 在 EOF 遇到无换行的行时
+          #   返回非零并**丢弃该行** —— 于是「自上次 Release 起恰好只有 1 条提交」时
+          #   必然显示「0 条」（唯一那行被丢掉）；多条时则是**丢掉最后一条**。
+          #   实测（2026-10-09 run 37857371595）：基准 4d4b322..HEAD 只有 1 条 commit，
+          #   Release 说明因此显示「本次构建无新增提交」——提交记录功能静默失效。
+          #   tformat 会在每条 commit 后输出终止换行，根治此问题（本地已按
+          #   单条 / 多条 / 无新提交三种场景验证）。
           : > commits.md
-          git log --no-merges --max-count=60 --pretty=format:'%H%x09%s' "$base..HEAD" \
+          git log --no-merges --max-count=60 --pretty=tformat:'%H%x09%s' "$base..HEAD" \
             | while IFS=$'\t' read -r h s; do
                 if [ -z "$h" ]; then continue; fi   # 不能用 "&& continue"，set -e 下会误退出
                 printf -- '- [`%s`](%s/commit/%s) %s\n' "${h:0:7}" "$repo_url" "$h" "$s" >> commits.md
