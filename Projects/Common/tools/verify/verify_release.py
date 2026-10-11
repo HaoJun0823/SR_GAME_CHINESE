@@ -242,12 +242,18 @@ def verify_pkg(rel, root, rep, strict):
         if bad:
             rep.add(pkg, 'update/ le_strings', RESULT_FAIL,
                     f'{len(bad)}/{len(les)} 结构自检失败：{bad[:2]}')
-        elif zh == 0 or us == 0:
+        elif us == 0:
+            # ★ 2026-10-11: 只要求 _us。引擎 locale 是 us，loose 加载只请求
+            #   *_us.le_strings，_zh 从未被读取 -> 构建侧已不再产出它。
+            #   这里若出现 _zh 只是历史残留，不算错，但提示一下。
+            rep.add(pkg, 'update/ le_strings', RESULT_FAIL,
+                    f'{len(les)} 个但没有任何 _us.le_strings（引擎只读 _us）')
+        elif zh:
             rep.add(pkg, 'update/ le_strings', RESULT_WARN,
-                    f'{len(les)} 个（_zh={zh} _us={us}，两者都应非空）')
+                    f'{len(les)} 个全部结构自检通过 (_us={us}, 另有 {zh} 个 _zh 冗余)')
         else:
             rep.add(pkg, 'update/ le_strings', RESULT_OK,
-                    f'{len(les)} 个全部结构自检通过 (_zh={zh}, _us={us})')
+                    f'{len(les)} 个全部结构自检通过 (_us={us})')
 
     # 5. scripts/dict/
     dicts = sorted(glob.glob(os.path.join(scripts, 'dict', '*.txt')))

@@ -8,8 +8,7 @@ build_release_le_strings.py — 从 data/ 原始 le_string 模板 + Resource 中
   Resource/<game>/<lang>/le_string/<name>_us.txt    中文翻译 (HASH_xxxx 或英文原文 -> 中文)
 
 输出:
-  <out_dir>/<name>_zh.le_strings   规范中文 locale 文件
-  <out_dir>/<name>_us.le_strings   覆盖英文槽的兜底(内容同 _zh; 无 zh locale 时靠它生效)
+  <out_dir>/<name>_us.le_strings   覆盖英文槽的中文表(loose 加载实际命中的就是它)
 
   默认 out_dir = Release/<game>/<version>/misc
   CI 构建请传 --out-dir 指向 release/<game>_<version>/update
@@ -29,11 +28,13 @@ build_release_le_strings.py — 从 data/ 原始 le_string 模板 + Resource 中
     步长一律从源模板探测（SR3 实测全 UTF-16，SR4 common 混有 UTF-32 主机表，
     SR4 microsoft 基本全 UTF-32）。
   - charlist 反向映射：若模板目录下有 charlist_zh.dat 则启用（目前仅 SR3 侧存在）。
-  - 两个游戏同时产出 _zh 与 _us, 保证 loose 加载无论游戏 locale 如何都能显示中文。
+  - ★ 2026-10-11 只产出 _us：引擎的 locale 是 us（游戏没有 zh locale），实测
+    loose 加载只会请求 *_us.le_strings；_zh 从未被读取，纯属冗余体积。
+    需要 _zh 时传 --suffixes us,zh 即可恢复。
 
 作为库使用:
   import build_release_le_strings as B
-  ok, fails = B.build_game('SR4', 'common', ['zh','us'], out_dir=...)
+  ok, fails = B.build_game('SR4', 'common', ['us'], out_dir=...)
 """
 import os
 import re
@@ -305,7 +306,7 @@ def check_sources(game, version):
     return (not problems), problems
 
 
-def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False,
+def build_game(game, version, suffixes=('us',), out_dir=None, quiet=False,
                strict_sources=True):
     """构建单个 {game}_{version} 的 le_string 产物。
 
@@ -507,7 +508,7 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False,
 
         base_ok = True
         for suf in suffixes:
-            out_name = stem[:-3] + '_' + suf + '.le_strings'   # menu_us -> menu_zh / menu_us
+            out_name = stem[:-3] + '_' + suf + '.le_strings'   # menu_us -> menu_us / menu_zh
             out_path = os.path.join(out_dir, out_name)
             try:
                 mode = repack_fn(tpl_path, pairs, out_path)
@@ -526,8 +527,10 @@ def build_game(game, version, suffixes=('zh', 'us'), out_dir=None, quiet=False,
                 if suf == suffixes[0]:
                     src_tag = f'{len(pairs)} 条' + (f' 源={src_used}' if src_used != stem else '')
                     enc = 'UTF-16' if step == 2 else 'UTF-32'
+                    # 单后缀(默认)时不写「等 N 个」, 避免读成还有别的产物。
+                    tail = f' 等 {len(suffixes)} 个' if len(suffixes) > 1 else ''
                     log(f'  {stem:24s} 条目={tot:5d} 中文串={cjk:5d} '
-                        f'(翻译 {src_tag}, {mode}, {enc}) -> {out_name} 等 {len(suffixes)} 个')
+                        f'(翻译 {src_tag}, {mode}, {enc}) -> {out_name}{tail}')
             except Exception as e:
                 fails.append((out_name, '结构自检: ' + str(e)))
                 base_ok = False
@@ -565,7 +568,8 @@ def main():
                     help='限定游戏 (可重复; 默认两个都构建)')
     ap.add_argument('--version', help='限定版本 (common / microsoft)')
     ap.add_argument('--out-dir', help='覆盖输出目录 (单游戏单版本时可用)')
-    ap.add_argument('--suffixes', default='zh,us', help='产出的 locale 后缀 (默认 zh,us)')
+    ap.add_argument('--suffixes', default='us',
+                    help='产出的 locale 后缀 (默认 us; 引擎只读 _us, _zh 属冗余)')
     ap.add_argument('--no-self-test', action='store_true', help='跳过前置自检 (不建议)')
     args = ap.parse_args()
 

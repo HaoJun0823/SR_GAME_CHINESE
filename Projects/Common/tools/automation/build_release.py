@@ -16,7 +16,7 @@ build_release.py — {game}_{version}_{lang} 一键发布构建编排
 关于 lang（与规格 `{game}_{version}_{lang}` 的关系）
     规格里 lang 是命名组成部分，但目录树只取 `{game}_{version}`。
     因为 lang 决定「装什么内容」（Resource 下取哪个语言子目录、产出哪些
-    `_zh`/`_us` 后缀），而 game/version 决定「装给哪个游戏构建」——两者正交。
+    locale 后缀，当前为 `_us`），而 game/version 决定「装给哪个游戏构建」——两者正交。
     当前 lang 恒为 CHS；将来增加语言时只需 `--lang` 换源目录即可，
     目录树不必随之膨胀（不同语言的包本来就要分开分发）。
 
@@ -526,13 +526,13 @@ def step3_le_strings(cfg, out_root, lang):
     """3. le_string 构建 → release/{gv}/update/"""
     up = os.path.join(out_root, cfg['rel'], 'update')
     done, fails = le_build.build_game(cfg['game'], cfg['version'],
-                                     suffixes=('zh', 'us'), out_dir=up, quiet=True)
+                                     suffixes=('us',), out_dir=up, quiet=True)
     if fails:
         raise RuntimeError(f'le_string 构建失败 {len(fails)} 项：{fails[:3]}')
     n = len([f for f in os.listdir(up) if f.endswith('.le_strings')]) if os.path.isdir(up) else 0
     if n == 0:
         raise RuntimeError(f'update/ 未产出任何 .le_strings：{up}')
-    p(f'  update\\  {n} 个 .le_strings（{done} 张表 × _zh/_us）')
+    p(f'  update\\  {n} 个 .le_strings（{done} 张表）')
     return n
 
 

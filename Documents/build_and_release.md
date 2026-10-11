@@ -26,7 +26,7 @@ release/sr4r_microsoft/      SR4 Microsoft Store 版
 > **为什么目录名不含 `lang`？**
 > 规格里 `lang` 是命名组成部分，但目录树只取 `{game}_{version}`。
 > `lang` 决定的是「装什么内容」（取 `Resource/` 下哪个语言子目录、产出哪些
-> `_zh`/`_us` 后缀），而 `game`/`version` 决定「装给哪个游戏构建」——两者正交。
+> locale 后缀，当前为 `_us`），而 `game`/`version` 决定「装给哪个游戏构建」——两者正交。
 > 当前 `lang` 恒为 `chs`；将来增加语言时只需 `--lang` 换源目录，
 > 不同语言的包本来就分开分发，不必挤进同一个目录。
 
@@ -81,7 +81,7 @@ release/sr3r_common/
 │   ├── SourceHanSansHWSC-VF.ttf ← 步骤 5
 │   ├── charlist.txt             ← 步骤 4（字符清单）
 │   └── dict/                    ← 步骤 2（12 个词典 txt）
-└── update/                      ← 步骤 3（42 个 le_strings：21 表 × _zh/_us）
+└── update/                      ← 步骤 3（21 个 le_strings：21 表 × _us）
 ```
 
 ---

@@ -14,14 +14,15 @@
     Resource/<game>/CHS/le_string/<name>_us.txt      ← 中文翻译（"KEY": "文本"）
                     │
                     ▼  build_release_le_strings.py
-    Release/<game>/common/misc/<name>_zh.le_strings  ← 规范中文 locale
-    Release/<game>/common/misc/<name>_us.le_strings  ← 覆盖英文槽的兜底（内容同 _zh）
+    Release/<game>/common/misc/<name>_us.le_strings  ← 覆盖英文槽的中文表
                     │
                     ▼  分发
     dist/common/update/<game>/                       ← 入库供 git 维护
     游戏目录/update/                                  ← 实际部署（loose 覆盖）
 
-> 同时产出 `_zh` 与 `_us` 两份：无论游戏 locale 设为哪个，loose 加载都能命中中文。
+> ★ 2026-10-11 起只产出 `_us`：引擎 locale 是 us（游戏没有 zh locale），实测
+> loose 加载只会请求 `*_us.le_strings`，`_zh` 从未被读取，纯属冗余体积。
+> 需要 `_zh` 时传 `--suffixes us,zh` 即可恢复。
 
 ## 二、一条命令跑完
 
@@ -38,14 +39,14 @@
 
     [2/3] 构建
       ===== SR3 =====
-        activity_us   条目= 818 中文串= 802 (翻译 818 条) -> activity_zh.le_strings 等 2 个
+        activity_us   条目= 818 中文串= 802 (翻译 818 条) -> activity_us.le_strings
         ...
       ===== SR4 =====
         ...
 
     [3/3] 汇总
-      Release/SR3/common/misc: 42 文件
-      Release/SR4/common/misc: 42 文件
+      Release/SR3/common/misc: 21 文件
+      Release/SR4/common/misc: 21 文件
       全部完成 (产物结构自检全部通过)。
 
 ## 三、三个阶段在做什么

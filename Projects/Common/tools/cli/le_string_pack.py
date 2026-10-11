@@ -43,7 +43,7 @@ charlist 映射（SR3 主机板也许会需要）。
   python le_string_pack.py pack 源 译.txt 出 --charlist charlist_zh.dat
 
   # 批量（整个目录）
-  python le_string_pack.py pack-dir data/SR4/common/misc Resource/SR4/CHS/le_string out/ --suffixes zh,us
+  python le_string_pack.py pack-dir data/SR4/common/misc Resource/SR4/CHS/le_string out/ --suffixes us
 
 退出码: 0=全部成功; 1=有失败（供 CI 判定）。
 """
@@ -300,7 +300,7 @@ def main():
     p.add_argument('src_dir', help='模板目录（含 *_us.le_strings）')
     p.add_argument('txt_dir', help='译文目录（含 *_us.txt）')
     p.add_argument('out_dir', help='输出目录')
-    p.add_argument('--suffixes', default='zh,us', help='产出后缀（默认 zh,us）')
+    p.add_argument('--suffixes', default='us', help='产出后缀（默认 us；引擎只读 _us）')
     p.set_defaults(fn=cmd_pack_dir)
 
     p = sub.add_parser('self-test', help='运行内核自检')
