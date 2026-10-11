@@ -1,0 +1,15 @@
+"Alright motherfuckers…": "都给老子听好了……";
+"So how many guys... never mind.  What is this “Feel Boss” thing?": "那到底有多少人……算了不问了。这个“Feel Boss”是什么玩意？";
+"You're gonna need more help than that Frenchy…": "光这些帮手可不够，法国佬……";
+"Copy that.": "收到。";
+"Déjà vu...": "似曾相识……";
+"Here we go!  Action!": "好戏开场！开拍！";
+"Shit... good point.": "妈的……说得有道理。";
+"I thought you'd be faster than this.": "我还以为你能更快点。";
+"Prepare to open fire on the building.": "准备向大楼开火。";
+"Saints are in the loading dock.  Don't let them enter the building.": "圣徒的人到装卸区了。别让他们进楼。";
+"My apologies, your captain is having troubles finding the clutch...": "非常抱歉，我们的机长正忙着找离合器在哪儿……";
+"I should have known then... It was the sound of doom on our doorstep.": "我那时就该明白……那是厄运敲响我们家门的声音。";
+"You can't kill me.  You don't know the truth.  The fact is... I am your father.": "你杀不了我。你不知道真相。事实就是……我是你父亲。";
+"Intruder in R&D, possibly moving to cell block.  Resembles Commander Temple.  Shoot on sight.": "研发部有入侵者，可能正前往牢房区。长得像坦普尔指挥官。见到就开枪。";
+"Breaking News.  Minutes ago, Mad Mangler Merle Roberts, a Luchador slated to compete in the upcoming Murderbrawl 31, ran over several pedestrians in what witnesses say was a rage induced vehicular massacre.  His body is being pulled out of the fiery wreckage as his career ended... at a dead end.  This is Jane Valderamma with a breaking news report.": "突发新闻。几分钟前，原定参加即将举行的第 31 届杀人摔跤大赛的摔跤手“疯绞肉机”梅尔·罗伯茨驾车撞倒数名行人，目击者称这是一场暴怒之下的车辆屠杀。他的尸体正从燃烧的残骸中被拖出，他的职业生涯也就此……走到死路。我是简·瓦尔德拉玛，为您报道。";
