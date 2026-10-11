@@ -576,6 +576,19 @@ static constexpr size_t   WRAP_MAX_CHARS  = 256;   // 缓存残段/拼接缓冲�
 static constexpr uint64_t WRAP_TTL_MS     = 5000;  // 残段缓存过期（防不同句子串扰）
 static constexpr size_t   WRAP_MIN_PREFIX = 8;     // 前缀残段最短长度（过滤短 UI 串噪音）
 static constexpr size_t   WRAP_MIN_SUFFIX = 2;     // 后缀残段最短长度
+
+// 语音字幕【整句】替换上限 —— 独立于折行状态机，勿与 WRAP_MAX_CHARS 合并。
+//   依据（与 SR3R 同源逆向结论）: Hook J 落点的第 1 参数是引擎折行【之前】的完整
+//   原句（折行在该函数内部完成）。长句必须在 Hook J 一次性放行，否则整句永远查不到
+//   词典（折行后的残段更不可能命中完整句键）。
+//   实测 SR4 最长 543 字符；原 256 上限令 84 条长句（长独白为主）永远回落英文显示。
+//   折行状态机只处理引擎已切分的短行段（每段 <256），故 WRAP_MAX_CHARS 保持 256。
+static constexpr size_t   SUB_MAX_CHARS   = 1024;
+// LookupNode 的前置闸门是 len > DUMP_MAX_CHARS*4（=1024）。此断言把两者的
+// 隐性耦合钉死：若日后调整 DUMP_MAX_CHARS 导致闸门收紧，编译期即报错，
+// 而不是让长句在运行期静默回落英文。
+static_assert(SUB_MAX_CHARS <= DUMP_MAX_CHARS * 4,
+              "Hook J 整句上限超出 LookupNode 接受范围，长句将被静默丢弃");
 // ---------- VA -> 本进程地址 ----------
 static uint64_t s_exeBase = 0;   // 游戏模块实际基址（MainThread 内 GetModuleHandleW(nullptr); 诊断分类用）
 template <typename T = uint8_t*>
@@ -1171,9 +1184,9 @@ static const DictNode* LookupNode(const wchar_t* s, volatile LONG* hit, volatile
     size_t b, tl;
     if (TrimRange(s, len, &b, &tl))
     {
-        if (tl <= 512)
+        if (tl < SUB_MAX_CHARS)
         {
-            wchar_t tmp[513];
+            wchar_t tmp[SUB_MAX_CHARS];
             wmemcpy(tmp, s + b, tl);
             tmp[tl] = L'\0';
             r = DictLookup(tmp, tl);
@@ -1182,10 +1195,12 @@ static const DictNode* LookupNode(const wchar_t* s, volatile LONG* hit, volatile
     }
 
     // 空格规范化重查（引擎把连续空格压成单空格后到来, 词典原键含双空格）
-    if (len <= 512)
+    // 门限随 SUB_MAX_CHARS 放宽: 实测 SR4 有 2 条 >512 字符的键只能靠本分支命中
+    // （长独白，原文含连续空格），卡在 512 会让它们继续静默 miss。
+    if (len < SUB_MAX_CHARS)
     {
-        wchar_t norm[513];
-        size_t nl = NormalizeKey(s, len, norm, 512);
+        wchar_t norm[SUB_MAX_CHARS];
+        size_t nl = NormalizeKey(s, len, norm, SUB_MAX_CHARS - 1);
         if (nl)
         {
             r = DictLookup(norm, nl);
@@ -3305,7 +3320,13 @@ static const wchar_t* EarlySub(const char* which, LangGet_t orig,
     }
     if (wcschr(s, L'%') || wcschr(s, L'\n')) return s;
     size_t n = wcslen(s);
-    if (n < 4 || n >= WRAP_MAX_CHARS) return s;
+    // 上限用 SUB_MAX_CHARS（整句上限），不用 WRAP_MAX_CHARS：后者是折行状态机的
+    // 段长常数，被这里借用作「超长」门槛属于同一处历史误用。SR4 的
+    // le_data_supplement.txt 有 156 条 >256 的长条目（最长 567），走语言服务返回层，
+    // 卡在 256 会让它们静默回落英文。
+    // 本函数只用 DictLookup 精确匹配、命中即返回字典里的 trans 指针，
+    // 不涉及任何本地缓冲，故放宽无越界风险（最坏情况是 miss 后原样返回 s）。
+    if (n < 4 || n >= SUB_MAX_CHARS) return s;
     const DictNode* r = DictLookup(s, n);
     if (r)
     {
@@ -3358,7 +3379,7 @@ static SubtitleDraw_t g_origSubtitle = nullptr;
 static volatile LONG g_hitJ = 0, g_missJ = 0;
 
 // 译文输出缓冲（渲染线程专用, 与 g_wrap 状态机同线程假设, 无锁）
-static constexpr size_t SUBBUF_CHARS = WRAP_MAX_CHARS + 32;
+static constexpr size_t SUBBUF_CHARS = SUB_MAX_CHARS + 32;
 static wchar_t g_subBuf[SUBBUF_CHARS];
 
 // 尾部字面 \n<数字> 时长尾码检测: 返回主体长度（尾码起点）; 无尾码返回 len
@@ -3380,7 +3401,7 @@ static double __fastcall HookSubtitle(const wchar_t* text, float a2, double a3, 
     if (text && *text && g_dictReady && !wcschr(text, L'%'))
     {
         size_t len = wcslen(text);
-        if (len < WRAP_MAX_CHARS)
+        if (len < SUB_MAX_CHARS)
         {
             size_t bodyLen = SubBodyLen(text, len);
 
@@ -3391,7 +3412,10 @@ static double __fastcall HookSubtitle(const wchar_t* text, float a2, double a3, 
             size_t hitLen;
             if (bodyLen < len)
             {
-                wchar_t body[WRAP_MAX_CHARS];
+                // 上限 SUB_MAX_CHARS（非 WRAP_MAX_CHARS）: 主体可能接近整句长度，
+                // 用折行常数会在长句场景越界写栈。留在栈上（勿改 static）以保
+                // 免疫并发重入 —— 与 g_subBuf 的单线程假设不同层。
+                wchar_t body[SUB_MAX_CHARS];
                 wmemcpy(body, text, bodyLen);
                 body[bodyLen] = L'\0';
                 r = LookupNode(body, &g_hitJ, &g_missJ);

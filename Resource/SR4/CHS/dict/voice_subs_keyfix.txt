@@ -267,3 +267,4 @@
 "You're showing a lot of restraint Kinzie.": "金吉，你表现得很有克制力。";
 "Zinyak'll have to try harder than that.": "齐尼亚克得多下点功夫才行……";
 "Zinyak, this isn't pride... This is wrath!": "齐尼亚克，这不是骄傲……这是怒火！";
+"Found another one.": "又找到一个。";
