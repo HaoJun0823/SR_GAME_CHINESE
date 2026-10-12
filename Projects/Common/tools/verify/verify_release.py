@@ -50,6 +50,17 @@ RESULT_OK = 'OK'
 RESULT_WARN = 'WARN'
 RESULT_FAIL = 'FAIL'
 
+# ── S8 ASI 体积指纹（硬门禁）──────────────────────────────────────────────
+# 值 = 「MSVC v141 (14.16, cl 19.16) + Win10 SDK 10.0.26100 + 本仓库固定 flags」
+# 的确定产物。若工具链静默回退到 v142，体积会改变 —— 故必须**精确相等**，
+# 不能用区间或软警告替代。实测来源：2026-10-13 CI 产物。
+#   SR3R_I18N.asi  277504 B
+#   SR4R_I18N.asi  283136 B
+ASI_EXPECTED_SIZE = {
+    'SR3R_I18N': 277504,
+    'SR4R_I18N': 283136,
+}
+
 
 class Report:
     def __init__(self):
@@ -209,17 +220,25 @@ def verify_pkg(rel, root, rep, strict):
     else:
         ok, detail = is_x64_pe(asi)
         size = os.path.getsize(asi)
+        want = ASI_EXPECTED_SIZE.get(prefix)
         if not ok:
             rep.add(pkg, 'ASI 产物', RESULT_FAIL, detail)
         elif size < 64 * 1024:
             rep.add(pkg, 'ASI 产物', RESULT_FAIL, f'体积仅 {size:,}B，不像完整 DLL')
+        elif want is not None and size != want:
+            # S8 硬指纹：体积不符 = 工具集/SDK 回退或源码改动，必须拦下
+            rep.add(pkg, 'ASI 产物', RESULT_FAIL,
+                    f'体积指纹不符：实际 {size:,}B，期望 {want:,}B'
+                    f'（MSVC v141 + SDK 26100 的确定产物；疑似工具集回退）')
         else:
             crt = has_dynamic_crt(asi)
             if crt:
                 rep.add(pkg, 'ASI 产物', RESULT_WARN,
                         f'{size:,}B {detail}；但存在动态 CRT 依赖 {crt}（期望 /MT 静态链接）')
             else:
-                rep.add(pkg, 'ASI 产物', RESULT_OK, f'{size:,}B {detail}，静态 CRT')
+                rep.add(pkg, 'ASI 产物', RESULT_OK,
+                        f'{size:,}B {detail}，静态 CRT' +
+                        (f'，指纹相符（={want:,}B）' if want is not None else ''))
 
     # 3. ini
     if os.path.isfile(asi):

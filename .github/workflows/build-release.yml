@@ -146,7 +146,7 @@ jobs:
       #     install.sh 幂等（ln_s 检查存在才建、cp -a 覆盖 wrapper），且能
       #     修复缓存 tar 对 symlink farm 的任何潜在损伤。
       - name: 还原 MSVC 工具链缓存
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: .msvc
           key: msvcwine-v141-vs15.9-sdk17763-x64-${{ env.MSVCWINE_REF }}-v1
@@ -245,6 +245,11 @@ jobs:
           python3 Projects/Common/tools/automation/build_release.py "${extra[@]}"
 
       # ── 产物校验（独立于构建脚本再核一遍：x64 PE / 静态 CRT / 包结构）──
+      # ── S8 体积指纹（硬断言位置：verify_release.py 的 ASI_EXPECTED_SIZE）──
+      #   值 = MSVC v141 (14.16) + Win10 SDK 10.0.26100 的确定产物；回退到 v142
+      #   会改变体积并被拦下。此处列出以便在本 workflow 文件内直接 grep：
+      #     SR3R_I18N.asi  277504 B
+      #     SR4R_I18N.asi  283136 B
       - name: 校验产物完整性
         run: python3 Projects/Common/tools/verify/verify_release.py release
 
@@ -277,7 +282,7 @@ jobs:
           done
 
       - name: "上传 SR3 通用包 (artifact: sr3r-common)"
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: sr3r-common
           path: stage/sr3r-common
@@ -285,7 +290,7 @@ jobs:
           retention-days: 30
 
       - name: "上传 SR4 通用包 (artifact: sr4r-common)"
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: sr4r-common
           path: stage/sr4r-common
@@ -293,7 +298,7 @@ jobs:
           retention-days: 30
 
       - name: "上传 SR4 微软商店包 (artifact: sr4r-microsoft)"
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: sr4r-microsoft
           path: stage/sr4r-microsoft
@@ -325,19 +330,19 @@ jobs:
 
       # 三个 artifact 分别下载到各自子目录（每个子目录含 1 个中文名 zip）
       - name: 下载 SR3 通用包
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: sr3r-common
           path: dist/sr3r-common
 
       - name: 下载 SR4 通用包
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: sr4r-common
           path: dist/sr4r-common
 
       - name: 下载 SR4 微软商店包
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: sr4r-microsoft
           path: dist/sr4r-microsoft
