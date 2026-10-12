@@ -557,7 +557,7 @@ def step5_fonts(cfg, out_root):
 
 
 def step6_loader(cfg, out_root):
-    """6. dist/common/winmm.dll + 必读说明.txt → release/{gv}/"""
+    """6. dist/common/winmm.dll + 必读说明.txt + 两份 AI 辅助文件 → release/{gv}/"""
     common = os.path.join(ROOT, 'dist', 'common')
     dst = os.path.join(out_root, cfg['rel'])
     os.makedirs(dst, exist_ok=True)
@@ -571,6 +571,15 @@ def step6_loader(cfg, out_root):
             raise RuntimeError(f'{sp} 体积仅 {sz} B，不像真实 ASI Loader')
         shutil.copy2(sp, os.path.join(dst, f))
         got.append(f'{f}({sz:,}B)')
+
+    # 两份 AI 辅助文件（统一标准 S12/S13）：放包根，玩家可直接把 .txt 拖进
+    # 任意 AI 聊天工具。文件名含中文 → 打包时 zipfile 自动置 UTF-8 标志位。
+    for f in AI_FILES:
+        sp = os.path.join(common, f)
+        if not os.path.exists(sp):
+            raise RuntimeError(f'缺少 {sp}（AI 辅助文件）')
+        shutil.copy2(sp, os.path.join(dst, f))
+        got.append(f'{f}({os.path.getsize(sp):,}B)')
     p('  ' + ', '.join(got))
     return len(got)
 
@@ -589,6 +598,12 @@ def step7_ini(cfg, out_root):
     p(f'  scripts\\{cfg["ini"]}')
     return n
 
+
+# 两份 AI 辅助文件（统一标准 S12/S13），由 step6 随包分发到包根
+AI_FILES = [
+    '如果不会安装，请把该文件发给AI，让AI教你.txt',
+    '将此文件交给AI，让AI协助完善本项目.txt',
+]
 
 LICENSE_DIR = 'Licenses'
 LICENSE_ORDER = ['ASILoader.txt', 'MinHook.txt', 'stb.txt', 'source-han-serif.txt', 'GPLv3.txt']
