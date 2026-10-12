@@ -360,13 +360,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          tag="$(TZ=Asia/Shanghai date +%Y-%m-%d-%H-%M-%S)"
+          # stamp：纯 ASCII 时间戳，仅供 Release 附件名（API 上传不支持中文名，
+          #   非 ASCII 会被静默破坏成 _._._）。
+          stamp="$(TZ=Asia/Shanghai date +%Y-%m-%d-%H-%M-%S)"
+          # tag：面向玩家的 CJK 前缀标签（统一标准 §5 汉化补丁-YYYY-MM-DD-HH-MM-SS）。
+          tag="汉化补丁-${stamp}"
           # 极小概率同秒重复推送：若 tag 已存在则追加运行号
           if gh api "repos/${{ github.repository }}/git/ref/tags/$tag" >/dev/null 2>&1; then
             tag="${tag}-${GITHUB_RUN_NUMBER}"
           fi
+          echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "将使用 tag: $tag"
+          echo "将使用 tag: $tag （附件戳 stamp: $stamp）"
 
       - name: 建 git tag 并推送
         run: |
@@ -391,6 +396,7 @@ jobs:
         run: |
           set -euo pipefail
           tag="${{ steps.tag.outputs.tag }}"
+          stamp="${{ steps.tag.outputs.stamp }}"
           slug="${{ github.repository }}"
           # ★ slug 只给 gh api 用（repos/{slug}/...）；拼 **commit 链接** 必须带
           #   https://github.com/ 前缀，否则 markdown 里只是一段普通文字、点不开。
@@ -475,9 +481,9 @@ jobs:
 
           | 英文附件名 | 对应中文原名 | 适用版本 |
           |---|---|---|
-          | `Saint-Row-3-Common-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒III》简体中文通用补丁 | SR3 重制版（Steam / GOG / EPIC） |
-          | `Saint-Row-4-Common-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒IV》简体中文通用补丁 | SR4 重制版（Steam / GOG / EPIC） |
-          | `Saint-Row-4-Microsoft-CHS-Patch-@@TAG@@.zip` | 《黑道圣徒IV》简体中文微软商店补丁 | SR4 微软商店版 |
+          | `Saint-Row-3-Common-CHS-Patch-@@STAMP@@.zip` | 《黑道圣徒III》简体中文通用补丁 | SR3 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Common-CHS-Patch-@@STAMP@@.zip` | 《黑道圣徒IV》简体中文通用补丁 | SR4 重制版（Steam / GOG / EPIC） |
+          | `Saint-Row-4-Microsoft-CHS-Patch-@@STAMP@@.zip` | 《黑道圣徒IV》简体中文微软商店补丁 | SR4 微软商店版 |
           EOF
 
           # ── 6) 追加必读说明全文（与包内 必读说明.txt 同源）──────────────────
@@ -503,7 +509,7 @@ jobs:
           } >> release_notes.md
 
           # ── 7) 占位符替换 + 自检 ────────────────────────────────────────
-          sed -i "s/@@TAG@@/$tag/g" release_notes.md
+          sed -i "s/@@TAG@@/$tag/g; s/@@STAMP@@/$stamp/g" release_notes.md
           if grep -q '@@TAG@@' release_notes.md; then
             echo "!! 仍有未替换的 @@TAG@@" >&2; exit 1
           fi
@@ -523,6 +529,7 @@ jobs:
         run: |
           set -euo pipefail
           tag="${{ steps.tag.outputs.tag }}"
+          stamp="${{ steps.tag.outputs.stamp }}"
           slug="${{ github.repository }}"
           # 1) 建 release（api.github.com），取 upload_url
           # ★★ body 必须用 **-F**（不能 -f）传：`-f` **不展开 `@file`**，
@@ -589,7 +596,7 @@ jobs:
               | jq -r '.name'
             echo "✅ $ascii"
           }
-          upload_one "$(ls dist/sr3r-common/*.zip)"    "Saint-Row-3-Common-CHS-Patch-${tag}.zip"
-          upload_one "$(ls dist/sr4r-common/*.zip)"    "Saint-Row-4-Common-CHS-Patch-${tag}.zip"
-          upload_one "$(ls dist/sr4r-microsoft/*.zip)" "Saint-Row-4-Microsoft-CHS-Patch-${tag}.zip"
+          upload_one "$(ls dist/sr3r-common/*.zip)"    "Saint-Row-3-Common-CHS-Patch-${stamp}.zip"
+          upload_one "$(ls dist/sr4r-common/*.zip)"    "Saint-Row-4-Common-CHS-Patch-${stamp}.zip"
+          upload_one "$(ls dist/sr4r-microsoft/*.zip)" "Saint-Row-4-Microsoft-CHS-Patch-${stamp}.zip"
           echo "✅ 已发布 Release: $tag"
