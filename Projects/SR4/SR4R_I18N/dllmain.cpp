@@ -3498,6 +3498,141 @@ static uint32_t*  g_pMountCount     = nullptr;   // dword_146998D80 表项数
 static uint32_t*  g_pMountArray     = nullptr;   // dword_146998D90 表项数组（12B/项）
 static bool       g_mountRegApplied = false;
 
+// ============================================================================
+// v2.1 根治: 在「注册序列末尾」这个静止点同步插队, 取代运行期异步改表
+// ============================================================================
+// 【为什么必须改（v1.9.1~v2.0 崩溃的根因, 与 SR3R v7.10 同源）】
+//   旧做法是守候线程按 50ms 轮询 count, 稳定 200ms 后调 MountReg(0,0,1)。
+//   问题不在「插队晚不晚」, 而在**改表那一刻引擎是否正在读表**:
+//   挂载表有两种读者 ——
+//     sub_14084DEE0（统一打开器主遍历）  整调用持锁 -> 安全
+//     sub_14084DD60 / sub_14084E140      **游标式**  -> 危险
+//   后两者的起始下标由**调用方**保存, 函数内部把 `*a1 + 1` 写回, 调用方循环
+//   调用直到返回 0。游标是调用方的状态, **不在临界区范围内**, 那把挂载表锁
+//   保护不了它。而 MountReg(insertFront=1) 是一次整表 memmove —— 若此刻有游标
+//   循环正在进行, 下标语义立刻改变 -> 条目被跳过/重复访问 -> 下游资源槽为 NULL。
+//
+// 【新做法: 静止点插队】
+//   注册器在整份映像里只有极少数调用点, 且集中在主初始化的连续几行内;
+//   最后一次返回时 count 达到 MOUNTREG_EXPECT, 而引擎**尚未开始装载资源**。
+//   这是本进程唯一的静止点。在这一刻补一次 MountReg(0,0,1), 最终布局与旧版
+//   验证过的一致 —— 语义零变化, 只是不再有异步窗口。
+//   hook 内每次调用后都复核「磁盘项是否仍在 [0]」, 被后续注册挤走就补回,
+//   使该布局成为「注册点上的不变式」而非一次性动作。
+//
+// 【兜底】装晚了 / 装失败 -> LooseFirstWatcherThread 回退旧的轮询守候线程。
+static constexpr uint32_t MOUNTREG_EXPECT = 3;      // 原版固定注册 3 项
+
+static MountReg_t    g_origMountReg     = nullptr;  // MinHook 蹦床（hook 未装则空）
+static volatile LONG g_regCalls         = 0;        // 观测到的注册器调用次数
+static volatile LONG g_regHoisted       = 0;        // 已在静止点确认磁盘项位于 [0]
+static volatile LONG g_watcherFallback  = 0;        // 1 = 走了旧守候线程（回退路径）
+
+// 取磁盘项 {type=0,param=0} 的下标; -1 = 不在表里
+static int FindDiskIdx(uint32_t cnt)
+{
+    if (!g_pMountArray || cnt > 16) return -1;
+    for (uint32_t i = 0; i < cnt; ++i)
+        if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) return (int)i;
+    return -1;
+}
+
+// 打印整张表布局 —— 跨构建自检用（布局一旦偏离预期, 日志里立刻看得见）
+static void LogMountLayout(const char* why)
+{
+    if (!g_pMountCount || !g_pMountArray) { Log("mountlayout[%s]: 表地址未定位", why); return; }
+    uint32_t n = *g_pMountCount;
+    if (n > 16) n = 16;
+    char buf[224]; size_t off = 0; buf[0] = '\0';
+    for (uint32_t i = 0; i < n; ++i)
+    {
+        const uint8_t* e = reinterpret_cast<const uint8_t*>(g_pMountArray) + 12u * i;
+        char one[48];
+        _snprintf_s(one, sizeof(one), _TRUNCATE, "[%u]{%u,%u,%u} ",
+                    i,
+                    *reinterpret_cast<const uint32_t*>(e),
+                    *reinterpret_cast<const uint32_t*>(e + 4),
+                    (unsigned)e[8]);
+        size_t len = strlen(one);
+        if (off + len + 1 >= sizeof(buf)) break;
+        memcpy(buf + off, one, len); off += len; buf[off] = '\0';
+    }
+    Log("mountlayout[%s]: count=%u %s", why, *g_pMountCount, buf);
+}
+
+// 注册器 detour: 先让引擎原样注册, 返回后复核并（必要时）补插队。
+//   ★ 递归调用 g_origMountReg 是安全的: 原函数此刻已返回并释放了临界区,
+//     且 MountReg(0,0,1) 对「已在 [0]」的表是幂等的（下标 0 时不搬移）。
+static char __fastcall HookMountReg(int type, int param, char insertFront)
+{
+    char r = g_origMountReg(type, param, insertFront);
+    LONG n = InterlockedIncrement(&g_regCalls);
+
+    if (g_cfg.looseFirst)
+    {
+        uint32_t cnt = g_pMountCount ? *g_pMountCount : 0;
+        if (cnt >= MOUNTREG_EXPECT)
+        {
+            int idx = FindDiskIdx(cnt);
+            if (idx != 0)
+            {
+                char ok = g_origMountReg(0, 0, 1);      // ★ 静止点: 顶到 [0]
+                int after = FindDiskIdx(g_pMountCount ? *g_pMountCount : 0);
+                Log("mountreg[hook]: 静止点插队 calls=%ld ret=%d count=%u diskIdx %d -> %d %s",
+                    n, (int)ok, cnt, idx, after, after == 0 ? "OK" : "WARN 仍未在表头");
+                if (after != 0) return r;
+            }
+            if (InterlockedCompareExchange(&g_regHoisted, 0, 0) == 0)
+            {
+                InterlockedExchange(&g_regHoisted, 1);
+                g_mountRegApplied = true;
+                Log("mountreg[hook]: ★ 磁盘项已置于表头 [0] —— loose 资源(含 le_strings)优先于 vpp_pc");
+                LogMountLayout("after-hoist");
+            }
+        }
+        else
+        {
+            Log("mountreg[hook]: 注册序列进行中 call=%ld (count=%u/%u) -> 等末尾静止点",
+                n, cnt, MOUNTREG_EXPECT);
+        }
+    }
+    return r;
+}
+
+// 安装注册器 hook。返回 true = 已接管（无需旧守候线程作为主路径）。
+//   装之前若表**已注册满**, 说明注册序列早已跑完 -> hook 来不及, 交回调用方走旧路径。
+//   若表非空但未满（注册正在进行到一半）, 仍然装 —— detour 内部会等到
+//   count>=MOUNTREG_EXPECT 才动手, 中途挂上是安全的。
+static bool InstallMountRegHook()
+{
+    if (!g_fnMountRegCall) { Log("mountreg[hook]: 注册器未定位 -> 回退守候线程"); return false; }
+
+    uint32_t pre = g_pMountCount ? *g_pMountCount : 0;
+    if (pre >= MOUNTREG_EXPECT)
+    {
+        Log("mountreg[hook]: 安装前 count 已=%u (注册序列早已结束) -> 回退守候线程", pre);
+        return false;
+    }
+    if (pre != 0)
+        Log("mountreg[hook]: 安装前 count=%u (注册进行中) -> 仍装, detour 内部等末尾静止点", pre);
+    if (MH_CreateHook((void*)g_fnMountRegCall, (void*)HookMountReg, (void**)&g_origMountReg) != MH_OK
+        || !g_origMountReg)
+    {
+        g_origMountReg = nullptr;
+        Log("mountreg[hook]: MH_CreateHook 失败 -> 回退守候线程");
+        return false;
+    }
+    if (MH_EnableHook((void*)g_fnMountRegCall) != MH_OK)
+    {
+        MH_RemoveHook((void*)g_fnMountRegCall);
+        g_origMountReg = nullptr;
+        Log("mountreg[hook]: MH_EnableHook 失败 -> 回退守候线程");
+        return false;
+    }
+    Log("mountreg[hook]: 已 hook 注册器 @%p -> 将在注册序列末尾(静止点)插队", (void*)g_fnMountRegCall);
+    return true;
+}
+
 // ----------------------------------------------------------------------
 //  LocateMountReg / LooseFirstWatcherThread —— 定位(只读) + 独立守候线程改表
 // ----------------------------------------------------------------------
@@ -3581,12 +3716,15 @@ static bool ApplyLooseFirst()
         return false;
     }
 
-    // ★★ v1.9.2 新增「注册序列已结束」判定（与 SR3R v7.8.2 同构, 实测崩溃教训）:
+    // ★★ v1.9.2 的「注册序列已结束」判定（v2.1 起仅作为**回退路径**保留）:
     //   引擎连续调 3 次注册器（count 1→2→3）。若在 count 刚到 1/2 时抢先插队,
     //   会与引擎后续那次 MountReg(...,insertFront=1) 打架 → 后续线程空指针崩溃
     //   （c0000005, 崩在游戏自身链表遍历, 栈上无本 DLL 帧）。
     //   故要求「count 稳定在预期值」再动手。
-    static const uint32_t MOUNTREG_EXPECT = 3;          // 原版固定注册 3 项
+    //
+    //   ★ v2.1 说明: 正路径已改为 HookMountReg 的「静止点插队」（见上文）。
+    //     本函数现在只在「注册器 hook 装晚了/装失败」时由守候线程调用。
+    //     MOUNTREG_EXPECT 已提升为文件作用域常量, 两处共用。
     static const int      MOUNTREG_STABLE_SAMPLES = 4;  // 连续 4 次(×50ms=200ms)不变
     {
         uint32_t c = *g_pMountCount;
@@ -3609,28 +3747,22 @@ static bool ApplyLooseFirst()
     }
 
     // 调用前后各扫一次表, 便于日志核对「是否真的搬动了」
-    auto findDisk = [](uint32_t* arr, uint32_t cnt) -> int
-    {
-        if (!arr || cnt > 16) return -1;
-        for (uint32_t i = 0; i < cnt; ++i)
-            if (arr[3 * i] == 0 && arr[3 * i + 1] == 0) return (int)i;
-        return -1;
-    };
     uint32_t cnt0 = *g_pMountCount;
-    int idx0 = findDisk(g_pMountArray, cnt0);
+    int idx0 = FindDiskIdx(cnt0);
 
     char ok = g_fnMountRegCall(0, 0, 1);            // ★ insertFront=1 -> 顶到 [0]
 
     uint32_t cnt1 = *g_pMountCount;
-    int idx1 = findDisk(g_pMountArray, cnt1);
+    int idx1 = FindDiskIdx(cnt1);
 
-    Log("mountreg: ApplyLooseFirst -> ret=%d, count %u->%u, disk idx %d -> %d",
+    Log("mountreg: ApplyLooseFirst(回退路径) -> ret=%d, count %u->%u, disk idx %d -> %d",
         (int)ok, cnt0, cnt1, idx0, idx1);
 
     if (idx1 == 0)
     {
         g_mountRegApplied = true;
         Log("mountreg: ★ 磁盘项已置于表头 [0] —— loose 资源(含 le_strings)优先于 vpp_pc");
+        LogMountLayout("watcher-hoist");
         return true;
     }
     Log("mountreg: WARN 磁盘项未在表头 (idx=%d) —— loose 可能不生效", idx1);
@@ -3752,18 +3884,19 @@ static bool LocateMountReg()
 }
 
 // 在 MainThread 里「等到挂载表就绪后」把磁盘项插队。
-// 「守候线程」: 独立线程轮询挂载表, 一旦引擎注册完(count>0)就把磁盘项插队。
+// 「兜底守候线程」: 仅在**注册器 hook 未能接管**时作为主路径启动
+//   （见 InstallMountRegHook / MainThread 5c）。
 //
-//   ★ v1.9.1 架构（与 SR3R v7.8.1 同构, 两次实测教训的最终形态）:
-//     ① 不能在 DllMain 里调注册器 —— 那时临界区(CRT 静态构造)还没初始化, 进程崩。
-//     ② 不能在 MainThread 里同步等待 —— 引擎注册发生在主初始化里, 由静态构造
-//        分派器在 ASI 注入**之后**才跑, 实测可晚于注入 30s+;
-//        同步等就会把后面的 hook 安装一起卡死。
-//     → 最终: DllMain 只做只读定位; 本线程独立轮询, 与 hook 安装完全解耦。
+//   ★ v2.1 变更: 本线程不再是唯一路径。
+//     主路径 = HookMountReg 在注册序列末尾(静止点)同步插队 —— 那时引擎还没开始
+//     装载资源, 不存在游标式遍历者, 因此没有「改表撞读者」的窗口。
+//     本线程只在两种情况下承担主路径:
+//       ① 注册器 AOB 未定位 / MinHook 安装失败;
+//       ② 安装时表已非空(注册早已跑完, hook 来不及)。
+//     这两种情况下引擎版本很可能已变, 故保留 v1.9.2 的保守判定（count 稳定多次）。
 //
-//   ★ v1.9.2 追加「注册序列已结束」判定（实测崩溃教训, 同 SR3R v7.8.2）:
-//     必须等 count 稳定在预期值再插队, 否则会与引擎自身的后续注册打架,
-//     导致游戏后续线程空指针崩溃。本线程不再「表非空就退出」。
+//   hook 已装时本线程只做兜底: 给 hook 一个宽限期, 期内由 hook 完成插队即退出;
+//   超时仍未完成才回退轮询改表（防「hook 装了但该构建注册路径不同」静默失效）。
 static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
 {
     if (!LocateMountReg())
@@ -3772,16 +3905,36 @@ static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
         return 0;
     }
 
-    const DWORD LOOSE_WAIT_MS = 180000;     // 上限 180s（表就绪即返回, 不会等满）
+    const bool  hookArmed     = (g_origMountReg != nullptr);
+    const DWORD HOOK_GRACE_MS = hookArmed ? 15000 : 0;   // hook 在装 -> 先白等 15s
+    const DWORD LOOSE_WAIT_MS = 180000;                  // 总上限 180s
     const DWORD STEP_MS       = 50;
     DWORD waited   = 0;
     DWORD lastBeat = 0;
 
+    if (hookArmed)
+        Log("mountreg[watch]: 注册器 hook 已装, 先给 %u ms 宽限期（静止点插队优先）", HOOK_GRACE_MS);
+
     while (waited < LOOSE_WAIT_MS)
     {
+        if (InterlockedCompareExchange(&g_regHoisted, 0, 0) != 0)
+        {
+            Log("mountreg[watch]: 静止点插队已由 hook 完成（等待 %u ms）-> 本线程退出", waited);
+            return 0;
+        }
+        if (waited < HOOK_GRACE_MS)
+        {
+            Sleep(STEP_MS); waited += STEP_MS;
+            if (waited - lastBeat >= 5000)
+            {
+                lastBeat = waited;
+                Log("mountreg[watch]: hook 宽限期 %u/%u ms ...", waited, HOOK_GRACE_MS);
+            }
+            continue;
+        }
         if (ApplyLooseFirst())
         {
-            Log("mountreg[watch]: 等待 %u ms 后表就绪并完成插队", waited);
+            Log("mountreg[watch]: 回退路径在等待 %u ms 后完成插队", waited);
             return 0;
         }
         // v1.9.2: 不再「表非空就退出」—— 注册序列未结束时 ApplyLooseFirst 会
@@ -4752,13 +4905,17 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     }
 
     // 5c. 安装（第二阶段）
-    //   挂载表磁盘项插队: 起一个「守候线程」异步完成。
-    //   ★ 不能在 DllMain 调注册器（临界区未初始化 -> 崩溃, v1.9 实测）;
-    //   ★ 也不能在此处同步等待（引擎注册由静态构造分派器在 ASI 注入后才跑,
-    //     实测可晚 30s+, 同步等会把下面的 hook 安装一起卡死, v1.9.1 实测）。
-    //   → 独立线程轮询, 与 hook 安装完全解耦; 结果以 [watch] 行日志为准。
+    //   挂载表磁盘项插队: 主路径 = hook 注册器, 在「注册序列末尾」静止点同步插队。
+    //   ★ 为什么不在运行期异步改表（v1.9.1~v2.0 的崩溃根因）:
+    //     挂载表的游标式读者(sub_14084DD60 / sub_14084E140)把下标存在**调用方**,
+    //     那把表锁保护不到; MountReg(insertFront=1) 是整表 memmove —— 撞上正在进行
+    //     的游标循环就会跳过/重复条目 -> 下游资源槽 NULL。注册序列末尾是唯一确定
+    //     没有并发遍历者的时刻（引擎还没开始装载资源）。
+    //   ★ 装晚了/失败 -> 回退到旧守候线程（未知构建保底）。
     if (g_cfg.looseFirst)
     {
+        bool hooked = InstallMountRegHook();
+        if (!hooked) InterlockedExchange(&g_watcherFallback, 1);
         HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
         if (hWatcher) CloseHandle(hWatcher);
         else          Log("mountreg: WARN 守候线程创建失败 -> loose 优先不可用");
@@ -4789,11 +4946,14 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("SR4R v2.0 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, bc3_atlas=%d, applied=%d, idling",
+    Log("SR4R v2.1 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, applied=%d, idling",
         g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j,
-        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas, (int)g_mountRegApplied);
-    // 注: 挂载表插队由独立「守候线程」异步完成（引擎注册晚于本线程）,
-    //     此处 applied 可能仍为 0 —— 属正常, 不等同失败; 结果以 [watch] 行日志为准。
+        (int)g_cfg.looseFirst,
+        InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
+        (int)g_cfg.bc3Atlas, (int)g_mountRegApplied);
+    // 注: 正路径的插队在引擎注册序列末尾(静止点)由 HookMountReg 同步完成;
+    //     此处 applied 可能仍为 0（引擎注册晚于本线程）—— 属正常,
+    //     结果以 "mountreg[hook]: ★ 磁盘项已置于表头" 与 mountlayout 行为准。
     return 0;
 }
 
@@ -4868,7 +5028,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N");
-	        Log("[DllMain] ATTACH SR4R v2.0 (BC3 atlas + format branches + capacity guard)");
+	        Log("[DllMain] ATTACH SR4R v2.1 (loose 静止点插队: 根治改表撞游标读者的崩溃)");
             // v1.9: 这里**只做只读定位**, 绝不调用引擎注册器。
             //   原因（v1.8 实测崩溃）: 注册器内部 EnterCriticalSection(&挂载表锁),
             //   该临界区由引擎 CRT 静态构造初始化, 而 ASI 的 DllMain 跑在

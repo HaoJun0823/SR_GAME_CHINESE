@@ -3455,6 +3455,150 @@ using MountRegFn = char(__fastcall*)(int type, int param, char insertFront);
 static MountRegFn    g_fnMountRegCall   = nullptr;   // ★ 真正的函数指针（用于调用）
 static volatile LONG g_mountRegApplied  = 0;         // 已成功插队
 
+// ============================================================================
+// v7.10 根治: 在「注册序列末尾」这个静止点同步插队, 取代运行期异步改表
+// ============================================================================
+// 【为什么必须改（v7.8.1~v7.9 崩溃的根因）】
+//   旧做法是守候线程按 50ms 轮询 count, 稳定 200ms 后调 MountReg(0,0,1)。
+//   问题不在「插队晚不晚」, 而在**改表那一刻引擎是否正在读表**:
+//   挂载表有两种读者 ——
+//     sub_14084DEE0（统一打开器主遍历）  整调用持锁 -> 安全
+//     sub_14084DD60 / sub_14084E140      **游标式**  -> 危险
+//   后两者的起始下标由**调用方**保存, 函数内部 `v9 = *a1 + 1; *a1 = v9;` 跨调用
+//   写回, 调用方循环调用直到返回 0。游标是调用方的状态, **不在临界区范围内**,
+//   所以那把 stru_142967DA8 锁保护不了它。而 MountReg(insertFront=1) 是一次
+//   整表 memmove（[0..v6-1] 整体后移一格）—— 若此刻有游标循环正在进行,
+//   下标语义立刻改变 -> 条目被跳过/重复访问 -> 下游资源槽为 NULL。
+//   这与崩溃现场吻合: SRTTR+0x8D0BE0 处 rcx = slotTable[index] = 0,
+//   调用者 sub_14031EBE0(0x31ED7A) 不检查 NULL 就调用了非防御式校验器;
+//   栈上是任务/活动装载路径(sub_14042D750 / sub_14042C750), 即装载期。
+//
+// 【新做法: 静止点插队】
+//   注册器 sub_14084D5A0 在整个映像里**只有 3 个调用点**, 全在 sub_1401673B0 内连续执行:
+//      140167678  MountReg(0, 0, 0)   磁盘项 -> [0]
+//      140167686  MountReg(1, 6, 0)             -> [1]
+//      140167693  MountReg(1, 0, 1)   vpp 插队  -> [0], 把磁盘项挤到 [1]
+//   第 3 次返回后 count==3, 而引擎此时**尚未开始装载资源**（本地化初始化
+//   sub_1403FDA90 -> sub_1403FD430 还在后面）。这是本进程唯一的静止点。
+//   在这一刻补一次 MountReg(0,0,1), 最终布局 [0]={0,0} [1]={1,0} [2]={1,6}
+//   与 v7.8 起验证过的完全一致 —— 语义零变化, 只是不再有异步窗口。
+//   hook 内每次调用后都复核一次「磁盘项是否仍在 [0]」, 被后续注册挤走就补回,
+//   使该布局成为「注册点上的不变式」而非一次性动作。
+//
+// 【兜底】装晚了 / 装失败 -> MountRegWatchdogThread 检测到「count 已就绪但未观测到
+//   调用」时回退旧的轮询守候线程（ApplyLooseFirst）, 保证未知构建下 loose 仍可用。
+static constexpr uint32_t MOUNTREG_EXPECT = 3;      // 原版固定注册 3 项
+
+static MountRegFn    g_origMountReg     = nullptr;  // MinHook 蹦床（hook 未装则空）
+static volatile LONG g_regCalls         = 0;        // 观测到的注册器调用次数
+static volatile LONG g_regHoisted       = 0;        // 已在静止点确认磁盘项位于 [0]
+static volatile LONG g_watcherFallback  = 0;        // 1 = 走了旧守候线程（回退路径）
+
+// 取磁盘项 {type=0,param=0} 的下标; -1 = 不在表里
+static int FindDiskIdx(uint32_t cnt)
+{
+    if (!g_pMountArray || cnt > 16) return -1;
+    for (uint32_t i = 0; i < cnt; ++i)
+        if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) return (int)i;
+    return -1;
+}
+
+// 打印整张表布局 —— 跨构建自检用（布局一旦偏离预期, 日志里立刻看得见）
+static void LogMountLayout(const char* why)
+{
+    if (!g_pMountCount || !g_pMountArray) { Log("mountlayout[%s]: 表地址未定位", why); return; }
+    uint32_t n = *g_pMountCount;
+    if (n > 16) n = 16;
+    char buf[224]; size_t off = 0; buf[0] = '\0';
+    for (uint32_t i = 0; i < n; ++i)
+    {
+        const uint8_t* e = reinterpret_cast<const uint8_t*>(g_pMountArray) + 12u * i;
+        char one[48];
+        _snprintf_s(one, sizeof(one), _TRUNCATE, "[%u]{%u,%u,%u} ",
+                    i,
+                    *reinterpret_cast<const uint32_t*>(e),
+                    *reinterpret_cast<const uint32_t*>(e + 4),
+                    (unsigned)e[8]);
+        size_t len = strlen(one);
+        if (off + len + 1 >= sizeof(buf)) break;
+        memcpy(buf + off, one, len); off += len; buf[off] = '\0';
+    }
+    Log("mountlayout[%s]: count=%u %s", why, *g_pMountCount, buf);
+}
+
+// 注册器 detour: 先让引擎原样注册, 返回后复核并（必要时）补插队。
+//   ★ 递归调用 g_origMountReg 是安全的: 原函数此刻已返回并释放了临界区,
+//     且 MountReg(0,0,1) 对「已在 [0]」的表是幂等的（v6==0 时不搬移）。
+static char __fastcall HookMountReg(int type, int param, char insertFront)
+{
+    char r = g_origMountReg(type, param, insertFront);
+    LONG n = InterlockedIncrement(&g_regCalls);
+
+    if (g_cfg.looseFirst)
+    {
+        uint32_t cnt = g_pMountCount ? *g_pMountCount : 0;
+        if (cnt >= MOUNTREG_EXPECT)
+        {
+            int idx = FindDiskIdx(cnt);
+            if (idx != 0)
+            {
+                char ok = g_origMountReg(0, 0, 1);      // ★ 静止点: 顶到 [0]
+                int after = FindDiskIdx(g_pMountCount ? *g_pMountCount : 0);
+                Log("mountreg[hook]: 静止点插队 calls=%ld ret=%d count=%u diskIdx %d -> %d %s",
+                    n, (int)ok, cnt, idx, after, after == 0 ? "OK" : "WARN 仍未在表头");
+                if (after != 0) return r;
+            }
+            if (InterlockedCompareExchange(&g_regHoisted, 0, 0) == 0)
+            {
+                InterlockedExchange(&g_regHoisted, 1);
+                InterlockedExchange(&g_mountRegApplied, 1);
+                Log("mountreg[hook]: ★ 磁盘项已置于表头 [0] —— loose 资源优先于 vpp_pc");
+                LogMountLayout("after-hoist");
+            }
+        }
+        else
+        {
+            Log("mountreg[hook]: 注册序列进行中 call=%ld (count=%u/%u) -> 等末尾静止点",
+                n, cnt, MOUNTREG_EXPECT);
+        }
+    }
+    return r;
+}
+
+// 安装注册器 hook。返回 true = 已接管（无需旧守候线程作为主路径）。
+//   装之前若表**已注册满**, 说明注册序列早已跑完 -> hook 来不及, 交回调用方走旧路径。
+//   若表非空但未满（注册正在进行到一半）, 仍然装 —— detour 内部会等到
+//   count>=MOUNTREG_EXPECT 才动手, 中途挂上是安全的。
+static bool InstallMountRegHook()
+{
+    if (!g_fnMountReg) { Log("mountreg[hook]: 注册器未定位 -> 回退守候线程"); return false; }
+
+    uint32_t pre = g_pMountCount ? *g_pMountCount : 0;
+    if (pre >= MOUNTREG_EXPECT)
+    {
+        Log("mountreg[hook]: 安装前 count 已=%u (注册序列早已结束) -> 回退守候线程", pre);
+        return false;
+    }
+    if (pre != 0)
+        Log("mountreg[hook]: 安装前 count=%u (注册进行中) -> 仍装, detour 内部等末尾静止点", pre);
+    if (MH_CreateHook((void*)g_fnMountReg, (void*)HookMountReg, (void**)&g_origMountReg) != MH_OK
+        || !g_origMountReg)
+    {
+        g_origMountReg = nullptr;
+        Log("mountreg[hook]: MH_CreateHook 失败 -> 回退守候线程");
+        return false;
+    }
+    if (MH_EnableHook((void*)g_fnMountReg) != MH_OK)
+    {
+        MH_RemoveHook((void*)g_fnMountReg);
+        g_origMountReg = nullptr;
+        Log("mountreg[hook]: MH_EnableHook 失败 -> 回退守候线程");
+        return false;
+    }
+    Log("mountreg[hook]: 已 hook 注册器 @%p -> 将在注册序列末尾(静止点)插队", (void*)g_fnMountReg);
+    return true;
+}
+
 // 把挂载表里的磁盘项 {type=0, param=0} 前移到表头。
 //   返回 true = 表已处于「磁盘优先」状态（含「本来就在表头」的情况）。
 //
@@ -3479,14 +3623,17 @@ static bool ApplyLooseFirst()
         return false;
     }
 
-    // ★★ v7.8.3 新增「注册序列已结束」判定（实测崩溃教训）：
+    // ★★ v7.8.3 的「注册序列已结束」判定（v7.10 起仅作为**回退路径**保留）：
     //   引擎在 sub_1401673B0 里**连续**调 3 次注册器（1→2→3 项）。
     //   若在 count 刚到 1 或 2 时抢先插队，会把表搞乱，之后引擎自己那次
     //   MountReg(1,0,1) 又插队，最终布局虽"看起来对"，但引擎在其后的初始化
     //   里已按"磁盘项在 [1]"做了缓存/推导 → 后续线程空指针崩溃（c0000005）。
     //   故必须等「表项数稳定」再动手：连续 MOUNTREG_STABLE_SAMPLES 次采样不变，
     //   且达到原版最终值 3（下限），才认为注册序列结束。
-    static const uint32_t MOUNTREG_EXPECT = 3;          // 原版固定注册 3 项
+    //
+    //   ★ v7.10 说明: 正路径已改为 HookMountReg 的「静止点插队」（见上文）。
+    //     本函数现在只在「注册器 hook 装晚了/装失败」时由守候线程调用。
+    //     MOUNTREG_EXPECT 已提升为文件作用域常量, 两处共用。
     static const int      MOUNTREG_STABLE_SAMPLES = 4;  // 连续 4 次(×50ms=200ms)不变
     static uint32_t s_lastCount = 0;
     static int      s_sameCnt   = 0;
@@ -3511,30 +3658,21 @@ static bool ApplyLooseFirst()
     }
 
     // 调用前先快照, 便于日志核对「是否真的搬动了」
-    int beforeIdx = -1;
-    if (g_pMountArray)
-    {
-        for (uint32_t i = 0; i < beforeCount; ++i)
-            if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) { beforeIdx = (int)i; break; }
-    }
+    int beforeIdx = FindDiskIdx(beforeCount);
 
     char ok = g_fnMountRegCall(0, 0, 1);                // ★ insertFront=1 -> 顶到 [0]
 
     uint32_t afterCount = g_pMountCount ? *g_pMountCount : 0;
-    int afterIdx = -1;
-    if (g_pMountArray && afterCount <= 16)
-    {
-        for (uint32_t i = 0; i < afterCount; ++i)
-            if (g_pMountArray[3 * i] == 0 && g_pMountArray[3 * i + 1] == 0) { afterIdx = (int)i; break; }
-    }
+    int afterIdx = FindDiskIdx(afterCount);
 
-    Log("mountreg: ApplyLooseFirst -> ret=%d, count %u->%u, disk item idx %d -> %d",
+    Log("mountreg: ApplyLooseFirst(回退路径) -> ret=%d, count %u->%u, disk item idx %d -> %d",
         (int)ok, beforeCount, afterCount, beforeIdx, afterIdx);
 
     if (afterIdx == 0)
     {
         InterlockedExchange(&g_mountRegApplied, 1);
         Log("mountreg: ★ 磁盘项已置于表头 [0] —— loose 资源（含 le_strings）优先于 vpp_pc");
+        LogMountLayout("watcher-hoist");
         return true;
     }
     Log("mountreg: WARN 磁盘项未在表头 (idx=%d) —— loose 可能仍不生效", afterIdx);
@@ -3614,20 +3752,15 @@ static bool LocateMountReg()
     return true;                                        // 仅定位, 不改表
 }
 
-// 「守候线程」: 独立线程轮询挂载表, 一旦引擎注册完(count>0)就把磁盘项插队。
+// 「兜底守候线程」: 仅在**注册器 hook 未能接管**时启动（见 InstallMountRegHook）。
 //
-//   ★ v7.8.1 架构（两次实测教训的最终形态）:
-//     ① 不能在 DllMain 里调注册器 —— 那时临界区(CRT 静态构造)还没初始化, 进程崩。
-//     ② 不能在 MainThread 里同步等待 —— 引擎注册挂在主初始化
-//        (sub_140169160 → sub_1401673B0)里, 由静态构造分派器在 ASI 注入**之后**
-//        才跑, 实测可晚于注入 30s+; 同步等就会把 hook 安装一起卡死。
-//     → 最终: DllMain 只做只读定位; 本线程独立轮询, 与 hook 安装完全解耦。
-//
-//   ★ v7.8.3 追加「注册序列已结束」判定（实测崩溃教训）:
-//     引擎在 sub_1401673B0 里连续注册 3 项（count 1→2→3）。若在 count 刚到 1/2 时
-//     抢先插队, 会与引擎后续的 MountReg(1,0,1) 打架 → 后续线程空指针崩溃。
-//     故 ApplyLooseFirst 内部要求「count 稳定(=3 且连续多次不变)」才动手; 本线程
-//     不再「表非空就退出」, 一律以 ApplyLooseFirst 的返回值（true=已插队成功）为准。
+//   ★ v7.10 变更: 本线程不再是主路径。
+//     主路径 = HookMountReg 在注册序列末尾(静止点)同步插队 —— 那时引擎还没开始
+//     装载资源, 不存在游标式遍历者, 因此没有「改表撞读者」的窗口。
+//     本线程只在两种情况下被启动:
+//       ① 注册器 AOB 未定位 / MinHook 安装失败;
+//       ② 安装时表已非空(注册早已跑完, hook 来不及)。
+//     这两种情况下引擎版本很可能已变, 故保留 v7.8.3 的保守判定（count 稳定多次）。
 //
 //   轮询开销极小（读一个 u32 + 比较）, 50ms 一次; 就绪后立即退出。
 static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
@@ -3639,20 +3772,45 @@ static DWORD WINAPI LooseFirstWatcherThread(LPVOID)
         return 0;
     }
 
-    const DWORD LOOSE_WAIT_MS = 180000;     // 上限 180s（表就绪即返回, 不会等满）
+    // ★ hook 已装上的话, 插队由 HookMountReg 在静止点完成, 本线程只做等待与兜底。
+    //   宽限期给 hook 机会: 若注册序列在宽限期内跑完(hook 会置 g_regHoisted),
+    //   本线程直接收工; 否则说明 hook 没生效, 回退到轮询改表。
+    const bool hookArmed = (g_origMountReg != nullptr);
+    const DWORD HOOK_GRACE_MS = hookArmed ? 15000 : 0;   // hook 在装 -> 先白等 15s
+    const DWORD LOOSE_WAIT_MS = 180000;                  // 总上限 180s
     const DWORD STEP_MS       = 50;
     DWORD waited   = 0;
     DWORD lastBeat = 0;
 
+    if (hookArmed)
+        Log("mountreg[watch]: 注册器 hook 已装, 先给 %u ms 宽限期（静止点插队优先）", HOOK_GRACE_MS);
+
     while (waited < LOOSE_WAIT_MS)
     {
-        if (ApplyLooseFirst())
+        // hook 已完成静止点插队 -> 本线程无事可做
+        if (InterlockedCompareExchange(&g_regHoisted, 0, 0) != 0)
         {
-            Log("mountreg[watch]: 等待 %u ms 后表就绪并完成插队", waited);
+            Log("mountreg[watch]: 静止点插队已由 hook 完成（等待 %u ms）-> 本线程退出", waited);
             return 0;
         }
-        // v7.8.3: 不再「表非空就退出」—— 注册序列未结束时 ApplyLooseFirst 会
-        //   主动返回 false 继续等；只有它返回 true（已插队成功）才收工。
+
+        // 宽限期内不动表, 只观察
+        if (waited < HOOK_GRACE_MS)
+        {
+            Sleep(STEP_MS); waited += STEP_MS;
+            if (waited - lastBeat >= 5000)
+            {
+                lastBeat = waited;
+                Log("mountreg[watch]: hook 宽限期 %u/%u ms ...", waited, HOOK_GRACE_MS);
+            }
+            continue;
+        }
+
+        if (ApplyLooseFirst())
+        {
+            Log("mountreg[watch]: 回退路径在等待 %u ms 后完成插队", waited);
+            return 0;
+        }
         Sleep(STEP_MS);
         waited += STEP_MS;
         if (waited - lastBeat >= 5000)      // 心跳 5s
@@ -3927,18 +4085,32 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     //    必须在 hook 安装与引擎指针绑定之前完成。
     ResolveTargets();
 
-    // 4a. v7.8.1: 挂载表磁盘项插队 —— 【不能在主线程阻塞等待】
-    //     ★ 教训: 引擎注册挂在主初始化(sub_140169160 → sub_1401673B0)里,
-    //       该函数由静态构造分派器在 ASI 注入**之后**才跑, 实测可晚于注入 30s+。
-    //       若在此处同步等待, 会把后面的 hook 安装(4b/5)一起卡住 -> 汉化失效。
-    //     故: 另起一个「守候线程」, 只负责轮询挂载表并在就绪后插队;
-    //       本线程立即继续往下走, 装 hook 不受影响。
-    //     (DllMain 已做完只读定位 LocateMountReg; 注册表地址此刻有效)
+    // 4a. v7.10: 磁盘项优先 —— 主路径 = hook 注册器, 在「注册序列末尾」静止点插队。
+    //     ★ 为什么不在运行期异步改表（v7.8.1~v7.9 的崩溃根因）:
+    //       挂载表的游标式读者(sub_14084DD60 / sub_14084E140)把下标存在**调用方**,
+    //       锁保护不到; MountReg(insertFront=1) 是整表 memmove —— 撞上正在进行的
+    //       游标循环就会跳过/重复条目 -> 下游资源槽 NULL -> 崩在 SRTTR+0x8D0BE0。
+    //       注册序列末尾是唯一确定没有并发遍历者的时刻（引擎还没开始装载资源）。
+    //     ★ MinHook 必须在此处初始化（4b 之后、5. 之前已统一）。
+    //     ★ 装晚了/失败 -> 回退到旧守候线程（未知构建保底）。
+    MH_Initialize();
     if (g_cfg.looseFirst)
     {
-        HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
-        if (hWatcher) CloseHandle(hWatcher);
-        else          Log("mountreg: WARN 守候线程创建失败 -> loose 优先不可用");
+        if (!InstallMountRegHook())
+        {
+            InterlockedExchange(&g_watcherFallback, 1);
+            HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
+            if (hWatcher) CloseHandle(hWatcher);
+            else          Log("mountreg: WARN 守候线程创建失败 -> loose 优先不可用");
+        }
+        else
+        {
+            // hook 已接管: 仍然起一个轻量守候线程, 只做兜底（宽限期内等 hook 完成,
+            // 超时未完成才回退改表）。这样「hook 装了但没被调用」（例如该构建
+            // 注册路径不同）也不会静默失效。
+            HANDLE hWatcher = CreateThread(nullptr, 0, LooseFirstWatcherThread, nullptr, 0, nullptr);
+            if (hWatcher) CloseHandle(hWatcher);
+        }
     }
 
     // 4b. 引擎指针（任一解析失败 -> 该指针留空, 对应功能自动降级而非崩溃）
@@ -3947,8 +4119,7 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     if (g_vaD3dDevice)  g_devSlot      = VA<ID3D11Device**>(g_vaD3dDevice);
     if (g_vaD3dContext) g_ctxSlot      = VA<ID3D11DeviceContext**>(g_vaD3dContext);
 
-    // 5. MinHook
-    MH_Initialize();
+    // 5. MinHook（MH_Initialize 已在 4a 提前调用, 此处不再重复）
     bool a = InstallHook(g_fnDrawWide,   "DrawWide",   (void*)HookDrawWide,   (void**)&g_origDrawWide);
     bool b = InstallHook(g_fnFormat,     "Format",     (void*)HookFormat,     (void**)&g_origFormat);
     bool c = InstallHook(g_fnFontLookup, "FontLookup", (void*)HookFontLookup, (void**)&g_origFontLookup);
@@ -3989,12 +4160,15 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("v7.9 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, bc3_atlas=%d, applied=%d, idling",
+    Log("v7.10 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, applied=%d, idling",
         g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j,
-        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas,
+        (int)g_cfg.looseFirst,
+        InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
+        (int)g_cfg.bc3Atlas,
         (int)(InterlockedCompareExchange(&g_mountRegApplied, 0, 0) != 0));
-    // 注: 挂载表插队由独立「守候线程」异步完成（引擎注册晚于本线程, 见 4a 注释）,
-    //     此处 applied 可能仍为 0 —— 属正常, 不等同失败; 结果以 [watch] 行日志为准。
+    // 注: 正路径的插队在引擎注册序列末尾(静止点)由 HookMountReg 同步完成;
+    //     此处 applied 可能仍为 0（引擎注册晚于本线程）—— 属正常,
+    //     结果以 "mountreg[hook]: ★ 磁盘项已置于表头" 与 mountlayout 行为准。
     return 0;
 }
 
@@ -4009,18 +4183,20 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR3R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N");
-			Log("[DllMain] ATTACH v7.9 (BC3 atlas + format branches + capacity guard)");
+			Log("[DllMain] ATTACH v7.10 (loose 静止点插队: 根治改表撞游标读者的崩溃)");
 
-            // v7.8: 挂载表磁盘项插队的手续分两步 ——
+            // v7.10: 挂载表磁盘项插队的手续分两步 ——
             //   ① 这里(DllMain) 只做**只读定位**: AOB 找注册器 + 解出挂载表地址。
-            //   ② 改表动作放在 MainThread（见 ApplyLooseFirstWithWait）。
+            //   ② 实际改表在 MainThread: 先 hook 注册器, 在「注册序列末尾」这个
+            //      静止点同步插队（主路径）; 装晚了才回退旧守候线程。
             //
             //   ★ 为什么不在 DllMain 里直接改表（v7.8 首版踩过的坑）:
             //     注册器内部 EnterCriticalSection(&stru_142967DA8), 该临界区由
             //     CRT 静态构造（sub_14002FDC0）初始化, 而 ASI 注入的 DllMain 早于
             //     主 exe 的 CRT 初始化 -> 进未初始化临界区 -> **进程直接崩溃**（实测）。
             //     另外此刻挂载表 count 还是 0（注册尚未发生）。
-            //   → 所以 DllMain 只读不写; 改表延后到 MainThread（那时引擎早已初始化完）。
+            //   ★ 为什么不在 MainThread 里盲目异步改表（v7.8.1~v7.9 的崩溃根因）:
+            //     见上方 HookMountReg 处的大段说明（游标式读者 + 整表 memmove）。
             //   风险控制: 定位全程只读 .text, 不 LoadLibrary / 不 CreateThread。
             //   注: g_cfg 的静态默认值此刻已生效, 但 ini 可能有 loose_first=0。
             //       故这里先用轻量解析覆盖 g_cfg.looseFirst, 避免 MainThread 读 ini 前误开。
