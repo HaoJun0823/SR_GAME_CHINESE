@@ -29,7 +29,7 @@ build_release.py — {game}_{version}_{lang} 一键发布构建编排
     5. 复制 Fonts/ 下的字体 → release/{gv}/scripts/
     6. 复制 dist/common/winmm.dll 与 必读说明.txt → release/{gv}/
     7. 复制 dist/{game}/scripts/*.ini → release/{gv}/scripts/
-    8. 合并 Licenses/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE
+    8. 合并 LICENSES/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE
 
 用法
     python build_release.py                      # 全部：sr3r_common / sr4r_common / sr4r_microsoft
@@ -605,12 +605,14 @@ AI_FILES = [
     '将此文件交给AI，让AI协助完善本项目.txt',
 ]
 
-LICENSE_DIR = 'Licenses'
-LICENSE_ORDER = ['ASILoader.txt', 'MinHook.txt', 'stb.txt', 'source-han-serif.txt', 'GPLv3.txt']
+# ★ 全大写 LICENSES/（REUSE 规范）。CI 跑在 Linux 上大小写敏感，
+#   写成 Licenses/ 在 Windows 本地能过、上 CI 必挂。
+LICENSE_DIR = 'LICENSES'
+LICENSE_ORDER = ['ASILoader.txt', 'MinHook.txt', 'stb.txt', 'source-han-serif.txt', 'Apache-2.0.txt']
 
 
 def step8_license(cfg, out_root):
-    """8. 合并 Licenses/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE"""
+    """8. 合并 LICENSES/ 下全部 txt → release/{gv}/License.txt，并复制根目录 LICENSE → release/{gv}/LICENSE"""
     src = os.path.join(ROOT, LICENSE_DIR)
     if not os.path.isdir(src):
         raise RuntimeError(f'许可目录不存在：{src}（已重命名为 {LICENSE_DIR}/）')

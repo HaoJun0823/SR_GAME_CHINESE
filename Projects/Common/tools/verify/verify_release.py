@@ -340,7 +340,7 @@ def verify_pkg(rel, root, rep, strict):
         rep.add(pkg, 'License.txt', RESULT_FAIL, '缺失或内容过少')
     else:
         t = open(lic, 'r', encoding='utf-8-sig', errors='replace').read()
-        need = ['ASILoader', 'MinHook', 'GPLv3']
+        need = ['ASILoader', 'MinHook', 'Apache-2.0']
         miss = [n for n in need if n not in t]
         if miss:
             rep.add(pkg, 'License.txt', RESULT_WARN,
