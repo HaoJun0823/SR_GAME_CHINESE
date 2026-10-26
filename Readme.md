@@ -197,11 +197,15 @@ DLL 在运行时从该字体动态生成所需字形的位图并注入引擎，�
 
 ## 五、License — 许可证
 
-本项目以 **GPL v3** 发布。第三方依赖许可证一并收录：
+本项目为个人非官方作品，以 **HJNCSA-1.0（非商业源码可得许可）** 发布：
+禁止商业使用；二次修改后再分发须公开源代码与改动记录并保留署名；
+作者不对使用后果承担责任，且不拥有游戏及其原始素材的版权。完整条款见 [`LICENSE`](LICENSE)。
+
+第三方依赖许可证一并收录：
 
 | 文件 | 覆盖对象 |
 | --- | --- |
-| `GPLv3.txt` | 本项目 |
+| `Apache-2.0.txt` | 本项目的许可基座（Apache License 2.0 官方全文） |
 | `MinHook.txt` | MinHook（BSD-2-Clause） |
 | `ASILoader.txt` | Ultimate ASI Loader（MIT） |
 | `README.md` | 许可证索引说明 |

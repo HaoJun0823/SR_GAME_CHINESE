@@ -4,7 +4,9 @@
 External, runtime-only localization DLL: no game resource files are touched; text is swapped in memory and CJK glyph rendering is injected on the fly.
 
 > **语言 / Language**: 中文在前，English follows. Two languages say the same things; read either one.
-> **License**: GPL-3.0（与本项目仓库一致 / same as this repository）
+> **License**: HJNCSA-1.0（非商业源码可得许可，与本项目仓库一致 / non-commercial
+> source-available, same as this repository）：禁止商业使用；二次修改后再分发须公开
+> 源代码与改动记录并保留署名；作者免责且不拥有游戏版权。详见仓库根 `LICENSE`。
 > **Author**: HaoJun0823 — https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N
 
 > ⚠️ **过时标注（2026-10-02 盘点）**：本文早期版本提到的 `Tools/verify_aob.py`
