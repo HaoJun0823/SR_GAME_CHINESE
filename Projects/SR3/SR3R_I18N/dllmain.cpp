@@ -386,6 +386,7 @@ struct Config
     bool     subtitleEarly;       // v7.5: 字幕绘制入口整串替换（Hook J）
     bool     looseFirst;          // v7.8: 挂载表磁盘项插队（loose 资源文件优先于 vpp_pc）
     bool     bc3Atlas;            // v7.9: 魔法图集用 BC3 压缩（显存 ↓4x; 0=回到 BGRA8 无损）
+    uint32_t maxAtlasW;           // v7.11: 伪图集加宽上限（宽度即卡死触发器; 默认 4096, 可在 ini 调小到 2048 兜底）
     wchar_t exeOverride[MAX_PATH]; // v7.6.1: 版本强制覆盖 (auto/steam/gog/epic); auto=PE 指纹判别
 };
 
@@ -440,6 +441,7 @@ static Config g_cfg = {
     true,                          // subtitle_early
     true,                          // loose_first 默认开（loose 资源优先于 vpp_pc）
     true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
+    4096u,                         // v7.11: max_atlas_w 默认 4096（8192 在部分 GPU/驱动下致卡死; 见玩家 dump 分析）
     L"auto",                       // exeOverride: 默认自动 (PE 指纹判别)
 };
 
@@ -499,15 +501,22 @@ static void LoadConfig(const wchar_t* iniPath)
         else if (_wcsicmp(key, L"subtitle_early") == 0) g_cfg.subtitleEarly = (*val != L'0');
         else if (_wcsicmp(key, L"loose_first") == 0)    g_cfg.looseFirst  = (*val != L'0');
         else if (_wcsicmp(key, L"bc3_atlas") == 0)      g_cfg.bc3Atlas    = (*val != L'0');
+        else if (_wcsicmp(key, L"max_atlas_w") == 0)
+        {
+            long v = (long)wcstoul(val, nullptr, 10);
+            if (v < 1024) v = 1024; else if (v > 8192) v = 8192;
+            if (v & 3) v = (v + 3) & ~3u;               // 4 对齐(BC3 块单位)
+            g_cfg.maxAtlasW = (uint32_t)v;
+        }
         else if (_wcsicmp(key, L"exe") == 0)            wcscpy_s(g_cfg.exeOverride, val);
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d loose=%d bc3=%d exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d loose=%d bc3=%d maxAtlasW=%u exe=%ls)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
         (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, (int)g_cfg.looseFirst,
-        (int)g_cfg.bc3Atlas, g_cfg.exeOverride);
+        (int)g_cfg.bc3Atlas, g_cfg.maxAtlasW, g_cfg.exeOverride);
 }
 
 // ---------- 版本判别（PE 指纹; 与 SR4R 同思路。SR3R 目标定位全 AOB, 故仅用于日志标注与 ini 覆盖） ----------
@@ -1406,7 +1415,7 @@ static DWORD WINAPI RasterizeThread(LPVOID arg)
     uint32_t nGuess = g_charCount;
     {
         // 官方图集真实尺寸: 引擎纹理对象 +8/+10 (u16 W/H; 不依赖 D3D 就绪)
-        uint32_t capW = 8192, offHGuess = 2048;
+        uint32_t capW = g_cfg.maxAtlasW, offHGuess = 2048;
         uint32_t offTexId = *(uint32_t*)((uint8_t*)off + 184);
         void* texObj = (offTexId != 0xFFFFFFFFu) ? g_origTexObj((int)offTexId) : nullptr;
         if (texObj)
@@ -2084,15 +2093,20 @@ static bool FinishFont(FakeFont* f)
     uint32_t nCellsWanted = f->nCells;   // 截断前记录（日志用）
     uint32_t rows = (f->nCells + perRow - 1) / perRow;
     uint32_t maxRows = (ATLAS_H_LIMIT - offH) / f->cellH - 1; // O2': 与收窄循环共用安全预算
-    if (rows > maxRows && W < 8192)
+    if (rows > maxRows && W < g_cfg.maxAtlasW)
     {
-        // 显存换全字覆盖: 加宽伪图集减少截断
-        // （font1 官方 4096 宽仅 18 列; 8192 宽 37 列; 16384 宽曾致卡死, 回退）
-        //   O1 起图集为 BC3（1B/px）, 8192 宽的显存代价已降到原来的 1/4。
+        // v7.11: 伪图集加宽上限改为可配置(max_atlas_w, 默认 4096)。
+        //   实测证据: 玩家(RTX 4060 Ti / Win11 26H2 / 最新驱动)在 SAVING 界面卡死, 3 份 minidump
+        //   均显示卡在 SR3R_I18N 的 D3D11 字体图集上传路径 —— I18N 线程永久阻塞于 nvwgf2umx
+        //   (NVIDIA 驱动) 的 NtWaitForMultipleObjects, 主线程随之钉死; 而日志恰在
+        //   "atlas widened 2048 -> 8192" 之后冻结。历史亦有 "16384 宽致卡死" 先例。
+        //   结论: 图集宽度本身是触发器。4096 是能在 16384 高度限制内放下 3005 字、且宽度减半的
+        //   最保守取值; 若客户机仍不稳, 可在 ini 把 max_atlas_w 降到 2048(官方宽度, 必不卡,
+        //   代价是极低频字可能被截断)。O1 起图集为 BC3(1B/px), 4096 宽显存代价已很低。
         uint32_t oldW = W;
-        W = 8192;
+        W = g_cfg.maxAtlasW;
         perRow = W / f->cellW;
-        if (perRow == 0) { Log("font%u: perRow=0 after widen (cellW=%u>8192), abort", fontId, f->cellW); srcTex->Release(); f->state = 4; return false; }
+        if (perRow == 0) { Log("font%u: perRow=0 after widen (cellW=%u>maxAtlasW), abort", fontId, f->cellW); srcTex->Release(); f->state = 4; return false; }
         rows = (f->nCells + perRow - 1) / perRow;
         maxRows = (ATLAS_H_LIMIT - offH) / f->cellH - 1;
         Log("font%u: atlas widened %u -> %u (perRow %u -> %u)", fontId, oldW, W, oldW / f->cellW, perRow);
@@ -4160,11 +4174,12 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("v7.10 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, applied=%d, idling",
+    Log("v7.11 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, maxAtlasW=%u, applied=%d, idling",
         g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j,
         (int)g_cfg.looseFirst,
         InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
         (int)g_cfg.bc3Atlas,
+        g_cfg.maxAtlasW,
         (int)(InterlockedCompareExchange(&g_mountRegApplied, 0, 0) != 0));
     // 注: 正路径的插队在引擎注册序列末尾(静止点)由 HookMountReg 同步完成;
     //     此处 applied 可能仍为 0（引擎注册晚于本线程）—— 属正常,
@@ -4183,7 +4198,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR3R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N");
-			Log("[DllMain] ATTACH v7.10 (loose 静止点插队: 根治改表撞游标读者的崩溃)");
+			Log("[DllMain] ATTACH v7.11 (loose 静止点插队 + 图集宽度可配置化: 修复部分 GPU 在 SAVING 界面卡死)");
 
             // v7.10: 挂载表磁盘项插队的手续分两步 ——
             //   ① 这里(DllMain) 只做**只读定位**: AOB 找注册器 + 解出挂载表地址。
