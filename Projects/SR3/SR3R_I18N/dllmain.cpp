@@ -441,7 +441,8 @@ static Config g_cfg = {
     true,                          // subtitle_early
     true,                          // loose_first 默认开（loose 资源优先于 vpp_pc）
     true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
-    4096u,                         // v7.11: max_atlas_w 默认 4096（8192 在部分 GPU/驱动下致卡死; 见玩家 dump 分析）
+    8192u,                         // v7.11: max_atlas_w 默认 8192(字号=原版行为). 部分 GPU/驱动(SAVING 卡死, 见 dump 分析)
+                                  //        可在 ini 设 max_atlas_w=2048 兜底(牺牲字号换不卡); 真解为渲染线程上传(待做)
     L"auto",                       // exeOverride: 默认自动 (PE 指纹判别)
 };
 
