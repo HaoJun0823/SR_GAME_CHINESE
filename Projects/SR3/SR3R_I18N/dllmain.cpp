@@ -386,7 +386,8 @@ struct Config
     bool     subtitleEarly;       // v7.5: 字幕绘制入口整串替换（Hook J）
     bool     looseFirst;          // v7.8: 挂载表磁盘项插队（loose 资源文件优先于 vpp_pc）
     bool     bc3Atlas;            // v7.9: 魔法图集用 BC3 压缩（显存 ↓4x; 0=回到 BGRA8 无损）
-    uint32_t maxAtlasW;           // v7.11: 伪图集加宽上限（宽度即卡死触发器; 默认 4096, 可在 ini 调小到 2048 兜底）
+    uint32_t maxAtlasW;           // v7.11: 伪图集加宽上限（宽度即卡死放大器; 默认 8192=原版字号）
+    bool     uploadOnRender;      // v7.12: 图集 GPU 上传只在渲染线程做（根治跨线程 D3D11 争用; 0=旧行为）
     wchar_t exeOverride[MAX_PATH]; // v7.6.1: 版本强制覆盖 (auto/steam/gog/epic); auto=PE 指纹判别
 };
 
@@ -442,7 +443,8 @@ static Config g_cfg = {
     true,                          // loose_first 默认开（loose 资源优先于 vpp_pc）
     true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
     8192u,                         // v7.11: max_atlas_w 默认 8192(字号=原版行为). 部分 GPU/驱动(SAVING 卡死, 见 dump 分析)
-                                  //        可在 ini 设 max_atlas_w=2048 兜底(牺牲字号换不卡); 真解为渲染线程上传(待做)
+                                  //        可在 ini 设 max_atlas_w=2048 兜底(牺牲字号换不卡)
+    true,                          // v7.12: upload_on_render_thread 默认开（上传只在渲染线程, 消除跨线程 ctx 争用）
     L"auto",                       // exeOverride: 默认自动 (PE 指纹判别)
 };
 
@@ -509,15 +511,16 @@ static void LoadConfig(const wchar_t* iniPath)
             if (v & 3) v = (v + 3) & ~3u;               // 4 对齐(BC3 块单位)
             g_cfg.maxAtlasW = (uint32_t)v;
         }
+        else if (_wcsicmp(key, L"upload_on_render_thread") == 0) g_cfg.uploadOnRender = (*val != L'0');
         else if (_wcsicmp(key, L"exe") == 0)            wcscpy_s(g_cfg.exeOverride, val);
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d loose=%d bc3=%d maxAtlasW=%u exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d loose=%d bc3=%d maxAtlasW=%u upload_on_render=%d exe=%ls)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
         (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, (int)g_cfg.looseFirst,
-        (int)g_cfg.bc3Atlas, g_cfg.maxAtlasW, g_cfg.exeOverride);
+        (int)g_cfg.bc3Atlas, g_cfg.maxAtlasW, (int)g_cfg.uploadOnRender, g_cfg.exeOverride);
 }
 
 // ---------- 版本判别（PE 指纹; 与 SR4R 同思路。SR3R 目标定位全 AOB, 故仅用于日志标注与 ini 覆盖） ----------
@@ -1313,6 +1316,20 @@ static uint32_t ResolveSlot(void* off);
 static bool     FinishFont(FakeFont* f);
 static void     RequestFont(uint32_t slot);
 
+// ---------- v7.12: 渲染线程上传队列 ----------
+// 背景: v7.10 及以前, FinishFont（官方图集读回 + 8192 宽 BC3 图集创建/上传）由后台
+//   RasterizeThread 执行, 而渲染线程同时在同一份 D3D11 **immediate context** 上做游戏
+//   渲染。immediate context 不是线程安全的 —— 玩家 3 份 minidump 全是纯挂起(无异常流),
+//   I18N 线程永久阻塞于 nvwgf2umx(驱动) 的 NtWaitForMultipleObjects, 且栈里 I18N 帧与
+//   d3d11 帧交织, 正是这种无锁并发访问的典型死锁形态。
+// 方案: 后台只做 CPU 光栅化, 完成后 state=3 入队; 由**渲染线程**在 hook 入口消费队列并
+//   执行 FinishFont。这样 immediate context 永远只在渲染线程被访问, 争用根除。
+//   代价: 首次 CJK 文本时渲染线程承担一次性上传开销（日志会打印耗时）。
+static volatile LONG g_pendingUploads = 0;   // 待上传字体数（>0 才扫描, 高频路径零代价）
+static volatile LONG g_renderTid      = 0;   // 首个进入渲染 hook 的线程 = 渲染线程
+static volatile LONG g_uploadTries[FAKE_FONT_MAX] = { 0 };  // 每字体失败重试次数
+static void     RenderDrainFontUploads();
+
 // ---------- Hook C: 字体对象查询（两渲染器公共必经点） ----------
 // 触发升级 + 伪对象替换
 // ptr 缓存（官方对象 -> FakeFont）, 高频路径避免线性扫 fontTab
@@ -1344,6 +1361,10 @@ static void* __fastcall HookFontLookup(int fontId)
     // 触发/推进升级（菜单文本走 sub_14016E7D0 渲染器, 不经 DrawWide,
     // 故在此公共必经点触发; 英文渲染不受影响, 官方 cell 照抄）
     if (g_stbReady && g_dictReady) EnsureFontReady(off);
+
+    // v7.12: 本 hook 在渲染路径上（SAVING/菜单文本即走这里, 不一定经 DrawWide）,
+    //   在此消费待上传字体 -> 本轮绘制即可用上新伪字体。
+    RenderDrainFontUploads();
 
     // 已 live 的伪对象替换（校验官方对象仍在槽位）
     uint32_t slot = (fontId >= 0 && (uint32_t)fontId < FAKE_FONT_MAX)
@@ -1562,18 +1583,22 @@ static DWORD WINAPI RasterizeThread(LPVOID arg)
         fontId, n, cellW, cellH, (double)(scale / fullScale), baseline, missGlyph, offCount);
 
     InterlockedExchange(&f->state, 3);  // 待 D3D 阶段
+    InterlockedIncrement(&g_pendingUploads);
 
-    // D3D 阶段也在本后台线程完成（FinishFont 内 CAS 3->5 防并发）:
-    // 原设计在渲染线程做, 官方图集读回+大纹理上传会卡主界面首帧; 后台做完后伪对象才 live,
-    // 未就绪期间引擎用官方字体渲染中文 -> 槽码越界被 sub_140858C10 边界检查挡住 -> 安全空白回退
-    // 暂时性失败（D3D/官方SRV未就绪, state 回 3）: 后台重试至多 30s
+    // v7.12: 默认由渲染线程做 D3D 阶段（见 g_pendingUploads 处说明）。
+    //   后台线程到此为止: 不碰 device/context, 只把 CPU 光栅化产物交出去。
+    if (g_cfg.uploadOnRender) return 0;
+
+    // 兼容旧行为（ini: upload_on_render_thread=0）: 本后台线程直接做 D3D。
+    //   注意: 这正是跨线程争用 immediate context 的来源, 保留仅作 A/B 对照。
     for (int retry = 0; retry < 300; ++retry)
     {
-        if (FinishFont(f)) return 0;
-        if (f->state != 3) return 0;   // 永久失败(4)/已被别的线程完成, 不再重试
+        if (FinishFont(f)) { InterlockedDecrement(&g_pendingUploads); return 0; }
+        if (f->state != 3) { InterlockedDecrement(&g_pendingUploads); return 0; }   // 永久失败/已被完成
         Sleep(100);
     }
     Log("font%u: D3D stage gave up after 30s (state=%ld)", fontId, f->state);
+    InterlockedDecrement(&g_pendingUploads);
     return 0;
 }
 
@@ -2418,6 +2443,82 @@ static bool FinishFont(FakeFont* f)
     return true;
 }
 
+// ---------- v7.12: 渲染线程消费上传队列 ----------
+//   semantics: 只在**渲染线程**执行; 首次进入的线程即绑定为渲染线程, 其他线程一律跳过
+//   （绝不从非渲染线程碰 immediate context —— 那正是 v7.10 卡死的根因）。
+//   每帧最多消费一个字体, 避免一帧承担多个大图集上传; 暂时性失败留队列下次再试。
+static volatile LONG g_nextUploadTry = 0;   // 重试冷却（GetTickCount 低 32 位, 可回绕比较）
+
+static void RenderDrainFontUploads()
+{
+    if (InterlockedCompareExchange(&g_pendingUploads, 0, 0) <= 0) return;
+
+    // 线程归属: 只有渲染线程可以做 D3D 上传
+    const LONG tid = (LONG)GetCurrentThreadId();
+    LONG rt = g_renderTid;
+    if (rt == 0)
+    {
+        if (InterlockedCompareExchange(&g_renderTid, tid, 0) == 0)
+            Log("upload: render thread bound tid=%ld (图集 GPU 上传限定此线程)", tid);
+        rt = g_renderTid;
+    }
+    if (rt != tid)
+    {
+        // 非渲染线程调用: 跳过（诊断用, 只记前几次, 防刷屏）
+        static volatile LONG skipLog = 0;
+        if (InterlockedIncrement(&skipLog) <= 3)
+            Log("upload: skip tid=%ld (render tid=%ld), defer to render thread", tid, rt);
+        return;                                  // 留给渲染线程
+    }
+
+    // 重试冷却（失败后 200ms 再试, 避免每帧数百次重试把帧时间吃光）
+    const LONG now = (LONG)GetTickCount();
+    if ((LONG)(now - g_nextUploadTry) < 0) return;
+
+    static volatile LONG busy = 0;               // 防重入
+    if (InterlockedCompareExchange(&busy, 1, 0) != 0) return;
+
+    for (uint32_t i = 0; i < FAKE_FONT_MAX; ++i)
+    {
+        FakeFont* f = &g_fake[i];
+        if (f->state != 3) continue;
+
+        const uint64_t t0 = GetTickCount64();
+        const bool ok = FinishFont(f);
+        const uint64_t ms = GetTickCount64() - t0;
+        const LONG st = f->state;
+
+        if (ok || st != 3)
+        {
+            InterlockedDecrement(&g_pendingUploads);
+            g_nextUploadTry = 0;
+            // 耗时是诊断关键: 渲染线程承担一次性上传, 若过大(>500ms)可考虑再拆 CPU 编码阶段
+            Log("font%u: [render] atlas upload %s in %llu ms (state=%ld)",
+                f->fontId, ok ? "OK" : "FAILED", (unsigned long long)ms, st);
+        }
+        else
+        {
+            // 暂时性失败（D3D/官方 SRV 未就绪）: 留队列, 冷却后重试
+            const LONG tries = InterlockedIncrement(&g_uploadTries[i]);
+            g_nextUploadTry = now + 200;
+            if (tries >= 300)
+            {
+                Log("font%u: [render] upload gave up after %ld tries, fallback to official font", f->fontId, tries);
+                InterlockedExchange(&f->state, 4);
+                InterlockedDecrement(&g_pendingUploads);
+            }
+            else if (tries <= 3 || (tries % 50) == 0)
+            {
+                Log("font%u: [render] upload retry #%ld (%llu ms, state=%ld)", f->fontId, tries, (unsigned long long)ms, st);
+            }
+        }
+        InterlockedExchange(&busy, 0);
+        return;                                  // 一次只处理一个
+    }
+    InterlockedExchange(&g_pendingUploads, 0);   // 没有待办（已被别处完成/失败）
+    InterlockedExchange(&busy, 0);
+}
+
 // ---------- 请求升级字体（渲染线程, DrawWide 内调用） ----------
 // 文本是否需要中文字形（词典字符集位图: 含任一 >=0x80 字符即需要）
 static bool TextNeedsGlyphs(const wchar_t* s)
@@ -2594,6 +2695,8 @@ static __int64 __fastcall HookDrawWide(void* a1, float x, float y, const wchar_t
         if (r) text = r->trans;
         // 文本含中文字符（无论替换来自 Hook A 还是 Hook B）-> 确保该字体已升级
         if (TextNeedsGlyphs(text)) EnsureFontFor(fontId);
+        // v7.12: 在渲染线程消费待上传字体（本函数必然是渲染线程调用）
+        RenderDrainFontUploads();
     }
     return g_origDrawWide(a1, x, y, text, scale, flag, fontId, a8);
 }
@@ -4175,12 +4278,13 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("v7.11 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, maxAtlasW=%u, applied=%d, idling",
+    Log("v7.12 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, maxAtlasW=%u, upload_on_render=%d, applied=%d, idling",
         g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j,
         (int)g_cfg.looseFirst,
         InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
         (int)g_cfg.bc3Atlas,
         g_cfg.maxAtlasW,
+        (int)g_cfg.uploadOnRender,
         (int)(InterlockedCompareExchange(&g_mountRegApplied, 0, 0) != 0));
     // 注: 正路径的插队在引擎注册序列末尾(静止点)由 HookMountReg 同步完成;
     //     此处 applied 可能仍为 0（引擎注册晚于本线程）—— 属正常,
@@ -4199,7 +4303,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR3R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N");
-			Log("[DllMain] ATTACH v7.11 (loose 静止点插队 + 图集宽度可配置化: 修复部分 GPU 在 SAVING 界面卡死)");
+			Log("[DllMain] ATTACH v7.12 (图集 GPU 上传改由渲染线程执行: 根治跨线程 D3D11 immediate context 争用)");
 
             // v7.10: 挂载表磁盘项插队的手续分两步 ——
             //   ① 这里(DllMain) 只做**只读定位**: AOB 找注册器 + 解出挂载表地址。
