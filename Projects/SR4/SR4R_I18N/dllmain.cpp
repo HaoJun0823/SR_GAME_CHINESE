@@ -186,6 +186,42 @@ static const uint8_t SIG_SUBTITLE_DRAW[16] = {
     0x4C,0x8B,0xDC,0x55,0x56,0x41,0x54,0x49,0x8D,0xAB,0xA8,0xFB,0xFF,0xFF,0x48,0x81 };
 
 // ---------------------------------------------------------------------
+//  L  HUD 交互提示文本出口（v2.2, 2026-11-15）—— 独立通道专用 hook
+// ---------------------------------------------------------------------
+//  sub_1404B5770 / sub_1404B5840 是一对同构孪生函数, 签名干净:
+//      __int64 __fastcall(const char* KEY, const char* fallback)
+//  命中游戏字符串表 -> 返回表内 wchar_t*; 未命中 -> 把 fallback(或 KEY 本身)
+//  转宽字符注册进动态字符串表后返回。两种返回值都是长期有效的宽串指针。
+//  下游 sub_140BED2D0 才用 CRT vswprintf 把 %ls / %s 填成按键名(E / 手柄键),
+//  所以在这里替换的是「模板」, 占位符原样留给引擎格式化。
+//
+//  为什么必须单独挂: 这条链走 4096 桶 hash 字符串表(sub_1404B5570) +
+//  CRT vswprintf, 不经过 Hook B(Format) 也不经过 Hook F/G(语言服务 thunk)。
+//  现有 8 个 hook 只在渲染/字体层(DrawWide / FontLookup)碰得到它, 文本产出层管不到。
+//  「按 E 进入飞船 / 传送门」的提示与按钮标签正是走这条链。
+//
+//  53B 特征码: [16..19] rip disp32 / [45..48] call rel32 通配;
+//  [52] 是第二个 call rel32 的首字节 —— 它是唯一能区分两个孪生函数的字节,
+//  会随构建变化, 因此跨构建必须重定位; 已知 Steam 构建优先走 VA 表回退。
+//  Steam (TDS=642AD908) 实测各恰好 1 命中 @0x1404B5770 / 0x1404B5840。
+static const uint8_t SIG_PROMPT_GET[53] = {
+    0x48,0x89,0x5C,0x24,0x18,0x57,0x48,0x81,0xEC,0x30,0x02,0x00,0x00,
+    0x48,0x8B,0x05,0x24,0x9B,0x52,0x01,0x48,0x33,0xC4,0x48,0x89,0x84,
+    0x24,0x20,0x02,0x00,0x00,0x48,0x8B,0xFA,0x48,0x8B,0xD9,0x48,0x85,
+    0xC9,0x74,0x13,0x33,0xD2,0xE8,0x9F,0x3B,0x6D,0x00,0x8B,0xC8,0xE8,0xC8 };
+static const uint8_t SIG_PROMPT_BTN[53] = {
+    0x48,0x89,0x5C,0x24,0x18,0x57,0x48,0x81,0xEC,0x30,0x02,0x00,0x00,
+    0x48,0x8B,0x05,0x54,0x9A,0x52,0x01,0x48,0x33,0xC4,0x48,0x89,0x84,
+    0x24,0x20,0x02,0x00,0x00,0x48,0x8B,0xFA,0x48,0x8B,0xD9,0x48,0x85,
+    0xC9,0x74,0x13,0x33,0xD2,0xE8,0xCF,0x3A,0x6D,0x00,0x8B,0xC8,0xE8,0xF8 };
+//  mask[i]=1 精确匹配, 0 跳过（rip disp32 / call rel32 随构建与 ASLR 变化）
+static const uint8_t MASK_PROMPT[53] = {
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1 };
+static_assert(sizeof(SIG_PROMPT_GET) == 53 && sizeof(SIG_PROMPT_BTN) == 53 &&
+              sizeof(MASK_PROMPT) == 53, "PROMPT 特征码必须 53 字节 (见 AOB_ENTRY)");
+
+// ---------------------------------------------------------------------
 //  K 资源挂载表注册器 (v1.9 起改为「直接调用」) —— loose le_string 加载核心
 // ---------------------------------------------------------------------
 //  目标函数: sub_140B7E7A0(int type, int param, char insertFront)
@@ -329,6 +365,9 @@ AOB_ENTRY(SRV_RESOLVE, SIG_SRV_RESOLVE,  nullptr,          16, R2_SRVRESOLVE, RM
 AOB_ENTRY(LANG_CUR,    SIG_LANG_CUR,     MASK_LANG_CUR,    27, R2_LANGCUR,    RM_LANGCUR,    27, nullptr, nullptr, 0);
 AOB_ENTRY(LANG_TXT,    SIG_LANG_TXT,     MASK_LANG_TXT,    16, R2_LANGTXT,    RM_LANGTXT,    27, nullptr, nullptr, 0);
 AOB_ENTRY(SUBTITLE,    SIG_SUBTITLE_DRAW,nullptr,          16, R2_SUBTITLE,   RM_SUBTITLE,   48, R3_SUBTITLE, nullptr, 48);
+// L HUD 交互提示（Steam 专用; L2/L3 留空 —— 53B L1 已在该构建唯一, 其它构建 VA=0 不安装）
+AOB_ENTRY(PROMPT_GET,  SIG_PROMPT_GET,  MASK_PROMPT,      53, nullptr, nullptr, 0, nullptr, nullptr, 0);
+AOB_ENTRY(PROMPT_BTN,  SIG_PROMPT_BTN,  MASK_PROMPT,      53, nullptr, nullptr, 0, nullptr, nullptr, 0);
 // K 资源挂载表注册器 (v1.9 loose le_string) —— 见下方 ApplyLooseFirst 说明
 //   ★ 注意本条的 L1/L2 长度与其它 hook 不同:
 //     L1 = 31（收在 call 操作码处, 不含 call 的 rel32 —— 那个偏移会随构建变）
@@ -357,6 +396,8 @@ struct ExeConfig {
     uint64_t    vaFontCount;
     uint64_t    vaD3dDevice;
     uint64_t    vaD3dContext;
+    uint64_t    vaPromptGet;   // L: HUD 提示主查表 (Steam 0x1404B5770)
+    uint64_t    vaPromptBtn;   // L: 按钮标签变体   (Steam 0x1404B5840)
 };
 
 // Steam (sr_hv.exe) — IDA 2026-09-07/08 实测
@@ -374,6 +415,8 @@ static constexpr ExeConfig CFG_STEAM = {
     0x146AE504CULL,  // fontCount
     0x147667C70ULL,  // D3DDevice
     0x147667C78ULL,  // D3DContext
+    0x1404B5770ULL,  // PromptGet  (HUD 交互提示主查表, 147 处调用)
+    0x1404B5840ULL,  // PromptBtn  (按钮标签变体, HUD_HOLD_BUTTON 那支)
 };
 
 // GOG (sr_hv_gog.exe) — IDA 2026-09-08 实测 + 2026-09-12 复核修正
@@ -396,6 +439,8 @@ static constexpr ExeConfig CFG_GOG = {
     0x14698A5C8ULL,  // fontCount
     0x14761DEF8ULL,  // D3DDevice
     0x14761DF00ULL,  // D3DContext
+    0ULL,            // PromptGet  — 未定位, 不安装 Hook L
+    0ULL,            // PromptBtn  — 未定位, 不安装 Hook L
 };
 
 // EPIC (sr_hv_epic.exe) — 2026-09-12 实测
@@ -418,6 +463,8 @@ static constexpr ExeConfig CFG_EPIC = {
     0x146ACD304ULL,  // fontCount   (dword_146ACD304, = fontTab-4; 注意 Steam/GOG 布局不同)
     0x14764DF70ULL,  // D3DDevice
     0x14764DF78ULL,  // D3DContext
+    0ULL,            // PromptGet  — 未定位, 不安装 Hook L
+    0ULL,            // PromptBtn  — 未定位, 不安装 Hook L
 };
 
 // 运行时填充 (MainThread 中检测 exe 后设置)
@@ -447,6 +494,8 @@ static constexpr ExeConfig CFG_MSSTORE = {
     0ULL,            // fontCount  — 未知, 依赖运行时自解
     0ULL,            // D3DDevice  — 未知, 依赖 SRV 反查
     0ULL,            // D3DContext — 未知, 依赖 SRV 反查
+    0ULL,            // PromptGet  — 换代构建未定位, 不安装 Hook L
+    0ULL,            // PromptBtn  — 换代构建未定位, 不安装 Hook L
 };
 
 // ============ 构建识别：按【内容】而非文件名 ============
@@ -739,6 +788,8 @@ struct Config
     bool     looseFirst;          // v1.9: 挂载表磁盘项插队(loose 文件优先于 vpp_pc)
     bool     bc3Atlas;            // v7.9: 魔法图集用 BC3 压缩（显存 ↓4x; 0=回到 BGRA8 无损）
     wchar_t  exeOverride[16];     // 强制指定构建 (auto/steam/gog/epic/msstore); 默认 auto=按 PE 指纹识别
+    bool     promptDiag;          // v2.2: Hook L 采样日志（记录 KEY / fallback / 返回串）
+    bool     promptHook;          // v2.2: Hook L 是否安装并做文本替换（0=完全不装, 用于对照）
 };
 
 static Config g_cfg = {
@@ -754,6 +805,8 @@ static Config g_cfg = {
     true,                          // loose_first = 开（loose 资源优先于 vpp_pc）
     true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
     L"auto",                       // exe: 按 PE 指纹自动识别
+    true,                          // v2.2: prompt_diag 默认开（诊断按 E 交互提示）
+    true,                          // v2.2: prompt_hook 默认开（安装 Hook L 并启用替换）
 };
 
 // UTF-8 无 BOM/带 BOM ini 行解析（手工实现, 避免路径中文问题）
@@ -821,14 +874,17 @@ static void LoadConfig(const wchar_t* iniPath)
         else if (_wcsicmp(key, L"loose_first") == 0)  g_cfg.looseFirst = (*val != L'0');
         else if (_wcsicmp(key, L"bc3_atlas") == 0)    g_cfg.bc3Atlas   = (*val != L'0');
         else if (_wcsicmp(key, L"exe") == 0)  wcsncpy_s(g_cfg.exeOverride, val, _TRUNCATE);
+        else if (_wcsicmp(key, L"prompt_diag") == 0) g_cfg.promptDiag = (*val != L'0');
+        else if (_wcsicmp(key, L"prompt_hook") == 0) g_cfg.promptHook = (*val != L'0');
 
         line = wcstok_s(nullptr, L"\r\n", &ctx);
     }
     VirtualFree(wbuf, 0, MEM_RELEASE);
-    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d loose=%d bc3=%d exe=%ls)",
+    Log("cfg: %ls loaded (dict_dir=%ls origin_dir=%ls font_file=%ls charlist=%ls dump=%d early=%d diag=%d sub=%d textdump=%d loose=%d bc3=%d exe=%ls prompt_diag=%d prompt_hook=%d)",
         iniPath, g_cfg.dictDir, g_cfg.originDir, g_cfg.fontFile, g_cfg.charlistFile, (int)g_cfg.dumpEnabled,
         (int)g_cfg.langEarly, (int)g_cfg.earlyDiag, (int)g_cfg.subtitleEarly, g_cfg.textDump,
-        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas, g_cfg.exeOverride);
+        (int)g_cfg.looseFirst, (int)g_cfg.bc3Atlas, g_cfg.exeOverride,
+        (int)g_cfg.promptDiag, (int)g_cfg.promptHook);
 }
 
 // ---------- CRC-32 (IEEE 反射, 与 zlib.crc32 一致) ----------
@@ -1637,7 +1693,7 @@ static SrvResolve_t g_origSrvResolve = nullptr;
 //   手段: 采样 Format 的**调用者模块内偏移**(ra=+0x…, 可与 Steam 侧已知调用点常量
 //   RA_FMT_* 或 MS dump 反汇编直接对上) + 采样 F/G 语言服务的**返回串**。
 // =====================================================================
-enum { HC_A = 0, HC_B, HC_C, HC_D, HC_E, HC_J, HC_N };
+enum { HC_A = 0, HC_B, HC_C, HC_D, HC_E, HC_J, HC_L, HC_N };
 static volatile LONG g_hookCalls[HC_N];     // 各 hook 被调用次数（仅 SR4R_DIAG_RUNTIME=1 时写入）
 
 // =====================================================================
@@ -3304,6 +3360,139 @@ static bool IsBareKey(const wchar_t* s)
     return true;
 }
 
+// =====================================================================
+// v2.2 Hook L —— HUD 交互提示文本出口（独立通道）
+// =====================================================================
+//  挂点: sub_1404B5770(主提示, 147 处调用) / sub_1404B5840(按钮标签变体)。
+//  这条链查的是 4096 桶 hash 字符串表, 格式化用 CRT vswprintf, 都不经过
+//  Hook B / F / G。此处是「文本产出层」唯一能插手的地方。
+//
+//  关键约束:
+//   1. 只换返回指针, 绝不改引擎内存。译文在 arena 常驻, g_keyZh 是静态字面量。
+//   2. 必须过 FmtSpecOk —— 译文若多出 % 转换符, 下游 vswprintf 会去读一个
+//      并不存在的参数 -> 野指针(v1.6 HUD_DROP_ITEM_MESSAGE 事故)。
+//   3. 中文模板里的 %ls 由下游填成按键名, [format]/{XXX_IMG} 图标标签原样保留。
+//   4. 诊断按 (which, key, ret) 去重, 每种组合只记一行, 上限 200 行, 防刷屏。
+//      ★ calls 计数不依赖 SR4R_DIAG_RUNTIME: stats 行里 prompt calls=0 就说明
+//        这个提示根本不走这两个函数, 是判别「是不是这条链」最直接的证据。
+// =====================================================================
+using PromptGet_t = __int64(__fastcall*)(__int64, __int64);
+static PromptGet_t g_origPromptGet = nullptr;
+static PromptGet_t g_origPromptBtn = nullptr;
+static volatile LONG g_hitL = 0, g_missL = 0;
+
+static void PromptNarrow(char* dst, size_t cap, const char* s)
+{
+    dst[0] = '\0';
+    if (!s || !*s || cap < 2) return;
+    size_t n = 0;
+    while (n + 1 < cap && s[n]) ++n;   // 不用 strnlen_s: 避免 CRT 版本差异
+    memcpy(dst, s, n);
+    dst[n] = '\0';
+}
+
+// 宽串 -> UTF-8。Log() 是窄字符 fprintf 流, 直接 %ls 会把中文写成 '?';
+// 手工转 UTF-8 才能让日志里看得见真实译文。
+static void PromptUtf8(char* dst, size_t cap, const wchar_t* s)
+{
+    dst[0] = '\0';
+    if (!s || cap < 2) return;
+    int n = WideCharToMultiByte(CP_UTF8, 0, s, -1, dst, (int)cap, nullptr, nullptr);
+    if (n <= 0) dst[0] = '\0';
+}
+
+// 256 槽开放寻址去重表（原子 CAS, 安装/运行期多线程安全）
+static volatile LONG g_promptSeen[256] = {};
+static volatile LONG g_promptLogN = 0;
+
+static bool PromptFirstTime(const char* which, const char* key, const wchar_t* s)
+{
+    uint32_t h = 2166136261u;
+    for (const char* p = which; *p; ++p) { h ^= (unsigned char)*p; h *= 16777619u; }
+    for (const char* p = key; p && *p; ++p) { h ^= (unsigned char)*p; h *= 16777619u; }
+    for (const wchar_t* p = s; p && *p; ++p) { h ^= (uint32_t)*p; h *= 16777619u; }
+    const uint32_t tag = h | 1u;
+    for (uint32_t k = 0; k < 8; ++k)
+    {
+        uint32_t i = (h + k) & 255u;
+        LONG prev = InterlockedCompareExchange(&g_promptSeen[i], (LONG)tag, 0L);
+        if (prev == 0L) return true;
+        if ((uint32_t)prev == tag) return false;
+    }
+    return false;   // 槽位冲突满, 宁可不打日志也不影响游戏
+}
+
+static __int64 PromptSub(PromptGet_t orig, const char* which,
+                         __int64 key, __int64 fallback)
+{
+    const wchar_t* s = (const wchar_t*)orig(key, fallback);  // 完整透传 a1/a2
+    const wchar_t* out = s;
+    bool bare = false, dictHit = false, unsafe = false, replaced = false;
+
+    if (g_dictReady && s && *s)
+    {
+        // 1) 裸 KEY 兜底: a2==0 时引擎会把 KEY 名本身当文本返回
+        if (IsBareKey(s))
+        {
+            bare = true;
+            const wchar_t* zh = KeyZhLookup(s);
+            if (g_cfg.promptHook && zh) { out = zh; replaced = true; }
+        }
+        // 2) 英文模板/句子 -> 词典中文模板
+        if (!replaced)
+        {
+            const DictNode* r = LookupNode(s, &g_hitL, &g_missL);
+            if (r)
+            {
+                dictHit = true;
+                bool ok = FmtSpecOk(s, r->trans);
+                if (g_cfg.promptHook && ok) { out = r->trans; replaced = true; }
+                else if (!ok)                unsafe = true;
+            }
+        }
+    }
+
+    if (g_cfg.promptDiag)
+    {
+        const char* ks = (const char*)key;
+        const char* fs = fallback ? (const char*)fallback : "";
+        bool first = PromptFirstTime(which, ks, s);
+        bool special = (!s || !*s) || bare || dictHit || unsafe || replaced;
+        if (first || special)
+        {
+            LONG n = InterlockedIncrement(&g_promptLogN);
+            if (n <= 200)
+            {
+                char kb[128], fb[160], rb[512], ob[512];
+                PromptNarrow(kb, sizeof(kb), ks);
+                PromptNarrow(fb, sizeof(fb), fs);
+                PromptUtf8(rb, sizeof(rb), s);
+                PromptUtf8(ob, sizeof(ob), out);
+                Log("prompt#%-3ld %s key=\"%s\" fb=\"%s\" ret=\"%s\" len=%zu bare=%d dict=%d unsafe=%d repl=%d final=\"%s\"",
+                    n, which, kb, fb, rb, s ? wcslen(s) : (size_t)0,
+                    (int)bare, (int)dictHit, (int)unsafe, (int)replaced, ob);
+            }
+        }
+    }
+    return (__int64)out;
+}
+
+static __int64 __fastcall HookPromptGet(__int64 k, __int64 f)
+{
+    InterlockedIncrement(&g_hookCalls[HC_L]);
+    static volatile LONG once = 0;
+    if (InterlockedIncrement(&once) == 1) Log("prompt: PROMPT_GET alive (first call)");
+    return PromptSub(g_origPromptGet, "GET", k, f);
+}
+
+static __int64 __fastcall HookPromptBtn(__int64 k, __int64 f)
+{
+    InterlockedIncrement(&g_hookCalls[HC_L]);
+    static volatile LONG once = 0;
+    if (InterlockedIncrement(&once) == 1) Log("prompt: PROMPT_BTN alive (first call)");
+    return PromptSub(g_origPromptBtn, "BTN", k, f);
+}
+
 static const wchar_t* EarlySub(const char* which, LangGet_t orig,
                                uint64_t a1, uint64_t a2, uint64_t a3, uint64_t a4,
                                volatile LONG* hit, volatile LONG* miss)
@@ -4310,8 +4499,9 @@ static DWORD WINAPI StatsThread(LPVOID)
     for (;;)
     {
         Sleep(STATS_PERIOD_MS);
-        Log("stats: draw hit=%ld miss=%ld | format hit=%ld miss=%ld | wrap=%ld | sub hit=%ld miss=%ld | dumped=%u | fonts=%ld",
-            g_hitA, g_missA, g_hitB, g_missB, g_wrapHits, g_hitJ, g_missJ, g_dumpCount, g_fidCacheN);
+        Log("stats: draw hit=%ld miss=%ld | format hit=%ld miss=%ld | wrap=%ld | sub hit=%ld miss=%ld | dumped=%u | fonts=%ld | prompt calls=%ld hit=%ld miss=%ld",
+            g_hitA, g_missA, g_hitB, g_missB, g_wrapHits, g_hitJ, g_missJ, g_dumpCount, g_fidCacheN,
+            g_hookCalls[HC_L], g_hitL, g_missL);
 #if SR4R_DIAG_RUNTIME
         // v1.5: hook 存活/调用量 + 语言服务层计数 + wrap 事件 + Format 调用点分类
         //   calls: 每个 hook 的真实被调用次数（0 = 该 hook 在本构建从未触发 ->
@@ -4435,8 +4625,8 @@ struct LocResult
 //   MainThread 会先定位 FontLookup 用于自解全局变量, 随后 InstallHook 还会再要
 //   同一签名 —— 记忆化既省掉一次 20MB 扫描, 也避免失败时重复打日志。
 //   （安装阶段单线程, 无需加锁）
-static const AobSig* g_aobMemoKey[8] = {};
-static LocResult      g_aobMemoVal[8] = {};
+static const AobSig* g_aobMemoKey[12] = {};
+static LocResult      g_aobMemoVal[12] = {};
 static int           g_aobMemoN      = 0;
 
 // 定位顺序: L1 精确特征码 -> L2 放宽特征码 -> L3 换代构建精确特征码 -> 版本 VA 表。
@@ -4497,7 +4687,7 @@ static LocResult LocateHook(const AobSig& s)
         }
     }
 
-    if (g_aobMemoN < 8)
+    if (g_aobMemoN < 12)
     {
         g_aobMemoKey[g_aobMemoN] = &s;
         g_aobMemoVal[g_aobMemoN] = r;
@@ -4703,7 +4893,7 @@ static void DumpExecutableSections(const wchar_t* dir, const char* why)
 // ---------- 主线程 ----------
 static DWORD WINAPI MainThread(LPVOID hSelf)
 {
-    Log("==== SR4R_I18N v1.7: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码) ====");
+    Log("==== SR4R_I18N v2.2: SR3R v7.5.2 ported to SR4 (Steam/GOG/EPIC/MSStore + 未知构建自解, L1/L2/L3 三层特征码 + Hook L HUD 提示通道) ====");
     wchar_t dir[MAX_PATH], iniPath[MAX_PATH], dictDir[MAX_PATH], dtxt[MAX_PATH];
     GetModuleFileNameW((HMODULE)hSelf, dir, MAX_PATH);
     wchar_t* slash = wcsrchr(dir, L'\\');
@@ -4934,7 +5124,23 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     // 字幕/HUD 绘制入口整串替换（ini subtitle_early 可关）
     bool j = g_cfg.subtitleEarly && InstallHook(AOB_SUBTITLE, g_exe.vaSubtitleDraw,
                                                 (void*)HookSubtitle, (void**)&g_origSubtitle);
-    if (!a && !b && !c && !d && !e && !f && !g && !j)
+    // v2.2 Hook L: HUD 交互提示独立通道。只在已定位该 VA 的构建上安装;
+    //   GOG / EPIC / MSStore 的 VA 表故意留 0 -> 跳过, 避免对错误地址打 mismatch。
+    bool l1 = false, l2 = false;
+    if ((g_cfg.promptDiag || g_cfg.promptHook) && g_exe.vaPromptGet && g_exe.vaPromptBtn)
+    {
+        l1 = InstallHook(AOB_PROMPT_GET, g_exe.vaPromptGet, (void*)HookPromptGet, (void**)&g_origPromptGet);
+        l2 = InstallHook(AOB_PROMPT_BTN, g_exe.vaPromptBtn, (void*)HookPromptBtn, (void**)&g_origPromptBtn);
+        Log("prompt: Hook L GET=%d BTN=%d diag=%d replace=%d",
+            (int)l1, (int)l2, (int)g_cfg.promptDiag, (int)g_cfg.promptHook);
+    }
+    else
+    {
+        Log("prompt: Hook L skipped (cfg diag=%d hook=%d, vaGet=0x%llX vaBtn=0x%llX)",
+            (int)g_cfg.promptDiag, (int)g_cfg.promptHook,
+            (unsigned long long)g_exe.vaPromptGet, (unsigned long long)g_exe.vaPromptBtn);
+    }
+    if (!a && !b && !c && !d && !e && !f && !g && !j && !l1 && !l2)
     {
         Log("no hooks installed, idle");
         return 0;
@@ -4946,8 +5152,9 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("SR4R v2.1 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, applied=%d, idling",
+    Log("SR4R v2.2 active: dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d J=%d L=%d/%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, applied=%d, idling",
         g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)j,
+        (int)l1, (int)l2,
         (int)g_cfg.looseFirst,
         InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
         (int)g_cfg.bc3Atlas, (int)g_mountRegApplied);
@@ -5028,7 +5235,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR4R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR4R_I18N");
-	        Log("[DllMain] ATTACH SR4R v2.1 (loose 静止点插队: 根治改表撞游标读者的崩溃)");
+	        Log("[DllMain] ATTACH SR4R v2.2 (loose 静止点插队 + Hook L)");
             // v1.9: 这里**只做只读定位**, 绝不调用引擎注册器。
             //   原因（v1.8 实测崩溃）: 注册器内部 EnterCriticalSection(&挂载表锁),
             //   该临界区由引擎 CRT 静态构造初始化, 而 ASI 的 DllMain 跑在

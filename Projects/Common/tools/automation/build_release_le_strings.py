@@ -491,12 +491,34 @@ def build_game(game, version, suffixes=('us',), out_dir=None, quiet=False,
         tpl_step = C.detect_file_step(tpl_path)
 
         def repack_fn(tp, pp, op, _rev=rev_charmap, _st=tpl_step):
-            """先试原位覆盖；超槽则降级全量重建（不丢条目）。"""
+            """先试原位覆盖；超槽则降级全量重建（不丢条目）。
+
+            ★ 2026-11-15 修复: C.repack_inplace() **不会**因超槽抛异常 —— 它把
+              放不进原槽的 hash 记在返回值的 'overflow' 列表里, 然后照常写出文件。
+              旧代码忽略返回值, 于是这些条目在产物里静默保持英文原文；而下游的
+              「产物全量结构自检」只核对条目数守恒, 完全看不出内容没写进去。
+              SR4 实测: common 47 条 / microsoft 48 条译文因此未生效。
+              修法: 显式检查 overflow, 有则从**原模板**全量重建 (repack), 不丢译文。
+              有 charlist 的分支 (_rev) 本来就会 raise, 行为不变。
+
+            ★ 同时收紧键集: 全量重建 (C.repack) 会把源 txt 里「模板不存在的 hash」
+              当作新键追加进表, 令 stringCount 与模板不一致 (实测 microsoft 的
+              hud_us 1392!=1391、menu_us 900!=877)。inplace 路径本来就忽略这些键,
+              故两路统一先按模板键集过滤, 保证降级前后键集严格守恒、改动最小。
+            """
+            tpl_keys = _tpl_hash_cache.get(tpl_path) or template_hashes(tpl_path)
+            pp = {h: t for h, t in pp.items() if h in tpl_keys}
             try:
                 if _rev:
                     _repack_with_charmap(tp, pp, op, _rev, _st)
-                else:
-                    C.repack_inplace(tp, pp, op)
+                    return 'inplace'
+                r = C.repack_inplace(tp, pp, op)
+                ov = r.get('overflow') or []
+                if ov:
+                    _overslot.setdefault(stem, []).append(
+                        f'inplace 超槽 {len(ov)} 条 -> 降级全量重建')
+                    C.repack(tp, pp, op)          # 读原模板 tp, 覆盖写 op
+                    return f'repack(超槽 {len(ov)} 条)'
                 return 'inplace'
             except ValueError as e:
                 _overslot.setdefault(stem, []).append(str(e))
