@@ -444,7 +444,9 @@ static Config g_cfg = {
     true,                          // v7.9: bc3_atlas 默认开（显存 ↓4x; 置 0 回到 BGRA8 无损）
     8192u,                         // v7.11: max_atlas_w 默认 8192(字号=原版行为). 部分 GPU/驱动(SAVING 卡死, 见 dump 分析)
                                   //        可在 ini 设 max_atlas_w=2048 兜底(牺牲字号换不卡)
-    true,                          // v7.12: upload_on_render_thread 默认开（上传只在渲染线程, 消除跨线程 ctx 争用）
+    false,                         // v7.13: 默认关。v7.12 的"渲染线程上传"在渲染热路径(HookFontLookup/
+                                   //   HookDrawWide)里 Map 大 staging, 实测会触发 DecodeBc1 的 AV
+                                   //   (dump 20261115-190416), 故先回退后台上传。需要 A/B 时 ini 设 1。
     L"auto",                       // exeOverride: 默认自动 (PE 指纹判别)
 };
 
@@ -1602,6 +1604,31 @@ static DWORD WINAPI RasterizeThread(LPVOID arg)
     return 0;
 }
 
+// ---------- 内存可读性校验（v7.13） ----------
+// 崩溃实证 20261115-190416: AV@DecodeBc1 读 blk[0] 失败, 调用链
+//   HookFontLookup -> RenderDrainFontUploads -> FinishFont -> DecodeBcStrip
+//   -> DecodeBc3 -> DecodeBc1; 栈上 tmp 已有解码结果 -> 是解码到中途才踩到不可读页。
+//   staging 是 Map 出来的读回缓冲, 一旦驱动返回的指针/范围不可信(设备被重置、渲染中途
+//   插入大 staging 拷贝等), 直接解引用就是进程级 AV。这里先逐区校验再解码:
+//   不可读 -> 放弃本次升级(state=4 回退官方字体), 绝不崩进程。
+static bool IsRangeReadable(const void* p, size_t n)
+{
+    if (!p || n == 0) return false;
+    const uint8_t* cur = static_cast<const uint8_t*>(p);
+    const uint8_t* end = cur + n;
+    while (cur < end)
+    {
+        MEMORY_BASIC_INFORMATION mbi{};
+        if (VirtualQuery(cur, &mbi, sizeof(mbi)) != sizeof(mbi)) return false;
+        if (mbi.State != MEM_COMMIT) return false;
+        if (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD)) return false;
+        const uint8_t* next = static_cast<const uint8_t*>(mbi.BaseAddress) + mbi.RegionSize;
+        if (next <= cur) return false;                      // 防死循环
+        cur = next;
+    }
+    return true;
+}
+
 // ---------- DXGI 格式辅助（v6.4: 官方图集读回格式感知） ----------
 // 返回每像素字节数; 压缩/未知格式返回 0
 static uint32_t BppOf(DXGI_FORMAT fmt)
@@ -2210,6 +2237,29 @@ static bool FinishFont(FakeFont* f)
         VirtualFree(atlas, 0, MEM_RELEASE);
         f->state = 4;
         return false;
+    }
+
+    // v7.13: 解码前校验 staging 读回范围真实可读。
+    //   崩溃实证: 渲染中途 Map 大 staging, 驱动返回的指针可能已失效, DecodeBc1 直接 AV。
+    //   这里宁可放弃升级(回退官方字体), 也不让进程崩。
+    if (bc)
+    {
+        const uint32_t blocksY = (offH + 3) >> 2;
+        const uint32_t blocksX = (offW + 3) >> 2;
+        const uint32_t bb      = BcBlockBytes(dd.Format);
+        const size_t   need    = (blocksX && blocksY)
+                               ? ((size_t)(blocksY - 1) * ms.RowPitch + (size_t)blocksX * bb) : 0;
+        if (blocksX == 0 || blocksY == 0 || bb == 0 || ms.RowPitch < (UINT)blocksX * bb ||
+            !IsRangeReadable(ms.pData, need))
+        {
+            Log("font%u: staging unreadable (pData=%p RowPitch=%u need=%zu blocks=%ux%u bb=%u), abort upgrade",
+                fontId, ms.pData, ms.RowPitch, need, blocksX, blocksY, bb);
+            ctx->Unmap(stag, 0);
+            stag->Release();
+            VirtualFree(atlas, 0, MEM_RELEASE);
+            f->state = 4;
+            return false;
+        }
     }
 
     if (bc)
@@ -4278,7 +4328,7 @@ static DWORD WINAPI MainThread(LPVOID hSelf)
     CloseHandle(CreateThread(nullptr, 0, FontFileThread, hSelf, 0, nullptr));
 
     CloseHandle(CreateThread(nullptr, 0, StatsThread, nullptr, 0, nullptr));
-    Log("v7.12 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, maxAtlasW=%u, upload_on_render=%d, applied=%d, idling",
+    Log("v7.13 active: build=%s, dict=%u keys (%u files), hooks A=%d B=%d C=%d D=%d E=%d F=%d G=%d H=%d I=%d J=%d, loose_first=%d, loosePath=%s, bc3_atlas=%d, maxAtlasW=%u, upload_on_render=%d, applied=%d, idling",
         g_build ? g_build->name : "???", g_dictCount, files, (int)a, (int)b, (int)c, (int)d, (int)e, (int)f, (int)g, (int)h, (int)i, (int)j,
         (int)g_cfg.looseFirst,
         InterlockedCompareExchange(&g_watcherFallback, 0, 0) ? "watcher-fallback" : "hook-quiescent",
@@ -4303,7 +4353,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         if (g_log)
         {
 			Log("[Info] SR3R Font Extend By HaoJun0823 https://www.haojun0823.xyz | https://github.com/HaoJun0823/SR3R_I18N");
-			Log("[DllMain] ATTACH v7.12 (图集 GPU 上传改由渲染线程执行: 根治跨线程 D3D11 immediate context 争用)");
+			Log("[DllMain] ATTACH v7.13 (回退后台上传 + staging 可读性校验: 修复渲染热路径 Map 大 staging 引发的 DecodeBc 访问冲突)");
 
             // v7.10: 挂载表磁盘项插队的手续分两步 ——
             //   ① 这里(DllMain) 只做**只读定位**: AOB 找注册器 + 解出挂载表地址。
