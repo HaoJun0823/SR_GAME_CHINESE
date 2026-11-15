@@ -246,10 +246,10 @@ jobs:
 
       # ── 产物校验（独立于构建脚本再核一遍：x64 PE / 静态 CRT / 包结构）──
       # ── S8 体积指纹（硬断言位置：verify_release.py 的 ASI_EXPECTED_SIZE）──
-      #   值 = MSVC v141 (14.16) + Win10 SDK 10.0.26100 的确定产物；回退到 v142
+      #   值 = MSVC v141 (14.16) + Win10 SDK 10.0.17763 的确定产物；回退到 v142
       #   会改变体积并被拦下。此处列出以便在本 workflow 文件内直接 grep：
-      #     SR3R_I18N.asi  277504 B
-      #     SR4R_I18N.asi  283136 B
+      #     SR3R_I18N.asi  279552 B   (v7.13)
+      #     SR4R_I18N.asi  286208 B   (v2.2)
       - name: 校验产物完整性
         run: python3 Projects/Common/tools/verify/verify_release.py release
 
