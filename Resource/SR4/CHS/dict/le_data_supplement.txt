@@ -4449,6 +4449,7 @@
 "TRANSFER LIMIT": "转账上限";
 "Launch a plethora of grenades for maximum explosions.": "一口气射出海量榴弹，把爆炸效果拉满。";
 "VOICE CHAT": "语音聊天";
+"Voice Chat": "语音聊天";
 "FEET": "英尺";
 "The Full Kinzie": "全金吉";
 "STREAKING": "裸奔";
@@ -12308,4 +12309,6 @@
 "I think I figured out how this works.  Run along the path collecting the power orbs, which should boost your new speed.  Every time you hit a checkpoint you'll be able to stay in the program a bit longer so you can reach the end.  Though you probably want to avoid the firewalls along the way.  Good luck!": "我想我弄明白这怎么运作了。沿着路径跑收集能量球，它们会增强你的新速度。每次到达检查点你就能在程序中多待一会儿，直到抵达终点。不过你大概想避开路上的防火墙。祝你好运！";
 "I need that!": "我需要那个！";
 "Go to the old well and give a pike of Pickled peppers to Johns friend the puple wizard of id.": "去那口老井，给约翰的朋友——伊德紫袍巫师——一罐腌辣椒吧。";
+"Go to the old well and give a pike of pickled peppers to Johns friend the puple wizard of id.": "去那口老井，给约翰的朋友——伊德紫袍巫师——一罐腌辣椒吧。";
+"LIFE STEAL - Go to the old well and give a pike of pickled peppers to Johns friend the puple wizard of id.": "生命吸取 - 去那口老井，给约翰的朋友——伊德紫袍巫师——一罐腌辣椒吧。";
 "Take a walk on the wild side. You've got unlimited sprint. Do a fucking barrel roll while your at it.Take a walk on the wild side. You've got unlimited sprint. Do a fucking barrel roll while you": "去野外走走吧。你有无限冲刺。顺便来个桶滚翻。去野外走走吧。你有无限冲刺。顺便来个";
