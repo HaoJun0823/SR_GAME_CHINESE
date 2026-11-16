@@ -102,6 +102,7 @@ def check_le_strings(path):
     if need > len(buf):
         return False, f'头部声明 {need}B 超出文件 {len(buf)}B (nb={nb} nstr={nstr})'
     total = 0
+    misplaced = 0
     for i in range(nb):
         cnt, _pad, off, _pad2 = struct.unpack_from('<IIII', buf, 12 + i * 16)
         total += cnt
@@ -114,11 +115,18 @@ def check_le_strings(path):
                 continue
             if s_off + 4 > len(buf):
                 return False, f'bucket[{i}] 字符串偏移越界 @0x{s_off:X}'
+            # ★★ 引擎按 hash % nb 查桶：条目若不在自己的桶里，游戏永远查不到
+            #    （界面回退英文/空白），而魔数/总数/越界全部通过 —— 2026-11 事故。
+            if nb > 0 and struct.unpack_from('<I', buf, s_off)[0] % nb != i:
+                misplaced += 1
             e = s_off + 4
             while e + 1 < len(buf) and struct.unpack_from('<H', buf, e)[0] != 0:
                 e += 2
     if total != nstr:
         return False, f'bucket 条目总数 {total} != header.stringCount {nstr}'
+    if misplaced:
+        return False, (f'{misplaced}/{total} 条目不在 bucket[hash % nb] 内'
+                       f'（引擎查不到，界面会回退原文）')
     return True, f'buckets={nb} strings={nstr}'
 
 

@@ -349,6 +349,47 @@ def detect_file_step(path):
     return detect_text_step(buf, nb, buckets)
 
 
+def bucket_mismatches(buf, path="<buf>"):
+    """统计「不在 bucket[hash % nb] 里」的条目数。返回 (错位数, 总数)。
+
+    ★★ 这是**引擎查找语义**，不是风格问题：运行时定位字符串走
+       `bucket = hash % nb`，条目若落在别的桶里就永远查不到 —— 界面回退原文/
+       空白，而魔数、stringCount、越界这些结构自检**全都通过**（2026-11 事故：
+       CI 包里 4 张表 98% 条目错位，结构校验全绿，游戏内菜单/字幕仍显示英文）。
+       故凡是重建过布局的产物，必须过这一关。
+    """
+    fid, _ver, nb, _nstr, buckets = _bucket_table(buf, path)
+    if nb <= 0:
+        return 0, 0
+    bad = tot = 0
+    for i, (off, cnt) in enumerate(buckets):
+        for j in range(cnt):
+            pos = off + OFFSET_ENTRY_SIZE * j
+            if pos + 4 > len(buf):
+                raise ValueError(f"{path}: bucket[{i}] offset 表越界 @0x{pos:X}")
+            s_off = struct.unpack_from("<I", buf, pos)[0]
+            if s_off == 0:                      # 空槽
+                continue
+            if s_off + 4 > len(buf):
+                raise ValueError(f"{path}: bucket[{i}] 字符串偏移越界 @0x{s_off:X}")
+            h = struct.unpack_from("<I", buf, s_off)[0]
+            tot += 1
+            if h % nb != i:
+                bad += 1
+    return bad, tot
+
+
+def check_layout_file(path):
+    """对文件做分桶自洽校验；不通过直接抛 ValueError（供写路径做最后一道闸）。"""
+    with open(path, "rb") as f:
+        buf = f.read()
+    bad, tot = bucket_mismatches(buf, path)
+    if bad:
+        raise ValueError(
+            f"{path}: {bad}/{tot} 条目不在 bucket[hash % nb] 内 —— 引擎将查不到这些字符串")
+    return tot
+
+
 def read_with_bucket(path, step=None):
     """
     完整解析。返回 (file_id, version, nb, stringCount, entries, step)
@@ -502,18 +543,22 @@ def repack(in_path, pairs, out_path):
             # 新键：按 hash 升序插到尾部（引擎按 hash 查表，顺序不影响查找）
             merged[h] = t
 
-    # 分桶：原文件几个桶就还几个桶，按 hash 顺序重新均分（保持 count 结构）
+    # 分桶：原文件几个桶就还几个桶，**按 hash % nb 归桶**。
+    #   ★★ 2026-11-16 修复: 旧实现按 hash 出现顺序「均分」(per = total // nb)
+    #      并把桶内顺序当成无所谓 —— 那是错的。引擎查表是
+    #      `bucket[hash % nb] -> 在桶内 offset 表里找 hash`，均分会让 ~98%
+    #      条目落到错误的桶里，游戏内整张表失效（回退英文/空白），而所有结构性
+    #      自检（魔数/总数/越界）依然全绿。经验证据: data/ 下 66 张原版表
+    #      数千条目 100% 满足 hash % nb == bucket_index，无一例外。
+    #   桶内顺序保持「文件内出现顺序」即可（引擎只在桶内按 hash 匹配，
+    #   实测原版桶内并非 hash 升序，故不要求排序）。
     hs = list(merged.keys())
     total = len(hs)
     if nb <= 0:
         nb = 1
-    per = total // nb
-    buckets = []
-    idx = 0
-    for i in range(nb):
-        c = per if i < nb - 1 else (total - idx)
-        buckets.append(hs[idx:idx + c])
-        idx += c
+    buckets = [[] for _ in range(nb)]
+    for h in hs:
+        buckets[h % nb].append(h)
 
     header = struct.pack("<IHHI", MAGIC, ver, nb, total)
     bucket_off = HEADER_SIZE
@@ -550,7 +595,77 @@ def repack(in_path, pairs, out_path):
     back = read_with_bucket(out_path, step=step)[4]
     if len(back) != total:
         raise ValueError(f"{out_path}: 回读校验失败, 只读回 {len(back)}/{total} 条")
+    # ★ 分桶自洽（引擎按 hash % nb 查桶）—— 结构自检通过 ≠ 能被游戏读到
+    check_layout_file(out_path)
     return total
+
+
+def repack_keep_slots(in_path, pairs, out_path, step=None):
+    """保槽重建：保留原文件每条字符串的槽位与桶归属，只把「放不下」的条目
+    扩到实际所需宽度。
+
+    与 repack() 的区别：repack 会把整个字符串区压紧（体积可大幅缩小），
+    本函数只在必要时加宽个别槽位，产物体积 ≈ 模板 + 少量扩容，布局与原版
+    同构 —— 对「已验证可用的原版形态」扰动最小，是超槽降级的首选。
+
+    返回 (写入条目数, 扩容条目清单 [(hash, 原槽, 新槽), ...])。
+    """
+    with open(in_path, "rb") as f:
+        buf = f.read()
+    fid, ver, nb, nstr, buckets = _bucket_table(buf, in_path)
+    if step is None:
+        step = detect_text_step(buf, nb, buckets)
+
+    # 物理顺序（按字符串起点升序）—— 尽量让新文件与原文件排列一致
+    starts = []
+    for off, cnt in buckets:
+        for i in range(cnt):
+            s = struct.unpack_from("<I", buf, off + OFFSET_ENTRY_SIZE * i)[0]
+            if s:
+                starts.append(s)
+    starts = sorted(set(starts))
+    slot_of = {}
+    for i, s in enumerate(starts):
+        nxt = starts[i + 1] if i + 1 < len(starts) else len(buf)
+        slot_of[s] = nxt - (s + 4)
+
+    body_off = HEADER_SIZE + BUCKET_SIZE * nb + OFFSET_ENTRY_SIZE * nstr
+    blob = bytearray()
+    new_off = {}
+    grown = []
+    for s in starts:
+        h = struct.unpack_from("<I", buf, s)[0]
+        old_txt, _end = _decode_cstr(buf, s + 4, step)
+        raw = encode_text(pairs.get(h, old_txt), None, step)
+        old_slot = slot_of[s]
+        slot = old_slot if len(raw) <= old_slot else len(raw)
+        if slot != old_slot:
+            grown.append((h, old_slot, slot))
+        new_off[s] = body_off + len(blob)
+        blob += struct.pack("<I", h) + raw + b"\x00" * (slot - len(raw))
+
+    off_tbl_off = HEADER_SIZE + BUCKET_SIZE * nb
+    bk, ot = bytearray(), bytearray()
+    oi = 0
+    for bi in range(nb):
+        cnt, p0, _o, p1 = struct.unpack_from("<IIII", buf, HEADER_SIZE + BUCKET_SIZE * bi)
+        bk += struct.pack("<IIII", cnt, p0, off_tbl_off + oi * OFFSET_ENTRY_SIZE, p1)
+        off, _c = buckets[bi]
+        for i in range(cnt):
+            s = struct.unpack_from("<I", buf, off + OFFSET_ENTRY_SIZE * i)[0]
+            ot += struct.pack("<II", new_off.get(s, 0), 0)
+        oi += cnt
+
+    data = struct.pack("<IHHI", MAGIC, ver, nb, nstr) + bytes(bk) + bytes(ot) + bytes(blob)
+    _purge_out(out_path)
+    with open(out_path, "wb") as f:
+        f.write(data)
+
+    back = read_with_bucket(out_path, step=step)[4]
+    if len(back) != nstr:
+        raise ValueError(f"{out_path}: 回读校验失败, 只读回 {len(back)}/{nstr} 条")
+    check_layout_file(out_path)
+    return nstr, grown
 
 
 def repack_inplace(in_path, pairs, out_path):
@@ -558,10 +673,32 @@ def repack_inplace(in_path, pairs, out_path):
     原位覆盖式写回：保持原文件布局与槽位，仅在原位替换文本。
     优点：不改变偏移，引擎侧最稳；缺点：新文本比旧文本长时无法容纳。
     返回 dict 统计 {'written': n, 'overflow': [hash, ...]}。
+
+    ★★ 2026-11-16 修复「可用空间」定义：槽宽 = 到**下一个字符串起点**的距离，
+      而不是「到本串 NUL 为止」。旧实现用 _decode_cstr 的返回值当 room，完全
+      忽略了字符串之间的 padding —— SR3 的 customize/menu/static/subtitle
+      模板（130090/68930/60462/78442 B）padding 很宽（紧凑排列只要
+      77450/33042/32096/34604 B），于是每张表仅有 1~2 条被判超槽，进而降级
+      「整表重建」，又踩中重建路径的分桶错误，最终 CI 包在游戏内整表失效。
+      按真实槽宽判断后这几条同样放得下，无需重建。
     """
     fid, ver, nb, nstr, entries, step = read_with_bucket(in_path)
     with open(in_path, "rb") as f:
         buf = bytearray(f.read())
+
+    # 全部字符串起点（升序）→ 每条的真实槽宽
+    starts = []
+    for off, count in _bucket_table(buf, in_path)[4]:
+        for i in range(count):
+            p = off + OFFSET_ENTRY_SIZE * i
+            s = struct.unpack_from("<I", buf, p)[0]
+            if s:
+                starts.append(s)
+    starts = sorted(set(starts))     # 去重：允许多个 hash 共享同一串（原版暂无）
+    room_at = {}
+    for i, s in enumerate(starts):
+        nxt = starts[i + 1] if i + 1 < len(starts) else len(buf)
+        room_at[s] = nxt - (s + 4)
 
     written, overflow = 0, []
     for off, count in _bucket_table(buf, in_path)[4]:
@@ -574,9 +711,8 @@ def repack_inplace(in_path, pairs, out_path):
             new_txt = pairs[h]
             if new_txt == entries.get(h):
                 continue
-            _old, old_next = _decode_cstr(buf, str_off + 4, step)
             new_raw = encode_text(new_txt, None, step)
-            room = old_next - (str_off + 4)
+            room = room_at.get(str_off, 0)
             if len(new_raw) > room:
                 overflow.append(h)
                 continue

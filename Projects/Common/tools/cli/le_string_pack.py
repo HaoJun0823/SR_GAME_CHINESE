@@ -197,12 +197,11 @@ def _repack_with_charmap(src, pairs, dst, rev, step):
     total = len(hs)
     if nb <= 0:
         nb = 1
-    per = total // nb
-    buckets, idx = [], 0
-    for i in range(nb):
-        c = per if i < nb - 1 else (total - idx)
-        buckets.append(hs[idx:idx + c])
-        idx += c
+    # ★★ 必须按 hash % nb 归桶（引擎查找语义）；顺序均分会让条目落错桶、
+    #    游戏内整表失效，而结构自检照样全绿。详见 le_string_codec.repack()。
+    buckets = [[] for _ in range(nb)]
+    for h in hs:
+        buckets[h % nb].append(h)
 
     header = struct.pack('<IHHI', C.MAGIC, ver, nb, total)
     off_tbl_off = C.HEADER_SIZE + C.BUCKET_SIZE * nb
@@ -231,6 +230,7 @@ def _repack_with_charmap(src, pairs, dst, rev, step):
     back = C.read_with_bucket(dst, step=step)[4]
     if len(back) != total:
         raise ValueError(f'{dst}: 回读校验失败 {len(back)}/{total}')
+    C.check_layout_file(dst)
     return total
 
 

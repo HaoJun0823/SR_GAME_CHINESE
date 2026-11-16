@@ -238,12 +238,14 @@ def _repack_with_charmap(src, pairs, dst, rev_charmap, step, force_rebuild=False
     hs = list(merged.keys())
     total = len(hs)
     n_b = nb if nb > 0 else 1
-    per = total // n_b
-    buckets, idx = [], 0
-    for i in range(n_b):
-        c = per if i < n_b - 1 else (total - idx)
-        buckets.append(hs[idx:idx + c])
-        idx += c
+    # ★★ 2026-11-16 修复: 必须按 hash % n_b 归桶，不能按顺序均分。
+    #   引擎查表是 `bucket[hash % nb] -> 桶内 offset 表匹配 hash`；均分会让
+    #   ~98% 条目落错桶 → 游戏内该表整体失效（菜单/字幕仍显示英文），而魔数、
+    #   stringCount、越界等结构自检全部通过。data/ 下 66 张原版表数千条目
+    #   100% 满足 hash % nb == bucket_index，这是引擎语义的直接证据。
+    buckets = [[] for _ in range(n_b)]
+    for h in hs:
+        buckets[h % n_b].append(h)
 
     off_tbl_off = C.HEADER_SIZE + C.BUCKET_SIZE * n_b
     body_off = off_tbl_off + C.OFFSET_ENTRY_SIZE * total
@@ -269,6 +271,8 @@ def _repack_with_charmap(src, pairs, dst, rev_charmap, step, force_rebuild=False
     back = C.read_with_bucket(dst, step=step)[4]
     if len(back) != total:
         raise ValueError(f'{dst}: 回读校验失败 {len(back)}/{total}')
+    # ★ 分桶自洽（引擎按 hash % nb 查桶）：结构自检通过 ≠ 游戏读得到
+    C.check_layout_file(dst)
     return total
 
 
@@ -516,17 +520,22 @@ def build_game(game, version, suffixes=('us',), out_dir=None, quiet=False,
                 ov = r.get('overflow') or []
                 if ov:
                     _overslot.setdefault(stem, []).append(
-                        f'inplace 超槽 {len(ov)} 条 -> 降级全量重建')
-                    C.repack(tp, pp, op)          # 读原模板 tp, 覆盖写 op
-                    return f'repack(超槽 {len(ov)} 条)'
+                        f'inplace 超槽 {len(ov)} 条 -> 降级保槽重建')
+                    # ★★ 2026-11-16: 超槽只降级「保槽重建」，不再用 C.repack 全量压紧。
+                    #   repack 会把整个字符串区重排压缩（130090 -> 77450），把一条
+                    #   短原文（"HO"）塞不下的问题放大成整表布局变更；保槽重建只
+                    #   加宽那几条，产物体积≈模板+几十字节，对已验证的原版形态
+                    #   扰动最小。两者都会过 check_layout_file（分桶自洽）。
+                    C.repack_keep_slots(tp, pp, op)
+                    return f'repack-keep-slot(超槽 {len(ov)} 条)'
                 return 'inplace'
             except ValueError as e:
                 _overslot.setdefault(stem, []).append(str(e))
                 if _rev:
                     _repack_with_charmap(tp, pp, op, _rev, _st, force_rebuild=True)
                 else:
-                    C.repack(tp, pp, op)
-                return 'repack(降级)'
+                    C.repack_keep_slots(tp, pp, op)
+                return 'repack-keep-slot(降级)'
 
         base_ok = True
         for suf in suffixes:
@@ -569,7 +578,8 @@ def build_game(game, version, suffixes=('us',), out_dir=None, quiet=False,
         for stem, old, new, co, cn in _resrc:
             log(f'    {stem}: {old}.txt (覆盖 {co:.0%}) -> {new}.txt (覆盖 {cn:.0%})')
     if _overslot:
-        log(f'  [注意] {len(_overslot)} 个文件有中文超槽, 已自动降级为全量重建 (条目不丢):')
+        log(f'  [注意] {len(_overslot)} 个文件有个别中文超槽, 已降级为保槽重建 '
+            f'(只加宽那几条, 条目不丢, 其余槽位不变):')
         for stem, msgs in sorted(_overslot.items()):
             log(f'    {stem}: {len(msgs)} 条  {msgs[0][:80]}')
     if fails:
